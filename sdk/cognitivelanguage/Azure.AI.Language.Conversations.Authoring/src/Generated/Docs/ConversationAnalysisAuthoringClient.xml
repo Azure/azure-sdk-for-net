@@ -789,5 +789,427 @@ foreach (BinaryData item in client.GetTrainingConfigVersions("Conversation", max
 }
 ]]></code></example>
     </member>
+    <member name="GetTrainingJobsAsync(string,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainingJobsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>"))
+{
+}
+]]></code>
+This sample shows how to call GetTrainingJobsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainingJobs(string,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainingJobs.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (TrainingOperationState item in client.GetTrainingJobs("<projectName>"))
+{
+}
+]]></code>
+This sample shows how to call GetTrainingJobs with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (TrainingOperationState item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainingJobsAsync(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetTrainingJobsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetTrainingJobsAsync("<projectName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("createdOn").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+}
+]]></code>
+This sample shows how to call GetTrainingJobsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetTrainingJobsAsync("<projectName>", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("createdOn").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+    Console.WriteLine(result.GetProperty("expiresOn").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startedOn").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndOn").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainingJobs(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetTrainingJobs and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetTrainingJobs("<projectName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("createdOn").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+}
+]]></code>
+This sample shows how to call GetTrainingJobs with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetTrainingJobs("<projectName>", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("jobId").ToString());
+    Console.WriteLine(result.GetProperty("createdOn").ToString());
+    Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+    Console.WriteLine(result.GetProperty("expiresOn").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startedOn").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndOn").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainedModelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
+{
+}
+]]></code>
+This sample shows how to call GetTrainedModelsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainedModels(string,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainedModels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
+{
+}
+]]></code>
+This sample shows how to call GetTrainedModels with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainedModelsAsync(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetTrainedModelsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+}
+]]></code>
+This sample shows how to call GetTrainedModelsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainedModels(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetTrainedModels and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetTrainedModels("<projectName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+}
+]]></code>
+This sample shows how to call GetTrainedModels with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetTrainedModels("<projectName>", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetExportedModelsAsync(string,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetExportedModelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
+{
+}
+]]></code>
+This sample shows how to call GetExportedModelsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetExportedModels(string,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetExportedModels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>"))
+{
+}
+]]></code>
+This sample shows how to call GetExportedModels with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetExportedModelsAsync(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetExportedModelsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("exportedModelName").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastExportedModelOn").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+}
+]]></code>
+This sample shows how to call GetExportedModelsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("exportedModelName").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastExportedModelOn").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetExportedModels(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetExportedModels and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetExportedModels("<projectName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("exportedModelName").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastExportedModelOn").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+}
+]]></code>
+This sample shows how to call GetExportedModels with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetExportedModels("<projectName>", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("exportedModelName").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastExportedModelOn").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+}
+]]></code></example>
+    </member>
   </members>
 </doc>

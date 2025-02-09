@@ -11,13 +11,9 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     [CodeGenClient("AuthoringClient")]
-    [CodeGenSuppress("GetConversationAuthoringDeploymentResourcesClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringDeploymentsClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringProjectsClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringTrainingClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringModelsClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringPrebuiltsClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringExportedModelsClient", typeof(string))]
     public partial class ConversationAnalysisAuthoringClient
     {
         private readonly string _apiVersion;

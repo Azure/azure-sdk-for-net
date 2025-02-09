@@ -703,7 +703,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
 
-Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
+Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("exportedModelName").ToString());
@@ -719,7 +719,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
 
-Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
+Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("exportedModelName").ToString());
@@ -738,7 +738,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
 
-Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
+Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("exportedModelName").ToString());
@@ -754,7 +754,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
 
-Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
+Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("exportedModelName").ToString());
@@ -811,7 +811,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
 
-Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
+Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -825,7 +825,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
 
-Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
+Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -859,7 +859,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
 
-Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
+Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -873,7 +873,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
 
-Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
+Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -897,130 +897,6 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetP
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-]]></code></example>
-    </member>
-    <member name="GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)">
-      <example>
-This sample shows how to call GetTrainedModelsAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
-{
-}
-]]></code>
-This sample shows how to call GetTrainedModelsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetTrainedModels(string,int?,int?,int?,CancellationToken)">
-      <example>
-This sample shows how to call GetTrainedModels.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
-{
-}
-]]></code>
-This sample shows how to call GetTrainedModels with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetTrainedModelsAsync(string,int?,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call GetTrainedModelsAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", (int?)null, (int?)null, (int?)null, (RequestContext)null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
-    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
-}
-]]></code>
-This sample shows how to call GetTrainedModelsAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 1234, 1234, 1234, (RequestContext)null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
-    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetTrainedModels(string,int?,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call GetTrainedModels and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-foreach (BinaryData item in client.GetTrainedModels("<projectName>", (int?)null, (int?)null, (int?)null, (RequestContext)null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
-    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
-}
-]]></code>
-This sample shows how to call GetTrainedModels with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-foreach (BinaryData item in client.GetTrainedModels("<projectName>", 1234, 1234, 1234, (RequestContext)null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("label").ToString());
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
-    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
-}
 ]]></code></example>
     </member>
     <member name="GetModelEvaluationResultsAsync(string,string,StringIndexType,int?,int?,int?,CancellationToken)">
@@ -1156,126 +1032,6 @@ foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<
     Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
     Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
     Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetExportedModelsAsync(string,int?,int?,int?,CancellationToken)">
-      <example>
-This sample shows how to call GetExportedModelsAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
-{
-}
-]]></code>
-This sample shows how to call GetExportedModelsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetExportedModels(string,int?,int?,int?,CancellationToken)">
-      <example>
-This sample shows how to call GetExportedModels.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>"))
-{
-}
-]]></code>
-This sample shows how to call GetExportedModels with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetExportedModelsAsync(string,int?,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call GetExportedModelsAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", null, null, null, null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("exportedModelName").ToString());
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-    Console.WriteLine(result.GetProperty("lastExportedModelOn").ToString());
-    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-}
-]]></code>
-This sample shows how to call GetExportedModelsAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", 1234, 1234, 1234, null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("exportedModelName").ToString());
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-    Console.WriteLine(result.GetProperty("lastExportedModelOn").ToString());
-    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetExportedModels(string,int?,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call GetExportedModels and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-foreach (BinaryData item in client.GetExportedModels("<projectName>", null, null, null, null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("exportedModelName").ToString());
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-    Console.WriteLine(result.GetProperty("lastExportedModelOn").ToString());
-    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
-}
-]]></code>
-This sample shows how to call GetExportedModels with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient();
-
-foreach (BinaryData item in client.GetExportedModels("<projectName>", 1234, 1234, 1234, null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("exportedModelName").ToString());
-    Console.WriteLine(result.GetProperty("modelId").ToString());
-    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-    Console.WriteLine(result.GetProperty("lastExportedModelOn").ToString());
-    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
-    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
 }
 ]]></code></example>
     </member>
