@@ -178,7 +178,7 @@ function Get-ObjectKey {
 
   if ($Object -is [hashtable] -or $Object -is [System.Collections.Specialized.OrderedDictionary]) {
     $sortedEntries = $Object.GetEnumerator() | Sort-Object Name
-    $hashString = ($sortedEntries | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join ";"
+    $hashString = ($sortedEntries | ForEach-Object { "$($_.Key)=$(Get-ObjectKey $_.Value)" }) -join ";"
     return $hashString.GetHashCode()
   }
 
