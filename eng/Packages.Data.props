@@ -231,7 +231,6 @@
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="3.1.32" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.1.22" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.0.15" />
-    <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Functions.Worker.Extensions.Abstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.10.0" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.0" />
@@ -318,6 +317,7 @@
     <PackageReference Update="Microsoft.Azure.Devices.Client" Version="1.41.3" />
     <PackageReference Update="Microsoft.Azure.EventHubs" Version="4.3.2" />
     <PackageReference Update="Microsoft.Azure.EventHubs.Processor" Version="4.3.2" />
+    <PackageReference Update="Microsoft.Azure.Functions.Extensions" Version="1.0.0" />
     <PackageReference Update="Microsoft.Azure.Graph.RBAC" Version="2.2.2-preview" />
     <PackageReference Update="Microsoft.Azure.KeyVault" Version="3.0.5" />
     <PackageReference Update="Microsoft.Azure.KeyVault.Core" Version="3.0.5" />

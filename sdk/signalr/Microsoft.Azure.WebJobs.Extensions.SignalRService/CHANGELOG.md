@@ -6,6 +6,7 @@
 
 ### Breaking Changes
 * Remove .NET 6.0 support.
+* Modify `AddDefaultAuth` method in `SignalRFunctionsHostBuilderExtensions.cs` to use `IServiceCollection` instead of `IFunctionsHostBuilder` to remove the dependency for legacy pacakge `Microsoft.Azure.Functions.Extensions`.
 
 ### Bugs Fixed
 * Correctly support returning result for SignalR invocation in MessagePack protocol from isolated-worker process.
