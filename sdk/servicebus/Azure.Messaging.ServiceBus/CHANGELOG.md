@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed an issue with the `AmqpReceiver` class where a drain failure during a `ReceiveMessagesAsync` operation would cause message ordering to be violated. ([#47822](https://github.com/Azure/azure-sdk-for-net/issues/47822))
+
 ### Other Changes
 
 ## 7.18.3 (2025-01-17)
