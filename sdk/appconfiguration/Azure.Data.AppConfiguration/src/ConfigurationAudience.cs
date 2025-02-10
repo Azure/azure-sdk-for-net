@@ -7,14 +7,17 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Cloud audiences available for AppConfiguration. </summary>
-    public readonly partial struct ConfigurationAudience : IEquatable<ConfigurationAudience>
+    public readonly struct ConfigurationAudience : IEquatable<ConfigurationAudience>
     {
         private readonly string _value;
+        private const string AzureChinaValue = "https://appconfig.azure.cn";
+        private const string AzureGovernmentValue = "https://appconfig.azure.us";
+        private const string AzurePublicCloudValue = "https://appconfig.azure.com";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConfigurationAudience"/> object.
         /// </summary>
-        /// <param name="value">The Azure Active Directory audience to use when forming authorization scopes.
+        /// <param name="value">The Microsoft Entra audience to use when forming authorization scopes.
         /// For the App Configuration service, this value corresponds to a URL that identifies the Azure cloud where the resource is located.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         /// <remarks>Please use one of the constant members over creating a custom value unless you have special needs for doing so.</remarks>
@@ -23,10 +26,6 @@ namespace Azure.Data.AppConfiguration
             Argument.AssertNotNullOrEmpty(value, nameof(value));
             _value = value;
         }
-
-        private const string AzureChinaValue = "https://appconfig.azure.cn";
-        private const string AzureGovernmentValue = "https://appconfig.azure.us";
-        private const string AzurePublicCloudValue = "https://appconfig.azure.com";
 
         /// <summary> Azure China. </summary>
         public static ConfigurationAudience AzureChina { get; } = new ConfigurationAudience(AzureChinaValue);

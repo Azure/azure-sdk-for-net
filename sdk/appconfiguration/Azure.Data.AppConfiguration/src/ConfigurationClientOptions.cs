@@ -41,7 +41,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
-        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// Gets or sets the Audience to use for authentication with Microsoft Entra. The audience is not considered when using a shared key.
         /// </summary>
         /// <value>If <c>null</c>, <see cref="ConfigurationAudience.AzurePublicCloud" /> will be assumed.</value>
         public ConfigurationAudience? Audience { get; set; }
@@ -73,12 +73,12 @@ namespace Azure.Data.AppConfiguration
         {
             if (string.IsNullOrEmpty(Audience?.ToString()))
             {
-                string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped).ToLower();
+                string host = uri.GetComponents(UriComponents.Host, UriFormat.SafeUnescaped);
                 return host switch
                 {
-                    _ when host.EndsWith(AzConfigUsGovCloudHostName) || host.EndsWith(AppConfigUsGovCloudHostName)
+                    _ when host.EndsWith(AzConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigUsGovCloudHostName, StringComparison.InvariantCultureIgnoreCase)
                         => $"{ConfigurationAudience.AzureGovernment}/.default",
-                    _ when host.EndsWith(AzConfigChinaCloudHostName) || host.EndsWith(AppConfigChinaCloudHostName)
+                    _ when host.EndsWith(AzConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase) || host.EndsWith(AppConfigChinaCloudHostName, StringComparison.InvariantCultureIgnoreCase)
                         => $"{ConfigurationAudience.AzureChina}/.default",
                     _ => $"{ConfigurationAudience.AzurePublicCloud}/.default"
                 };

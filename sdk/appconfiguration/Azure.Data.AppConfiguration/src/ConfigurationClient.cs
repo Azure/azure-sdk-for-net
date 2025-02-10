@@ -75,9 +75,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="endpoint">The <see cref="Uri"/> referencing the app configuration storage.</param>
         /// <param name="credential">The token credential used to sign requests.</param>
         /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
-        /// <remarks> The <paramref name="credential"/>'s Azure Active Directory audience is configurable via the <see cref="ConfigurationClientOptions.Audience"/> property.
-        /// If no token audience is set, the client attempts to set an audience based on the provided <paramref name="endpoint"/>,
-        /// defaulting to <see cref="ConfigurationAudience.AzurePublicCloud"/> when the endpoint is not recognized as a known Azure Active Directory audience.
+        /// <remarks> The <paramref name="credential"/>'s Microsoft Entra audience is configurable via the <see cref="ConfigurationClientOptions.Audience"/> property.
+        /// If you are using an Azure cloud other than Public, you'll want to configure the audience to match your environment.
+        /// If no token audience is set, Public will be used.
         /// </remarks>
         public ConfigurationClient(Uri endpoint, TokenCredential credential, ConfigurationClientOptions options)
         {
