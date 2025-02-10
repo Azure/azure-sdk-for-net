@@ -26,7 +26,7 @@ namespace Azure.Generator.InputTransformation
             // There is no need to check sub-clients or custom code since it is specific to handle the above removing
             if (operationsToKeep.Count == 0) return null;
 
-            return new InputClient(client.Name, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
+            return new InputClient(client.Name, client.Namespace, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
         }
 
         private static IReadOnlyList<InputParameter> TransformInputOperationParameters(InputOperation operation)

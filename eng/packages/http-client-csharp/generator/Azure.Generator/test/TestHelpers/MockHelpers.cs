@@ -41,12 +41,13 @@ namespace Azure.Generator.Tests.TestHelpers
             IReadOnlyList<InputModelType> inputNsModels = inputModels?.Invoke() ?? [];
             InputAuth inputNsAuth = new InputAuth(apiKeyAuth?.Invoke(), oauth2Auth?.Invoke());
             var mockInputNs = new Mock<InputNamespace>(
-                string.Empty,
+                "Samples",
                 inputNsApiVersions,
                 inputNsEnums,
                 inputNsModels,
                 inputNsClients,
-                inputNsAuth);
+                inputNsAuth,
+                null);
             var mockInputLibrary = new Mock<InputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
