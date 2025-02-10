@@ -44,8 +44,6 @@ namespace Azure.Generator.Mgmt.Models
 
         public string this[int index] => _segments[index];
 
-        public string SerializedPath => _path;
-
         /// <summary>
         /// Check if this <see cref="RequestPath"/> is a prefix path of the other request path.
         /// Note that this.IsAncestorOf(this) will return false which indicates that this method is testing the "proper ancestor" like a proper subset.
