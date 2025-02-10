@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.AI.Language.Conversations.Authoring;
 
 namespace Microsoft.Extensions.Azure
 {
