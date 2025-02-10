@@ -14,6 +14,9 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("GetConversationAuthoringDeploymentsClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringProjectsClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringModelsClient", typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringDeploymentsClient")]
+    [CodeGenSuppress("GetConversationAuthoringProjectsClient")]
+    [CodeGenSuppress("GetConversationAuthoringModelsClient")]
     public partial class ConversationAnalysisAuthoringClient
     {
         private readonly string _apiVersion;

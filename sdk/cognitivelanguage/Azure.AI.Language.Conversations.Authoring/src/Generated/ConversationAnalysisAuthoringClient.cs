@@ -1062,24 +1062,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         private ConversationAuthoringProjects _cachedConversationAuthoringProjects;
         private ConversationAuthoringModels _cachedConversationAuthoringModels;
 
-        /// <summary> Initializes a new instance of ConversationAuthoringDeployments. </summary>
-        public virtual ConversationAuthoringDeployments GetConversationAuthoringDeploymentsClient()
-        {
-            return Volatile.Read(ref _cachedConversationAuthoringDeployments) ?? Interlocked.CompareExchange(ref _cachedConversationAuthoringDeployments, new ConversationAuthoringDeployments(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedConversationAuthoringDeployments;
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringProjects. </summary>
-        public virtual ConversationAuthoringProjects GetConversationAuthoringProjectsClient()
-        {
-            return Volatile.Read(ref _cachedConversationAuthoringProjects) ?? Interlocked.CompareExchange(ref _cachedConversationAuthoringProjects, new ConversationAuthoringProjects(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedConversationAuthoringProjects;
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
-        public virtual ConversationAuthoringModels GetConversationAuthoringModelsClient()
-        {
-            return Volatile.Read(ref _cachedConversationAuthoringModels) ?? Interlocked.CompareExchange(ref _cachedConversationAuthoringModels, new ConversationAuthoringModels(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedConversationAuthoringModels;
-        }
-
         internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
