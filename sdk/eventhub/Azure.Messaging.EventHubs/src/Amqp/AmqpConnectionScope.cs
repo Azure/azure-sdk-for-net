@@ -603,6 +603,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var linkSettings = new AmqpLinkSettings { OperationTimeout = operationTimeout };
                 linkSettings.AddProperty(AmqpProperty.Timeout, (uint)linkTimeout.TotalMilliseconds);
 
+                linkSettings.DesiredCapabilities ??= new Multiple<AmqpSymbol>();
+                linkSettings.DesiredCapabilities.Add(AmqpProperty.GeoReplication);
+
                 link = new RequestResponseAmqpLink(AmqpManagement.LinkType, session, AmqpManagement.Address, linkSettings.Properties);
 
                 // Track the link before returning it, so that it can be managed with the scope.
