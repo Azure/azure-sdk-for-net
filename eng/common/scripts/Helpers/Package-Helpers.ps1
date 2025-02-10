@@ -184,7 +184,7 @@ function Get-ObjectKey {
 
   elseif ($Object -is [PSCustomObject]) {
     $sortedProperties = $Object.PSObject.Properties | Sort-Object Name
-    $propertyString = ($sortedProperties | ForEach-Object { "$($_.Name)=$($_.Value)" }) -join ";"
+    $propertyString = ($sortedProperties | ForEach-Object { "$($_.Name)=$(Get-ObjectKey $_.Value)" }) -join ";"
     return $propertyString.GetHashCode()
   }
 
