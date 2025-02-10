@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.Rooms
 {
     /// <summary> A collection of participants in a room. </summary>
-    internal partial class ParticipantsCollection
+    public partial class ParticipantsCollection
     {
         /// <summary> Initializes a new instance of <see cref="ParticipantsCollection"/>. </summary>
         /// <param name="value"> A collection of participants. </param>

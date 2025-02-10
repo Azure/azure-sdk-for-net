@@ -51,8 +51,20 @@ namespace Azure.Communication.Rooms
         /// </summary>
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
+        public RoomsClient(Uri endpoint, AzureKeyCredential credential)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                new RoomsClientOptions())
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoomsClient"/> class.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
         /// <param name="options"></param>
-        public RoomsClient(Uri endpoint, AzureKeyCredential credential, RoomsClientOptions options = default)
+        public RoomsClient(Uri endpoint, AzureKeyCredential credential, RoomsClientOptions options )
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
@@ -64,8 +76,20 @@ namespace Azure.Communication.Rooms
         /// </summary>
         /// <param name="endpoint"></param>
         /// <param name="credential"></param>
+        public RoomsClient(Uri endpoint, TokenCredential credential)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(credential, nameof(credential)),
+                new RoomsClientOptions())
+        { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoomsClient"/> class.
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="credential"></param>
         /// <param name="options"></param>
-        public RoomsClient(Uri endpoint, TokenCredential credential, RoomsClientOptions options = default)
+        public RoomsClient(Uri endpoint, TokenCredential credential, RoomsClientOptions options)
             : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
@@ -131,7 +155,7 @@ namespace Azure.Communication.Rooms
             try
             {
                 var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(options?.Participants);
-                return await RoomsServiceClient.CreateAsync(options?.ValidFrom, options?.ValidUntil, options?.PstnDialOutEnabled, participantDictionary, cancellationToken).ConfigureAwait(false);
+                return await RoomsServiceClient.CreateAsync(options?.ValidFrom, options?.ValidUntil, participantDictionary, options?.PstnDialOutEnabled, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -164,7 +188,7 @@ namespace Azure.Communication.Rooms
             try
             {
                 var participantDictionary = ConvertRoomParticipantsToDictionaryForAddOrUpdate(options?.Participants);
-                return RoomsServiceClient.Create(options?.ValidFrom, options?.ValidUntil, options?.PstnDialOutEnabled, participantDictionary, cancellationToken);
+                return RoomsServiceClient.Create(options?.ValidFrom, options?.ValidUntil, participantDictionary,options?.PstnDialOutEnabled, cancellationToken);
             }
             catch (Exception ex)
             {

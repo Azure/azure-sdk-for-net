@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.Rooms
 {
@@ -28,6 +30,17 @@ namespace Azure.Communication.Rooms
             }
 
             return new CommunicationRoom(id, createdAt, validFrom, validUntil, pstnDialOutEnabled);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Rooms.ParticipantsCollection"/>. </summary>
+        /// <param name="value"> A collection of participants. </param>
+        /// <param name="nextLink"> If there are more participants that can be retrieved, the next link will be populated. </param>
+        /// <returns> A new <see cref="Rooms.ParticipantsCollection"/> instance for mocking. </returns>
+        public static ParticipantsCollection ParticipantsCollection(IEnumerable<RoomParticipant> value = null, string nextLink = null)
+        {
+            value ??= new List<RoomParticipant>();
+
+            return new ParticipantsCollection(value?.ToList(), nextLink);
         }
     }
 }
