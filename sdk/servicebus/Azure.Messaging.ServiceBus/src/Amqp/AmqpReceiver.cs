@@ -373,7 +373,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // The session won't be closed in the case that MaxConcurrentCallsPerSession > 1, but with concurrency, it is not possible to guarantee ordering.
                 if (_isSessionReceiver && (!_isProcessor || SessionId != null) && messageList.Count < maxMessages)
                 {
-                    await DrainLinkAsync(link, cancellationToken).ConfigureAwait(false);
+                    await SafeDrainLinkAsync(link, cancellationToken).ConfigureAwait(false);
 
                     // These workarounds are necessary in order to resume prefetching after the link has been drained
                     // https://github.com/Azure/azure-amqp/issues/252#issuecomment-1942734342
@@ -426,7 +426,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="link">The AMPQ link to drain.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public async Task DrainLinkAsync(ReceivingAmqpLink link, CancellationToken cancellationToken)
+        public async Task SafeDrainLinkAsync(ReceivingAmqpLink link, CancellationToken cancellationToken)
         {
             try
             {

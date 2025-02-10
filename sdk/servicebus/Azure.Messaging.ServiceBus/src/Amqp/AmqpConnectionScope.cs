@@ -1436,7 +1436,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
         }
 
-        internal void CloseLink(AmqpLink link, string identifier = "")
+        internal void CloseLink(AmqpLink link, string identifier = default)
         {
             ServiceBusEventSource.Log.CloseLinkStart(identifier);
             if (!_useSingleSession)
@@ -1447,7 +1447,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusEventSource.Log.CloseLinkComplete(identifier);
         }
 
-        internal void CloseLink(RequestResponseAmqpLink link, string identifier = "")
+        internal void CloseLink(RequestResponseAmqpLink link, string identifier = default)
         {
             ServiceBusEventSource.Log.CloseLinkStart(identifier);
             if (!_useSingleSession)

@@ -1554,7 +1554,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(DrainLinkStartEvent, identifier);
+                WriteEvent(DrainLinkStartEvent, identifier ?? string.Empty);
             }
         }
 
@@ -1563,7 +1563,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(DrainLinkCompleteEvent, identifier);
+                WriteEvent(DrainLinkCompleteEvent, identifier ?? string.Empty);
             }
         }
 
@@ -1572,7 +1572,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(DrainLinkExceptionEvent, identifier, exception);
+                WriteEvent(DrainLinkExceptionEvent, identifier ?? string.Empty, exception);
             }
         }
 
@@ -1581,7 +1581,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(CloseLinkStartEvent, identifier);
+                WriteEvent(CloseLinkStartEvent, identifier ?? string.Empty);
             }
         }
 
@@ -1590,7 +1590,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             if (IsEnabled())
             {
-                WriteEvent(CloseLinkCompleteEvent, identifier);
+                WriteEvent(CloseLinkCompleteEvent, identifier ?? string.Empty);
             }
         }
         #endregion
