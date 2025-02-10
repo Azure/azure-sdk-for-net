@@ -90,13 +90,20 @@ class PackageProps {
                 $result = [PSCustomObject]@{
                     ArtifactConfig = [HashTable]$artifactForCurrentPackage
                     MatrixConfigs  = @()
+                    AdditionalMatrixConfigs = @()
                 }
 
                 # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
                 $matrixConfigList = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "MatrixConfigs")
 
                 if ($matrixConfigList) {
-                    $result.MatrixConfigs = $matrixConfigList
+                    $result.MatrixConfigs += $matrixConfigList
+                }
+
+                $additionalMatrixConfigList = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "AdditionalMatrixConfigs")
+
+                if ($additionalMatrixConfigList) {
+                    $result.AdditionalMatrixConfigs += $additionalMatrixConfigList
                 }
 
                 return $result
@@ -123,6 +130,9 @@ class PackageProps {
                     $this.CIMatrixConfigs = $ciArtifactResult.MatrixConfigs
                     # if this package appeared in this ci file, then we should
                     # treat this CI file as the source of the Matrix for this package
+                    if ($ciArtifactResult.PSObject.Properties.Name -contains "AdditionalMatrixConfigs" -and $ciArtifactResult.AdditionalMatrixConfigs) {
+                        $this.CIMatrixConfigs += $ciArtifactResult.AdditionalMatrixConfigs
+                    }
                     break
                 }
             }

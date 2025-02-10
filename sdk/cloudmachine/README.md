@@ -50,8 +50,8 @@ Open `Program.cs` file and add the following two lines of code to the top of the
 ```csharp
 using Azure.CloudMachine;
 
-CloudMachineInfrastructure infrastrucutre = new();
-if (infrastrucutre.TryExecuteCommand(args)) return;
+ProjectInfrastructure infrastructure = new();
+if (infrastructure.TryExecuteCommand(args)) return;
 ```
 
 The `TryExecuteCommand` call allows running the app with a `-init` switch, which will generate bicep files required to provision CloudMachine resources in Azure. Let's generate these bicep files now.
@@ -78,9 +78,9 @@ az resource list --resource-group <resource_group_from_command_line> --output ta
 
 #### Use CDK to add resources to the CloudMachine
 
-Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the follwoing line of code right below where the infrastructure instance is created:
+Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the following line of code right below where the infrastructure instance is created:
 ```csharp
-infrastrucutre.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
+infrastructure.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
 ```
 Now regenerate the bicep files and re-provision
 ```dotnetcli
@@ -88,17 +88,17 @@ dotnet run -init
 azd provision
 ```
 
-#### Add CloudMachineClient to ASP.NET DI Container
-You will be using `CloudMachineClient` to access rources provisioned in the cloud machine. Let's add such client to the DI container such that it is avaliable to ASP.NET handlers
+#### Add ProjectClient to ASP.NET DI Container
+You will be using `ProjectClient` to access resources provisioned in the cloud machine. Let's add such client to the DI container such that it is avaliable to ASP.NET handlers
 ```dotnetcli
-builder.AddCloudMachine(infrastrucutre);
+builder.AddCloudMachine(infrastructure);
 ```
 #### Call CloudMachine APIs
 
 You are now ready to call Azure OpenAI service from the app. To do this, change the line of code that maps the application root to the following:
 
 ```csharp
-app.MapGet("/", (CloudMachineClient cm) => cm.GetOpenAIChatClient().CompleteChat("list all noble gases").AsText());
+app.MapGet("/", (ProjectClient client) => client.GetOpenAIChatClient().CompleteChat("list all noble gases").AsText());
 ```
 
 The full program should now look like the following:
@@ -106,16 +106,16 @@ The full program should now look like the following:
 using Azure.CloudMachine;
 using Azure.CloudMachine.OpenAI;
 
-CloudMachineInfrastructure infrastrucutre = new();
-infrastrucutre.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
-if (infrastrucutre.TryExecuteCommand(args)) return;
+ProjectInfrastructure infrastructure = new();
+infrastructure.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
+if (infrastructure.TryExecuteCommand(args)) return;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.AddCloudMachine(infrastrucutre);
+builder.AddCloudMachine(infrastructure);
 
 var app = builder.Build();
 
-app.MapGet("/", (CloudMachineClient cm) => cm.GetOpenAIChatClient().CompleteChat("list all noble gases").AsText());
+app.MapGet("/", (ProjectClient client) => client.GetOpenAIChatClient().CompleteChat("list all noble gases").AsText());
 
 app.Run();
 ```

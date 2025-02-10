@@ -20,7 +20,7 @@ public class ProvisioningTests
     [Test]
     public void JustCloudMachine()
     {
-        CloudMachineInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         string expectedBicep = LoadTestFile("JustCloudMachine.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
@@ -29,7 +29,7 @@ public class ProvisioningTests
     [Test]
     public void OpenAI()
     {
-        CloudMachineInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 
@@ -41,7 +41,7 @@ public class ProvisioningTests
     [Test]
     public void GenerateBicep()
     {
-        CloudMachineInfrastructure infra = new("cm0c420d2f21084cd");
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new KeyVaultFeature());
         infra.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
         infra.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
