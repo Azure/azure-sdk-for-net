@@ -17,6 +17,7 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  sample: false
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -419,6 +420,68 @@ directive:
       $.VirtualMachineScaleSetUpdate.properties.properties["x-ms-client-flatten"] = false;
       $.UpgradePolicy.additionalProperties = true;
   - from: computeRPCommon.json
+    where: $.definitions.VMSizeProperties
+    transform: >
+      $.additionalProperties = true;
+
+  # in new swagger:
+  - from: ComputeRP.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
+  - from: ComputeRP.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
+# resolve the duplicate schema issue
+  - from: DiskRP.json
+    where: $.definitions
+    transform: >
+      $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
+  - from: DiskRP.json
+    where: $.definitions
+    transform: >
+      $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
+  - from: cloudService.json
+    where: $.definitions
+    transform: >
+      $.CloudService.properties.properties["x-ms-client-flatten"] = true;
+      $.OSFamily.properties.properties["x-ms-client-flatten"] = true;
+      $.OSVersion.properties.properties["x-ms-client-flatten"] = true;
+      $.Extension.properties.properties["x-ms-client-flatten"] = true;
+      $.CloudServiceRole.properties.properties["x-ms-client-flatten"] = true;
+      $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
+      $.LoadBalancerFrontendIpConfiguration.properties.properties["x-ms-client-flatten"] = true;
+  # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
+  - from: ComputeRP.json
+    where: $.definitions.VirtualMachineScaleSetExtension.properties.name
+    transform: $["readOnly"] = true;
+  # add a json converter to this model
+  - from: swagger-document
+    where: $.definitions.KeyVaultSecretReference
+    transform: $["x-csharp-usage"] = "converter";
+  # TODO -- to be removed. This is a temporary workaround because the rename-mapping configuration is not working properly on arrays.
+  - from: ComputeRP.json
+    where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
+    transform: $["x-ms-client-name"] = "DataDiskList";
+  # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and UserInitiatedReboot
+  - from: ComputeRP.json
+    where: $.definitions.UserInitiatedRedeploy.properties
+    transform: >
+      $.dummyProperty = {
+        "type": "string",
+        "description": "This is a dummy property to prevent flattening."
+      };
+  # add additionalproperties to a few models to support private properties supported by the service
+  - from: ComputeRP.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineScaleSetProperties.additionalProperties = true;
+      $.VirtualMachineScaleSet.properties.properties["x-ms-client-flatten"] = false;
+      $.VirtualMachineScaleSetUpdate.properties.properties["x-ms-client-flatten"] = false;
+      $.UpgradePolicy.additionalProperties = true;
+  - from: ComputeRP.json
     where: $.definitions.VMSizeProperties
     transform: >
       $.additionalProperties = true;
