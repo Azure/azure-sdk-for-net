@@ -462,17 +462,17 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Triggers a training job for a project. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The training input parameters. </param>
+        /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation<TrainingJobResult> Train(
             WaitUntil waitUntil,
-            TrainingJobDetails body,
+            TrainingJobDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = Train(waitUntil, _projectName, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchTrainingJobResultFromTrainingOperationState, ClientDiagnostics, "ConversationAuthoringTraining.Train");
