@@ -124,8 +124,6 @@ Our samples are structured as unit tests so we can easily verify they're up to
 date and working correctly.  These tests aren't recorded and make minimal use
 of test infrastructure to keep them easy to read.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FCONTRIBUTING.png)
-
 <!-- LINKS -->
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
