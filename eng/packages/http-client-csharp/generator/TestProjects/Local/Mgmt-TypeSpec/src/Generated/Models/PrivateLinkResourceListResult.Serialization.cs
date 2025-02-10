@@ -12,8 +12,9 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using MgmtTypeSpec;
+using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.ResourceManager.Models
 {
     /// <summary></summary>
     public partial class PrivateLinkResourceListResult : IJsonModel<PrivateLinkResourceListResult>

@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.CommonTypes.Models;
+using Azure.ResourceManager.Models;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
@@ -64,7 +66,7 @@ namespace MgmtTypeSpec.Models
         /// <summary> The complex type of the extended location. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="type"> The type of the extended location. </param>
-        /// <returns> A new <see cref="Models.ExtendedLocation"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.CommonTypes.Models.ExtendedLocation"/> instance for mocking. </returns>
         public static ExtendedLocation ExtendedLocation(string name = default, ExtendedLocationType @type = default)
         {
 
@@ -78,7 +80,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Models.TrackedResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.CommonTypes.Models.TrackedResource"/> instance for mocking. </returns>
         public static TrackedResource TrackedResource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -98,7 +100,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.CommonTypes.Models.Resource"/> instance for mocking. </returns>
         public static Resource Resource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default)
         {
 
@@ -112,7 +114,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
         /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
         /// <param name="lastModifiedAt"> The timestamp of resource last modification (UTC). </param>
-        /// <returns> A new <see cref="Models.SystemData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.CommonTypes.Models.SystemData"/> instance for mocking. </returns>
         public static SystemData SystemData(string createdBy = default, CreatedByType? createdByType = default, DateTimeOffset? createdAt = default, string lastModifiedBy = default, CreatedByType? lastModifiedByType = default, DateTimeOffset? lastModifiedAt = default)
         {
 
@@ -129,7 +131,7 @@ namespace MgmtTypeSpec.Models
         /// <summary> The response of a Foo list operation. </summary>
         /// <param name="value"> The Foo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.FooListResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.Models.FooListResult"/> instance for mocking. </returns>
         public static FooListResult FooListResult(IEnumerable<FooData> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<FooData>();
@@ -140,7 +142,7 @@ namespace MgmtTypeSpec.Models
         /// <summary> The response of a PrivateLinkResource list operation. </summary>
         /// <param name="value"> The PrivateLinkResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourceListResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.Models.PrivateLinkResourceListResult"/> instance for mocking. </returns>
         public static PrivateLinkResourceListResult PrivateLinkResourceListResult(IEnumerable<PrivateLinkResource> value = default, Uri nextLink = default)
         {
             value ??= new ChangeTrackingList<PrivateLinkResource>();
@@ -173,7 +175,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.PrivateLinkResourceProperties"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.CommonTypes.Models.PrivateLinkResourceProperties"/> instance for mocking. </returns>
         public static PrivateLinkResourceProperties PrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             requiredMembers ??= new ChangeTrackingList<string>();
@@ -187,7 +189,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="type"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
-        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.CommonTypes.Models.ManagedServiceIdentity"/> instance for mocking. </returns>
         public static ManagedServiceIdentity ManagedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, ManagedServiceIdentityType @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
@@ -198,7 +200,7 @@ namespace MgmtTypeSpec.Models
         /// <summary> User assigned identity properties. </summary>
         /// <param name="principalId"> The principal ID of the assigned identity. </param>
         /// <param name="clientId"> The client ID of the assigned identity. </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.CommonTypes.Models.UserAssignedIdentity"/> instance for mocking. </returns>
         public static UserAssignedIdentity UserAssignedIdentity(Guid? principalId = default, Guid? clientId = default)
         {
 
@@ -210,7 +212,7 @@ namespace MgmtTypeSpec.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <returns> A new <see cref="Models.ProxyResource"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Azure.ResourceManager.CommonTypes.Models.ProxyResource"/> instance for mocking. </returns>
         public static ProxyResource ProxyResource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default)
         {
 

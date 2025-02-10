@@ -48,6 +48,15 @@ namespace Azure.Generator
         public override IHttpRequestOptionsApi HttpRequestOptionsApi => HttpRequestOptionsProvider.Instance;
 
         /// <inheritdoc/>
+        public override string GetModelNamespace(InputModelType inputModel) => $"{base.GetModelNamespace(inputModel)}.Models";
+
+        /// <inheritdoc/>
+        public override string GetEnumNamespace(InputEnumType inputEnum) => $"{base.GetEnumNamespace(inputEnum)}.Models";
+
+        /// <inheritdoc/>
+        public override string GetModelFactoryNamespace() => $"{base.GetModelFactoryNamespace()}.Models";
+
+        /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
             if (inputType is InputPrimitiveType inputPrimitiveType)

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary> The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location. </summary>
     public partial class ProxyResource : Resource

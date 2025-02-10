@@ -13,7 +13,7 @@ using Azure;
 using Azure.Core;
 using MgmtTypeSpec;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary></summary>
     public partial class ManagedServiceIdentity : IJsonModel<ManagedServiceIdentity>

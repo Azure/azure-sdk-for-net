@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using MgmtTypeSpec;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary> The kind of entity that created the resource. </summary>
     public readonly partial struct CreatedByType : IEquatable<CreatedByType>

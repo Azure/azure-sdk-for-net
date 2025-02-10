@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using MgmtTypeSpec;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary> Type of managed service identity (where both SystemAssigned and UserAssigned types are allowed). </summary>
     public readonly partial struct ManagedServiceIdentityType : IEquatable<ManagedServiceIdentityType>

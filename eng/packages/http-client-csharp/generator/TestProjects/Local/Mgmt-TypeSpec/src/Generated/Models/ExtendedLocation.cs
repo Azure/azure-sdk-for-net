@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary> The complex type of the extended location. </summary>
     public partial class ExtendedLocation

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public partial class Resource

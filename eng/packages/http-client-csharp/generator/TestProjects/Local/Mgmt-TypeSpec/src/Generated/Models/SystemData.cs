@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.ResourceManager.CommonTypes.Models
 {
     /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
     public partial class SystemData
