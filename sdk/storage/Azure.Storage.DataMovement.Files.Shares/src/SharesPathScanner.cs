@@ -13,9 +13,9 @@ using Azure.Storage.Files.Shares.Specialized;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class PathScanner
+    internal class SharesPathScanner
     {
-        public static Lazy<PathScanner> Singleton { get; } = new Lazy<PathScanner>(() => new PathScanner());
+        public static Lazy<SharesPathScanner> Singleton { get; } = new Lazy<SharesPathScanner>(() => new SharesPathScanner());
 
         public virtual async IAsyncEnumerable<StorageResource> ScanAsync(
             ShareDirectoryClient sourceDirectory,

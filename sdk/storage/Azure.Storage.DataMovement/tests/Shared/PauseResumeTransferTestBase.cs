@@ -1,113 +1,98 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-extern alias BaseBlobs;
-extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using BaseBlobs::Azure.Storage.Blobs;
-using BaseBlobs::Azure.Storage.Blobs.Models;
-using BaseBlobs::Azure.Storage.Blobs.Specialized;
-using Azure.Storage.Blobs.Tests;
-using Azure.Storage.Common;
-using Azure.Storage.DataMovement.Blobs.Tests;
+using Azure.Core;
+using Azure.Storage.Test.Shared;
+using System.Threading.Tasks;
+using System.IO;
+using NUnit.Framework;
+using System.Threading;
 using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.Test;
-using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
-using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class PauseResumeTransferTests : DataMovementBlobTestBase
+    public abstract class PauseResumeTransferTestBase
+        <TServiceClient,
+        TContainerClient,
+        TObjectClient,
+        TClientOptions,
+        TEnvironment> : StorageTestBase<TEnvironment>
+        where TServiceClient : class
+        where TContainerClient : class
+        where TObjectClient : class
+        where TClientOptions : ClientOptions
+        where TEnvironment : StorageTestEnvironment, new()
     {
-        private readonly CancellationToken _mockingToken = new();
+        public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
-        public PauseResumeTransferTests(
+        public PauseResumeTransferTestBase(
             bool async,
-            BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, default)
+            RecordedTestMode? mode = null) : base(async, mode)
         {
         }
 
-        private async Task AssertDirectorySourceAndDestinationAsync(
-            TransferDirection transferType,
-            StorageResourceContainer sourceResource,
-            StorageResourceContainer destinationResource,
-            BlobContainerClient sourceContainer,
-            BlobContainerClient destinationContainer)
-        {
-            await foreach (StorageResourceItem childSourceResource in sourceResource.GetStorageResourcesAsync())
-            {
-                StorageResourceItem childDestinationResource;
-                if (transferType == TransferDirection.Upload)
-                {
-                    string destinationChildName = childSourceResource.Uri.LocalPath.Substring(sourceResource.Uri.LocalPath.Length + 1);
-                    childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName, default);
-                }
-                else
-                {
-                    string destinationChildName = childSourceResource.Uri.AbsoluteUri.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
-                    childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName, default);
-                }
-                await AssertSourceAndDestinationAsync(
-                    transferType: transferType,
-                    sourceResource: childSourceResource,
-                    destinationResource: childDestinationResource,
-                    sourceContainer: sourceContainer,
-                    destinationContainer: destinationContainer);
-            }
-        }
+        protected string GetNewContainerName()
+            => $"test-container-{ClientBuilder.Recording.Random.NewGuid()}";
+        protected string GetNewItemName()
+            => $"test-item-{ClientBuilder.Recording.Random.NewGuid()}";
 
-        private async Task AssertSourceAndDestinationAsync(
-            TransferDirection transferType,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
-            BlobContainerClient sourceContainer,
-            BlobContainerClient destinationContainer)
-        {
-            if (transferType == TransferDirection.Upload)
-            {
-                // Verify Upload by downloading the blob and comparing the values
-                BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationResource.Uri);
-                using (FileStream fileStream = File.OpenRead(sourceResource.Uri.LocalPath))
-                {
-                    await DownloadAndAssertAsync(fileStream, destinationContainer.GetBlockBlobClient(destinationBuilder.BlobName));
-                }
-            }
-            else if (transferType == TransferDirection.Download)
-            {
-                // Verify Download
-                BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceResource.Uri);
-                using (FileStream fileStream = File.OpenRead(destinationResource.Uri.LocalPath))
-                {
-                    await DownloadAndAssertAsync(fileStream, sourceContainer.GetBlockBlobClient(sourceBuilder.BlobName));
-                }
-            }
-            else
-            {
-                BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceResource.Uri);
-                BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationResource.Uri);
+        #region Abstract Methods
+        protected abstract Task<IDisposingContainer<TContainerClient>> GetDisposingContainerAsync(
+            string containerName = default,
+            TServiceClient service = default);
 
-                await DownloadCopyBlobAndAssert(
-                    sourceContainer.GetBlobBaseClient(sourceBuilder.BlobName),
-                    destinationContainer.GetBlobBaseClient(destinationBuilder.BlobName));
-            }
-        }
+        protected abstract StorageResourceProvider GetStorageResourceProvider();
 
+        protected abstract Task<StorageResource> CreateSourceStorageResourceItemAsync(
+            long size,
+            string blobName,
+            TContainerClient container);
+
+        protected abstract StorageResource CreateDestinationStorageResourceItem(
+            string name,
+            TContainerClient container);
+
+        protected abstract StorageResource CreateDestinationStorageResourceItemWithOptions(
+            string name,
+            Metadata metadata,
+            string contentLanguage,
+            TContainerClient container);
+
+        protected abstract Task AssertDestinationProperties(
+            string name,
+            Metadata metadata,
+            string contentLanguage,
+            TContainerClient container);
+
+        protected abstract Task<Stream> GetStreamFromContainerAsync(
+            Uri uri,
+            TContainerClient container);
+
+        protected abstract Task<StorageResource> CreateSourceStorageResourceContainerAsync(
+            long size,
+            int blobCount,
+            string directoryPath,
+            TContainerClient container);
+
+        protected abstract StorageResource CreateDestinationStorageResourceContainer(
+            TContainerClient container);
+        #endregion
+
+        #region Helper Methods
         private async Task<StorageResource> CreateLocalFileSourceResourceAsync(
             long size,
             string directory)
         {
             string localSourceFile = await CreateRandomFileAsync(directory);
             // create a new file and copy contents of stream into it, and then close the FileStream
-            // so the StagedUploadAsync call is not prevented from reading using its FileStream.
             using Stream originalStream = await CreateLimitedMemoryStream(size);
             using (FileStream fileStream = File.Create(localSourceFile))
             {
@@ -116,44 +101,15 @@ namespace Azure.Storage.DataMovement.Tests
             return LocalFilesStorageResourceProvider.FromFile(localSourceFile);
         }
 
-        private async Task<StorageResource> CreateBlobSourceResourceAsync(
-            long size,
-            string blobName,
-            BlobContainerClient container,
-            BlockBlobStorageResourceOptions options = default)
-        {
-            BlockBlobClient blobClient = container.GetBlockBlobClient(blobName);
-
-            // create a new file and copy contents of stream into it, and then close the FileStream
-            // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-            using (Stream originalStream = await CreateLimitedMemoryStream(size))
-            {
-                // Upload blob to storage account
-                originalStream.Position = 0;
-                await blobClient.UploadAsync(originalStream);
-            }
-            return BlobsStorageResourceProvider.FromClient(blobClient, options);
-        }
-
-        private StorageResource CreateBlobDestinationResource(
-            BlobContainerClient container,
-            string blobName = default,
-            BlockBlobStorageResourceOptions options = default)
-        {
-            blobName ??= GetNewBlobName();
-            BlockBlobClient destinationClient = container.GetBlockBlobClient(blobName);
-            return BlobsStorageResourceProvider.FromClient(destinationClient, options);
-        }
-
         private async Task<(StorageResource SourceResource, StorageResource DestinationResource)> CreateStorageResourcesAsync(
             TransferDirection transferType,
             long size,
             string localDirectory,
-            BlobContainerClient sourceContainer,
-            BlobContainerClient destinationContainer,
+            TContainerClient sourceContainer,
+            TContainerClient destinationContainer,
             string storagePath = default)
         {
-            storagePath ??= GetNewBlobName();
+            storagePath ??= GetNewItemName();
 
             StorageResource SourceResource = default;
             StorageResource DestinationResource = default;
@@ -161,15 +117,15 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNullOrEmpty(localDirectory, nameof(localDirectory));
-                SourceResource ??= await CreateBlobSourceResourceAsync(size, storagePath, sourceContainer);
+                SourceResource ??= await CreateSourceStorageResourceItemAsync(size, storagePath, sourceContainer);
                 DestinationResource ??= LocalFilesStorageResourceProvider.FromFile(Path.Combine(localDirectory, storagePath));
             }
             else if (transferType == TransferDirection.Copy)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
-                SourceResource ??= await CreateBlobSourceResourceAsync(size, storagePath, sourceContainer);
-                DestinationResource ??= CreateBlobDestinationResource(destinationContainer, storagePath);
+                SourceResource ??= await CreateSourceStorageResourceItemAsync(size, storagePath, sourceContainer);
+                DestinationResource ??= CreateDestinationStorageResourceItem(storagePath, destinationContainer);
             }
             else
             {
@@ -177,7 +133,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNullOrEmpty(localDirectory, nameof(localDirectory));
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 SourceResource ??= await CreateLocalFileSourceResourceAsync(size, localDirectory);
-                DestinationResource ??= CreateBlobDestinationResource(destinationContainer, storagePath);
+                DestinationResource ??= CreateDestinationStorageResourceItem(storagePath, destinationContainer);
             }
             return (SourceResource, DestinationResource);
         }
@@ -192,12 +148,12 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager manager,
             TransferDirection transferType = TransferDirection.Upload,
             string localDirectory = default,
-            BlobContainerClient sourceContainer = default,
-            BlobContainerClient destinationContainer = default,
+            TContainerClient sourceContainer = default,
+            TContainerClient destinationContainer = default,
             StorageResource sourceResource = default,
             StorageResource destinationResource = default,
             TransferOptions transferOptions = default,
-            long size = Constants.KB * 100)
+            long size = DataMovementTestConstants.KB * 100)
         {
             Argument.AssertNotNull(manager, nameof(manager));
             if (sourceResource == default && destinationResource == default)
@@ -222,6 +178,203 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
+        private bool StreamsAreEqual(Stream stream1, Stream stream2)
+        {
+            if (stream1 == stream2)
+            {
+                return true;
+            }
+            if (stream1 == null || stream2 == null)
+            {
+                return false;
+            }
+            if (!stream1.CanRead || !stream2.CanRead)
+            {
+                return false;
+            }
+            if (stream1.Length != stream2.Length)
+            {
+                return false;
+            }
+
+            const int bufferSize = 8192; // Read in chunks
+            byte[] buffer1 = new byte[bufferSize];
+            byte[] buffer2 = new byte[bufferSize];
+
+            stream1.Position = 0;
+            stream2.Position = 0;
+
+            using (BufferedStream bs1 = new BufferedStream(stream1, bufferSize))
+            using (BufferedStream bs2 = new BufferedStream(stream2, bufferSize))
+            {
+                int bytesRead1, bytesRead2;
+                while ((bytesRead1 = bs1.Read(buffer1, 0, buffer1.Length)) > 0)
+                {
+                    bytesRead2 = bs2.Read(buffer2, 0, buffer2.Length);
+                    if (bytesRead1 != bytesRead2 || !buffer1.Take(bytesRead1).SequenceEqual(buffer2.Take(bytesRead2)))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private async Task VerifyTransferContent(StorageResource sResource, StorageResource dResource,
+            TContainerClient sourceContainer, TContainerClient destinationContainer, TransferDirection transferType)
+        {
+            // Verify transfer
+            Stream sourceStream = default;
+            Stream destinationStream = default;
+            if (transferType == TransferDirection.Upload)
+            {
+                sourceStream = File.OpenRead(sResource.Uri.LocalPath);
+                destinationStream = await GetStreamFromContainerAsync(dResource.Uri, destinationContainer);
+            }
+            else if (transferType == TransferDirection.Download)
+            {
+                sourceStream = await GetStreamFromContainerAsync(sResource.Uri, sourceContainer);
+                destinationStream = File.OpenRead(dResource.Uri.LocalPath);
+            }
+            else // Copy
+            {
+                sourceStream = await GetStreamFromContainerAsync(sResource.Uri, sourceContainer);
+                destinationStream = await GetStreamFromContainerAsync(dResource.Uri, destinationContainer);
+            }
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
+        }
+
+        private async Task<StorageResource> CreateLocalDirectorySourceResourceAsync(
+            long size,
+            int fileCount,
+            string directoryPath)
+        {
+            for (int i = 0; i < fileCount; i++)
+            {
+                await CreateRandomFileAsync(directoryPath, size: size);
+            }
+            return LocalFilesStorageResourceProvider.FromDirectory(directoryPath);
+        }
+
+        private async Task<(StorageResource SourceResource, StorageResource DestinationResource)> CreateStorageResourceContainersAsync(
+            TransferDirection transferType,
+            long size,
+            int transferCount,
+            string sourceDirectoryPath,
+            string destinationDirectoryPath,
+            TContainerClient sourceContainer,
+            TContainerClient destinationContainer)
+        {
+            StorageResource SourceResource = default;
+            StorageResource DestinationResource = default;
+            if (transferType == TransferDirection.Download)
+            {
+                Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
+                Argument.AssertNotNullOrEmpty(destinationDirectoryPath, nameof(destinationDirectoryPath));
+                SourceResource ??= await CreateSourceStorageResourceContainerAsync(
+                    size: size,
+                    blobCount: transferCount,
+                    directoryPath: GetNewContainerName(),
+                    container: sourceContainer);
+                DestinationResource ??= LocalFilesStorageResourceProvider.FromDirectory(destinationDirectoryPath);
+            }
+            else if (transferType == TransferDirection.Copy)
+            {
+                Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
+                Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
+                SourceResource ??= await CreateSourceStorageResourceContainerAsync(
+                    size: size,
+                    blobCount: transferCount,
+                    directoryPath: GetNewContainerName(),
+                    container: sourceContainer);
+                DestinationResource ??= CreateDestinationStorageResourceContainer(destinationContainer);
+            }
+            else
+            {
+                // Default to Upload
+                Argument.AssertNotNullOrEmpty(sourceDirectoryPath, nameof(sourceDirectoryPath));
+                Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
+                SourceResource ??= await CreateLocalDirectorySourceResourceAsync(
+                    size: size,
+                    fileCount: transferCount,
+                    directoryPath: sourceDirectoryPath);
+                DestinationResource ??= CreateDestinationStorageResourceContainer(destinationContainer);
+            }
+            return (SourceResource, DestinationResource);
+        }
+
+        /// <summary>
+        /// Upload and verify the contents of the blob
+        ///
+        /// By default in this function an event argument will be added to the options event handler
+        /// to detect when the upload has finished.
+        /// </summary>
+        private async Task<TransferOperation> CreateDirectoryLongTransferAsync(
+            TransferManager manager,
+            TransferDirection transferType = TransferDirection.Upload,
+            string sourceDirectory = default,
+            string destinationDirectory = default,
+            TContainerClient sourceContainer = default,
+            TContainerClient destinationContainer = default,
+            StorageResource sourceResource = default,
+            StorageResource destinationResource = default,
+            TransferOptions transferOptions = default,
+            int transferCount = 100,
+            long size = DataMovementTestConstants.MB)
+        {
+            Argument.AssertNotNull(manager, nameof(manager));
+            if (sourceResource == default && destinationResource == default)
+            {
+                (StorageResource source, StorageResource dest) = await CreateStorageResourceContainersAsync(
+                    transferType: transferType,
+                    size: size,
+                    transferCount: transferCount,
+                    sourceDirectoryPath: sourceDirectory,
+                    destinationDirectoryPath: destinationDirectory,
+                    sourceContainer: sourceContainer,
+                    destinationContainer: destinationContainer);
+                sourceResource = source;
+                destinationResource = dest;
+            }
+            else if ((sourceResource == default && destinationResource != default) ||
+                    (sourceResource != default && destinationResource == default))
+            {
+                throw new ArgumentException($"Both {nameof(sourceResource)} or {nameof(destinationResource)} must be specified, " +
+                    $"if only one is specified.");
+            }
+
+            // Act
+            return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+        }
+
+        private async Task AssertDirectorySourceAndDestinationAsync(
+            TransferDirection transferType,
+            StorageResourceContainer sourceResource,
+            StorageResourceContainer destinationResource,
+            TContainerClient sourceContainer,
+            TContainerClient destinationContainer)
+        {
+            await foreach (StorageResourceItem childSourceResource in sourceResource.GetStorageResourcesAsync())
+            {
+                StorageResourceItem childDestinationResource;
+                if (transferType == TransferDirection.Upload)
+                {
+                    string destinationChildName = childSourceResource.Uri.LocalPath.Substring(sourceResource.Uri.LocalPath.Length + 1);
+                    childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName, default);
+                }
+                else
+                {
+                    string destinationChildName = childSourceResource.Uri.AbsoluteUri.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
+                    childDestinationResource = destinationResource.GetStorageResourceReference(destinationChildName, default);
+                }
+
+                // Verify transfer
+                await VerifyTransferContent(childSourceResource, childDestinationResource, sourceContainer, destinationContainer, transferType);
+            }
+        }
+        #endregion
+
+        #region Tests
         [Test]
         [LiveOnly]
         [TestCase(TransferDirection.Upload)]
@@ -232,15 +385,15 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -254,7 +407,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.KB * 100,
+                size: DataMovementTestConstants.KB * 100,
                 transferOptions: transferOptions);
 
             // Act
@@ -283,15 +436,15 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -305,7 +458,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.KB * 100,
+                size: DataMovementTestConstants.KB * 100,
                 transferOptions: transferOptions);
 
             // Act
@@ -350,15 +503,15 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -372,7 +525,7 @@ namespace Azure.Storage.DataMovement.Tests
                 localDirectory: localDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.KB * 100,
+                size: DataMovementTestConstants.KB * 100,
                 transferOptions: transferOptions);
 
             // Act
@@ -406,21 +559,20 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
-            long size = Constants.KB * 100;
+            long size = DataMovementTestConstants.KB * 100;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
                 transferType: transferType,
@@ -465,12 +617,24 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
             // Verify transfer
-            await AssertSourceAndDestinationAsync(
-                transferType: transferType,
-                sourceResource: sResource,
-                destinationResource: dResource,
-                sourceContainer: sourceContainer.Container,
-                destinationContainer: destinationContainer.Container);
+            Stream sourceStream = default;
+            Stream destinationStream = default;
+            if (transferType == TransferDirection.Upload)
+            {
+                sourceStream = File.OpenRead(sResource.Uri.LocalPath);
+                destinationStream = await GetStreamFromContainerAsync(dResource.Uri, destinationContainer.Container);
+            }
+            else if (transferType == TransferDirection.Download)
+            {
+                sourceStream = await GetStreamFromContainerAsync(sResource.Uri, sourceContainer.Container);
+                destinationStream = File.OpenRead(dResource.Uri.LocalPath);
+            }
+            else // Copy
+            {
+                sourceStream = await GetStreamFromContainerAsync(sResource.Uri, sourceContainer.Container);
+                destinationStream = await GetStreamFromContainerAsync(dResource.Uri, destinationContainer.Container);
+            }
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
         }
 
         [Test]
@@ -483,21 +647,20 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
-            long size = Constants.KB * 100;
+            long size = DataMovementTestConstants.KB * 100;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourcesAsync(
                 transferType: transferType,
@@ -537,13 +700,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
-            // Verify transfer
-            await AssertSourceAndDestinationAsync(
-                transferType: transferType,
-                sourceResource: sResource,
-                destinationResource: dResource,
-                sourceContainer: sourceContainer.Container,
-                destinationContainer: destinationContainer.Container);
+            //Verify transfer
+            await VerifyTransferContent(sResource, dResource, sourceContainer.Container, destinationContainer.Container, transferType);
         }
 
         [Test]
@@ -555,38 +713,33 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
-            BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer blobContainer = await GetTestContainerAsync(service);
+            await using IDisposingContainer<TContainerClient> container = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
 
             Metadata metadata = DataProvider.BuildMetadata();
-            BlockBlobStorageResourceOptions testOptions = new()
-            {
-                Metadata = metadata,
-                AccessTier = AccessTier.Cool,
-                ContentLanguage = "en-US",
-            };
+            string contentLanguage = "en-US";
 
-            long size = Constants.KB;
+            string destName = GetNewItemName();
+            long size = DataMovementTestConstants.KB;
             StorageResource source;
             StorageResource destination;
             if (transferType == TransferDirection.Upload)
             {
                 source = await CreateLocalFileSourceResourceAsync(size, localDirectory.DirectoryPath);
-                destination = CreateBlobDestinationResource(blobContainer.Container, options: testOptions);
+                destination = CreateDestinationStorageResourceItemWithOptions(destName, metadata, contentLanguage, container.Container);
             }
             else // Copy
             {
-                source = await CreateBlobSourceResourceAsync(size, GetNewBlobName(), blobContainer.Container);
-                destination = CreateBlobDestinationResource(blobContainer.Container, options: testOptions);
+                source = await CreateSourceStorageResourceItemAsync(size, GetNewItemName(), container.Container);
+                destination = CreateDestinationStorageResourceItemWithOptions(destName, metadata, contentLanguage, container.Container);
             }
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination);
@@ -608,177 +761,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
-            BlobUriBuilder builder = new BlobUriBuilder(destination.Uri);
-            BlockBlobClient blob = blobContainer.Container.GetBlockBlobClient(builder.BlobName);
-            BlobProperties props = (await blob.GetPropertiesAsync()).Value;
-            Assert.That(props.Metadata, Is.EqualTo(metadata));
-            Assert.AreEqual(testOptions.AccessTier, new AccessTier(props.AccessTier));
-            Assert.AreEqual(testOptions.ContentLanguage, props.ContentLanguage);
-        }
-
-        private async Task<StorageResource> CreateBlobDirectorySourceResourceAsync(
-            long size,
-            int blobCount,
-            string directoryPath,
-            BlobContainerClient container,
-            BlobStorageResourceContainerOptions options = default)
-        {
-            for (int i = 0; i < blobCount; i++)
-            {
-                if (i % 3 == 0)
-                {
-                    BlockBlobClient blobClient = container.GetBlockBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
-                    // create a new file and copy contents of stream into it, and then close the FileStream
-                    // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-                    using (Stream originalStream = await CreateLimitedMemoryStream(size))
-                    {
-                        // Upload blob to storage account
-                        originalStream.Position = 0;
-                        await blobClient.UploadAsync(originalStream);
-                    }
-                }
-                else if (i % 3 == 1)
-                {
-                    AppendBlobClient blobClient = container.GetAppendBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
-                    await blobClient.CreateAsync();
-                    // create a new file and copy contents of stream into it, and then close the FileStream
-                    // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-                    using (Stream originalStream = await CreateLimitedMemoryStream(size))
-                    {
-                        // Upload blob to storage account
-                        originalStream.Position = 0;
-                        await blobClient.AppendBlockAsync(originalStream);
-                    }
-                }
-                else
-                {
-                    PageBlobClient blobClient = container.GetPageBlobClient(string.Join("/", directoryPath, GetNewBlobName()));
-                    await blobClient.CreateAsync(size);
-                    // create a new file and copy contents of stream into it, and then close the FileStream
-                    // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-                    using (Stream originalStream = await CreateLimitedMemoryStream(size))
-                    {
-                        // Upload blob to storage account
-                        originalStream.Position = 0;
-                        await blobClient.UploadPagesAsync(originalStream, 0);
-                    }
-                }
-            }
-            options ??= new();
-            options.BlobPrefix = directoryPath;
-            return BlobsStorageResourceProvider.FromClient(container, options);
-        }
-
-        private async Task<StorageResource> CreateLocalDirectorySourceResourceAsync(
-            long size,
-            int fileCount,
-            string directoryPath)
-        {
-            for (int i = 0; i < fileCount; i++)
-            {
-                await CreateRandomFileAsync(directoryPath, size: size);
-            }
-            return LocalFilesStorageResourceProvider.FromDirectory(directoryPath);
-        }
-
-        private async Task<(StorageResource SourceResource, StorageResource DestinationResource)> CreateStorageResourceContainersAsync(
-            TransferDirection transferType,
-            long size,
-            int transferCount,
-            string sourceDirectoryPath,
-            string destinationDirectoryPath,
-            BlobContainerClient sourceContainer,
-            BlobContainerClient destinationContainer)
-        {
-            StorageResource SourceResource = default;
-            StorageResource DestinationResource = default;
-            if (transferType == TransferDirection.Download)
-            {
-                Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
-                Argument.AssertNotNullOrEmpty(destinationDirectoryPath, nameof(destinationDirectoryPath));
-                SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
-                    size: size,
-                    blobCount: transferCount,
-                    directoryPath: GetNewBlobDirectoryName(),
-                    container: sourceContainer);
-                DestinationResource ??= LocalFilesStorageResourceProvider.FromDirectory(destinationDirectoryPath);
-            }
-            else if (transferType == TransferDirection.Copy)
-            {
-                Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
-                Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
-                BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
-                {
-                    BlobPrefix = GetNewBlobDirectoryName(),
-                };
-                SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
-                    size: size,
-                    blobCount: transferCount,
-                    directoryPath: GetNewBlobDirectoryName(),
-                    container: sourceContainer);
-                DestinationResource ??= BlobsStorageResourceProvider.FromClient(destinationContainer, options);
-            }
-            else
-            {
-                // Default to Upload
-                Argument.AssertNotNullOrEmpty(sourceDirectoryPath, nameof(sourceDirectoryPath));
-                Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
-                SourceResource ??= await CreateLocalDirectorySourceResourceAsync(
-                    size: size,
-                    fileCount: transferCount,
-                    directoryPath: sourceDirectoryPath);
-
-                BlobStorageResourceContainerOptions options = new()
-                {
-                    BlobPrefix = GetNewBlobDirectoryName()
-                };
-                DestinationResource ??= BlobsStorageResourceProvider.FromClient(destinationContainer, options);
-            }
-            return (SourceResource, DestinationResource);
-        }
-
-        /// <summary>
-        /// Upload and verify the contents of the blob
-        ///
-        /// By default in this function an event argument will be added to the options event handler
-        /// to detect when the upload has finished.
-        /// </summary>
-        private async Task<TransferOperation> CreateDirectoryLongTransferAsync(
-            TransferManager manager,
-            TransferDirection transferType = TransferDirection.Upload,
-            string sourceDirectory = default,
-            string destinationDirectory = default,
-            BlobContainerClient sourceContainer = default,
-            BlobContainerClient destinationContainer = default,
-            StorageResource sourceResource = default,
-            StorageResource destinationResource = default,
-            TransferOptions transferOptions = default,
-            int transferCount = 100,
-            long size = Constants.MB)
-        {
-            Argument.AssertNotNull(manager, nameof(manager));
-            if (sourceResource == default && destinationResource == default)
-            {
-                (StorageResource source, StorageResource dest) = await CreateStorageResourceContainersAsync(
-                    transferType: transferType,
-                    size: size,
-                    transferCount: transferCount,
-                    sourceDirectoryPath: sourceDirectory,
-                    destinationDirectoryPath: destinationDirectory,
-                    sourceContainer: sourceContainer,
-                    destinationContainer: destinationContainer);
-                sourceResource = source;
-                destinationResource = dest;
-            }
-            else if ((sourceResource == default && destinationResource != default) ||
-                    (sourceResource != default && destinationResource == default))
-            {
-                throw new ArgumentException($"Both {nameof(sourceResource)} or {nameof(destinationResource)} must be specified, " +
-                    $"if only one is specified.");
-            }
-
-            // Act
-            return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
+            await AssertDestinationProperties(destName, metadata, contentLanguage, container.Container);
         }
 
         [Test]
@@ -792,15 +775,15 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -816,7 +799,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.KB * 4,
+                size: DataMovementTestConstants.KB * 4,
                 transferCount: partCount,
                 transferOptions: transferOptions);
 
@@ -840,16 +823,15 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -865,7 +847,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.KB * 4,
+                size: DataMovementTestConstants.KB * 4,
                 transferCount: partCount,
                 transferOptions: transferOptions);
 
@@ -889,16 +871,15 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -914,7 +895,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationDirectory: destinationDirectory.DirectoryPath,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container,
-                size: Constants.KB * 4,
+                size: DataMovementTestConstants.KB * 4,
                 transferCount: partCount,
                 transferOptions: transferOptions);
 
@@ -944,25 +925,24 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions()
             {
-                InitialTransferSize = Constants.KB,
-                MaximumTransferChunkSize = Constants.KB
+                InitialTransferSize = DataMovementTestConstants.KB,
+                MaximumTransferChunkSize = DataMovementTestConstants.KB
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
-            long size = Constants.KB * 4;
+            long size = DataMovementTestConstants.KB * 4;
             int partCount = 4;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourceContainersAsync(
@@ -1029,25 +1009,24 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions()
             {
-                InitialTransferSize = Constants.KB,
-                MaximumTransferChunkSize = Constants.KB
+                InitialTransferSize = DataMovementTestConstants.KB,
+                MaximumTransferChunkSize = DataMovementTestConstants.KB
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
-            long size = Constants.KB * 4;
+            long size = DataMovementTestConstants.KB * 4;
             int partCount = 4;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourceContainersAsync(
@@ -1121,19 +1100,18 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
             using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
-            BlobServiceClient service = GetServiceClient_OAuth();
-            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
-            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
+            await using IDisposingContainer<TContainerClient> sourceContainer = await GetDisposingContainerAsync();
+            await using IDisposingContainer<TContainerClient> destinationContainer = await GetDisposingContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
+            StorageResourceProvider provider = GetStorageResourceProvider();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { provider },
             };
             TransferManager transferManager = new TransferManager(options);
-            long size = Constants.MB;
+            long size = DataMovementTestConstants.MB;
 
             (StorageResource sResource, StorageResource dResource) = await CreateStorageResourceContainersAsync(
                 transferType: transferType,
@@ -1206,7 +1184,8 @@ namespace Azure.Storage.DataMovement.Tests
                 manager._transfers.TryAdd(Guid.NewGuid().ToString(), transfer.Object);
             }
 
-            await manager.PauseAllRunningTransfersAsync(_mockingToken);
+            CancellationTokenSource token = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await manager.PauseAllRunningTransfersAsync(token.Token);
 
             foreach (Mock<TransferOperation> transfer in pausable)
             {
@@ -1218,5 +1197,6 @@ namespace Azure.Storage.DataMovement.Tests
                 transfer.VerifyNoOtherCalls();
             }
         }
+        #endregion
     }
 }
