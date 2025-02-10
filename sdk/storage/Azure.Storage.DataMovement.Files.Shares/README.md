@@ -21,8 +21,8 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.DataMovement.Files.Shares` client library will be included:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement --prerelease
-dotnet add package Azure.Storage.DataMovement.Files.Shares --prerelease
+dotnet add package Azure.Storage.DataMovement
+dotnet add package Azure.Storage.DataMovement.Files.Shares
 ```
 
 ### Prerequisites
