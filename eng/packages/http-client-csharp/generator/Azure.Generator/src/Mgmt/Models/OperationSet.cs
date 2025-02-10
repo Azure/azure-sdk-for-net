@@ -85,8 +85,6 @@ namespace Azure.Generator.Mgmt.Models
             return null;
         }
 
-       
-
         private InputOperation? FindBestOperation()
         {
             // first we try GET operation

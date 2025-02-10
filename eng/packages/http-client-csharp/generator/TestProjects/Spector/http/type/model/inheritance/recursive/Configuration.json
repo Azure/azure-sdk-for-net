@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Model.Inheritance.Recursive",
+  "library-name": "Type.Model.Inheritance.Recursive",
+  "use-model-reader-writer": true
+}

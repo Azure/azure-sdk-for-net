@@ -88,7 +88,7 @@ public class OpenAIModelFeature : CloudMachineFeature
     /// <returns></returns>
     /// <exception cref="InvalidOperationException"></exception>
     /// <exception cref="NotImplementedException"></exception>
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
     {
         if (Account == null) throw new InvalidOperationException("Account must be set before emitting");
         if (Account.Resource == null) throw new InvalidOperationException("Account must be emitted before emitting");
@@ -135,7 +135,7 @@ public class OpenAIModelFeature : CloudMachineFeature
         cm.AddResource(deployment);
         return deployment;
 
-        OpenAIModelFeature? FindPrevious(CloudMachineInfrastructure cm, OpenAIModelFeature current)
+        OpenAIModelFeature? FindPrevious(ProjectInfrastructure cm, OpenAIModelFeature current)
         {
             OpenAIModelFeature? previous = default;
             foreach (var feature in cm.Features)

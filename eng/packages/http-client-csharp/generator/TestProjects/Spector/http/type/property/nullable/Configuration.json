@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Property.Nullable",
+  "library-name": "Type.Property.Nullable",
+  "use-model-reader-writer": true
+}

@@ -22,13 +22,10 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UnknownValue = "unknown";
         private const string GroupCallLocatorValue = "groupCallLocator";
         private const string ServerCallLocatorValue = "serverCallLocator";
         private const string RoomCallLocatorValue = "roomCallLocator";
 
-        /// <summary> unknown. </summary>
-        public static CallLocatorKindInternal Unknown { get; } = new CallLocatorKindInternal(UnknownValue);
         /// <summary> groupCallLocator. </summary>
         public static CallLocatorKindInternal GroupCallLocator { get; } = new CallLocatorKindInternal(GroupCallLocatorValue);
         /// <summary> serverCallLocator. </summary>

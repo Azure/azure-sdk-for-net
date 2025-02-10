@@ -47,8 +47,8 @@ namespace Azure.Messaging.EventHubs.Primitives
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
-        /// <summary>The maximum number of failed consumers to allow when processing a partition; failed consumers are those which have been unable to receive and process events.</summary>
-        private const int MaximumFailedConsumerCount = 1;
+        /// <summary>The maximum number of times to restart a failed consumer when processing a partition; failed consumers are those which have been unable to receive events.</summary>
+        private const int MaximumConsumerRestartCount = 1;
 
         /// <summary>Indicates whether or not the consumer should consider itself invalid when a partition is stolen by another consumer, as determined by the Event Hubs service.</summary>
         private const bool InvalidateConsumerWhenPartitionIsStolen = true;
@@ -742,6 +742,28 @@ namespace Azure.Messaging.EventHubs.Primitives
                 return new LastEnqueuedEventProperties(consumer.LastReceivedEvent);
             }
 
+            async Task<EventPosition> initializeStartingPositionAsync(TPartition initializePartition,
+                                                                      EventPosition? overridePosition,
+                                                                      CancellationToken initializeCancellation)
+            {
+                // Determine the position to start processing from; this will occur during partition initialization normally, but may be superseded
+                // if an override was passed.  In the event that initialization is run and encounters an exception, it takes responsibility for firing
+                // the error handler.
+
+                var (startingPosition, checkpoint) = overridePosition switch
+                {
+                    _ when overridePosition.HasValue => (overridePosition.Value, null),
+                    _ => await InitializePartitionForProcessingAsync(initializePartition, initializeCancellation).ConfigureAwait(false)
+                };
+
+                var checkpointUsed = (checkpoint != null);
+                var checkpointLastModified = checkpointUsed ? checkpoint.LastModified : null;
+                var checkpointAuthor = checkpointUsed ? checkpoint.ClientIdentifier : null;
+
+                Logger.EventProcessorPartitionProcessingEventPositionDetermined(Identifier, EventHubName, ConsumerGroup, initializePartition.PartitionId, startingPosition.ToString(), checkpointUsed, checkpointAuthor, checkpointLastModified);
+                return startingPosition;
+            }
+
             // Define the routine to handle processing for the partition.
 
             async Task performProcessing()
@@ -754,24 +776,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                 var eventBatch = default(IReadOnlyList<EventData>);
                 var lastEvent = default(EventData);
                 var failedAttemptCount = 0;
-                var failedConsumerCount = 0;
+                var resetConsumerCount = 0;
 
-                // Determine the position to start processing from; this will occur during
-                // partition initialization normally, but may be superseded if an override
-                // was passed.  In the event that initialization is run and encounters an
-                // exception, it takes responsibility for firing the error handler.
-
-                var (startingPosition, checkpoint) = startingPositionOverride switch
-                {
-                    _ when startingPositionOverride.HasValue => (startingPositionOverride.Value, null),
-                    _ => await InitializePartitionForProcessingAsync(partition, cancellationSource.Token).ConfigureAwait(false)
-                };
-
-                var checkpointUsed = (checkpoint != null);
-                var checkpointLastModified = checkpointUsed ? checkpoint.LastModified : null;
-                var checkpointAuthor = checkpointUsed ? checkpoint.ClientIdentifier : null;
-
-                Logger.EventProcessorPartitionProcessingEventPositionDetermined(Identifier, EventHubName, ConsumerGroup, partition.PartitionId, startingPosition.ToString(), checkpointUsed, checkpointAuthor, checkpointLastModified);
+                var startingPosition = await initializeStartingPositionAsync(partition, startingPositionOverride, cancellationSource.Token).ConfigureAwait(false);
 
                 // Create the connection to be used for spawning consumers; if the creation
                 // fails, then consider the processing task to be failed.  The main processing
@@ -797,7 +804,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // Continue processing the partition until cancellation is signaled or until the count of failed consumers is too great.
                 // Consumers which been consistently unable to receive and process events will be considered invalid and abandoned for a new consumer.
 
-                while ((!cancellationSource.IsCancellationRequested) && (failedConsumerCount <= MaximumFailedConsumerCount))
+                while ((!cancellationSource.IsCancellationRequested) && (resetConsumerCount <= MaximumConsumerRestartCount))
                 {
                     try
                     {
@@ -844,7 +851,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                 // satisfied, and the failure counts should reset.
 
                                 failedAttemptCount = 0;
-                                failedConsumerCount = 0;
+                                resetConsumerCount = 0;
                             }
                             catch (TaskCanceledException) when (cancellationSource.IsCancellationRequested)
                             {
@@ -933,6 +940,45 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                         ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
                     }
+                    catch (FormatException ex)
+                    {
+                        // This is a special case that occurs when the starting position is invalid due to a legacy checkpoint format
+                        // after a GeoDR fail over. There is no way to recover checkpoint data in this scenario, the checkpoint will
+                        // need to be removed or ignored and the default position used.  To avoid requiring callers to manually remove
+                        // checkpoints, the processor will invalidate the checkpoint automatically to allow processing to continue
+                        // for a retry.
+
+                        Logger.EventProcessorPartitionLegacyCheckpointFormat(partition.PartitionId, Identifier, EventHubName, ConsumerGroup);
+
+                        // Because this can be non-obvious to developers who are not capturing logs, also surface an exception to the error handler
+                        // to ensure that the checkpoint reset does not go unnoticed.
+
+                        var handlerExceptionMessage = ex.Message ?? ex.InnerException?.Message;
+                        var handlerException = new EventHubsException(false, EventHubName, handlerExceptionMessage, EventHubsException.FailureReason.GeneralError, ex.InnerException);
+                        _ = InvokeOnProcessingErrorAsync(handlerException, partition, Resources.OperationReadEvents, CancellationToken.None);
+
+                        // Attempt to clear checkpoint data. This will cause the next initialization attempt to use the default starting position.
+
+                        try
+                        {
+                            await UpdateCheckpointAsync(partition.PartitionId, new CheckpointPosition(), cancellationSource.Token).ConfigureAwait(false);
+                        }
+                        catch (Exception clearEx)
+                        {
+                            // If we couldn't clear the checkpoint, capture the error and follow general error flow.  This will fault the task
+                            // and allow load balancing to reassign the partition or retry.
+
+                            Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, clearEx.Message);
+
+                            ++resetConsumerCount;
+                            capturedException = ex;
+                        }
+
+                        // Reinitialize the partition to force the full evaluation for determining the default position, including any custom logic
+                        // in handlers.  Initialization is responsible for its own logging and error handling; allow the exception to be bubbled.
+
+                        startingPosition = await initializeStartingPositionAsync(partition, startingPositionOverride, cancellationSource.Token).ConfigureAwait(false);
+                    }
                     catch (EventHubsException ex) when (ex.Reason == EventHubsException.FailureReason.ConsumerDisconnected)
                     {
                         // If the partition was stolen, the consumer should not be recreated as that would reassert ownership
@@ -949,7 +995,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                     }
                     catch (Exception ex)
                     {
-                        ++failedConsumerCount;
+                        Logger.EventProcessorPartitionProcessingError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                        ++resetConsumerCount;
                         capturedException = ex;
                     }
                     finally

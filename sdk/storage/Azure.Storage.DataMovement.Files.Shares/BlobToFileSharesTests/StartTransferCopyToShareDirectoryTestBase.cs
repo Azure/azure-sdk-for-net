@@ -106,45 +106,36 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new ShareFileStorageResourceOptions
                 {
-                    ContentDisposition = new(_defaultContentDisposition),
-                    ContentLanguage = new(_defaultContentLanguageShare),
-                    CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType),
-                    FileMetadata = new(_defaultMetadata),
-                    FileAttributes = new(_defaultFileAttributes),
-                    FileCreatedOn = new(_defaultFileCreatedOn),
-                    FileChangedOn = new(_defaultFileChangedOn),
-                    FileLastWrittenOn = new(_defaultFileLastWrittenOn)
+                    ContentDisposition = _defaultContentDisposition,
+                    ContentLanguage = _defaultContentLanguageShare,
+                    CacheControl = _defaultCacheControl,
+                    ContentType = _defaultContentType,
+                    FileMetadata = _defaultMetadata,
+                    FileAttributes = _defaultFileAttributes,
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileChangedOn = _defaultFileChangedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn
                 };
             }
             else if (propertiesTestType == TransferPropertiesTestType.NoPreserve)
             {
                 options = new ShareFileStorageResourceOptions
                 {
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false),
-                    FileMetadata = new(false),
-                    FileAttributes = new(false),
-                    FileCreatedOn = new(false),
-                    FileLastWrittenOn = new(false),
-                    FilePermissions = new(false)
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    FileMetadata = default,
+                    FileAttributes = default,
+                    FileCreatedOn = default,
+                    FileLastWrittenOn = default,
                 };
             }
             else if (propertiesTestType == TransferPropertiesTestType.Preserve)
             {
                 options = new ShareFileStorageResourceOptions
                 {
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true),
-                    FileMetadata = new(true),
-                    FileAttributes = new(true),
-                    FileCreatedOn = new(true),
-                    FileLastWrittenOn = new(true),
-                    FilePermissions = new(true)
+                    FilePermissions = true
                 };
             }
             // Authorize with SAS when performing operations
