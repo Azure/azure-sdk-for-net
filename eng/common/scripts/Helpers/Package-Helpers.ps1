@@ -194,7 +194,12 @@ function Get-ObjectKey {
   }
 
   else {
-    return $Object.GetHashCode()
+    $parsedBool = $null
+    if ([bool]::TryParse($Object, [ref]$parsedBool)) {
+      return $parsedBool.GetHashCode()
+    } else {
+      return $Object.GetHashCode()
+    }
   }
 }
 
