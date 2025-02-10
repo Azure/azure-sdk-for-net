@@ -1058,10 +1058,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAnalysisAuthoringClient.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
-        private ConversationAuthoringDeployments _cachedConversationAuthoringDeployments;
-        private ConversationAuthoringProjects _cachedConversationAuthoringProjects;
-        private ConversationAuthoringModels _cachedConversationAuthoringModels;
-
         internal HttpMessage CreateGetDeploymentsRequest(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
