@@ -45,7 +45,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ```
 
 ### Authenticate the client
-The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares#authenticate-the-client).
+The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/README.md#authenticate-the-client).
 
 ### Permissions
 
@@ -113,6 +113,9 @@ An upload takes place between a local file `StorageResource` as source and file 
 Upload a file.
 
 ```C# Snippet:SimplefileUpload_Shares
+TokenCredential tokenCredential = new DefaultAzureCredential();
+ShareFilesStorageResourceProvider shares = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
     destinationResource: await shares.FromFileAsync(destinationFileUri));
@@ -171,6 +174,30 @@ TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
     destinationResource: await shares.FromDirectoryAsync(destinationDirectoryUri));
 await directoryTransfer.WaitForCompletionAsync();
 ```
+
+### Resume using ShareFilesStorageResourceProvider
+
+To resume a transfer with Share File(s), valid credentials must be provided. See the sample below.
+
+```C# Snippet:TransferManagerResumeTransfers_Shares
+TokenCredential tokenCredential = new DefaultAzureCredential();
+ShareFilesStorageResourceProvider shares = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+{
+    ProvidersForResuming = new List<StorageResourceProvider>() { shares }
+});
+// Get resumable transfers from transfer manager
+await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+{
+    // Resume the transfer
+    if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+    {
+        await transferManager.ResumeTransferAsync(properties.TransferId);
+    }
+}
+```
+
+For more information regarding pause, resume, and/or checkpointing, see [Pause and Resume Checkpointing](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/samples/PauseResumeCheckpointing.md).
 
 ## Troubleshooting
 
