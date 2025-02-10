@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationMode.FailIfExists
+                CreationMode = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions transferManagerOptions = new()
@@ -294,7 +294,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationMode.SkipIfExists
+                CreationMode = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions transferManagerOptions = new()
@@ -343,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists
             };
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
             await InitializeDestinationDataAsync(
