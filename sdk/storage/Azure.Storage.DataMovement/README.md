@@ -1,11 +1,5 @@
 # Azure Storage Data Movement Common client library for .NET
 
-## Project Status: Beta
-
-This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
-
----
-
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant.
 
@@ -24,7 +18,7 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.DataMovement` client library will be included:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement --prerelease
+dotnet add package Azure.Storage.DataMovement
 ```
 
 ### Prerequisites
@@ -133,6 +127,8 @@ StorageResource directoryResource = files.FromDirectory("C:/path/to/dir");
 ## Troubleshooting
 
 See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
+
+See [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
 
 ## Next steps
 
