@@ -239,19 +239,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Triggers evaluation operation on a trained model. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="body"> The training input parameters. </param>
+        /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation<EvaluationJobResult>> EvaluateModelAsync(
             WaitUntil waitUntil,
             string trainedModelLabel,
-            EvaluationDetails body,
+            EvaluationDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await EvaluateModelAsync(waitUntil, _projectName, trainedModelLabel, content, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationOperationState, ClientDiagnostics, "ConversationAuthoringModels.EvaluateModel");
@@ -260,19 +260,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Triggers evaluation operation on a trained model. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="body"> The training input parameters. </param>
+        /// <param name="details"> The training input parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation<EvaluationJobResult> EvaluateModel(
             WaitUntil waitUntil,
             string trainedModelLabel,
-            EvaluationDetails body,
+            EvaluationDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = EvaluateModel(waitUntil, _projectName, trainedModelLabel, content, context);
             return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationOperationState, ClientDiagnostics, "ConversationAuthoringModels.EvaluateModel");
@@ -919,21 +919,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Creates a new exported model or replaces an existing one. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="exportedModelName"> The exported model name. </param>
-        /// <param name="body"> The exported model info. </param>
+        /// <param name="details"> The exported model info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportedModelName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportedModelName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(
             WaitUntil waitUntil,
             string exportedModelName,
-            ExportedModelDetails body,
+            ExportedModelDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return await CreateOrUpdateExportedModelAsync(waitUntil, _projectName, exportedModelName, content, context).ConfigureAwait(false);
         }
@@ -941,21 +941,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Creates a new exported model or replaces an existing one. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="exportedModelName"> The exported model name. </param>
-        /// <param name="body"> The exported model info. </param>
+        /// <param name="details"> The exported model info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="exportedModelName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportedModelName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Operation CreateOrUpdateExportedModel(
             WaitUntil waitUntil,
             string exportedModelName,
-            ExportedModelDetails body,
+            ExportedModelDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return CreateOrUpdateExportedModel(waitUntil, _projectName, exportedModelName, content, context);
         }

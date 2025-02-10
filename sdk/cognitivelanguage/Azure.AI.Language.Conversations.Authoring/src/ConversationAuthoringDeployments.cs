@@ -178,106 +178,106 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Swaps two existing deployments with each other. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> The job object to swap two deployments. </param>
+        /// <param name="details"> The job object to swap two deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> SwapDeploymentsAsync(
             WaitUntil waitUntil,
-            SwapDeploymentsDetails body,
+            SwapDeploymentsDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return await SwapDeploymentsAsync(waitUntil, _projectName, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Swaps two existing deployments with each other. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> The job object to swap two deployments. </param>
+        /// <param name="details"> The job object to swap two deployments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation SwapDeployments(
             WaitUntil waitUntil,
-            SwapDeploymentsDetails body,
+            SwapDeploymentsDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return SwapDeployments(waitUntil, _projectName, content, context);
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> The new deployment info. </param>
+        /// <param name="details"> The new deployment info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> DeployProjectAsync(
             WaitUntil waitUntil,
-            CreateDeploymentDetails body,
+            CreateDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return await DeployProjectAsync(waitUntil, _projectName, _deploymentName, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Creates a new deployment or replaces an existing one. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> The new deployment info. </param>
+        /// <param name="details"> The new deployment info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation DeployProject(
             WaitUntil waitUntil,
-            CreateDeploymentDetails body,
+            CreateDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return DeployProject(waitUntil, _projectName, _deploymentName, content, context);
         }
 
         /// <summary> Deletes a project deployment from the specified assigned resources. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> The options for deleting the deployment. </param>
+        /// <param name="details"> The options for deleting the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> DeleteDeploymentFromResourcesAsync(
             WaitUntil waitUntil,
-            DeleteDeploymentDetails body,
+            DeleteDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return await DeleteDeploymentFromResourcesAsync(waitUntil, _projectName, _deploymentName, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Deletes a project deployment from the specified assigned resources. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> The options for deleting the deployment. </param>
+        /// <param name="details"> The options for deleting the deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation DeleteDeploymentFromResources(
             WaitUntil waitUntil,
-            DeleteDeploymentDetails body,
+            DeleteDeploymentDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(_deploymentName, nameof(_deploymentName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return DeleteDeploymentFromResources(waitUntil, _projectName, _deploymentName, content, context);
         }
@@ -983,68 +983,68 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> The new project resources info. </param>
+        /// <param name="details"> The new project resources info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> AssignDeploymentResourcesAsync(
             WaitUntil waitUntil,
-            AssignDeploymentResourcesDetails body,
+            AssignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return await AssignDeploymentResourcesAsync(waitUntil, _projectName, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
-        /// <param name="body"> The new project resources info. </param>
+        /// <param name="details"> The new project resources info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation AssignDeploymentResources(
             WaitUntil waitUntil,
-            AssignDeploymentResourcesDetails body,
+            AssignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return AssignDeploymentResources(waitUntil, _projectName, content, context);
         }
 
         /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The info for the deployment resources to be deleted. </param>
+        /// <param name="details"> The info for the deployment resources to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Operation> UnassignDeploymentResourcesAsync(
             WaitUntil waitUntil,
-            UnassignDeploymentResourcesDetails body,
+            UnassignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return await UnassignDeploymentResourcesAsync(waitUntil, _projectName, content, context).ConfigureAwait(false);
         }
 
         /// <summary> Unassign resources from a project. This disallows deploying new deployments to these resources, and deletes existing deployments assigned to them. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The info for the deployment resources to be deleted. </param>
+        /// <param name="details"> The info for the deployment resources to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Operation UnassignDeploymentResources(
             WaitUntil waitUntil,
-            UnassignDeploymentResourcesDetails body,
+            UnassignDeploymentResourcesDetails details,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return UnassignDeploymentResources(waitUntil, _projectName, content, context);
         }
