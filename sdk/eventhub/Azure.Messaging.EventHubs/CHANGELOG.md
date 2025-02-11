@@ -26,8 +26,6 @@ Thank you to our developer community members who helped to make the Event Hubs c
   - [EventHubsModelFactory.EventData](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsmodelfactory.eventdata?view=azure-dotnet)
   - [BlobCheckpointStore.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.blobcheckpointstore.updatecheckpointasync?view=azure-dotnet)
   - [EventProcessorClient.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient.updatecheckpointasync?view=azure-dotnet)
-  
-### Breaking Changes
 
 ### Bugs Fixed
 
