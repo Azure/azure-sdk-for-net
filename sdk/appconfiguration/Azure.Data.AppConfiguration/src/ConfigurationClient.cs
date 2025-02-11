@@ -76,8 +76,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="credential">The token credential used to sign requests.</param>
         /// <param name="options">Options that allow configuration of requests sent to the configuration store.</param>
         /// <remarks> The <paramref name="credential"/>'s Microsoft Entra audience is configurable via the <see cref="ConfigurationClientOptions.Audience"/> property.
-        /// If you are using an Azure cloud other than Public, you'll want to configure the audience to match your environment.
-        /// If no token audience is set, Public will be used.
+        /// If no token audience is set, Azure Public Cloud is used. If using an Azure sovereign cloud, configure the audience accordingly.
         /// </remarks>
         public ConfigurationClient(Uri endpoint, TokenCredential credential, ConfigurationClientOptions options)
         {
