@@ -114,9 +114,9 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
 
         using PipelineMessage message = CreateCreateVectorStoreFileRequest(vectorStoreId, content, options);
         PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        VectorStoreFileAssociation value = VectorStoreFileAssociation.FromResponse(response);
+        var result = ClientResult.FromResponse(response);
 
-        AzureAddFileToVectorStoreOperation operation = new(Pipeline, _endpoint, ClientResult.FromValue(value, response), _apiVersion);
+        AzureAddFileToVectorStoreOperation operation = new(Pipeline, _endpoint, ClientResult.FromValue((VectorStoreFileAssociation)result, response), _apiVersion);
         return await operation.WaitUntilAsync(waitUntilCompleted, options).ConfigureAwait(false);
     }
 
@@ -127,9 +127,9 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
 
         using PipelineMessage message = CreateCreateVectorStoreFileRequest(vectorStoreId, content, options);
         PipelineResponse response = Pipeline.ProcessMessage(message, options);
-        VectorStoreFileAssociation value = VectorStoreFileAssociation.FromResponse(response);
+        var result = ClientResult.FromResponse(response);
 
-        AzureAddFileToVectorStoreOperation operation = new(Pipeline, _endpoint, ClientResult.FromValue(value, response), _apiVersion);
+        AzureAddFileToVectorStoreOperation operation = new(Pipeline, _endpoint, ClientResult.FromValue((VectorStoreFileAssociation)result, response), _apiVersion);
         return operation.WaitUntil(waitUntilCompleted, options);
     }
 
@@ -162,9 +162,9 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
 
         using PipelineMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, options);
         PipelineResponse response = await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false);
-        VectorStoreBatchFileJob job = VectorStoreBatchFileJob.FromResponse(response);
+        var result = ClientResult.FromResponse(response);
 
-        AzureCreateBatchFileJobOperation operation = new(Pipeline, _endpoint, ClientResult.FromValue(job, response), _apiVersion);
+        AzureCreateBatchFileJobOperation operation = new(Pipeline, _endpoint, ClientResult.FromValue((VectorStoreBatchFileJob)result, response), _apiVersion);
         return await operation.WaitUntilAsync(waitUntilCompleted, options).ConfigureAwait(false);
     }
 
@@ -179,9 +179,9 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
 
         using PipelineMessage message = CreateCreateVectorStoreFileBatchRequest(vectorStoreId, content, options);
         PipelineResponse response = Pipeline.ProcessMessage(message, options);
-        VectorStoreBatchFileJob job = VectorStoreBatchFileJob.FromResponse(response);
+        var result = ClientResult.FromResponse(response);
 
-        AzureCreateBatchFileJobOperation operation = new(Pipeline, _endpoint, ClientResult.FromValue(job, response), _apiVersion);
+        AzureCreateBatchFileJobOperation operation = new(Pipeline, _endpoint, ClientResult.FromValue((VectorStoreBatchFileJob)result, response), _apiVersion);
         return operation.WaitUntil(waitUntilCompleted, options);
     }
 

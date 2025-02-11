@@ -34,8 +34,11 @@ internal partial class AzureOpenAIFileCollection : IJsonModel<AzureOpenAIFileCol
             return null;
         }
         IReadOnlyList<AzureOpenAIFile> data = default;
-        InternalListFilesResponseObject @object = default;
-        IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+        string @object = default;
+        string firstId = default;
+        string lastId = default;
+        bool hasMore = false;
+        IDictionary<string, BinaryData> additionalBinaryDataProperties = default;
         Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
         foreach (var property in element.EnumerateObject())
         {
@@ -51,7 +54,22 @@ internal partial class AzureOpenAIFileCollection : IJsonModel<AzureOpenAIFileCol
             }
             if (property.NameEquals("object"u8))
             {
-                @object = new InternalListFilesResponseObject(property.Value.GetString());
+                @object = property.Value.GetString();
+                continue;
+            }
+            if (property.NameEquals("first_id"u8))
+            {
+                firstId = property.Value.GetString();
+                continue;
+            }
+            if (property.NameEquals("last_id"u8))
+            {
+                lastId = property.Value.GetString();
+                continue;
+            }
+            if (property.NameEquals("has_more"u8))
+            {
+                hasMore = property.Value.GetBoolean();
                 continue;
             }
             if (true)
@@ -59,8 +77,8 @@ internal partial class AzureOpenAIFileCollection : IJsonModel<AzureOpenAIFileCol
                 rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
         }
-        serializedAdditionalRawData = rawDataDictionary;
-        return new AzureOpenAIFileCollection(data, @object, serializedAdditionalRawData);
+        additionalBinaryDataProperties = rawDataDictionary;
+        return new AzureOpenAIFileCollection(data, @object, firstId, lastId, hasMore, additionalBinaryDataProperties);
     }
 
     void IJsonModel<AzureOpenAIFileCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -77,7 +95,7 @@ internal partial class AzureOpenAIFileCollection : IJsonModel<AzureOpenAIFileCol
 
     string IPersistableModel<AzureOpenAIFileCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-    internal static new AzureOpenAIFileCollection FromResponse(PipelineResponse response)
+    internal static AzureOpenAIFileCollection FromResponse(PipelineResponse response)
     {
         using var document = JsonDocument.Parse(response.Content);
         return DeserializeAzureOpenAIFileCollection(document.RootElement);

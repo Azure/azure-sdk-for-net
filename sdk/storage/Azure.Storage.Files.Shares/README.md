@@ -34,6 +34,20 @@ Here's an example using the Azure CLI:
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
+### Authenticate the client
+
+In order to interact with the Azure Blobs Storage service, you'll need to create an instance of the ShareServiceClient class. The [Azure Identity](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md) library makes it easy to add Azure Active Directory support for authenticating Azure SDK clients with their corresponding Azure services.
+
+```C# Snippet:ShareFile_TokenCredential
+// Create a TokenCredential that we can use to authenticate
+TokenCredential credential = new DefaultAzureCredential();
+
+// Create a client that can authenticate with a TokenCredential
+ShareServiceClient shareServiceClient = new ShareServiceClient(
+    StorageAccountFileUri,
+    credential);
+```
+
 ## Key concepts
 
 Azure file shares can be used to:

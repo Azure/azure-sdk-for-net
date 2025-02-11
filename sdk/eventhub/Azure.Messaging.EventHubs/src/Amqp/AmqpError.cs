@@ -66,6 +66,12 @@ namespace Azure.Messaging.EventHubs
         public static AmqpSymbol ProducerStolenError { get; } = AmqpConstants.Vendor + ":producer-epoch-stolen";
 
         /// <summary>
+        ///   Indicates that an offset is invalid for a GeoDR-enabled namespace.
+        /// </summary>
+        ///
+        public static AmqpSymbol InvalidGeolocationOffset { get; } = AmqpConstants.Vendor + ":georeplication:invalid-offset";
+
+        /// <summary>
         ///   The expression to test for when the service returns a "Not Found" response to determine the context.
         /// </summary>
         ///
@@ -222,6 +228,13 @@ namespace Azure.Messaging.EventHubs
             if (string.Equals(condition, SequenceOutOfOrderError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
                 return new EventHubsException(eventHubsResource, description, EventHubsException.FailureReason.InvalidClientState, innerException);
+            }
+
+            // An offset was rejected as invalid for a GeoDR-enabled namespace.
+
+            if (string.Equals(condition, InvalidGeolocationOffset.Value, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return new FormatException(IncludeTroubleshootingGuideLink(description), innerException);
             }
 
             // Authorization was denied.

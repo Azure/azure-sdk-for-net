@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The AzureContentFilterResultForPromptContentFilterResultsError. </summary>
-    internal partial class InternalAzureContentFilterResultForPromptContentFilterResultsError
+    /// <summary> The AzureContentFilterResultForChoiceError. </summary>
+    internal partial class InternalAzureContentFilterResultForChoiceError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -41,11 +41,11 @@ namespace Azure.AI.OpenAI
         /// </para>
         /// </summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData { get; set; }
-        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterResultForPromptContentFilterResultsError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterResultForChoiceError"/>. </summary>
         /// <param name="code"> A distinct, machine-readable code associated with the error. </param>
         /// <param name="message"> A human-readable message associated with the error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal InternalAzureContentFilterResultForPromptContentFilterResultsError(int code, string message)
+        internal InternalAzureContentFilterResultForChoiceError(int code, string message)
         {
             Argument.AssertNotNull(message, nameof(message));
 
@@ -53,19 +53,19 @@ namespace Azure.AI.OpenAI
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterResultForPromptContentFilterResultsError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterResultForChoiceError"/>. </summary>
         /// <param name="code"> A distinct, machine-readable code associated with the error. </param>
         /// <param name="message"> A human-readable message associated with the error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAzureContentFilterResultForPromptContentFilterResultsError(int code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalAzureContentFilterResultForChoiceError(int code, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterResultForPromptContentFilterResultsError"/> for deserialization. </summary>
-        internal InternalAzureContentFilterResultForPromptContentFilterResultsError()
+        /// <summary> Initializes a new instance of <see cref="InternalAzureContentFilterResultForChoiceError"/> for deserialization. </summary>
+        internal InternalAzureContentFilterResultForChoiceError()
         {
         }
 

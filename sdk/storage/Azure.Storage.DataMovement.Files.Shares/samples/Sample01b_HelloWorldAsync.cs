@@ -10,6 +10,7 @@ using Azure.Identity;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Samples
 {
@@ -99,15 +100,15 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
             await share.CreateIfNotExistsAsync();
             try
             {
-                ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
-
                 // Get a reference to a destination share file/directory
                 Uri destinationFolderUri = share.GetDirectoryClient("sample-directory").Uri;
                 Uri destinationFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file").Uri;
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
                 // Create simple transfer single share file upload job
                 #region Snippet:SimplefileUpload_Shares
+                TokenCredential tokenCredential = new DefaultAzureCredential();
+                ShareFilesStorageResourceProvider shares = new(tokenCredential);
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
                 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
                     destinationResource: await shares.FromFileAsync(destinationFileUri));
@@ -211,6 +212,27 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
             {
                 await share.DeleteIfExistsAsync();
             }
+        }
+
+        public async Task ResumeTransfersStoredAsync()
+        {
+            #region Snippet:TransferManagerResumeTransfers_Shares
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            ShareFilesStorageResourceProvider shares = new(tokenCredential);
+            TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+            {
+                ProvidersForResuming = new List<StorageResourceProvider>() { shares }
+            });
+            // Get resumable transfers from transfer manager
+            await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+            {
+                // Resume the transfer
+                if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+                {
+                    await transferManager.ResumeTransferAsync(properties.TransferId);
+                }
+            }
+            #endregion
         }
 
         public async Task<string> CreateFileShareTestDirectory(ShareClient client, int depth = 0, string basePath = default)

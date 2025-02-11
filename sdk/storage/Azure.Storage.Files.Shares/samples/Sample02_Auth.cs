@@ -143,6 +143,7 @@ namespace Azure.Storage.Files.Shares.Samples
         [Test]
         public async Task TokenCredentialAuthAsync()
         {
+            #region Snippet:ShareFile_TokenCredential
             // Create a TokenCredential that we can use to authenticate
             TokenCredential credential = new DefaultAzureCredential();
 
@@ -150,6 +151,7 @@ namespace Azure.Storage.Files.Shares.Samples
             ShareServiceClient shareServiceClient = new ShareServiceClient(
                 StorageAccountFileUri,
                 credential);
+            #endregion
 
             // Make a service request to verify we've successfully authenticated
             await shareServiceClient.GetPropertiesAsync();

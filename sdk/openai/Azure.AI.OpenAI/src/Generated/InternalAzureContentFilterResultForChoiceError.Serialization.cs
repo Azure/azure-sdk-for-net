@@ -10,17 +10,25 @@ using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class InternalAzureContentFilterResultForPromptContentFilterResultsError : IJsonModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>
+    internal partial class InternalAzureContentFilterResultForChoiceError : IJsonModel<InternalAzureContentFilterResultForChoiceError>
     {
-        void IJsonModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<InternalAzureContentFilterResultForChoiceError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>)this).GetFormatFromOptions(options) : options.Format;
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForChoiceError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForPromptContentFilterResultsError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForChoiceError)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("code") != true)
             {
                 writer.WritePropertyName("code"u8);
@@ -50,22 +58,21 @@ namespace Azure.AI.OpenAI
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
-        InternalAzureContentFilterResultForPromptContentFilterResultsError IJsonModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        InternalAzureContentFilterResultForChoiceError IJsonModel<InternalAzureContentFilterResultForChoiceError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForChoiceError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForPromptContentFilterResultsError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForChoiceError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInternalAzureContentFilterResultForPromptContentFilterResultsError(document.RootElement, options);
+            return DeserializeInternalAzureContentFilterResultForChoiceError(document.RootElement, options);
         }
 
-        internal static InternalAzureContentFilterResultForPromptContentFilterResultsError DeserializeInternalAzureContentFilterResultForPromptContentFilterResultsError(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static InternalAzureContentFilterResultForChoiceError DeserializeInternalAzureContentFilterResultForChoiceError(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,46 +103,46 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InternalAzureContentFilterResultForPromptContentFilterResultsError(code, message, serializedAdditionalRawData);
+            return new InternalAzureContentFilterResultForChoiceError(code, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<InternalAzureContentFilterResultForChoiceError>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForChoiceError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForPromptContentFilterResultsError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForChoiceError)} does not support writing '{options.Format}' format.");
             }
         }
 
-        InternalAzureContentFilterResultForPromptContentFilterResultsError IPersistableModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        InternalAzureContentFilterResultForChoiceError IPersistableModel<InternalAzureContentFilterResultForChoiceError>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForChoiceError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeInternalAzureContentFilterResultForPromptContentFilterResultsError(document.RootElement, options);
+                        return DeserializeInternalAzureContentFilterResultForChoiceError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForPromptContentFilterResultsError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForChoiceError)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<InternalAzureContentFilterResultForPromptContentFilterResultsError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<InternalAzureContentFilterResultForChoiceError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The result to deserialize the model from. </param>
-        internal static InternalAzureContentFilterResultForPromptContentFilterResultsError FromResponse(PipelineResponse response)
+        internal static InternalAzureContentFilterResultForChoiceError FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalAzureContentFilterResultForPromptContentFilterResultsError(document.RootElement);
+            return DeserializeInternalAzureContentFilterResultForChoiceError(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>

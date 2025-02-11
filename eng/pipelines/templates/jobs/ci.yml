@@ -138,7 +138,7 @@ jobs:
               /p:ServiceDirectory=* `
               /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
               $(DiagnosticArguments)
-          displayName: "Build and Package"
+          displayName: "Build and Package for PR"
       - ${{ else }}:
         - pwsh: |
             if (Test-Path "$(ProjectListOverrideFile)") {
@@ -160,7 +160,7 @@ jobs:
             /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
             /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
             $(DiagnosticArguments)
-          displayName: "Build and Package"
+          displayName: "Build and Package Service Directory"
 
       # save package properties again, this time honoring the dev version number
       - ${{ if ne(parameters.ServiceDirectory, 'auto') }}:

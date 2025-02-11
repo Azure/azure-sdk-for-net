@@ -11,6 +11,7 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -1151,6 +1152,10 @@ namespace Azure.Messaging.EventHubs.Tests
             await Task.WhenAny(completionSources, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
+            // Each consumer failure/recycle will emit a log.  Because the test doesn't have insight into the recycle threshold for the
+            // processor, the assertion can't be precise about the number of times this will be called.  Make sure there's at least one
+            // log written.
+
             mockLogger
                .Verify(log => log.EventProcessorPartitionProcessingError(
                    partition.PartitionId,
@@ -1158,7 +1163,7 @@ namespace Azure.Messaging.EventHubs.Tests
                    mockProcessor.Object.EventHubName,
                    mockProcessor.Object.ConsumerGroup,
                    expectedException.Message),
-                Times.Once);
+                Times.AtLeastOnce());
 
             cancellationSource.Cancel();
         }
@@ -1396,6 +1401,289 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task CreatePartitionProcessorProcessingTaskResetsTheCheckpointForLegacyFormatFailures()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partition = new EventProcessorPartition { PartitionId = "99" };
+            var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions, DefaultStartingPosition = EventPosition.FromSequenceNumber(65) };
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockConnection = Mock.Of<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var badMockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+
+            var legacyCheckpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = mockProcessor.Object.FullyQualifiedNamespace,
+                EventHubName = mockProcessor.Object.EventHubName,
+                ConsumerGroup = mockProcessor.Object.ConsumerGroup,
+                PartitionId = partition.PartitionId,
+                StartingPosition = EventPosition.FromOffset("123"),
+                ClientIdentifier = "legacy",
+                LastModified = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero)
+            };
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Callback(() => completionSource.TrySetResult(true))
+                .ReturnsAsync(EmptyBatch);
+
+            badMockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Throws(new FormatException("legacy", new InvalidCastException("legacy inner")));
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection);
+
+            mockProcessor
+                .SetupSequence(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
+                .Returns(badMockConsumer.Object)
+                .Returns(mockConsumer.Object);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task>("UpdateCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CheckpointPosition>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.CompletedTask);
+
+            mockProcessor
+                .Protected()
+                .SetupSequence<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(legacyCheckpoint))
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            cancellationSource.Cancel();
+
+            // The checkpoint should have been reset to an empty state.
+
+            mockProcessor
+                .Protected()
+                .Verify("UpdateCheckpointAsync",
+                  Times.Once(),
+                  [partition.PartitionId, new CheckpointPosition(), ItExpr.IsAny<CancellationToken>()]);
+
+            // The initial consumer should use the checkpoint starting position.
+
+            mockProcessor
+                .Verify(processor => processor.CreateConsumer(
+                    mockProcessor.Object.ConsumerGroup,
+                    partition.PartitionId,
+                    It.IsAny<string>(),
+                    legacyCheckpoint.StartingPosition,
+                    mockConnection,
+                    It.IsAny<EventProcessorOptions>(),
+                    It.IsAny<bool>()),
+                Times.Once);
+
+            // The second consumer should use the default starting position because there
+            // is no valid checkpoint.
+
+            mockProcessor
+                .Verify(processor => processor.CreateConsumer(
+                    mockProcessor.Object.ConsumerGroup,
+                    partition.PartitionId,
+                    It.IsAny<string>(),
+                    options.DefaultStartingPosition,
+                    mockConnection,
+                    It.IsAny<EventProcessorOptions>(),
+                    It.IsAny<bool>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.CreatePartitionProcessor" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreatePartitionProcessorProcessingTaskLogsLegacyFormatFailures()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partition = new EventProcessorPartition { PartitionId = "99" };
+            var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions, DefaultStartingPosition = EventPosition.FromSequenceNumber(65) };
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockConnection = Mock.Of<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var badMockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+
+            var legacyCheckpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = mockProcessor.Object.FullyQualifiedNamespace,
+                EventHubName = mockProcessor.Object.EventHubName,
+                ConsumerGroup = mockProcessor.Object.ConsumerGroup,
+                PartitionId = partition.PartitionId,
+                StartingPosition = EventPosition.FromOffset("123"),
+                ClientIdentifier = "legacy",
+                LastModified = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero)
+            };
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Callback(() => completionSource.TrySetResult(true))
+                .ReturnsAsync(EmptyBatch);
+
+            badMockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Throws(new FormatException("legacy", new InvalidCastException("legacy inner")));
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection);
+
+            mockProcessor
+                .SetupSequence(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
+                .Returns(badMockConsumer.Object)
+                .Returns(mockConsumer.Object);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task>("UpdateCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CheckpointPosition>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.CompletedTask);
+
+            mockProcessor
+                .Protected()
+                .SetupSequence<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(legacyCheckpoint))
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            cancellationSource.Cancel();
+
+            mockLogger
+                .Verify(log => log.EventProcessorPartitionLegacyCheckpointFormat(
+                    partition.PartitionId,
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    mockProcessor.Object.ConsumerGroup),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.CreatePartitionProcessor" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CreatePartitionProcessorProcessingTaskInvokesTheErrorHandlerForLegacyFormatFailures()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var expectedException = new FormatException("legacy", new InvalidCastException("legacy inner"));
+            var partition = new EventProcessorPartition { PartitionId = "99" };
+            var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
+            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions, DefaultStartingPosition = EventPosition.FromSequenceNumber(65) };
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var mockConnection = Mock.Of<EventHubConnection>();
+            var mockConsumer = new Mock<SettableTransportConsumer>();
+            var badMockConsumer = new Mock<SettableTransportConsumer>();
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
+
+            var legacyCheckpoint = new EventProcessorCheckpoint
+            {
+                FullyQualifiedNamespace = mockProcessor.Object.FullyQualifiedNamespace,
+                EventHubName = mockProcessor.Object.EventHubName,
+                ConsumerGroup = mockProcessor.Object.ConsumerGroup,
+                PartitionId = partition.PartitionId,
+                StartingPosition = EventPosition.FromOffset("123"),
+                ClientIdentifier = "legacy",
+                LastModified = new DateTimeOffset(2015, 10, 27, 12, 0, 0, TimeSpan.Zero)
+            };
+
+            mockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Callback(() => completionSource.TrySetResult(true))
+                .ReturnsAsync(EmptyBatch);
+
+            badMockConsumer
+                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
+                .Throws(expectedException);
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            mockProcessor
+                .Setup(processor => processor.CreateConnection())
+                .Returns(mockConnection);
+
+            mockProcessor
+                .SetupSequence(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
+                .Returns(badMockConsumer.Object)
+                .Returns(mockConsumer.Object);
+
+            mockProcessor
+                .Protected()
+                .Setup<Task>("UpdateCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CheckpointPosition>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.CompletedTask);
+
+            mockProcessor
+                .Protected()
+                .SetupSequence<Task<EventProcessorCheckpoint>>("GetCheckpointAsync",
+                    ItExpr.IsAny<string>(),
+                    ItExpr.IsAny<CancellationToken>())
+                .Returns(Task.FromResult(legacyCheckpoint))
+                .Returns(Task.FromResult(default(EventProcessorCheckpoint)));
+
+            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(partition, cancellationSource);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            cancellationSource.Cancel();
+
+            // Allow for a small delay because error processing is a background task, just to give it time to trigger.
+
+            await Task.Delay(250);
+
+            mockProcessor
+                .Protected()
+                .Verify("OnProcessingErrorAsync", Times.Once(),
+                     ItExpr.Is<EventHubsException>(ex =>
+                         ex.IsTransient == false
+                         && ex.Message.Contains(expectedException.Message)
+                         && ex.InnerException == expectedException.InnerException),
+                     partition,
+                     Resources.OperationReadEvents,
+                     ItExpr.IsAny<CancellationToken>());
+
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.CreatePartitionProcessor" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task CreatePartitionProcessorProcessingTaskHonorsTheRetryPolicy()
         {
             using var cancellationSource = new CancellationTokenSource();
@@ -1445,61 +1733,6 @@ namespace Azure.Messaging.EventHubs.Tests
                  Times.Exactly(retryOptions.MaximumRetries + 1));
 
             cancellationSource.Cancel();
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.CreatePartitionProcessor" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public async Task CreatePartitionProcessorProcessingTaskReplacesTheConsumerOnFailure()
-        {
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
-            var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
-            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var mockConnection = Mock.Of<EventHubConnection>();
-            var mockConsumer = new Mock<SettableTransportConsumer>();
-            var badMockConsumer = new Mock<SettableTransportConsumer>();
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(5, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options) { CallBase = true };
-
-            mockConsumer
-                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Callback(() => completionSource.TrySetResult(true))
-                .ReturnsAsync(EmptyBatch);
-
-            badMockConsumer
-                .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .Throws(new DllNotFoundException());
-
-            mockProcessor
-                .Setup(processor => processor.CreateConnection())
-                .Returns(mockConnection);
-
-            mockProcessor
-                .SetupSequence(processor => processor.CreateConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), mockConnection, It.IsAny<EventProcessorOptions>(), It.IsAny<bool>()))
-                .Returns(badMockConsumer.Object)
-                .Returns(mockConsumer.Object);
-
-            var partitionProcessor = mockProcessor.Object.CreatePartitionProcessor(new EventProcessorPartition(), cancellationSource, EventPosition.Earliest);
-
-            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-            cancellationSource.Cancel();
-
-            mockProcessor
-                .Verify(processor => processor.CreateConsumer(
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<string>(),
-                    It.IsAny<EventPosition>(),
-                    mockConnection,
-                    It.IsAny<EventProcessorOptions>(),
-                    It.IsAny<bool>()),
-                Times.AtLeast(2));
         }
 
         /// <summary>

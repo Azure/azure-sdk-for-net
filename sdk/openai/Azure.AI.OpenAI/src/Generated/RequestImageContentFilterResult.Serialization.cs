@@ -14,13 +14,22 @@ namespace Azure.AI.OpenAI
     {
         void IJsonModel<RequestImageContentFilterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<RequestImageContentFilterResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RequestImageContentFilterResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (SerializedAdditionalRawData?.ContainsKey("profanity") != true && Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
@@ -36,46 +45,6 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("jailbreak"u8);
                 writer.WriteObjectValue(Jailbreak, options);
             }
-            if (SerializedAdditionalRawData?.ContainsKey("sexual") != true && Optional.IsDefined(Sexual))
-            {
-                writer.WritePropertyName("sexual"u8);
-                writer.WriteObjectValue(Sexual, options);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("violence") != true && Optional.IsDefined(Violence))
-            {
-                writer.WritePropertyName("violence"u8);
-                writer.WriteObjectValue(Violence, options);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("hate") != true && Optional.IsDefined(Hate))
-            {
-                writer.WritePropertyName("hate"u8);
-                writer.WriteObjectValue(Hate, options);
-            }
-            if (SerializedAdditionalRawData?.ContainsKey("self_harm") != true && Optional.IsDefined(SelfHarm))
-            {
-                writer.WritePropertyName("self_harm"u8);
-                writer.WriteObjectValue(SelfHarm, options);
-            }
-            if (SerializedAdditionalRawData != null)
-            {
-                foreach (var item in SerializedAdditionalRawData)
-                {
-                    if (ModelSerializationExtensions.IsSentinelValue(item.Value))
-                    {
-                        continue;
-                    }
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         RequestImageContentFilterResult IJsonModel<RequestImageContentFilterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
