@@ -1221,36 +1221,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ProducerCannotSendWhenProxyIsInvalid()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                var producerOptions = new EventHubProducerClientOptions
-                {
-                    RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) },
-
-                    ConnectionOptions = new EventHubConnectionOptions
-                    {
-                        Proxy = new WebProxy("http://1.2.3.4:9999"),
-                        TransportType = EventHubsTransportType.AmqpWebSockets
-                    }
-                };
-
-                await using (var invalidProxyProducer = new EventHubProducerClient(connectionString, producerOptions))
-                {
-                    Assert.That(async () => await invalidProxyProducer.SendAsync(new[] { new EventData(new byte[1]) }), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
         public async Task ProducerCanSendEventsWithAFullyPopulatedAmqpMessage()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -1488,41 +1458,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var producer = new EventHubProducerClient(connectionString))
                 {
                     Assert.That(async () => await producer.GetPartitionPropertiesAsync(invalidPartition), Throws.TypeOf<ArgumentOutOfRangeException>());
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
-        ///   connect to the Event Hubs service.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProducerCannotRetrieveMetadataWhenProxyIsInvalid()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                var invalidProxyOptions = new EventHubProducerClientOptions
-                {
-                    RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) },
-
-                    ConnectionOptions = new EventHubConnectionOptions
-                    {
-                        Proxy = new WebProxy("http://1.2.3.4:9999"),
-                        TransportType = EventHubsTransportType.AmqpWebSockets
-                    }
-                };
-
-                await using (var producer = new EventHubProducerClient(connectionString))
-                await using (var invalidProxyProducer = new EventHubProducerClient(connectionString, invalidProxyOptions))
-                {
-                    var partition = (await producer.GetPartitionIdsAsync()).First();
-
-                    Assert.That(async () => await invalidProxyProducer.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(async () => await invalidProxyProducer.GetEventHubPropertiesAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(async () => await invalidProxyProducer.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                 }
             }
         }

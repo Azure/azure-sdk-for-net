@@ -1,5 +1,11 @@
 # Release History
 
+## 5.11.6 (20205-02-11)
+
+### Bugs Fixed
+
+- Fixed an obscure edge case in the `EventHubBufferedProducer` client where an obscure race condition when flushing/enqueuing events concurrently with disposing the producer could cause a semaphore to be released inappropriately.  This error superseded the `TaskCanceledException` that should have been surfaced.
+
 ## 5.11.5 (2024-07-31)
 
 ### Other Changes

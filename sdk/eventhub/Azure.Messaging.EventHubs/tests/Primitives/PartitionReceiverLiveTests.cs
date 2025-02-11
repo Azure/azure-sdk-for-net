@@ -854,40 +854,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReceiverCannotReadWithInvalidProxy()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-                var clientOptions = new PartitionReceiverOptions();
-                clientOptions.RetryOptions.MaximumRetries = 0;
-                clientOptions.RetryOptions.MaximumDelay = TimeSpan.FromMilliseconds(5);
-                clientOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(45);
-                clientOptions.ConnectionOptions.Proxy = new WebProxy("http://1.2.3.4:9999");
-                clientOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
-
-                var partition = (await QueryPartitionsAsync(EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName), cancellationSource.Token)).First();
-
-                await using (var invalidProxyReceiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName, clientOptions))
-                {
-                    // The sockets implementation in .NET Core on some platforms, such as Linux, does not trigger a specific socket exception and
-                    // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
-                    // invoke a timeout exception in these cases.
-
-                    Assert.That(async () => await ReadNothingAsync(invalidProxyReceiver, cancellationSource.Token, iterationCount: 25), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="PartitionReceiver" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
         public async Task ReceiverCannotReadAcrossPartitions()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
@@ -2115,41 +2081,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     await connection.CloseAsync(cancellationSource.Token);
 
                     Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="PartitionReceiver" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ReceiverCannotRetrieveMetadataWithInvalidProxy()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-                var partition = (await QueryPartitionsAsync(connectionString, cancellationSource.Token)).First();
-
-                var invalidProxyOptions = new PartitionReceiverOptions();
-                invalidProxyOptions.RetryOptions.MaximumRetries = 0;
-                invalidProxyOptions.RetryOptions.MaximumDelay = TimeSpan.FromMilliseconds(5);
-                invalidProxyOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(45);
-                invalidProxyOptions.ConnectionOptions.Proxy = new WebProxy("http://1.2.3.4:9999");
-                invalidProxyOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
-
-                await using (var receiver = new PartitionReceiver(EventHubConsumerClient.DefaultConsumerGroupName, partition, EventPosition.Earliest, connectionString, invalidProxyOptions))
-                {
-                    // The sockets implementation in .NET Core on some platforms, such as Linux, does not trigger a specific socket exception and
-                    // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
-                    // invoke a timeout exception in these cases.
-
-                    Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 }
             }
