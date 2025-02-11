@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Mail;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Execution;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -22,6 +20,7 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIProject
         // In future we may want to upload file to Azure here.
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
+
         AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
         #region Snippet:CreateVectorStoreBlob

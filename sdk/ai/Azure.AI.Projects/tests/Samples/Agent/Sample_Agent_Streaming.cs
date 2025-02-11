@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests
@@ -16,9 +17,10 @@ namespace Azure.AI.Projects.Tests
         {
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
             AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+            var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
             Response<Agent> agentResponse = await client.CreateAgentAsync(
-                model: "gpt-4-1106-preview",
+                model: modelName,
                 name: "My Friendly Test Assistant",
                 instructions: "You politely help with math questions. Use the code interpreter tool when asked to visualize numbers.",
                 tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });

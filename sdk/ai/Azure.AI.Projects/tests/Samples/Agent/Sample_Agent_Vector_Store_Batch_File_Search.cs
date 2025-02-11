@@ -4,13 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Mail;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Execution;
 
 namespace Azure.AI.Projects.Tests;
 

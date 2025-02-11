@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -19,6 +20,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIProjectsTestEnviron
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         #region Snippet:UploadAgentFilesToUse
         // Upload a file and wait for it to be processed
@@ -46,7 +48,7 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIProjectsTestEnviron
 
         // Create an agent with toolResources and process assistant run
         Response<Agent> agentResponse = await client.CreateAgentAsync(
-                model: "gpt-4-1106-preview",
+                model: modelName,
                 name: "SDK Test Agent - Retrieval",
                 instructions: "You are a helpful agent that can help fetch data from files you know about.",
                 tools: new List<ToolDefinition> { new FileSearchToolDefinition() },

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -18,6 +19,7 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
     public async Task BingGroundingExample()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         var clientOptions = new AIProjectClientOptions();
 
@@ -37,7 +39,7 @@ public partial class Sample_Agent_Bing_Grounding : SamplesBase<AIProjectsTestEnv
         BingGroundingToolDefinition bingGroundingTool = new BingGroundingToolDefinition(connectionList);
 
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-           model: "gpt-4-1106-preview",
+           model: modelName,
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: new List<ToolDefinition> { bingGroundingTool });
