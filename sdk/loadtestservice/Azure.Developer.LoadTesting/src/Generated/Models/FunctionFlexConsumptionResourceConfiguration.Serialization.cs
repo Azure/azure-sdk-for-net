@@ -36,8 +36,11 @@ namespace Azure.Developer.LoadTesting.Models
 
             writer.WritePropertyName("instanceMemoryMB"u8);
             writer.WriteNumberValue(InstanceMemoryMB);
-            writer.WritePropertyName("httpConcurrency"u8);
-            writer.WriteNumberValue(HttpConcurrency);
+            if (Optional.IsDefined(HttpConcurrency))
+            {
+                writer.WritePropertyName("httpConcurrency"u8);
+                writer.WriteNumberValue(HttpConcurrency.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,7 +79,7 @@ namespace Azure.Developer.LoadTesting.Models
                 return null;
             }
             long instanceMemoryMB = default;
-            long httpConcurrency = default;
+            long? httpConcurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,6 +91,10 @@ namespace Azure.Developer.LoadTesting.Models
                 }
                 if (property.NameEquals("httpConcurrency"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     httpConcurrency = property.Value.GetInt64();
                     continue;
                 }

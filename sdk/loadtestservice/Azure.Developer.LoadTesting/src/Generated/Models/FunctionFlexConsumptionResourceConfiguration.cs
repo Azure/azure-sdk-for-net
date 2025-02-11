@@ -47,18 +47,16 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="FunctionFlexConsumptionResourceConfiguration"/>. </summary>
         /// <param name="instanceMemoryMB"> Memory size of the instance. Supported values are 2048, 4096. </param>
-        /// <param name="httpConcurrency"> HTTP Concurrency for the function app. </param>
-        public FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB, long httpConcurrency)
+        public FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB)
         {
             InstanceMemoryMB = instanceMemoryMB;
-            HttpConcurrency = httpConcurrency;
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionFlexConsumptionResourceConfiguration"/>. </summary>
         /// <param name="instanceMemoryMB"> Memory size of the instance. Supported values are 2048, 4096. </param>
         /// <param name="httpConcurrency"> HTTP Concurrency for the function app. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB, long httpConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FunctionFlexConsumptionResourceConfiguration(long instanceMemoryMB, long? httpConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InstanceMemoryMB = instanceMemoryMB;
             HttpConcurrency = httpConcurrency;
@@ -73,6 +71,6 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Memory size of the instance. Supported values are 2048, 4096. </summary>
         public long InstanceMemoryMB { get; set; }
         /// <summary> HTTP Concurrency for the function app. </summary>
-        public long HttpConcurrency { get; set; }
+        public long? HttpConcurrency { get; set; }
     }
 }
