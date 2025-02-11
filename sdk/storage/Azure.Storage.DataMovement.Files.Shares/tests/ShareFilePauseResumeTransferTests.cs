@@ -60,23 +60,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         protected override StorageResource CreateDestinationStorageResourceItem(
             string fileName,
-            ShareClient container)
-        {
-            ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(fileName);
-            return ShareFilesStorageResourceProvider.FromClient(fileClient);
-        }
-
-        // potentially this can be refactored into CreateDestinationStorageResourceItem
-        protected override StorageResource CreateDestinationStorageResourceItemWithOptions(
-            string fileName,
-            Metadata metadata,
-            string contentLanguage,
-            ShareClient container)
+            ShareClient container,
+            Metadata metadata = default,
+            string contentLanguage = default)
         {
             ShareFileStorageResourceOptions testOptions = new()
             {
                 FileMetadata = metadata,
-                ContentLanguage = new string[]{ contentLanguage },
+                ContentLanguage = contentLanguage is null ? null : new[] { contentLanguage }
             };
             ShareFileClient fileClient = container.GetRootDirectoryClient().GetFileClient(fileName);
             return ShareFilesStorageResourceProvider.FromClient(fileClient, testOptions);

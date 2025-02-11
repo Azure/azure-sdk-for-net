@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 extern alias DMBlobs;
 extern alias BaseBlobs;
 
@@ -61,17 +60,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         protected override StorageResource CreateDestinationStorageResourceItem(
             string blobName,
-            BlobContainerClient container)
-        {
-            BlockBlobClient destinationClient = container.GetBlockBlobClient(blobName);
-            return BlobsStorageResourceProvider.FromClient(destinationClient);
-        }
-
-        protected override StorageResource CreateDestinationStorageResourceItemWithOptions(
-            string blobName,
-            Metadata metadata,
-            string contentLanguage,
-            BlobContainerClient container)
+            BlobContainerClient container,
+            Metadata metadata = default,
+            string contentLanguage = default)
         {
             BlockBlobStorageResourceOptions testOptions = new()
             {
@@ -98,6 +89,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobUriBuilder builder = new BlobUriBuilder(uri);
             BlockBlobClient blobClient = container.GetBlockBlobClient(builder.BlobName);
+            if (!await blobClient.ExistsAsync())
+            {
+                throw new FileNotFoundException($"Blob not found: {uri}");
+            }
 
             MemoryStream stream = new MemoryStream();
             await blobClient.DownloadToAsync(stream);
