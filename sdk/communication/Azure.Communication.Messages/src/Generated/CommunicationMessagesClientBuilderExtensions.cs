@@ -12,7 +12,7 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="NotificationMessagesClient"/>, <see cref="MessageTemplateClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="NotificationMessagesClient"/>, <see cref="MessageTemplateClient"/>, <see cref="ConversationManagementClient"/>, <see cref="ConversationMessagesClient"/> to client builder. </summary>
     public static partial class CommunicationMessagesClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>
@@ -53,6 +53,44 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>((options, cred) => new MessageTemplateClient(endpoint, cred, options));
         }
 
+        /// <summary> Registers a <see cref="ConversationManagementClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<ConversationManagementClient, CommunicationMessagesClientOptions> AddConversationManagementClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ConversationManagementClient, CommunicationMessagesClientOptions>((options) => new ConversationManagementClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="ConversationManagementClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        public static IAzureClientBuilder<ConversationManagementClient, CommunicationMessagesClientOptions> AddConversationManagementClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ConversationManagementClient, CommunicationMessagesClientOptions>((options, cred) => new ConversationManagementClient(endpoint, cred, options));
+        }
+
+        /// <summary> Registers a <see cref="ConversationMessagesClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<ConversationMessagesClient, CommunicationMessagesClientOptions> AddConversationMessagesClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<ConversationMessagesClient, CommunicationMessagesClientOptions>((options) => new ConversationMessagesClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="ConversationMessagesClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        public static IAzureClientBuilder<ConversationMessagesClient, CommunicationMessagesClientOptions> AddConversationMessagesClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<ConversationMessagesClient, CommunicationMessagesClientOptions>((options, cred) => new ConversationMessagesClient(endpoint, cred, options));
+        }
+
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
@@ -68,6 +106,22 @@ namespace Microsoft.Extensions.Azure
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<MessageTemplateClient, CommunicationMessagesClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="ConversationManagementClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<ConversationManagementClient, CommunicationMessagesClientOptions> AddConversationManagementClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<ConversationManagementClient, CommunicationMessagesClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="ConversationMessagesClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        public static IAzureClientBuilder<ConversationMessagesClient, CommunicationMessagesClientOptions> AddConversationMessagesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<ConversationMessagesClient, CommunicationMessagesClientOptions>(configuration);
         }
     }
 }

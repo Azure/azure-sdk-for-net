@@ -42,6 +42,6 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The text value. </summary>
-        public string Text { get; }
+        public string Text { get; set; }
     }
 }
