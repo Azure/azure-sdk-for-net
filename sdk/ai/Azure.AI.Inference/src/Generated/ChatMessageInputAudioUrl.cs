@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> The details of the audio url pointer. </summary>
+    /// <summary> The details of the audio url. </summary>
     internal partial class ChatMessageInputAudioUrl
     {
         /// <summary>
