@@ -178,13 +178,13 @@ function Get-ObjectKey {
 
   if ($Object -is [hashtable] -or $Object -is [System.Collections.Specialized.OrderedDictionary]) {
     $sortedEntries = $Object.GetEnumerator() | Sort-Object Name
-    $hashString = ($sortedEntries | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join ";"
+    $hashString = ($sortedEntries | ForEach-Object { "$($_.Key)=$(Get-ObjectKey $_.Value)" }) -join ";"
     return $hashString.GetHashCode()
   }
 
   elseif ($Object -is [PSCustomObject]) {
     $sortedProperties = $Object.PSObject.Properties | Sort-Object Name
-    $propertyString = ($sortedProperties | ForEach-Object { "$($_.Name)=$($_.Value)" }) -join ";"
+    $propertyString = ($sortedProperties | ForEach-Object { "$($_.Name)=$(Get-ObjectKey $_.Value)" }) -join ";"
     return $propertyString.GetHashCode()
   }
 
@@ -194,7 +194,12 @@ function Get-ObjectKey {
   }
 
   else {
-    return $Object.GetHashCode()
+    $parsedBool = $null
+    if ([bool]::TryParse($Object, [ref]$parsedBool)) {
+      return $parsedBool.GetHashCode()
+    } else {
+      return $Object.GetHashCode()
+    }
   }
 }
 

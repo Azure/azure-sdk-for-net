@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using Moq;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.Identity;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -22,6 +24,20 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public const string ShareProviderId = "share";
 
         private static byte[] GetBytes(StorageResourceCheckpointDetailsInternal checkpointDetails)
+        {
+            using MemoryStream stream = new();
+            checkpointDetails.SerializeInternal(stream);
+            return stream.ToArray();
+        }
+
+        private static byte[] GetBytesSource(ShareFileSourceCheckpointDetails checkpointDetails)
+        {
+            using MemoryStream stream = new();
+            checkpointDetails.SerializeInternal(stream);
+            return stream.ToArray();
+        }
+
+        private static byte[] GetBytesDestination(ShareFileDestinationCheckpointDetails checkpointDetails)
         {
             using MemoryStream stream = new();
             checkpointDetails.SerializeInternal(stream);
@@ -44,8 +60,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Setup(p => p.DestinationUri).Returns(new Uri(destinationPath));
             mock.Setup(p => p.SourceProviderId).Returns(sourceProviderId);
             mock.Setup(p => p.DestinationProviderId).Returns(destinationProviderId);
-            mock.Setup(p => p.SourceCheckpointDetails).Returns(GetBytes(sourceCheckpointDetails));
-            mock.Setup(p => p.DestinationCheckpointDetails).Returns(GetBytes(destinationCheckpointDetails));
+            mock.Setup(p => p.SourceCheckpointDetails).Returns(GetBytesSource(sourceCheckpointDetails));
+            mock.Setup(p => p.DestinationCheckpointDetails).Returns(GetBytesDestination(destinationCheckpointDetails));
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }

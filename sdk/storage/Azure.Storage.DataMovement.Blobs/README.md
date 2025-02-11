@@ -15,11 +15,9 @@ Azure Storage client libraries.
 
 ### Install the package
 
-Install the Azure Storage client library for .NET you'd like to use with
-[NuGet][nuget] and the `Azure.Storage.DataMovement.Blobs` client library will be included:
+Install the Azure Storage Data Movement Blobs client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement
 dotnet add package Azure.Storage.DataMovement.Blobs
 ```
 

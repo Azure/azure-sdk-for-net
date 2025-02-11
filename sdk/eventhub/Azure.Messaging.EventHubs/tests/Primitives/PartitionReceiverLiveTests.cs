@@ -622,16 +622,44 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     // Give the receiver a moment to ensure that it is established and then send events for it to read.
 
-                    await Task.Delay(250);
-                    await SendEventsAsync(scope.EventHubName, EventGenerator.CreateEvents(50), new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
+                    var sendTask = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            while (!cancellationSource.IsCancellationRequested)
+                            {
+                                await Task.Delay(150);
+                                await SendEventsAsync(scope.EventHubName, EventGenerator.CreateEvents(5), new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
+                            }
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // Expected
+                        }
+                    });
+
+                    while ((eventsRead < 1) && (!cancellationSource.IsCancellationRequested))
+                    {
+                        try
+                        {
+                            await Task.Delay(250, cancellationSource.Token);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // Expected
+                        }
+                    }
 
                     // Await reading of the events and validate that we were able to read at least one event.
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(eventsRead, Is.GreaterThanOrEqualTo(1), "At least one event should have been read.");
-                }
 
-                cancellationSource.Cancel();
+                    cancellationSource.Cancel();
+
+                    await readTask;
+                    await sendTask;
+                }
             }
         }
 
