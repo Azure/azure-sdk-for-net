@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_DomainTopicEventSubscriptionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainTopicEventSubscriptions_CreateOrUpdate.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/DomainTopicEventSubscriptions_CreateOrUpdate.json
             // this example is just showing the usage of "DomainTopicEventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this DomainTopicResource created on azure
             // for more information of creating DomainTopicResource, please refer to the document of DomainTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string domainName = "exampleDomain1";
             string topicName = "exampleDomainTopic1";
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_DomainTopicEventSubscriptionsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainTopicEventSubscriptions_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/DomainTopicEventSubscriptions_Get.json
             // this example is just showing the usage of "DomainTopicEventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this DomainTopicResource created on azure
             // for more information of creating DomainTopicResource, please refer to the document of DomainTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string domainName = "exampleDomain1";
             string topicName = "exampleDomainTopic1";
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_DomainTopicEventSubscriptionsList()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainTopicEventSubscriptions_List.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/DomainTopicEventSubscriptions_List.json
             // this example is just showing the usage of "DomainTopicEventSubscriptions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this DomainTopicResource created on azure
             // for more information of creating DomainTopicResource, please refer to the document of DomainTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string domainName = "exampleDomain1";
             string topicName = "exampleDomainTopic1";
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_DomainTopicEventSubscriptionsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainTopicEventSubscriptions_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/DomainTopicEventSubscriptions_Get.json
             // this example is just showing the usage of "DomainTopicEventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this DomainTopicResource created on azure
             // for more information of creating DomainTopicResource, please refer to the document of DomainTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string domainName = "exampleDomain1";
             string topicName = "exampleDomainTopic1";
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_DomainTopicEventSubscriptionsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/DomainTopicEventSubscriptions_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/DomainTopicEventSubscriptions_Get.json
             // this example is just showing the usage of "DomainTopicEventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this DomainTopicResource created on azure
             // for more information of creating DomainTopicResource, please refer to the document of DomainTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string domainName = "exampleDomain1";
             string topicName = "exampleDomainTopic1";
