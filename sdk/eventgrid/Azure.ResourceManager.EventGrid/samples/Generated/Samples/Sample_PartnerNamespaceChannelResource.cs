@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ChannelsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/Channels_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/Channels_Get.json
             // this example is just showing the usage of "Channels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceChannelResource created on azure
             // for more information of creating PartnerNamespaceChannelResource, please refer to the document of PartnerNamespaceChannelResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string partnerNamespaceName = "examplePartnerNamespaceName1";
             string channelName = "exampleChannelName1";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ChannelsDelete()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/Channels_Delete.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/Channels_Delete.json
             // this example is just showing the usage of "Channels_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceChannelResource created on azure
             // for more information of creating PartnerNamespaceChannelResource, please refer to the document of PartnerNamespaceChannelResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string partnerNamespaceName = "examplePartnerNamespaceName1";
             string channelName = "exampleEventChannelName1";
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ChannelsUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/Channels_Update.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/Channels_Update.json
             // this example is just showing the usage of "Channels_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceChannelResource created on azure
             // for more information of creating PartnerNamespaceChannelResource, please refer to the document of PartnerNamespaceChannelResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string partnerNamespaceName = "examplePartnerNamespaceName1";
             string channelName = "exampleChannelName1";
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFullUri_ChannelsGetFullUrl()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/Channels_GetFullUrl.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/Channels_GetFullUrl.json
             // this example is just showing the usage of "Channels_GetFullUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerNamespaceChannelResource created on azure
             // for more information of creating PartnerNamespaceChannelResource, please refer to the document of PartnerNamespaceChannelResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string partnerNamespaceName = "examplenamespace";
             string channelName = "examplechannel";
