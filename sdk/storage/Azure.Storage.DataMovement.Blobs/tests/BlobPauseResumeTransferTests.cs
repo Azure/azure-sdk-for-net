@@ -61,17 +61,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         protected override StorageResource CreateDestinationStorageResourceItem(
             string blobName,
-            BlobContainerClient container)
-        {
-            BlockBlobClient destinationClient = container.GetBlockBlobClient(blobName);
-            return BlobsStorageResourceProvider.FromClient(destinationClient);
-        }
-
-        protected override StorageResource CreateDestinationStorageResourceItemWithOptions(
-            string blobName,
-            Metadata metadata,
-            string contentLanguage,
-            BlobContainerClient container)
+            BlobContainerClient container,
+            Metadata metadata = default,
+            string contentLanguage = default)
         {
             BlockBlobStorageResourceOptions testOptions = new()
             {

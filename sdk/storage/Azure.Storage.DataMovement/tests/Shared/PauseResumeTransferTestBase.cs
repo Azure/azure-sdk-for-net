@@ -53,18 +53,14 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected abstract Task<StorageResource> CreateSourceStorageResourceItemAsync(
             long size,
-            string blobName,
+            string name,
             TContainerClient container);
 
         protected abstract StorageResource CreateDestinationStorageResourceItem(
             string name,
-            TContainerClient container);
-
-        protected abstract StorageResource CreateDestinationStorageResourceItemWithOptions(
-            string name,
-            Metadata metadata,
-            string contentLanguage,
-            TContainerClient container);
+            TContainerClient container,
+            Metadata metadata = default,
+            string contentLanguage = default);
 
         protected abstract Task AssertDestinationProperties(
             string name,
@@ -78,7 +74,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected abstract Task<StorageResource> CreateSourceStorageResourceContainerAsync(
             long size,
-            int blobCount,
+            int count,
             string directoryPath,
             TContainerClient container);
 
@@ -273,7 +269,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNullOrEmpty(destinationDirectoryPath, nameof(destinationDirectoryPath));
                 SourceResource ??= await CreateSourceStorageResourceContainerAsync(
                     size: size,
-                    blobCount: transferCount,
+                    count: transferCount,
                     directoryPath: GetNewContainerName(),
                     container: sourceContainer);
                 DestinationResource ??= LocalFilesStorageResourceProvider.FromDirectory(destinationDirectoryPath);
@@ -284,7 +280,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 SourceResource ??= await CreateSourceStorageResourceContainerAsync(
                     size: size,
-                    blobCount: transferCount,
+                    count: transferCount,
                     directoryPath: GetNewContainerName(),
                     container: sourceContainer);
                 DestinationResource ??= CreateDestinationStorageResourceContainer(destinationContainer);
@@ -734,12 +730,12 @@ namespace Azure.Storage.DataMovement.Tests
             if (transferType == TransferDirection.Upload)
             {
                 source = await CreateLocalFileSourceResourceAsync(size, localDirectory.DirectoryPath);
-                destination = CreateDestinationStorageResourceItemWithOptions(destName, metadata, contentLanguage, container.Container);
+                destination = CreateDestinationStorageResourceItem(destName, container.Container, metadata, contentLanguage);
             }
             else // Copy
             {
                 source = await CreateSourceStorageResourceItemAsync(size, GetNewItemName(), container.Container);
-                destination = CreateDestinationStorageResourceItemWithOptions(destName, metadata, contentLanguage, container.Container);
+                destination = CreateDestinationStorageResourceItem(destName, container.Container, metadata, contentLanguage);
             }
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination);
