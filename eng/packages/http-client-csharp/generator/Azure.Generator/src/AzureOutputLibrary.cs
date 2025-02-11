@@ -16,6 +16,7 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureOutputLibrary : ScmOutputLibrary
     {
+        //TODO: Move these to InputLibrary instead
         private Dictionary<RequestPath, OperationSet> _pathToOperationSetMap;
         private Dictionary<string, HashSet<OperationSet>> _specNameToOperationSetsMap;
         private Dictionary<string, InputModelType> _inputTypeMap;
