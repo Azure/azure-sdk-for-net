@@ -4,11 +4,6 @@
 
 ### Features Added
 - Added all operations related to NetworkSecurityPerimeter resource type and it's proxy resource types
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.10.0 (2024-12-20)
 
