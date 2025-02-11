@@ -10,7 +10,7 @@ public-clients: true
 tag: package-phonenumber-2025-02-11
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/dfb05962145923b65a277a1c48458983d227e04b/specification/communication/data-plane/PhoneNumbers/readme.md
+    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/a3d9c16f14fbfa814d6315a4972517cec77c6bfb/specification/communication/data-plane/PhoneNumbers/readme.md
 title: Phone numbers
 payload-flattening-threshold: 3
 generation1-convenience-client: true
