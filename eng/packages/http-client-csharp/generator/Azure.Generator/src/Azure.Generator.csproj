@@ -24,7 +24,7 @@
 			<SourceDir Include="$(OutputPath)**\*.*" />
 		</ItemGroup>
 		<Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
-    <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.Generator.CSharp.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
+    <Copy SourceFiles="..\..\..\node_modules\@typespec\http-client-csharp\dist\generator\Microsoft.TypeSpec.Generator.runtimeconfig.json" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator" />
 	</Target>
 
 	<!-- Include shared code from Azure.Core -->
