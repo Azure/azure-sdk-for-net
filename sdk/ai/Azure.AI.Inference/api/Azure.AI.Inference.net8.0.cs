@@ -7,6 +7,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.ChatCompletionsToolCall ChatCompletionsToolCall(string id = null, Azure.AI.Inference.ChatCompletionsToolCallType type = default(Azure.AI.Inference.ChatCompletionsToolCallType), Azure.AI.Inference.FunctionCall function = null) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsToolDefinition ChatCompletionsToolDefinition(Azure.AI.Inference.ChatCompletionsToolDefinitionType type = default(Azure.AI.Inference.ChatCompletionsToolDefinitionType), Azure.AI.Inference.FunctionDefinition function = null) { throw null; }
         public static Azure.AI.Inference.ChatMessageTextContentItem ChatMessageTextContentItem(string text = null) { throw null; }
+        public static Azure.AI.Inference.ChatRequestDeveloperMessage ChatRequestDeveloperMessage(string content = null) { throw null; }
         public static Azure.AI.Inference.ChatRequestSystemMessage ChatRequestSystemMessage(string content = null) { throw null; }
         public static Azure.AI.Inference.ChatRequestToolMessage ChatRequestToolMessage(string content = null, string toolCallId = null) { throw null; }
         public static Azure.AI.Inference.ChatResponseMessage ChatResponseMessage(Azure.AI.Inference.ChatRole role = default(Azure.AI.Inference.ChatRole), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatCompletionsToolCall> toolCalls = null) { throw null; }
@@ -380,6 +381,17 @@ namespace Azure.AI.Inference
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestAssistantMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestAssistantMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ChatRequestDeveloperMessage : Azure.AI.Inference.ChatRequestMessage, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestDeveloperMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestDeveloperMessage>
+    {
+        public ChatRequestDeveloperMessage(string content) { }
+        public string Content { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatRequestDeveloperMessage System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatRequestDeveloperMessage System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class ChatRequestMessage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestMessage>
     {
         protected ChatRequestMessage() { }
@@ -448,6 +460,7 @@ namespace Azure.AI.Inference
         private readonly int _dummyPrimitive;
         public ChatRole(string value) { throw null; }
         public static Azure.AI.Inference.ChatRole Assistant { get { throw null; } }
+        public static Azure.AI.Inference.ChatRole Developer { get { throw null; } }
         public static Azure.AI.Inference.ChatRole System { get { throw null; } }
         public static Azure.AI.Inference.ChatRole Tool { get { throw null; } }
         public static Azure.AI.Inference.ChatRole User { get { throw null; } }
