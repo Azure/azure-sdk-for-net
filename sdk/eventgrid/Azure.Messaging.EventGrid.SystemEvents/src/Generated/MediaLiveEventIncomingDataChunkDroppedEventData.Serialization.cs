@@ -49,11 +49,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("bitrate"u8);
                 writer.WriteNumberValue(Bitrate.Value);
             }
-            if (Optional.IsDefined(Timescale))
-            {
-                writer.WritePropertyName("timescale"u8);
-                writer.WriteStringValue(Timescale);
-            }
             if (Optional.IsDefined(ResultCode))
             {
                 writer.WritePropertyName("resultCode"u8);
@@ -104,7 +99,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string timestamp = default;
             string trackType = default;
             long? bitrate = default;
-            string timescale = default;
             string resultCode = default;
             string trackName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,11 +124,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     bitrate = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("timescale"u8))
-                {
-                    timescale = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("resultCode"u8))
                 {
                     resultCode = property.Value.GetString();
@@ -155,7 +144,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 timestamp,
                 trackType,
                 bitrate,
-                timescale,
                 resultCode,
                 trackName,
                 serializedAdditionalRawData);
