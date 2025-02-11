@@ -8,8 +8,6 @@
 
 - Fixed an issue where an error response from the Service Bus administration service without a body was incorrectly parsed, resulting in a null argument exception obscuring the actual failure response. ([#47517](https://github.com/Azure/azure-sdk-for-net/issues/47517))
 
-### Other Changes
-
 ## 7.18.3 (2025-01-17)
 
 ### Bugs Fixed
