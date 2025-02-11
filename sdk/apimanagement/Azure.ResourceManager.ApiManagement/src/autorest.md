@@ -175,7 +175,6 @@ rename-mapping:
   AccessIdName.access: TenantAccess
   AccessIdName.gitAccess: TenantGitAccess
   ApiContract: Api
-  ApiCollection: ApiListResult
   NetworkStatusContractByLocation: NetworkStatusContractWithLocation
   ApiManagementServiceResource: ApiManagementService
   ApiReleaseContract: ApiRelease

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (Unreleased)
+## 1.3.0 (2025-02-12)
 
 ### Features Added
 
@@ -14,12 +14,6 @@
     - Added OperationStatus Operations which follow the Azure-AsyncOperation flow
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.3.0-beta.1 (2024-09-09)
 
