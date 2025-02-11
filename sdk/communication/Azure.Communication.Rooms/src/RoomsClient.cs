@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+#pragma warning disable AZC0007
 
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,7 @@ namespace Azure.Communication.Rooms
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="options"></param>
+
         public RoomsClient(string connectionString, RoomsClientOptions options)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
