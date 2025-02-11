@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -26,6 +27,8 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIProjectsTestEnvironmen
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
+
         AgentsClient client = new(connectionString, new DefaultAzureCredential());
         var file_path = GetFile();
 
@@ -39,7 +42,7 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIProjectsTestEnvironmen
         );
 
         Response<Agent> agentResponse = await client.CreateAgentAsync(
-            model: "gpt-4",
+            model: modelName,
             name: "azure-function-agent-foo",
             instructions: "You are a helpful assistant.",
             tools: new List<ToolDefinition> { openapiTool }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -19,6 +20,8 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
+
         AgentsClient client = new(connectionString, new DefaultAzureCredential());
 
         #region Snippet:AzureFunctionsDefineFunctionTools
@@ -62,7 +65,7 @@ public partial class Sample_Agent_Azure_Functions : SamplesBase<AIProjectsTestEn
 
         #region Snippet:AzureFunctionsCreateAgentWithFunctionTools
         Response<Agent> agentResponse = await client.CreateAgentAsync(
-            model: "gpt-4",
+            model: modelName,
             name: "azure-function-agent-foo",
                 instructions: "You are a helpful support agent. Use the provided function any "
                 + "time the prompt contains the string 'What would foo say?'. When you invoke "

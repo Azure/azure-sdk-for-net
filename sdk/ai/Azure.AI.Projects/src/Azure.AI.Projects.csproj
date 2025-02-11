@@ -16,6 +16,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.AI.Inference" />
+    <PackageReference Include="Azure.AI.Agents" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -29,5 +30,9 @@
 
   <ItemGroup>
     <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Custom\Connection\" />
   </ItemGroup>
 </Project>

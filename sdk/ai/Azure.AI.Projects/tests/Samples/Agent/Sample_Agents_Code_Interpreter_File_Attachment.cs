@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.AI.Agents;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;

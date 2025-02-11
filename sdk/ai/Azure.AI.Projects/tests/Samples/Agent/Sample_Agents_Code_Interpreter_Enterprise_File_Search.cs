@@ -3,11 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Agents;
 
 namespace Azure.AI.Projects.Tests;
 

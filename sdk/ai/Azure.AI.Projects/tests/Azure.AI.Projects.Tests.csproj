@@ -1,29 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-    <!-- We don't care about XML doc comments on test types and members -->
+    <!--We don't care about XML doc comments on test types and members-->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="SessionRecords\**" />
-    <EmbeddedResource Remove="SessionRecords\**" />
-    <None Remove="SessionRecords\**" />
-  </ItemGroup>
 
-  <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\Azure.AI.Agents\src\Azure.AI.Agents.csproj" />
     <ProjectReference Include="..\src\Azure.AI.Projects.csproj" />
+    <PackageReference Include="..\src\Azure.AI.Agents.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
+    <PackageReference Include="Azure.Identity" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
   </ItemGroup>
-
 </Project>
