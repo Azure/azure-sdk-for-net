@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
+using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
@@ -67,9 +68,12 @@ namespace Azure.ResourceManager.Compute.Tests
         [TestCase(null)]
         [TestCase(true)]
         [TestCase(false)]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
         public async Task SetTags(bool? useTagResource)
         {
+            if ((useTagResource ?? true) && !ApiVersionHelper.IsApiVersionGreaterThan(ApiVersion, ApiVersionHelper.ApiVersionTagLroAsynOperation))
+            {
+                Assert.Ignore($"Skipping test for API version {ApiVersion}");
+            }
             SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("testDisk-");
             var disk = await CreateDiskAsync(name);
