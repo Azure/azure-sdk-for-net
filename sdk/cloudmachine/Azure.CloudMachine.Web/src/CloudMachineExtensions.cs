@@ -29,7 +29,7 @@ public static class CloudMachineExtensions
     /// <param name="application"></param>
     public static void MapCloudMachineApplication<T>(this WebApplication application) where T : class
     {
-        CloudMachineClient cm = application.Services.GetRequiredService<CloudMachineClient>();
+        ProjectClient cm = application.Services.GetRequiredService<ProjectClient>();
         T service = (T)Activator.CreateInstance(typeof(T), cm)!;
         application.Map<T>(service);
     }

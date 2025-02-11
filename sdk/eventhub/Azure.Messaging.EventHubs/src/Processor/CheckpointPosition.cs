@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Core;
 
@@ -108,6 +106,17 @@ namespace Azure.Messaging.EventHubs.Processor
 
             SequenceNumber = sequenceNumber;
             OffsetString = offsetString;
+        }
+
+        /// <summary>
+        ///   Initializes an empty <see cref="CheckpointPosition"/> which can be used
+        ///   to clear existing checkpoint data.
+        /// </summary>
+        ///
+        public CheckpointPosition()
+        {
+            SequenceNumber = long.MinValue;
+            OffsetString = null;
         }
 
         /// <summary>

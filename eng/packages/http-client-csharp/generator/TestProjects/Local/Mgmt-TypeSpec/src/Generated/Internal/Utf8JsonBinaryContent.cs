@@ -25,6 +25,7 @@ namespace MgmtTypeSpec
             JsonWriter = new Utf8JsonWriter(_stream);
         }
 
+        /// <summary> Gets the JsonWriter. </summary>
         public Utf8JsonWriter JsonWriter { get; }
 
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)

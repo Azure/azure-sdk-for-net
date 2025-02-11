@@ -48,7 +48,7 @@ namespace Azure.CloudMachine.OpenAI
         public string ModelVersion { get { throw null; } }
         protected override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
         protected override void EmitFeatures(Azure.CloudMachine.Core.FeatureCollection features, string cmId) { }
-        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure cm) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VectorbaseEntry
