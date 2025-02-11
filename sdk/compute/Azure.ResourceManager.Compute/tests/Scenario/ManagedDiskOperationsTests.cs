@@ -70,10 +70,6 @@ namespace Azure.ResourceManager.Compute.Tests
         [TestCase(false)]
         public async Task SetTags(bool? useTagResource)
         {
-            if ((useTagResource ?? true) && !ApiVersionHelper.IsApiVersionGreaterThan(ApiVersion, ApiVersionHelper.ApiVersionTagLroAsynOperation))
-            {
-                Assert.Ignore($"Skipping test for API version {ApiVersion}");
-            }
             SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("testDisk-");
             var disk = await CreateDiskAsync(name);
