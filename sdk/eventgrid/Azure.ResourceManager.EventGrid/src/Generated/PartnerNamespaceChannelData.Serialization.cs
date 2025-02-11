@@ -50,11 +50,6 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("partnerTopicInfo"u8);
                 writer.WriteObjectValue(PartnerTopicInfo, options);
             }
-            if (Optional.IsDefined(PartnerDestinationInfo))
-            {
-                writer.WritePropertyName("partnerDestinationInfo"u8);
-                writer.WriteObjectValue(PartnerDestinationInfo, options);
-            }
             if (Optional.IsDefined(MessageForActivation))
             {
                 writer.WritePropertyName("messageForActivation"u8);
@@ -104,7 +99,6 @@ namespace Azure.ResourceManager.EventGrid
             SystemData systemData = default;
             PartnerNamespaceChannelType? channelType = default;
             PartnerTopicInfo partnerTopicInfo = default;
-            PartnerDestinationInfo partnerDestinationInfo = default;
             string messageForActivation = default;
             PartnerNamespaceChannelProvisioningState? provisioningState = default;
             PartnerTopicReadinessState? readinessState = default;
@@ -164,15 +158,6 @@ namespace Azure.ResourceManager.EventGrid
                             partnerTopicInfo = PartnerTopicInfo.DeserializePartnerTopicInfo(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("partnerDestinationInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            partnerDestinationInfo = PartnerDestinationInfo.DeserializePartnerDestinationInfo(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("messageForActivation"u8))
                         {
                             messageForActivation = property0.Value.GetString();
@@ -221,7 +206,6 @@ namespace Azure.ResourceManager.EventGrid
                 systemData,
                 channelType,
                 partnerTopicInfo,
-                partnerDestinationInfo,
                 messageForActivation,
                 provisioningState,
                 readinessState,
@@ -322,21 +306,6 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     builder.Append("    partnerTopicInfo: ");
                     BicepSerializationHelpers.AppendChildObject(builder, PartnerTopicInfo, options, 4, false, "    partnerTopicInfo: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDestinationInfo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    partnerDestinationInfo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartnerDestinationInfo))
-                {
-                    builder.Append("    partnerDestinationInfo: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, PartnerDestinationInfo, options, 4, false, "    partnerDestinationInfo: ");
                 }
             }
 

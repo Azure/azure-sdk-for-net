@@ -56,7 +56,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="EventGridDomainPatch"/>. </summary>
         /// <param name="tags"> Tags of the domains resource. </param>
         /// <param name="identity"> Identity information for the resource. </param>
-        /// <param name="sku"> The Sku pricing tier for the domain. </param>
         /// <param name="publicNetworkAccess">
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules" /&gt;
@@ -85,11 +84,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="dataResidencyBoundary"> The data residency boundary for the domain. </param>
         /// <param name="eventTypeInfo"> The eventTypeInfo for the domain. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridDomainPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ResourceSku sku, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, PartnerTopicEventTypeInfo eventTypeInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventGridDomainPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, PartnerTopicEventTypeInfo eventTypeInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
-            Sku = sku;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIPRules = inboundIPRules;
             MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
@@ -107,21 +105,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Identity information for the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The Sku pricing tier for the domain. </summary>
-        internal ResourceSku Sku { get; set; }
-        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
-        [WirePath("sku.name")]
-        public EventGridSku? SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new ResourceSku();
-                Sku.Name = value;
-            }
-        }
-
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules" /&gt;

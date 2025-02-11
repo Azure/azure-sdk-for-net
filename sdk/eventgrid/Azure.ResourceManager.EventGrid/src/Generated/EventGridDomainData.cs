@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The Sku pricing tier for the Event Grid Domain resource. </param>
         /// <param name="identity"> Identity information for the Event Grid Domain resource. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the Event Grid Domain Resource. </param>
@@ -109,9 +108,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </param>
         /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridDomainProvisioningState? provisioningState, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridInputSchema? inputSchema, PartnerTopicEventTypeInfo eventTypeInfo, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridDomainProvisioningState? provisioningState, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridInputSchema? inputSchema, PartnerTopicEventTypeInfo eventTypeInfo, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Sku = sku;
             Identity = identity;
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
@@ -133,21 +131,6 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of <see cref="EventGridDomainData"/> for deserialization. </summary>
         internal EventGridDomainData()
         {
-        }
-
-        /// <summary> The Sku pricing tier for the Event Grid Domain resource. </summary>
-        internal ResourceSku Sku { get; set; }
-        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
-        [WirePath("sku.name")]
-        public EventGridSku? SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new ResourceSku();
-                Sku.Name = value;
-            }
         }
 
         /// <summary> Identity information for the Event Grid Domain resource. </summary>

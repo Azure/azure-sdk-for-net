@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TopicEventSubscriptionsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/TopicEventSubscriptions_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/TopicEventSubscriptions_Get.json
             // this example is just showing the usage of "TopicEventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this TopicEventSubscriptionResource created on azure
             // for more information of creating TopicEventSubscriptionResource, please refer to the document of TopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string topicName = "exampleTopic1";
             string eventSubscriptionName = "examplesubscription1";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_TopicEventSubscriptionsDelete()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/TopicEventSubscriptions_Delete.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/TopicEventSubscriptions_Delete.json
             // this example is just showing the usage of "TopicEventSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this TopicEventSubscriptionResource created on azure
             // for more information of creating TopicEventSubscriptionResource, please refer to the document of TopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
-            string topicName = "exampleTopic1";
-            string eventSubscriptionName = "examplesubscription1";
+            string topicName = "exampleTopic";
+            string eventSubscriptionName = "examplesubscription";
             ResourceIdentifier topicEventSubscriptionResourceId = TopicEventSubscriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, topicName, eventSubscriptionName);
             TopicEventSubscriptionResource topicEventSubscription = client.GetTopicEventSubscriptionResource(topicEventSubscriptionResourceId);
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_TopicEventSubscriptionsUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/TopicEventSubscriptions_Update.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/TopicEventSubscriptions_Update.json
             // this example is just showing the usage of "TopicEventSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this TopicEventSubscriptionResource created on azure
             // for more information of creating TopicEventSubscriptionResource, please refer to the document of TopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string topicName = "exampleTopic1";
             string eventSubscriptionName = "exampleEventSubscriptionName1";
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDeliveryAttributes_TopicEventSubscriptionsGetDeliveryAttributes()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/TopicEventSubscriptions_GetDeliveryAttributes.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/TopicEventSubscriptions_GetDeliveryAttributes.json
             // this example is just showing the usage of "TopicEventSubscriptions_GetDeliveryAttributes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this TopicEventSubscriptionResource created on azure
             // for more information of creating TopicEventSubscriptionResource, please refer to the document of TopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string topicName = "exampleTopic1";
             string eventSubscriptionName = "examplesubscription1";
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFullUri_TopicEventSubscriptionsGetFullUrl()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/TopicEventSubscriptions_GetFullUrl.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2025-02-15/examples/TopicEventSubscriptions_GetFullUrl.json
             // this example is just showing the usage of "TopicEventSubscriptions_GetFullUri" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this TopicEventSubscriptionResource created on azure
             // for more information of creating TopicEventSubscriptionResource, please refer to the document of TopicEventSubscriptionResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
             string resourceGroupName = "examplerg";
             string topicName = "exampleTopic1";
             string eventSubscriptionName = "examplesubscription1";
