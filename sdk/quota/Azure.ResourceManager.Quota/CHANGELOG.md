@@ -1,9 +1,9 @@
 # Release History
 
-## 2.0.0 
+## 1.1.0-beta.4 (2025-02-28)
 
 ### Features Added
-- Upgraded api-version tag from 'package-2024-12-18-preview' to 'package-2025-03-01'
+- Upgraded api-version tag from 'package-2024-12-18-preview' to 'package-2025-03-01'.
 ### Breaking Changes
 
 ### Bugs Fixed
