@@ -7,9 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <ProjectReference Include="..\..\Azure.AI.Agents\src\Azure.AI.Agents.csproj" />
     <ProjectReference Include="..\src\Azure.AI.Projects.csproj" />
-    <PackageReference Include="..\src\Azure.AI.Agents.csproj" />
+    <PackageReference Include="Azure.AI.Agents" />
   </ItemGroup>
 
   <ItemGroup>
