@@ -39,6 +39,7 @@
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
+    "sdk/agricultureplatform/*/api/*.cs",
     "sdk/communication/*/api/*.cs",
     "sdk/cosmosdb/*/api/*.cs",
     "sdk/digitaltwins/*/api/*.cs",
@@ -176,7 +177,10 @@
     "westcentralus",
     "westus",
     "Wmem",
-    "xunit"
+    "xunit",
+    "Agri",
+    "agri",
+    "Mobo"
   ],
   "overrides": [
     {
