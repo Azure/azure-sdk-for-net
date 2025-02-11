@@ -184,18 +184,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Validate(assistant);
 
-        Stopwatch stopwatch = Stopwatch.StartNew();
-        void Print(string message) => Console.WriteLine($"[{stopwatch.ElapsedMilliseconds,6}] {message}");
-
-        Print(" >>> Beginning call ... ");
-
         ThreadCreationOptions thirdOpt = new()
         {
             InitialMessages = { new(MessageRole.User, ["What should I wear outside right now?"]), },
         };
         AsyncCollectionResult<StreamingUpdate> asyncResults = client.CreateThreadAndRunStreamingAsync(assistant.Id, thirdOpt);
-
-        Print(" >>> Starting enumeration ...");
 
         ThreadRun run = null;
 
@@ -205,25 +198,19 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             List<ToolOutput> toolOutputs = new();
             await foreach (StreamingUpdate update in asyncResults)
             {
-                string message = update.UpdateKind.ToString();
-
                 if (update is RunUpdate runUpdate)
                 {
-                    message += $" run_id:{runUpdate.Value.Id}";
                     run = runUpdate.Value;
                 }
                 if (update is RequiredActionUpdate requiredActionUpdate)
                 {
                     Assert.That(requiredActionUpdate.FunctionName, Is.EqualTo(getWeatherTool.FunctionName));
                     Assert.That(requiredActionUpdate.GetThreadRun().Status, Is.EqualTo(RunStatus.RequiresAction));
-                    message += $" {requiredActionUpdate.FunctionName}";
                     toolOutputs.Add(new(requiredActionUpdate.ToolCallId, "warm and sunny"));
                 }
                 if (update is MessageContentUpdate contentUpdate)
                 {
-                    message += $" {contentUpdate.Text}";
                 }
-                Print(message);
             }
             if (toolOutputs.Count > 0)
             {
@@ -417,8 +404,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.Multiple(() =>
         {
             Assert.That(details?.ToolCalls.Count, Is.GreaterThan(0));
-            Assert.That(details.ToolCalls[0].ToolKind, Is.EqualTo(RunStepToolCallKind.CodeInterpreter));
-            Assert.That(details.ToolCalls[0].ToolCallId, Is.Not.Null.Or.Empty);
+            Assert.That(details.ToolCalls[0].Kind, Is.EqualTo(RunStepToolCallKind.CodeInterpreter));
+            Assert.That(details.ToolCalls[0].Id, Is.Not.Null.Or.Empty);
             Assert.That(details.ToolCalls[0].CodeInterpreterInput, Is.Not.Null.Or.Empty);
             Assert.That(details.ToolCalls[0].CodeInterpreterOutputs?.Count, Is.GreaterThan(0));
             Assert.That(details.ToolCalls[0].CodeInterpreterOutputs[0].ImageFileId, Is.Not.Null.Or.Empty);
@@ -471,7 +458,6 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 AdditionalInstructions = "Call provided tools when appropriate.",
             });
         Validate(run);
-        Console.WriteLine($" Run status right after creation: {run.Status}");
 
         // TODO FIXME: The underlying OpenAI code doesn't consider the "requires_action" status to be terminal even though it is.
         //             Work around this here
@@ -607,11 +593,11 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             numThreads++;
             foreach (MessageContent content in message.Content)
             {
-                Console.WriteLine(content.Text);
                 hasCake |= content.Text?.ToLowerInvariant().Contains("cake") == true;
                 foreach (TextAnnotation annotation in content.TextAnnotations)
                 {
-                    Console.WriteLine($"  --> From file: {annotation.InputFileId}, replacement: {annotation.TextToReplace}");
+                    Assert.That(annotation.InputFileId, Is.Not.Null.And.Not.Empty);
+                    Assert.That(annotation.TextToReplace, Is.Not.Null.And.Not.Empty);
                 }
             }
         }

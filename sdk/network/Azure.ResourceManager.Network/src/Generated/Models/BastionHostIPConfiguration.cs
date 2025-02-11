@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> Reference of the subnet resource. </param>
-        /// <param name="publicIPAddress"> Reference of the PublicIP resource. </param>
+        /// <param name="publicIPAddress"> Reference of the PublicIP resource. Null for private only bastion. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host IP configuration resource. </param>
         /// <param name="privateIPAllocationMethod"> Private IP allocation method. </param>
         internal BastionHostIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, NetworkIPAllocationMethod? privateIPAllocationMethod) : base(id, name, resourceType, serializedAdditionalRawData)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> Reference of the PublicIP resource. </summary>
+        /// <summary> Reference of the PublicIP resource. Null for private only bastion. </summary>
         internal WritableSubResource PublicIPAddress { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier PublicIPAddressId

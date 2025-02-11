@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.AppService;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Azure.CloudMachine.Core;
 
 namespace Azure.CloudMachine.AppService;
 
@@ -18,7 +18,7 @@ public class AppServiceFeature : CloudMachineFeature
         Sku = new AppServiceSkuDescription { Tier = "Free", Name = "F1" };
     }
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         //Add a App Service to the CloudMachine infrastructure.
         AppServicePlan hostingPlan = new("cm_hosting_plan")

@@ -10,30 +10,14 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public static class TestTransferWithTimeout
     {
-        public static void WaitForCompletion(
-            DataTransfer dataTransfer,
-            TestEventsRaised testEventsRaised,
-            CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                dataTransfer.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception ex)
-            when (ex is OperationCanceledException || ex is TaskCanceledException)
-            {
-                PrintAllEvents(testEventsRaised);
-            }
-        }
-
         public static async Task WaitForCompletionAsync(
-            DataTransfer dataTransfer,
+            TransferOperation transferOperation,
             TestEventsRaised testEventsRaised,
             CancellationToken cancellationToken = default)
         {
             try
             {
-                await dataTransfer.WaitForCompletionAsync(cancellationToken);
+                await transferOperation.WaitForCompletionAsync(cancellationToken);
             }
             catch (Exception ex)
             when (ex is OperationCanceledException || ex is TaskCanceledException)
@@ -69,21 +53,21 @@ namespace Azure.Storage.DataMovement.Tests
                         {
                             Assert.Fail(
                                 $"Skipped event occurred at Transfer id: {skippedEvent.TransferId}.\n" +
-                                $"Source Resource Path: {skippedEvent.SourceResource.Uri.AbsoluteUri}\n" +
-                                $"Destination Resource Path: {skippedEvent.DestinationResource.Uri.AbsoluteUri}\n");
+                                $"Source Resource Path: {skippedEvent.Source.Uri.AbsoluteUri}\n" +
+                                $"Destination Resource Path: {skippedEvent.Destination.Uri.AbsoluteUri}\n");
                         }
                         foreach (TransferItemCompletedEventArgs singleCompletedEvent in testEventsRaised.SingleCompletedEvents)
                         {
                             Assert.Fail(
                                 $"Single Item Transfer completed occurred at Transfer id: {singleCompletedEvent.TransferId}.\n" +
-                                $"Source Resource Path: {singleCompletedEvent.SourceResource.Uri.AbsoluteUri}\n" +
-                                $"Destination Resource Path: {singleCompletedEvent.DestinationResource.Uri.AbsoluteUri}\n");
+                                $"Source Resource Path: {singleCompletedEvent.Source.Uri.AbsoluteUri}\n" +
+                                $"Destination Resource Path: {singleCompletedEvent.Destination.Uri.AbsoluteUri}\n");
                         }
                         foreach (TransferStatusEventArgs statusEvent in testEventsRaised.StatusEvents)
                         {
                             Assert.Fail(
                                 $"Status Event at Transfer id: {statusEvent.TransferId}.\n" +
-                                $"Transfer State: {Enum.GetName(typeof(DataTransferState), statusEvent.TransferStatus.State)}\n" +
+                                $"Transfer State: {Enum.GetName(typeof(TransferState), statusEvent.TransferStatus.State)}\n" +
                                 $"HasCompletedSuccessfully: {statusEvent.TransferStatus.HasCompletedSuccessfully}\n" +
                                 $"HasFailedItems: {statusEvent.TransferStatus.HasFailedItems}\n +" +
                                 $"HasSkippedItems: {statusEvent.TransferStatus.HasSkippedItems}\n");

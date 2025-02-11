@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="AuthorizeModelCopyAsync(AuthorizeCopyContent,CancellationToken)">
+    <member name="AuthorizeModelCopyAsync(AuthorizeModelCopyOptions,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeModelCopyAsync.
 <code><![CDATA[
@@ -9,14 +9,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("targetModel")
+AuthorizeModelCopyOptions authorizeCopyRequest = new AuthorizeModelCopyOptions("targetModel")
 {
     Description = "Target model description",
 };
-Response<CopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
+Response<ModelCopyAuthorization> response = await client.AuthorizeModelCopyAsync(authorizeCopyRequest);
 ]]></code></example>
     </member>
-    <member name="AuthorizeModelCopy(AuthorizeCopyContent,CancellationToken)">
+    <member name="AuthorizeModelCopy(AuthorizeModelCopyOptions,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeModelCopy.
 <code><![CDATA[
@@ -24,11 +24,11 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-AuthorizeCopyContent authorizeCopyRequest = new AuthorizeCopyContent("targetModel")
+AuthorizeModelCopyOptions authorizeCopyRequest = new AuthorizeModelCopyOptions("targetModel")
 {
     Description = "Target model description",
 };
-Response<CopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRequest);
+Response<ModelCopyAuthorization> response = client.AuthorizeModelCopy(authorizeCopyRequest);
 ]]></code></example>
     </member>
     <member name="AuthorizeModelCopyAsync(RequestContent,RequestContext)">
@@ -197,52 +197,52 @@ Response response = client.DeleteModel("myCustomModel");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetResourceInfoAsync(CancellationToken)">
+    <member name="GetResourceDetailsAsync(CancellationToken)">
       <example>
-This sample shows how to call GetResourceInfoAsync.
+This sample shows how to call GetResourceDetailsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<ResourceDetails> response = await client.GetResourceInfoAsync();
+Response<DocumentIntelligenceResourceDetails> response = await client.GetResourceDetailsAsync();
 ]]></code></example>
     </member>
-    <member name="GetResourceInfo(CancellationToken)">
+    <member name="GetResourceDetails(CancellationToken)">
       <example>
-This sample shows how to call GetResourceInfo.
+This sample shows how to call GetResourceDetails.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<ResourceDetails> response = client.GetResourceInfo();
+Response<DocumentIntelligenceResourceDetails> response = client.GetResourceDetails();
 ]]></code></example>
     </member>
-    <member name="GetResourceInfoAsync(RequestContext)">
+    <member name="GetResourceDetailsAsync(RequestContext)">
       <example>
-This sample shows how to call GetResourceInfoAsync and parse the result.
+This sample shows how to call GetResourceDetailsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = await client.GetResourceInfoAsync(null);
+Response response = await client.GetResourceDetailsAsync(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("limit").ToString());
 ]]></code></example>
     </member>
-    <member name="GetResourceInfo(RequestContext)">
+    <member name="GetResourceDetails(RequestContext)">
       <example>
-This sample shows how to call GetResourceInfo and parse the result.
+This sample shows how to call GetResourceDetails and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response response = client.GetResourceInfo(null);
+Response response = client.GetResourceDetails(null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("customDocumentModels").GetProperty("count").ToString());
@@ -257,7 +257,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<OperationDetails> response = await client.GetOperationAsync("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
+Response<DocumentIntelligenceOperationDetails> response = await client.GetOperationAsync("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
 ]]></code></example>
     </member>
     <member name="GetOperation(string,CancellationToken)">
@@ -268,7 +268,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-Response<OperationDetails> response = client.GetOperation("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
+Response<DocumentIntelligenceOperationDetails> response = client.GetOperation("b704bb00-d130-4f3f-a1d8-ca96de3eabb4");
 ]]></code></example>
     </member>
     <member name="GetOperationAsync(string,RequestContext)">
@@ -309,7 +309,7 @@ Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("resourceLocation").ToString());
 ]]></code></example>
     </member>
-    <member name="AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyContent,CancellationToken)">
+    <member name="AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyOptions,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeClassifierCopyAsync.
 <code><![CDATA[
@@ -317,14 +317,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("targetClassifier")
+AuthorizeClassifierCopyOptions authorizeCopyRequest = new AuthorizeClassifierCopyOptions("targetClassifier")
 {
     Description = "Target classifier description",
 };
 Response<ClassifierCopyAuthorization> response = await client.AuthorizeClassifierCopyAsync(authorizeCopyRequest);
 ]]></code></example>
     </member>
-    <member name="AuthorizeClassifierCopy(AuthorizeClassifierCopyContent,CancellationToken)">
+    <member name="AuthorizeClassifierCopy(AuthorizeClassifierCopyOptions,CancellationToken)">
       <example>
 This sample shows how to call AuthorizeClassifierCopy.
 <code><![CDATA[
@@ -332,7 +332,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-AuthorizeClassifierCopyContent authorizeCopyRequest = new AuthorizeClassifierCopyContent("targetClassifier")
+AuthorizeClassifierCopyOptions authorizeCopyRequest = new AuthorizeClassifierCopyOptions("targetClassifier")
 {
     Description = "Target classifier description",
 };
@@ -535,7 +535,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-await foreach (OperationDetails item in client.GetOperationsAsync())
+await foreach (DocumentIntelligenceOperationDetails item in client.GetOperationsAsync())
 {
 }
 ]]></code></example>
@@ -548,7 +548,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-foreach (OperationDetails item in client.GetOperations())
+foreach (DocumentIntelligenceOperationDetails item in client.GetOperations())
 {
 }
 ]]></code></example>
@@ -655,7 +655,7 @@ foreach (BinaryData item in client.GetClassifiers(null))
 }
 ]]></code></example>
     </member>
-    <member name="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)">
+    <member name="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelOptions,CancellationToken)">
       <example>
 This sample shows how to call BuildDocumentModelAsync.
 <code><![CDATA[
@@ -663,13 +663,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("myCustomModel", DocumentBuildMode.Template)
+BuildDocumentModelOptions buildRequest = new BuildDocumentModelOptions("myCustomModel", DocumentBuildMode.Template)
 {
     Description = "Custom model description",
-    AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-    {
-        Prefix = "trainingDocs/",
-    },
     Tags =
     {
         ["createdBy"] = "myUserId"
@@ -679,7 +675,7 @@ Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)">
+    <member name="BuildDocumentModel(WaitUntil,BuildDocumentModelOptions,CancellationToken)">
       <example>
 This sample shows how to call BuildDocumentModel.
 <code><![CDATA[
@@ -687,13 +683,9 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-BuildDocumentModelContent buildRequest = new BuildDocumentModelContent("myCustomModel", DocumentBuildMode.Template)
+BuildDocumentModelOptions buildRequest = new BuildDocumentModelOptions("myCustomModel", DocumentBuildMode.Template)
 {
     Description = "Custom model description",
-    AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-    {
-        Prefix = "trainingDocs/",
-    },
     Tags =
     {
         ["createdBy"] = "myUserId"
@@ -765,7 +757,7 @@ Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code></example>
     </member>
-    <member name="ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)">
+    <member name="ComposeModelAsync(WaitUntil,ComposeModelOptions,CancellationToken)">
       <example>
 This sample shows how to call ComposeModelAsync.
 <code><![CDATA[
@@ -773,7 +765,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
+ComposeModelOptions composeRequest = new ComposeModelOptions("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
 {
     ["formA"] = new DocumentTypeDetails
     {
@@ -791,7 +783,7 @@ Operation<DocumentModelDetails> operation = await client.ComposeModelAsync(WaitU
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)">
+    <member name="ComposeModel(WaitUntil,ComposeModelOptions,CancellationToken)">
       <example>
 This sample shows how to call ComposeModel.
 <code><![CDATA[
@@ -799,7 +791,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-ComposeDocumentModelContent composeRequest = new ComposeDocumentModelContent("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
+ComposeModelOptions composeRequest = new ComposeModelOptions("composedModel", "customClassifier", new Dictionary<string, DocumentTypeDetails>
 {
     ["formA"] = new DocumentTypeDetails
     {
@@ -883,7 +875,7 @@ Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code></example>
     </member>
-    <member name="CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)">
+    <member name="CopyModelToAsync(WaitUntil,string,ModelCopyAuthorization,CancellationToken)">
       <example>
 This sample shows how to call CopyModelToAsync.
 <code><![CDATA[
@@ -891,7 +883,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-CopyAuthorization copyToRequest = new CopyAuthorization(
+ModelCopyAuthorization copyToRequest = new ModelCopyAuthorization(
 "/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
 "targetResourceRegion",
 "targetModel",
@@ -902,7 +894,7 @@ Operation<DocumentModelDetails> operation = await client.CopyModelToAsync(WaitUn
 DocumentModelDetails responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="CopyModelTo(WaitUntil,string,CopyAuthorization,CancellationToken)">
+    <member name="CopyModelTo(WaitUntil,string,ModelCopyAuthorization,CancellationToken)">
       <example>
 This sample shows how to call CopyModelTo.
 <code><![CDATA[
@@ -910,7 +902,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-CopyAuthorization copyToRequest = new CopyAuthorization(
+ModelCopyAuthorization copyToRequest = new ModelCopyAuthorization(
 "/subscriptions/targetSub/resourceGroups/targetRG/providers/Microsoft.CognitiveServices/accounts/targetService",
 "targetResourceRegion",
 "targetModel",
@@ -971,7 +963,7 @@ Console.WriteLine(result.GetProperty("modelId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 ]]></code></example>
     </member>
-    <member name="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)">
+    <member name="BuildClassifierAsync(WaitUntil,BuildClassifierOptions,CancellationToken)">
       <example>
 This sample shows how to call BuildClassifierAsync.
 <code><![CDATA[
@@ -979,19 +971,10 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
+BuildClassifierOptions buildRequest = new BuildClassifierOptions("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
 {
-    ["formA"] = new ClassifierDocumentTypeDetails
-    {
-        AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-        {
-            Prefix = "formADocs/",
-        },
-    },
-    ["formB"] = new ClassifierDocumentTypeDetails
-    {
-        AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"), "formB.jsonl"),
-    }
+    ["formA"] = new ClassifierDocumentTypeDetails(),
+    ["formB"] = new ClassifierDocumentTypeDetails()
 })
 {
     Description = "Classifier description",
@@ -1000,7 +983,7 @@ Operation<DocumentClassifierDetails> operation = await client.BuildClassifierAsy
 DocumentClassifierDetails responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="BuildClassifier(WaitUntil,BuildDocumentClassifierContent,CancellationToken)">
+    <member name="BuildClassifier(WaitUntil,BuildClassifierOptions,CancellationToken)">
       <example>
 This sample shows how to call BuildClassifier.
 <code><![CDATA[
@@ -1008,19 +991,10 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 DocumentIntelligenceAdministrationClient client = new DocumentIntelligenceAdministrationClient(endpoint, credential);
 
-BuildDocumentClassifierContent buildRequest = new BuildDocumentClassifierContent("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
+BuildClassifierOptions buildRequest = new BuildClassifierOptions("myClassifier", new Dictionary<string, ClassifierDocumentTypeDetails>
 {
-    ["formA"] = new ClassifierDocumentTypeDetails
-    {
-        AzureBlobSource = new AzureBlobContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"))
-        {
-            Prefix = "formADocs/",
-        },
-    },
-    ["formB"] = new ClassifierDocumentTypeDetails
-    {
-        AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("https://myStorageAccount.blob.core.windows.net/myContainer?mySasToken"), "formB.jsonl"),
-    }
+    ["formA"] = new ClassifierDocumentTypeDetails(),
+    ["formB"] = new ClassifierDocumentTypeDetails()
 })
 {
     Description = "Classifier description",

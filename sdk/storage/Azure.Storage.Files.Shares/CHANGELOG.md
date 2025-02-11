@@ -1,6 +1,16 @@
 # Release History
 
-## 12.22.0-beta.1 (Unreleased)
+## 12.22.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.22.0-beta.1 (2025-02-11)
 
 ### Features Added
 - Added support for service version 2025-05-05.
@@ -12,6 +22,9 @@
     - ShareFileClient.SetHttpHeaders() and .SetHttpHeadersAsync()
     - ShareDirectoryClient.Create() and .CreateAsync()
     - ShareDirectoryClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+
+### Bugs Fixed
+- Fixed \[BUG\] Unable to create directory with only whiteSpaceChars #42891
 
 ## 12.21.0 (2024-11-12)
 

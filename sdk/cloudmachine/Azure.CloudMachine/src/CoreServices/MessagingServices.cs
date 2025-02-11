@@ -15,8 +15,8 @@ public readonly struct MessagingServices
 {
     internal const string DEFAULT_SB_TOPIC = "cm_servicebus_default_topic";
 
-    private readonly CloudMachineClient _cm;
-    internal MessagingServices(CloudMachineClient cm) => _cm = cm;
+    private readonly ProjectClient _cm;
+    internal MessagingServices(ProjectClient cm) => _cm = cm;
 
     /// <summary>
     /// Sends a message to the service bus.
@@ -49,7 +49,7 @@ public readonly struct MessagingServices
     public void WhenMessageReceived(Action<string> received)
     {
         ServiceBusProcessor processor = _cm.Messaging.GetServiceBusProcessor(default);
-        CloudMachineClient cm = _cm;
+        ProjectClient cm = _cm;
 
         // TODO: How to unsubscribe?
         // TODO: Use a subscription filter to ignore Event Grid system events

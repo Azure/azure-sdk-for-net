@@ -7,7 +7,6 @@ extends:
     SDKType: client
     MaxParallel: 5
     TimeoutInMinutes: 240
-    SupportedClouds: 'Public,UsGov,Canary'
     CloudConfig:
       Public:
         ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
@@ -23,9 +22,6 @@ extends:
       #   # Some resource providers required for attestation are not supported in canary.
       #   MatrixReplace:
       #    - 'ArmTemplateParameters=(.*)enableAttestation.*?\$true(.*)/$1enableAttestation \= $false$2'
-      UsGov:
-        MatrixFilters:
-         - ArmTemplateParameters=^(?!.*enableHsm.*true)
     MatrixConfigs:
       - Name: keyvault_test_matrix
         Path: sdk/keyvault/platform-matrix.json

@@ -5,10 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.Core;
 
 public class FeatureCollection : IEnumerable<CloudMachineFeature>
 {
@@ -34,7 +33,7 @@ public class FeatureCollection : IEnumerable<CloudMachineFeature>
         }
     }
 
-    internal void Add(CloudMachineFeature item)
+    public void Add(CloudMachineFeature item)
     {
         if (_count == _items.Length)
         {
@@ -50,7 +49,7 @@ public class FeatureCollection : IEnumerable<CloudMachineFeature>
         }
     }
 
-    internal void Emit(CloudMachineInfrastructure infrastructure)
+    internal void Emit(ProjectInfrastructure infrastructure)
     {
         int index = 0;
         while (true)
