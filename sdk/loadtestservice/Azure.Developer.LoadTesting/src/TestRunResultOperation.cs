@@ -33,7 +33,8 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         public override BinaryData Value
         {
-            get {
+            get
+            {
                 if (HasCompleted && !HasValue)
                 {
                     throw new InvalidOperationException("The operation is not complete.");
@@ -99,7 +100,7 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = _client.GetTestRun(_testRunId);
+            _response = _client.GetTestRun(_testRunId).GetRawResponse();
             _value = _response.Content;
 
             return GetCompletionResponse();
@@ -117,7 +118,8 @@ namespace Azure.Developer.LoadTesting
 
             try
             {
-                _response = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
+                var initialResponse = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
+                _response = initialResponse.GetRawResponse();
                 _value = _response.Content;
             }
             catch
@@ -148,7 +150,7 @@ namespace Azure.Developer.LoadTesting
             }
             catch
             {
-                throw new RequestFailedException("No property validationStatus in reposne JSON: " + _value.ToString());
+                throw new RequestFailedException("No property validationStatus in response JSON: " + _value.ToString());
             }
 
             if (_terminalStatus.Contains(testRunStatus))
