@@ -20,4 +20,5 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM.
 
 [assembly: Guid("9daf858f-372a-49ad-a7a0-3b1947d1d20b")]
-[SuppressMessage("Error participant name collection", "AZC0030", Justification = "This issue arises because the ParticipantsCollection includes 'collection' in its name. However, since it has already reached General Availability, changing it now would result in breaking changes.")]
+
+[assembly: SuppressMessage("Error participant name collection", "AZC0030", Justification = "This issue arises because the ParticipantsCollection includes 'collection' in its name. However, since it has already reached General Availability, changing it now would result in breaking changes.")]
