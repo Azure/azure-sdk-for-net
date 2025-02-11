@@ -1,3 +1,3 @@
 directory: specification/chaos/Chaos.Management
-commit: specification/chaos/Chaos.Management/tspconfig.yaml
+commit: ed8fd7d032b7b456441bc69602e2205df808179e
 repo: Azure/azure-rest-api-specs
