@@ -46,7 +46,7 @@ namespace Azure.AI.Inference.Tests
             UsingFilePath
         }
 
-        public ChatCompletionsClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
@@ -533,7 +533,7 @@ namespace Azure.AI.Inference.Tests
         [TestCase(TargetModel.PhiAudioModel)]
         public async Task TestChatCompletionsWithAudio(TargetModel targetModel)
         {
-            if (Mode == RecordedTestMode.Playback)
+            if (targetModel == TargetModel.AoaiAudioModel && Mode == RecordedTestMode.Playback)
             {
                 Assert.Inconclusive("Unable to run test with file path in playback mode.");
             }
@@ -571,9 +571,28 @@ namespace Azure.AI.Inference.Tests
             ChatMessageAudioContentItem audioContentItem = targetModel switch
             {
                 TargetModel.AoaiAudioModel => new(TestEnvironment.TestAudioMp3InputPath, AudioContentFormat.Mp3),
-                TargetModel.PhiAudioModel => new(new Uri("https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-inference/tests/hello_how_are_you.mp3")),
+                TargetModel.PhiAudioModel => new(GetTestAudioInternetUri()),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
+
+            List<ChatRequestMessage> messages = new List<ChatRequestMessage>();
+
+            if (targetModel == TargetModel.PhiAudioModel)
+            {
+                messages.Add(new ChatRequestSystemMessage("You are a helpful assistant that helps describe audio."));
+                messages.Add(
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("Please describe this audio clip."),
+                        audioContentItem));
+            }
+            else
+            {
+                messages.Add(new ChatRequestSystemMessage("You are a helpful assistant that helps provide translations."));
+                messages.Add(
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("Please translate this audio snippet to spanish."),
+                        audioContentItem));
+            }
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -589,7 +608,7 @@ namespace Azure.AI.Inference.Tests
 
             if (targetModel == TargetModel.PhiAudioModel)
             {
-                requestOptions.Model = "phi-4-omni-updated-final-10";
+                requestOptions.Model = "phi-4-multimodal-instruct-1";
             }
 
             Response<ChatCompletions> response = null;
@@ -1105,6 +1124,15 @@ namespace Azure.AI.Inference.Tests
 
         private BinaryData GetTestImageData(string mimeType)
             => BinaryData.FromStream(GetTestImageStream(mimeType));
+
+        private Uri GetTestAudioInternetUri()
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return new Uri("https://sanitized");
+            }
+            return new Uri("https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba-online-audio-converter.com_-1.wav");
+        }
 
         private async Task ProcessStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response, List<ChatRequestMessage> messages)
         {
