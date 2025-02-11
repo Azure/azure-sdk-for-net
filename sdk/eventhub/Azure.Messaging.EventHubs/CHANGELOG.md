@@ -1,6 +1,6 @@
 # Release History
 
-## 5.12.0-beta.2 (Unreleased)
+## 5.12.0-beta.2 (2025-02-11)
 
 ### Acknowledgments
 
@@ -10,7 +10,22 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
-### Breaking Changes
+- Support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
+  As part of this feature, the type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API. To preserve backwards compatibility, the existing offset-related members have not been changed, and new members with names similar to `OffsetString` and string-based parameters for method overloads have been introduced.  
+  
+  The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
+  
+  Obsoleted properties:
+  - [EventData.Offset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventdata.offset?view=azure-dotnet#azure-messaging-eventhubs-eventdata-offset)
+  - [LastEnqueuedEventProperties.Offset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.lastenqueuedeventproperties.offset?view=azure-dotnet)
+  - [PartitionProperties.LastEnqueuedOffset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.partitionproperties.lastenqueuedoffset?view=azure-dotnet)
+
+  Obsoleted method overloads:
+  - [EventPosition.FromOffset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.eventposition.fromoffset?view=azure-dotnet)
+  - [EventHubsModelFactory.EventData](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsmodelfactory.eventdata?view=azure-dotnet)
+  - [BlobCheckpointStore.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.blobcheckpointstore.updatecheckpointasync?view=azure-dotnet)
+  - [EventProcessorClient.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient.updatecheckpointasync?view=azure-dotnet)
 
 ### Bugs Fixed
 
