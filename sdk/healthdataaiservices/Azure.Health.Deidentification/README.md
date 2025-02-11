@@ -15,7 +15,7 @@ Azure.Health.Deidentification is a managed service that enables users to tag, re
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Health.Deidentification --prerelease
+dotnet add package Azure.Health.Deidentification
 ```
 
 ### Prerequisites
@@ -40,9 +40,9 @@ Basic code snippet to create your Deidentification Client and Deidentify a strin
             new DeidentificationClientOptions()
         );
 
-        DeidentificationContent content = new("Hello, John!", OperationType.Surrogate, DocumentDataType.Plaintext);
+        DeidentificationContent content = new("Hello, John!");
 
-        Response<DeidentificationResult> result = client.Deidentify(content);
+        Response<DeidentificationResult> result = client.DeidentifyText(content);
         string outputString = result.Value.OutputText;
         Console.WriteLine(outputString); // Hello, Tom!
 ```
@@ -119,5 +119,3 @@ additional questions or comments.
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/healthdataaiservices/Azure.Health.Deidentification/README.png)

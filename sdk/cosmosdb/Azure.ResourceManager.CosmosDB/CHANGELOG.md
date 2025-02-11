@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.12 (Unreleased)
+## 1.4.0-beta.13 (Unreleased)
 
 ### Features Added
 
@@ -10,13 +10,18 @@
 
 ### Other Changes
 
+## 1.4.0-beta.12 (2024-12-20)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-09' to 'package-preview-2024-12-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2afa5b356adf6cf51209d2cf28d38644c69d9832/specification/cosmos-db/resource-manager/readme.md.
+
 ## 1.4.0-beta.11 (2024-11-01)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-preview-2024-05' to 'package-preview-2024-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4d065866a422257746306b352cb34fd5c98d5754/specification/cosmos-db/resource-manager/readme.md
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
 
 ## 1.4.0-beta.10 (2024-06-25)
 

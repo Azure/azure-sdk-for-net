@@ -14,7 +14,7 @@ internal class EventGridSystemTopicFeature(string topicName, CloudMachineFeature
 {
     internal const string EventGridTopicVersion = "2022-06-15";
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         var topic = new SystemTopic("cm_eventgrid_topic", EventGridTopicVersion)
         {
