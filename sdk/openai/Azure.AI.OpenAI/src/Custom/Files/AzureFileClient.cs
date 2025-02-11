@@ -29,7 +29,7 @@ internal partial class AzureFileClient : OpenAIFileClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureFileClient()
