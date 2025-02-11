@@ -89,6 +89,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobUriBuilder builder = new BlobUriBuilder(uri);
             BlockBlobClient blobClient = container.GetBlockBlobClient(builder.BlobName);
+            if (!await blobClient.ExistsAsync())
+            {
+                throw new FileNotFoundException($"Blob not found: {uri}");
+            }
 
             MemoryStream stream = new MemoryStream();
             await blobClient.DownloadToAsync(stream);
