@@ -3,9 +3,8 @@
 
 using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
-using Microsoft.Generator.CSharp;
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -56,6 +55,10 @@ public class AzureClientPlugin : ClientModelPlugin
         if (IsAzureArm.Value)
         {
             AddVisitor(new AzureArmVisitor());
+        }
+        else
+        {
+            AddVisitor(new AzureVisitor());
         }
     }
 

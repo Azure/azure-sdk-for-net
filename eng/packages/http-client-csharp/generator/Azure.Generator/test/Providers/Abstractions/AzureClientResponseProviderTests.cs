@@ -3,10 +3,10 @@
 
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
 using System.Linq;
 using NUnit.Framework;
 using Azure.Generator.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 
 namespace Azure.Generator.Tests.Providers.Abstractions
 {

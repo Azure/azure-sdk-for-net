@@ -4,10 +4,10 @@
 using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

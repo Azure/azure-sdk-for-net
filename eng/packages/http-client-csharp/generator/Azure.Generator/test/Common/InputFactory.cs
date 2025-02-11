@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Tests.Common
 {

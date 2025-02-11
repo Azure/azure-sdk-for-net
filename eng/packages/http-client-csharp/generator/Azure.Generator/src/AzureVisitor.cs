@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator
 {
@@ -10,10 +11,13 @@ namespace Azure.Generator
     {
         protected override TypeProvider? Visit(TypeProvider type)
         {
-            if (type is ModelProvider || type is EnumProvider || type is ModelFactoryProvider)
+            if (type is ModelProvider || type is EnumProvider || type is ModelFactoryProvider
+                || type is MrwSerializationTypeDefinition || type is FixedEnumSerializationProvider || type is ExtensibleEnumSerializationProvider)
             {
-                type.Namespace = $"{type.Namespace}.Models";
-                type.Type.Namespace = $"{type.Type.Namespace}.Models";
+                if (!type.Type.Namespace.EndsWith("Models"))
+                {
+                    type.Type.Namespace = $"{type.Type.Namespace}.Models";
+                }
             }
             return type;
         }
