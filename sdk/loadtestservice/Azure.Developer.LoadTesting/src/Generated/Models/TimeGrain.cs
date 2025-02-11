@@ -22,22 +22,22 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string PT5SValue = "PT5S";
-        private const string PT10SValue = "PT10S";
-        private const string PT1MValue = "PT1M";
-        private const string PT5MValue = "PT5M";
-        private const string PT1HValue = "PT1H";
+        private const string FiveSecondsValue = "PT5S";
+        private const string TenSecondsValue = "PT10S";
+        private const string OneMinuteValue = "PT1M";
+        private const string FiveMinutesValue = "PT5M";
+        private const string OneHourValue = "PT1H";
 
         /// <summary> 5 seconds, available only if test run duration is less than 10 minutes. </summary>
-        public static TimeGrain PT5S { get; } = new TimeGrain(PT5SValue);
+        public static TimeGrain FiveSeconds { get; } = new TimeGrain(FiveSecondsValue);
         /// <summary> 10 seconds, available only if test run duration is less than 10 minutes. </summary>
-        public static TimeGrain PT10S { get; } = new TimeGrain(PT10SValue);
+        public static TimeGrain TenSeconds { get; } = new TimeGrain(TenSecondsValue);
         /// <summary> 1 minute. </summary>
-        public static TimeGrain PT1M { get; } = new TimeGrain(PT1MValue);
+        public static TimeGrain OneMinute { get; } = new TimeGrain(OneMinuteValue);
         /// <summary> 5 minutes, available only if test run duration is greater than 1 minute. </summary>
-        public static TimeGrain PT5M { get; } = new TimeGrain(PT5MValue);
+        public static TimeGrain FiveMinutes { get; } = new TimeGrain(FiveMinutesValue);
         /// <summary> 1 hour, available only if test run duration is greater than 1 minute. </summary>
-        public static TimeGrain PT1H { get; } = new TimeGrain(PT1HValue);
+        public static TimeGrain OneHour { get; } = new TimeGrain(OneHourValue);
         /// <summary> Determines if two <see cref="TimeGrain"/> values are the same. </summary>
         public static bool operator ==(TimeGrain left, TimeGrain right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TimeGrain"/> values are not the same. </summary>
