@@ -113,7 +113,10 @@ namespace Azure.Generator.Utilities
                     return true;
                 }
 
-                switch (property.Name)
+                var serializationName = property.SerializationOptions?.Json?.Name;
+                if (serializationName is null)
+                    continue;
+                switch (serializationName)
                 {
                     case "id":
                         if (property.Type.GetImplementType() is InputPrimitiveType { Kind: InputPrimitiveTypeKind.String } inputPrimitiveType)
