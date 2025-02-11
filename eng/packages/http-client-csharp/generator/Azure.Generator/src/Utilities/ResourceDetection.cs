@@ -14,7 +14,6 @@ namespace Azure.Generator.Utilities
 {
     internal class ResourceDetection
     {
-        private const string ProvidersSegment = "/providers/";
         private const string ResourceGroupScopePrefix = "/subscriptions/{subscriptionId}/resourceGroups";
         private const string SubscriptionScopePrefix = "/subscriptions";
         private const string TenantScopePrefix = "/tenants";
@@ -25,25 +24,25 @@ namespace Azure.Generator.Utilities
 
         public static string GetResourceTypeFromPath(RequestPath requestPath)
         {
-            var index = ((string)requestPath).LastIndexOf(ProvidersSegment);
+            var index = requestPath.IndexOfLastProviders;
             if (index < 0)
             {
-                if (((string)requestPath).StartsWith(ResourceGroupScopePrefix, StringComparison.OrdinalIgnoreCase))
+                if (requestPath.SerializedPath.StartsWith(ResourceGroupScopePrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     return "Microsoft.Resources/resourceGroups";
                 }
-                else if (((string)requestPath).StartsWith(SubscriptionScopePrefix, StringComparison.OrdinalIgnoreCase))
+                else if (requestPath.SerializedPath.StartsWith(SubscriptionScopePrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     return "Microsoft.Resources/subscriptions";
                 }
-                else if (((string)requestPath).StartsWith(TenantScopePrefix, StringComparison.OrdinalIgnoreCase))
+                else if (requestPath.SerializedPath.StartsWith(TenantScopePrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     return "Microsoft.Resources/tenants";
                 }
                 throw new InvalidOperationException($"Cannot find resource type from path {requestPath}");
             }
 
-            var left = new RequestPath(((string)requestPath).Substring(index+ProvidersSegment.Length));
+            var left = new RequestPath(requestPath.SerializedPath.Substring(index+RequestPath.Providers.Length));
             var result = new StringBuilder(left[0]);
             for (int i = 1; i < left.Count; i += 2)
             {
@@ -98,7 +97,7 @@ namespace Azure.Generator.Utilities
 
         private static bool CheckEvenSegments(RequestPath requestPath)
         {
-            var index = ((string)requestPath).LastIndexOf(ProvidersSegment);
+            var index = requestPath.IndexOfLastProviders;
             // this request path does not have providers segment - it can be a "ById" request, skip to next criteria
             if (index < 0)
                 return true;

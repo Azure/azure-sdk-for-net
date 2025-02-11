@@ -58,7 +58,7 @@ namespace Azure.Generator.Utilities
         {
             singletonIdSuffix = null;
 
-            //// we should first check the configuration for the singleton settings
+            // TODO: we should first check the configuration for the singleton settings
             //if (Configuration.MgmtConfiguration.RequestPathToSingletonResource.TryGetValue(operationSet.RequestPath, out singletonIdSuffix))
             //{
             //    // ensure the singletonIdSuffix does not have a slash at the beginning
@@ -81,7 +81,7 @@ namespace Azure.Generator.Utilities
             if (!diff.Any() || !diff.All(s => RequestPath.IsSegmentConstant(s)))
                 return false;
 
-            //// see if the configuration says that we need to honor the dictionary for singletons
+            // TODO: see if the configuration says that we need to honor the dictionary for singletons
             //if (!Configuration.MgmtConfiguration.DoesSingletonRequiresKeyword)
             //{
             //    singletonIdSuffix = string.Join('/', diff.Select(s => s.ConstantValue));

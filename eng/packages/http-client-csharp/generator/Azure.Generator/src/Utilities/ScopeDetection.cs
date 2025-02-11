@@ -31,7 +31,7 @@ namespace Azure.Generator.Utilities
 
         private static RequestPath CalculateScopePath(RequestPath requestPath)
         {
-            var indexOfProvider = ((string)requestPath).IndexOf(RequestPath.Providers);
+            var indexOfProvider = requestPath.IndexOfLastProviders;
             // if there is no providers segment, myself should be a scope request path. Just return myself
             if (indexOfProvider >= 0)
             {

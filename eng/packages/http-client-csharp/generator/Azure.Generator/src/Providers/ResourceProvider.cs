@@ -31,7 +31,7 @@ namespace Azure.Generator.Providers
         private ResourceDataProvider _resourceData;
         private ClientProvider _clientProvider;
         private string _specCleanName;
-        private readonly HashSet<string> _contextualParameters;
+        private readonly IReadOnlyList<string> _contextualParameters;
 
         private FieldProvider _dataField;
         private FieldProvider _clientDiagonosticsField;
@@ -52,9 +52,9 @@ namespace Azure.Generator.Providers
             _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resrouceType));
         }
 
-        private HashSet<string> GetContextualParameters(string contextualRequestPath)
+        private IReadOnlyList<string> GetContextualParameters(string contextualRequestPath)
         {
-            var contextualParameters = new HashSet<string>();
+            var contextualParameters = new List<string>();
             var contextualSegments = new RequestPath(contextualRequestPath);
             foreach (var segment in contextualSegments)
             {
@@ -234,7 +234,7 @@ namespace Azure.Generator.Providers
             var result = new List<ParameterProvider>();
             if (isLongRunning)
             {
-                result.Add(KnownAzureTypes.WaitUntil);
+                result.Add(KnownAzureParameters.WaitUntil);
             }
             foreach (var parameter in convenienceMethod.Signature.Parameters)
             {
@@ -274,7 +274,7 @@ namespace Azure.Generator.Providers
                 var requestMethod = GetCorrespondingRequestMethod(operation);
                 var operationDeclaration = Declare("operation", New.Instance(typeof(ArmOperation), _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters)), responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out var operationVariable);
                 tryStatement.Add(operationDeclaration);
-                tryStatement.Add(new IfStatement(KnownAzureTypes.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
+                tryStatement.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
                 {
                     isAsync
                     ? operationVariable.Invoke("WaitForCompletionAsync", [KnownParameters.CancellationTokenParameter], null, isAsync).Terminate()
@@ -326,7 +326,7 @@ namespace Azure.Generator.Providers
         // TODO: get clean name of operation Name
         private MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
         {
-            var methods = _clientProvider.Methods;
+            var methods = _clientProvider.CanonicalView.Methods;
             return methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
         }
         //=> _clientProvider.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));

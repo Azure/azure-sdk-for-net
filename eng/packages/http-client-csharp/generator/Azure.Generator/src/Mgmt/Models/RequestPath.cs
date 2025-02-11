@@ -32,6 +32,7 @@ namespace Azure.Generator.Mgmt.Models
         {
             _path = path;
             _segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+            IndexOfLastProviders = _path.LastIndexOf(Providers);
         }
 
         public RequestPath(IEnumerable<string> segments)
@@ -41,6 +42,10 @@ namespace Azure.Generator.Mgmt.Models
         }
 
         public int Count => _segments.Count;
+
+        public string SerializedPath => _path;
+
+        public int IndexOfLastProviders { get; }
 
         public string this[int index] => _segments[index];
 
