@@ -68,7 +68,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailMetric(PFMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PFResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PassFailMetric(PFMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PassFailResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientMetric = clientMetric;
             Aggregate = aggregate;
@@ -104,6 +104,6 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> The actual value of the client metric for the test run. </summary>
         public double? ActualValue { get; }
         /// <summary> Outcome of the test run. </summary>
-        public PFResult? Result { get; }
+        public PassFailResult? Result { get; }
     }
 }

@@ -276,7 +276,7 @@ namespace Azure.Developer.LoadTesting.Models
             IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = default;
             LoadTestConfiguration loadTestConfiguration = default;
             TestRunArtifacts testArtifacts = default;
-            PFTestResult? testResult = default;
+            PassFailTestResult? testResult = default;
             int? virtualUsers = default;
             string displayName = default;
             string testId = default;
@@ -428,7 +428,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    testResult = new PFTestResult(property.Value.GetString());
+                    testResult = new PassFailTestResult(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("virtualUsers"u8))

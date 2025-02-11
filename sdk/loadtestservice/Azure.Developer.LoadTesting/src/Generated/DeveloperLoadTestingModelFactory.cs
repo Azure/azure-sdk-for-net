@@ -99,7 +99,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <returns> A new <see cref="Models.PassFailMetric"/> instance for mocking. </returns>
-        public static PassFailMetric PassFailMetric(PFMetrics? clientMetric = null, PassFailAggregationFunction? aggregate = null, string condition = null, string requestName = null, double? value = null, PassFailAction? action = null, double? actualValue = null, PFResult? result = null)
+        public static PassFailMetric PassFailMetric(PFMetrics? clientMetric = null, PassFailAggregationFunction? aggregate = null, string condition = null, string requestName = null, double? value = null, PassFailAction? action = null, double? actualValue = null, PassFailResult? result = null)
         {
             return new PassFailMetric(
                 clientMetric,
@@ -124,7 +124,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the server metric. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <returns> A new <see cref="Models.PassFailServerMetric"/> instance for mocking. </returns>
-        public static PassFailServerMetric PassFailServerMetric(ResourceIdentifier resourceId = null, string metricNamespace = null, string metricName = null, string aggregation = null, string condition = null, double value = default, PassFailAction? action = null, double? actualValue = null, PFResult? result = null)
+        public static PassFailServerMetric PassFailServerMetric(ResourceIdentifier resourceId = null, string metricNamespace = null, string metricName = null, string aggregation = null, string condition = null, double value = default, PassFailAction? action = null, double? actualValue = null, PassFailResult? result = null)
         {
             return new PassFailServerMetric(
                 resourceId,
@@ -360,7 +360,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestRun"/> instance for mocking. </returns>
-        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PFTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, Status? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, string portalUrl = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIPDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, Status? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, string portalUrl = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIPDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             secrets ??= new Dictionary<string, Secret>();
             environmentVariables ??= new Dictionary<string, string>();
