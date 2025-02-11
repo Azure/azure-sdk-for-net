@@ -18,7 +18,7 @@ public class TokenProviderTests
     public void SampleUsage()
     {
         // usage for TokenProvider abstract type
-        TokenProvider<IScopedToken> provider = new ScopedTokenProvider<IScopedToken>();
+        TokenProvider2<IScopedToken> provider = new ScopedTokenProvider<IScopedToken>();
         var client = new FooClient(new Uri("http://localhost"),  provider);
 
         // usage for TokenProvider2 abstract type
@@ -26,8 +26,8 @@ public class TokenProviderTests
         client = new FooClient(new Uri("http://localhost"),  provider);
 
         // usage for policy only and no public tokenProvider abstraction.
-        var policy = new ScopedAuthenticationPolicy(provider, "scope");
-        client = new FooClient(new Uri("http://localhost"), policy);
+        var factory = new AuthenticationPolicyFactory();
+        client = new FooClient(new Uri("http://localhost"), factory);
     }
 
     public class FooClient
@@ -45,7 +45,7 @@ public class TokenProviderTests
         {
             ClientPipeline pipeline = ClientPipeline.Create(new(),
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [AuthenticationPolicyFactory.CreateAuthenticationPolicy(credential, "myScope")],
+            perTryPolicies: [new ScopedAuthenticationPolicy((ITokenProvider)credential, "myScope")],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         }
 
@@ -53,7 +53,7 @@ public class TokenProviderTests
         {
             ClientPipeline pipeline = ClientPipeline.Create(new(),
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [AuthenticationPolicyFactory.CreateAuthenticationPolicy(credential, "myScope")],
+            perTryPolicies: [new ScopedAuthenticationPolicy(credential, "myScope")],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         }
 
@@ -62,11 +62,11 @@ public class TokenProviderTests
             { "scopes", new string[] { "myScope_from_spec" } },
             { "authorizationUrl" , "https://myAuthserver.com/token"} };
 
-        public FooClient(Uri uri, OAuthPipelinePolicy authPolicy)
+        public FooClient(Uri uri, IOauthPolicyFactory authPolicyFactory)
         {
             ClientPipeline pipeline = ClientPipeline.Create(new(),
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [authPolicy.CreateAuthenticationPolicy(context)],
+            perTryPolicies: [authPolicyFactory.CreateAuthenticationPolicy(context)],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
         }
     }
@@ -77,20 +77,11 @@ public class TokenProviderTests
         private IScopedToken _context;
         private string[] _scopes;
 
-        public ScopedAuthenticationPolicy(TokenProvider<IScopedToken> provider, string scope)
+        public ScopedAuthenticationPolicy(ITokenProvider provider, string scope)
         {
-            _provider = provider;
+            _provider = (TokenProvider<IScopedToken>)provider;
             _scopes = [scope];
             _context = _provider.CreateContext(new Dictionary<string, object> { { "scopes", _scopes } });
-        }
-
-        public override OAuthPipelinePolicy CreateAuthenticationPolicy(IReadOnlyDictionary<string, object> context)
-        {
-            if (context.TryGetValue("scopes", out var scopes) && scopes is string[] scopeArray)
-            {
-                return new ScopedAuthenticationPolicy(new ScopedTokenProvider<IScopedToken>(), scopeArray[0]);
-            }
-            throw new InvalidOperationException("Scopes are required.");
         }
 
         public override Token GetToken(CancellationToken cancellationToken) =>
@@ -138,33 +129,15 @@ public class TokenProviderTests
     }
 
     // Azure.Identity: This is a factory  that creates the appropriate policy based on the token provider.
-    public static class AuthenticationPolicyFactory
+    public class AuthenticationPolicyFactory : IOauthPolicyFactory
     {
-        public static PipelinePolicy CreateAuthenticationPolicy<TContext>(TokenProvider<TContext> provider, string scope)
-            where TContext : ITokenContext
+        public OAuthPipelinePolicy CreateAuthenticationPolicy(IReadOnlyDictionary<string, object> context)
         {
-            if (provider is TokenProvider<IScopedToken> scopedProvider)
+            if (context.TryGetValue("scopes", out var scopes) && scopes is string[] scopeArray)
             {
-                return new ScopedAuthenticationPolicy<IScopedToken>(scopedProvider, scope);
+                return new ScopedAuthenticationPolicy(new ScopedTokenProvider<IScopedToken>(), scopeArray[0]);
             }
-            if (provider is TokenProvider<IClaimsToken> claimsProvider)
-            {
-                return new ScopedClaimsAuthenticationPolicy<IClaimsToken>(claimsProvider, scope);
-            }
-            throw new ArgumentException("Provider must support IScopedToken");
-        }
-
-        public static PipelinePolicy CreateAuthenticationPolicy(ITokenProvider provider, string scope)
-        {
-            if (provider is TokenProvider<IScopedToken> scopedProvider)
-            {
-                return new ScopedAuthenticationPolicy<IScopedToken>(scopedProvider, scope);
-            }
-            if (provider is TokenProvider<IClaimsToken> claimsProvider)
-            {
-                return new ScopedClaimsAuthenticationPolicy<IClaimsToken>(claimsProvider, scope);
-            }
-            throw new ArgumentException("Provider must support IScopedToken");
+            throw new InvalidOperationException("Provided context does not match with a known policy.");
         }
     }
 
@@ -177,7 +150,7 @@ public class TokenProviderTests
         public string[] Scopes { get; }
     }
 
-    public class ScopedTokenProvider<TContext> : TokenProvider<IScopedToken>
+    public class ScopedTokenProvider<TContext> : TokenProvider2<IScopedToken>
     {
         public override Token GetAccessToken(IScopedToken context, CancellationToken cancellationToken)
         {

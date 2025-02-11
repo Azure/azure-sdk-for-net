@@ -11,15 +11,15 @@ public class Token
 #pragma warning restore AZC0012 // Avoid single word type names
 {
     /// <summary>
-    /// Creates a new instance of <see cref="Token"/> using the provided <paramref name="token"/> and <paramref name="expiresOn"/>.
+    /// Creates a new instance of <see cref="Token"/> using the provided <paramref name="tokenValue"/> and <paramref name="expiresOn"/>.
     /// </summary>
-    /// <param name="token"></param>
+    /// <param name="tokenValue"></param>
     /// <param name="tokenType"></param>
     /// <param name="expiresOn"></param>
     /// <param name="refreshOn"></param>
-    public Token(string token, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
+    public Token(string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
     {
-        TokenValue = token;
+        TokenValue = tokenValue;
         TokenType = tokenType;
         ExpiresOn = expiresOn;
         RefreshOn = refreshOn;

@@ -14,13 +14,6 @@ namespace System.ClientModel.Primitives;
 public abstract class OAuthPipelinePolicy: PipelinePolicy
 {
     /// <summary>
-    /// Creates a new instance of <see cref="OAuthPipelinePolicy"/>.
-    /// </summary>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    public abstract OAuthPipelinePolicy CreateAuthenticationPolicy(IReadOnlyDictionary<string, object> context);
-
-    /// <summary>
     /// Proposed: Gets the token using the context of the policy instance.
     /// </summary>
     /// <param name="cancellationToken"></param>

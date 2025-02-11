@@ -77,6 +77,10 @@ namespace System.ClientModel
     {
         string Claims { get; }
     }
+    public partial interface IOauthPolicyFactory
+    {
+        System.ClientModel.Primitives.OAuthPipelinePolicy CreateAuthenticationPolicy(System.Collections.Generic.IReadOnlyDictionary<string, object> context);
+    }
     public partial interface IScopedToken : System.ClientModel.ITokenContext
     {
         string[] Scopes { get; }
@@ -92,7 +96,7 @@ namespace System.ClientModel
     }
     public partial class Token
     {
-        public Token(string token, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
+        public Token(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } protected set { } }
         public System.DateTimeOffset? RefreshOn { get { throw null; } protected set { } }
         public string TokenType { get { throw null; } protected set { } }
@@ -255,7 +259,6 @@ namespace System.ClientModel.Primitives
     public abstract partial class OAuthPipelinePolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         protected OAuthPipelinePolicy() { }
-        public abstract System.ClientModel.Primitives.OAuthPipelinePolicy CreateAuthenticationPolicy(System.Collections.Generic.IReadOnlyDictionary<string, object> context);
         public abstract System.ClientModel.Token GetToken(System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetTokenAsync(System.Threading.CancellationToken cancellationToken);
     }
