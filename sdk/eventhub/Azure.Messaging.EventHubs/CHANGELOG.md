@@ -1,6 +1,6 @@
 # Release History
 
-## 5.12.0-beta.2 (Unreleased)
+## 5.12.0-beta.2 (2025-02-11)
 
 ### Acknowledgments
 
