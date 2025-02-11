@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -50,6 +51,21 @@ namespace Azure.Communication.Messages
             _keyCredential = credential;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConversationMessagesClient"/> class.
+        /// </summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="communicationTokenCredential">The <see cref="CommunicationTokenCredential"/> used to authenticate requests.</param>
+        /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public ConversationMessagesClient(Uri endpoint, CommunicationTokenCredential communicationTokenCredential, CommunicationMessagesClientOptions options = default)
+        : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
+                Argument.CheckNotNull(communicationTokenCredential, nameof(communicationTokenCredential)),
+                options ?? new CommunicationMessagesClientOptions())
+        {
+            _tokenCredential = new CommunicationBearerTokenCredential(communicationTokenCredential);
+        }
+
         #endregion
 
         #region private constructors
@@ -60,6 +76,11 @@ namespace Azure.Communication.Messages
         private ConversationMessagesClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
         { }
+
+        private ConversationMessagesClient(string endpoint, CommunicationTokenCredential communicationTokenCredential, CommunicationMessagesClientOptions options)
+            : this(new Uri(endpoint), options.BuildHttpPipeline(new CommunicationBearerTokenCredential(communicationTokenCredential)), options)
+        {
+        }
 
         private ConversationMessagesClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {

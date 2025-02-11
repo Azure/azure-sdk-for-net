@@ -221,6 +221,7 @@ namespace Azure.Communication.Messages
         public ConversationMessagesClient(string connectionString, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
         public ConversationMessagesClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ConversationMessagesClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
+        public ConversationMessagesClient(System.Uri endpoint, Azure.Communication.CommunicationTokenCredential communicationTokenCredential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
         public ConversationMessagesClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public ConversationMessagesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
