@@ -20,6 +20,7 @@ class PackageProps {
     # additional packages required for validation of this one
     [string[]]$AdditionalValidationPackages
     [HashTable]$ArtifactDetails
+    [HashTable]$CIParameters
     [HashTable[]]$CIMatrixConfigs
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory) {
@@ -61,6 +62,7 @@ class PackageProps {
             $this.ChangeLogPath = $null
         }
 
+        $this.CIParameters = @{}
         $this.InitializeCIArtifacts()
     }
 
@@ -112,28 +114,38 @@ class PackageProps {
         return $null
     }
 
+    [PSCustomObject]GetCIYmlForArtifact() {
+        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+
+        $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
+        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
+        $ciArtifactResult = $null
+
+        foreach ($ciFile in $ciFiles) {
+            $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
+            if ($ciArtifactResult) {
+                break
+            }
+        }
+
+        return $ciArtifactResult
+    }
+
     [void]InitializeCIArtifacts() {
         if (-not $env:SYSTEM_TEAMPROJECTID  -and -not $env:GITHUB_ACTIONS) {
             return
         }
 
-        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
-
-        $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
-        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
-
         if (-not $this.ArtifactDetails) {
-            foreach ($ciFile in $ciFiles) {
-                $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
-                if ($ciArtifactResult) {
-                    $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
-                    $this.CIMatrixConfigs = $ciArtifactResult.MatrixConfigs
-                    # if this package appeared in this ci file, then we should
-                    # treat this CI file as the source of the Matrix for this package
-                    if ($ciArtifactResult.PSObject.Properties.Name -contains "AdditionalMatrixConfigs" -and $ciArtifactResult.AdditionalMatrixConfigs) {
-                        $this.CIMatrixConfigs += $ciArtifactResult.AdditionalMatrixConfigs
-                    }
-                    break
+            $ciArtifactResult = $this.GetCIYmlForArtifact()
+
+            if ($ciArtifactResult) {
+                $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
+                $this.CIMatrixConfigs = $ciArtifactResult.MatrixConfigs
+                # if this package appeared in this ci file, then we should
+                # treat this CI file as the source of the Matrix for this package
+                if ($ciArtifactResult.PSObject.Properties.Name -contains "AdditionalMatrixConfigs" -and $ciArtifactResult.AdditionalMatrixConfigs) {
+                    $this.CIMatrixConfigs += $ciArtifactResult.AdditionalMatrixConfigs
                 }
             }
         }
