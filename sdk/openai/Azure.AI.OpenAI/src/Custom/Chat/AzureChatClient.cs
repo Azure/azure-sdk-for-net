@@ -135,8 +135,6 @@ internal partial class AzureChatClient : ChatClient
                 }
 
                 writer.Flush();
-
-                options.SerializedAdditionalRawData["max_tokens"] = BinaryData.FromBytes(stream.ToArray());
             }
             else
             {
