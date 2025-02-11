@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Quota.Models
                 throw new FormatException($"The model {nameof(GroupQuotaSubscriptionProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);

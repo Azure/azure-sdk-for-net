@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Model.Empty",
+  "library-name": "Type.Model.Empty",
+  "use-model-reader-writer": true
+}

@@ -73,18 +73,18 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(disposingLocalDirectory.DirectoryPath)
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(disposingLocalDirectory.DirectoryPath)
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
-            DataTransferOptions transferOptions = new DataTransferOptions()
+            TransferOptions transferOptions = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationMode = StorageResourceCreationMode.FailIfExists
             };
 
             // Start transfer and await for completion. This transfer will fail
             // since the destination already exists.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
                 transferOptions).ConfigureAwait(false);

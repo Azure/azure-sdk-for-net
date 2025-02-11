@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Elastic.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableElasticSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _elasticMonitorResourceMonitorsClientDiagnostics;
-        private MonitorsRestOperations _elasticMonitorResourceMonitorsRestClient;
+        private ClientDiagnostics _elasticMonitorMonitorsClientDiagnostics;
+        private MonitorsRestOperations _elasticMonitorMonitorsRestClient;
         private ClientDiagnostics _elasticVersionsClientDiagnostics;
         private ElasticVersionsRestOperations _elasticVersionsRestClient;
         private ClientDiagnostics _organizationsClientDiagnostics;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Elastic.Mocking
         {
         }
 
-        private ClientDiagnostics ElasticMonitorResourceMonitorsClientDiagnostics => _elasticMonitorResourceMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitorResource.ResourceType.Namespace, Diagnostics);
-        private MonitorsRestOperations ElasticMonitorResourceMonitorsRestClient => _elasticMonitorResourceMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ElasticMonitorResource.ResourceType));
+        private ClientDiagnostics ElasticMonitorMonitorsClientDiagnostics => _elasticMonitorMonitorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitorResource.ResourceType.Namespace, Diagnostics);
+        private MonitorsRestOperations ElasticMonitorMonitorsRestClient => _elasticMonitorMonitorsRestClient ??= new MonitorsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ElasticMonitorResource.ResourceType));
         private ClientDiagnostics ElasticVersionsClientDiagnostics => _elasticVersionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ElasticVersionsRestOperations ElasticVersionsRestClient => _elasticVersionsRestClient ??= new ElasticVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics OrganizationsClientDiagnostics => _organizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticMonitorResource> GetElasticMonitorResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticMonitorResource> GetElasticMonitorsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), ElasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitorResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), ElasticMonitorMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticMonitorResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticMonitorResource> GetElasticMonitorResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticMonitorResource> GetElasticMonitors(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorResourceMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorResourceMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), ElasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitorResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticMonitorMonitorsRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticMonitorMonitorsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorData.DeserializeElasticMonitorData(e)), ElasticMonitorMonitorsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticMonitors", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -123,21 +123,21 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="region"> Region where elastic deployment will take place. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ElasticVersionListFormat"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticVersionListFormat> GetElasticVersionsAsync(string region, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ElasticVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ElasticVersion> GetElasticVersionsAsync(string region, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(region, nameof(region));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticVersionsRestClient.CreateListRequest(Id.SubscriptionId, region);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, region);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ElasticVersionListFormat.DeserializeElasticVersionListFormat(e), ElasticVersionsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticVersions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ElasticVersion.DeserializeElasticVersion(e), ElasticVersionsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticVersions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -153,21 +153,21 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="region"> Region where elastic deployment will take place. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        /// <returns> A collection of <see cref="ElasticVersionListFormat"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticVersionListFormat> GetElasticVersions(string region, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ElasticVersion"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ElasticVersion> GetElasticVersions(string region, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(region, nameof(region));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ElasticVersionsRestClient.CreateListRequest(Id.SubscriptionId, region);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ElasticVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, region);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ElasticVersionListFormat.DeserializeElasticVersionListFormat(e), ElasticVersionsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticVersions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ElasticVersion.DeserializeElasticVersion(e), ElasticVersionsClientDiagnostics, Pipeline, "MockableElasticSubscriptionResource.GetElasticVersions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,15 +183,15 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UserApiKeyResponse>> GetApiKeyOrganizationAsync(ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticUserApiKeyResult>> GetApiKeyAsync(ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKeyOrganization");
+            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKey");
             scope.Start();
             try
             {
@@ -218,15 +218,15 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Email Id parameter of the User Organization, of which the API Key must be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UserApiKeyResponse> GetApiKeyOrganization(ElasticModelUserEmailId body = null, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticUserApiKeyResult> GetApiKey(ElasticUserEmailId body = null, CancellationToken cancellationToken = default)
         {
-            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKeyOrganization");
+            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetApiKey");
             scope.Start();
             try
             {
@@ -253,14 +253,14 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ElasticOrganizationToAzureSubscriptionMappingResponse>> GetElasticToAzureSubscriptionMappingOrganizationAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticOrganizationToAzureSubscriptionMappingResult>> GetElasticToAzureSubscriptionMappingAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetElasticToAzureSubscriptionMappingOrganization");
+            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetElasticToAzureSubscriptionMapping");
             scope.Start();
             try
             {
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ElasticOrganizationToAzureSubscriptionMappingResponse> GetElasticToAzureSubscriptionMappingOrganization(CancellationToken cancellationToken = default)
+        public virtual Response<ElasticOrganizationToAzureSubscriptionMappingResult> GetElasticToAzureSubscriptionMapping(CancellationToken cancellationToken = default)
         {
-            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetElasticToAzureSubscriptionMappingOrganization");
+            using var scope = OrganizationsClientDiagnostics.CreateScope("MockableElasticSubscriptionResource.GetElasticToAzureSubscriptionMapping");
             scope.Start();
             try
             {

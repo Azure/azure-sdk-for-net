@@ -1,4 +1,7 @@
-﻿using Azure.Core;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
@@ -7,7 +10,6 @@ using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
 using NUnit.Framework;
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;

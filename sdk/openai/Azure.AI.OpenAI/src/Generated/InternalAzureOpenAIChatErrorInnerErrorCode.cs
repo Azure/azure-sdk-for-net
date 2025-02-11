@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
         public static bool operator ==(InternalAzureOpenAIChatErrorInnerErrorCode left, InternalAzureOpenAIChatErrorInnerErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InternalAzureOpenAIChatErrorInnerErrorCode"/> values are not the same. </summary>
         public static bool operator !=(InternalAzureOpenAIChatErrorInnerErrorCode left, InternalAzureOpenAIChatErrorInnerErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InternalAzureOpenAIChatErrorInnerErrorCode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InternalAzureOpenAIChatErrorInnerErrorCode"/>. </summary>
         public static implicit operator InternalAzureOpenAIChatErrorInnerErrorCode(string value) => new InternalAzureOpenAIChatErrorInnerErrorCode(value);
 
         /// <inheritdoc />
