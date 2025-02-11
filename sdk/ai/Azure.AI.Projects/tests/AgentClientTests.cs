@@ -973,9 +973,10 @@ namespace Azure.AI.Projects.Tests
         }
 
         [RecordedTest]
-        [Ignore("Azure function call is not supported in all regions yet.")]
         public async Task TestAzureFunctionCall()
         {
+            // Note: This test was recorded in westus region as for now
+            // 2025-02-05 it is not supported in test region (East US 2)
             AzureFunctionToolDefinition azureFnTool = new(
                 name: "foo",
                 description: "Get answers from the foo bot.",
@@ -1032,9 +1033,10 @@ namespace Azure.AI.Projects.Tests
             await WaitForRun(client, run);
             PageableList<ThreadMessage> afterRunMessages = await client.GetMessagesAsync(thread.Id);
 
+            Assert.Greater(afterRunMessages.Count(), 1);
+            bool foundResponse = false;
             foreach (ThreadMessage msg in afterRunMessages)
             {
-                bool foundResponse = false;
                 foreach (MessageContent contentItem in msg.ContentItems)
                 {
                     if (contentItem is MessageTextContent textItem)
@@ -1046,8 +1048,8 @@ namespace Azure.AI.Projects.Tests
                         }
                     }
                 }
-                Assert.True(foundResponse);
             }
+            Assert.True(foundResponse);
         }
 
         [RecordedTest]

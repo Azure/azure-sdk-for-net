@@ -100,6 +100,7 @@ function GeneratePRMatrixForBatch {
     $matrixResults = @()
     foreach ($matrixConfig in $matrixConfigs) {
       Write-Host "Generating config for $($matrixConfig.Path)"
+      $nonSparse = $matrixConfig.PSObject.Properties['NonSparseParameters'] ? $matrixConfig.NonSparseParameters : @()
 
       $matrixResults = @()
       if ($directBatch) {
@@ -108,7 +109,8 @@ function GeneratePRMatrixForBatch {
           -Selection $matrixConfig.Selection `
           -DisplayNameFilter $DisplayNameFilter `
           -Filters $Filters `
-          -Replace $Replace
+          -Replace $Replace `
+          -NonSparseParameters $nonSparse
 
         if ($matrixResults) {
           Write-Host "We have the following direct matrix results: "
@@ -121,7 +123,8 @@ function GeneratePRMatrixForBatch {
           -Selection $matrixConfig.Selection `
           -DisplayNameFilter $DisplayNameFilter `
           -Filters ($Filters + $IndirectFilters) `
-          -Replace $Replace
+          -Replace $Replace `
+          -NonSparseParameters $nonSparse
 
         if ($matrixResults) {
           Write-Host "We have the following indirect matrix results: "
