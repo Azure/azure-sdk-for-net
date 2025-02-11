@@ -1,0 +1,8 @@
+﻿{
+  "output-folder": "./outputFolder",
+  "project-folder": "./projectFolder",
+  "namespace": "sample.namespace",
+  "unknown-bool-property": false,
+  "library-name": "sample-library",
+  "unknown-string-property": "unknownPropertyValue"
+}
