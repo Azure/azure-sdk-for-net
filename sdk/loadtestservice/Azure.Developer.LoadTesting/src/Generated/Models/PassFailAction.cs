@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Action to take on failure of pass/fail criteria. </summary>
-    public readonly partial struct PFAction : IEquatable<PFAction>
+    public readonly partial struct PassFailAction : IEquatable<PassFailAction>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="PFAction"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PassFailAction"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PFAction(string value)
+        public PassFailAction(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.Developer.LoadTesting.Models
         private const string StopValue = "stop";
 
         /// <summary> Test will continue to run even if pass fail metric criteria metric gets failed. </summary>
-        public static PFAction Continue { get; } = new PFAction(ContinueValue);
+        public static PassFailAction Continue { get; } = new PassFailAction(ContinueValue);
         /// <summary> Test run will stop if pass fail criteria metric is not passed. </summary>
-        public static PFAction Stop { get; } = new PFAction(StopValue);
-        /// <summary> Determines if two <see cref="PFAction"/> values are the same. </summary>
-        public static bool operator ==(PFAction left, PFAction right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="PFAction"/> values are not the same. </summary>
-        public static bool operator !=(PFAction left, PFAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PFAction"/>. </summary>
-        public static implicit operator PFAction(string value) => new PFAction(value);
+        public static PassFailAction Stop { get; } = new PassFailAction(StopValue);
+        /// <summary> Determines if two <see cref="PassFailAction"/> values are the same. </summary>
+        public static bool operator ==(PassFailAction left, PassFailAction right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="PassFailAction"/> values are not the same. </summary>
+        public static bool operator !=(PassFailAction left, PassFailAction right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PassFailAction"/>. </summary>
+        public static implicit operator PassFailAction(string value) => new PassFailAction(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PFAction other && Equals(other);
+        public override bool Equals(object obj) => obj is PassFailAction other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(PFAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(PassFailAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

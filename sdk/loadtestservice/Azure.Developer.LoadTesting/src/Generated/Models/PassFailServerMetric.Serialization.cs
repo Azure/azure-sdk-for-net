@@ -104,7 +104,7 @@ namespace Azure.Developer.LoadTesting.Models
             string aggregation = default;
             string condition = default;
             double value = default;
-            PFAction? action = default;
+            PassFailAction? action = default;
             double? actualValue = default;
             PFResult? result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -147,7 +147,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    action = new PFAction(property.Value.GetString());
+                    action = new PassFailAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("actualValue"u8))

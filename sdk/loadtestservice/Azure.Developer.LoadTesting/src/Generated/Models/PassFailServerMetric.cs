@@ -81,7 +81,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the server metric. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value, PFAction? action, double? actualValue, PFResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value, PassFailAction? action, double? actualValue, PFResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             MetricNamespace = metricNamespace;
@@ -113,7 +113,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> The value to compare with the server metric. </summary>
         public double Value { get; set; }
         /// <summary> Action taken after the threshold is met. Default is ‘continue’. </summary>
-        public PFAction? Action { get; set; }
+        public PassFailAction? Action { get; set; }
         /// <summary> The actual value of the server metric. </summary>
         public double? ActualValue { get; }
         /// <summary> Outcome of the test run. </summary>

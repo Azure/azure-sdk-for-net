@@ -68,7 +68,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailMetric(PFMetrics? clientMetric, PFAgFunc? aggregate, string condition, string requestName, double? value, PFAction? action, double? actualValue, PFResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PassFailMetric(PFMetrics? clientMetric, PassFailAggregationFunction? aggregate, string condition, string requestName, double? value, PassFailAction? action, double? actualValue, PFResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientMetric = clientMetric;
             Aggregate = aggregate;
@@ -89,7 +89,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// ‘max’ - for response_time_ms and latency metric, ‘avg’ - for requests_per_sec,
         /// ‘count’ - for requests
         /// </summary>
-        public PFAgFunc? Aggregate { get; set; }
+        public PassFailAggregationFunction? Aggregate { get; set; }
         /// <summary> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </summary>
         public string Condition { get; set; }
         /// <summary> Request name for which the Pass fail criteria has to be applied. </summary>
@@ -100,7 +100,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         public double? Value { get; set; }
         /// <summary> Action taken after the threshold is met. Default is ‘continue’. </summary>
-        public PFAction? Action { get; set; }
+        public PassFailAction? Action { get; set; }
         /// <summary> The actual value of the client metric for the test run. </summary>
         public double? ActualValue { get; }
         /// <summary> Outcome of the test run. </summary>

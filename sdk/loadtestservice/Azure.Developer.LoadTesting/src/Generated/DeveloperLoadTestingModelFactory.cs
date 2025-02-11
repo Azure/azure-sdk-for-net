@@ -99,7 +99,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the client metric for the test run. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <returns> A new <see cref="Models.PassFailMetric"/> instance for mocking. </returns>
-        public static PassFailMetric PassFailMetric(PFMetrics? clientMetric = null, PFAgFunc? aggregate = null, string condition = null, string requestName = null, double? value = null, PFAction? action = null, double? actualValue = null, PFResult? result = null)
+        public static PassFailMetric PassFailMetric(PFMetrics? clientMetric = null, PassFailAggregationFunction? aggregate = null, string condition = null, string requestName = null, double? value = null, PassFailAction? action = null, double? actualValue = null, PFResult? result = null)
         {
             return new PassFailMetric(
                 clientMetric,
@@ -124,7 +124,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the server metric. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <returns> A new <see cref="Models.PassFailServerMetric"/> instance for mocking. </returns>
-        public static PassFailServerMetric PassFailServerMetric(ResourceIdentifier resourceId = null, string metricNamespace = null, string metricName = null, string aggregation = null, string condition = null, double value = default, PFAction? action = null, double? actualValue = null, PFResult? result = null)
+        public static PassFailServerMetric PassFailServerMetric(ResourceIdentifier resourceId = null, string metricNamespace = null, string metricName = null, string aggregation = null, string condition = null, double value = default, PassFailAction? action = null, double? actualValue = null, PFResult? result = null)
         {
             return new PassFailServerMetric(
                 resourceId,

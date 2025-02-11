@@ -112,11 +112,11 @@ namespace Azure.Developer.LoadTesting.Models
                 return null;
             }
             PFMetrics? clientMetric = default;
-            PFAgFunc? aggregate = default;
+            PassFailAggregationFunction? aggregate = default;
             string condition = default;
             string requestName = default;
             double? value = default;
-            PFAction? action = default;
+            PassFailAction? action = default;
             double? actualValue = default;
             PFResult? result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -138,7 +138,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    aggregate = new PFAgFunc(property.Value.GetString());
+                    aggregate = new PassFailAggregationFunction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("condition"u8))
@@ -166,7 +166,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    action = new PFAction(property.Value.GetString());
+                    action = new PassFailAction(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("actualValue"u8))
