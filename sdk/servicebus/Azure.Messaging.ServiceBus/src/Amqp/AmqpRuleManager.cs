@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     identifier,
                     timeout,
                     CancellationToken.None),
-                link => _connectionScope.CloseLink(link));
+                link => _connectionScope.CloseLink(link, identifier));
         }
 
         /// <summary>
