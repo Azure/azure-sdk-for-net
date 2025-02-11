@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Runtime properties of this Capability Type. </summary>
-    internal partial class ChaosCapabilityTypeRuntimeProperties
+    internal partial class ChaosCapabilityMetadataRuntimeProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeRuntimeProperties"/>. </summary>
-        public ChaosCapabilityTypeRuntimeProperties()
+        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataRuntimeProperties"/>. </summary>
+        internal ChaosCapabilityMetadataRuntimeProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeRuntimeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataRuntimeProperties"/>. </summary>
         /// <param name="kind"> String of the kind of the resource's action type (continuous or discrete). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityTypeRuntimeProperties(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChaosCapabilityMetadataRuntimeProperties(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;

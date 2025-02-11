@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing the ChaosCapabilityType data model.
+    /// A class representing the ChaosCapabilityMetadata data model.
     /// Model that represents a Capability Type resource.
     /// </summary>
-    public partial class ChaosCapabilityTypeData : ResourceData
+    public partial class ChaosCapabilityMetadataData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeData"/>. </summary>
-        public ChaosCapabilityTypeData()
+        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataData"/>. </summary>
+        internal ChaosCapabilityMetadataData()
         {
             AzureRbacActions = new ChangeTrackingList<string>();
             AzureRbacDataActions = new ChangeTrackingList<string>();
+            RequiredAzureRoleDefinitionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityTypeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Location of the Capability Type resource. </param>
         /// <param name="publisher"> String of the Publisher that this Capability Type extends. </param>
         /// <param name="targetType"> String of the Target Type that this Capability Type extends. </param>
         /// <param name="displayName"> Localized string of the display name. </param>
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="kind"> String of the kind of this Capability Type. </param>
         /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
         /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
+        /// <param name="requiredAzureRoleDefinitionIds"> Required Azure Role Definition Ids to execute capability type. </param>
         /// <param name="runtimeProperties"> Runtime properties of this Capability Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IList<string> azureRbacActions, IList<string> azureRbacDataActions, ChaosCapabilityTypeRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChaosCapabilityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IReadOnlyList<string> azureRbacActions, IReadOnlyList<string> azureRbacDataActions, IReadOnlyList<string> requiredAzureRoleDefinitionIds, ChaosCapabilityMetadataRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Location = location;
             Publisher = publisher;
             TargetType = targetType;
             DisplayName = displayName;
@@ -87,12 +87,11 @@ namespace Azure.ResourceManager.Chaos
             Kind = kind;
             AzureRbacActions = azureRbacActions;
             AzureRbacDataActions = azureRbacDataActions;
+            RequiredAzureRoleDefinitionIds = requiredAzureRoleDefinitionIds;
             RuntimeProperties = runtimeProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Location of the Capability Type resource. </summary>
-        public AzureLocation? Location { get; set; }
         /// <summary> String of the Publisher that this Capability Type extends. </summary>
         public string Publisher { get; }
         /// <summary> String of the Target Type that this Capability Type extends. </summary>
@@ -108,15 +107,17 @@ namespace Azure.ResourceManager.Chaos
         /// <summary> String of the kind of this Capability Type. </summary>
         public string Kind { get; }
         /// <summary> Control plane actions necessary to execute capability type. </summary>
-        public IList<string> AzureRbacActions { get; }
+        public IReadOnlyList<string> AzureRbacActions { get; }
         /// <summary> Data plane actions necessary to execute capability type. </summary>
-        public IList<string> AzureRbacDataActions { get; }
+        public IReadOnlyList<string> AzureRbacDataActions { get; }
+        /// <summary> Required Azure Role Definition Ids to execute capability type. </summary>
+        public IReadOnlyList<string> RequiredAzureRoleDefinitionIds { get; }
         /// <summary> Runtime properties of this Capability Type. </summary>
-        internal ChaosCapabilityTypeRuntimeProperties RuntimeProperties { get; set; }
+        internal ChaosCapabilityMetadataRuntimeProperties RuntimeProperties { get; }
         /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>
         public string RuntimeKind
         {
-            get => RuntimeProperties is null ? default : RuntimeProperties.Kind;
+            get => RuntimeProperties?.Kind;
         }
     }
 }
