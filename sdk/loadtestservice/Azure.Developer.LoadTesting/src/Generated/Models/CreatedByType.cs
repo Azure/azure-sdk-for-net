@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </summary>
-    public readonly partial struct CreateByTypes : IEquatable<CreateByTypes>
+    public readonly partial struct CreatedByType : IEquatable<CreatedByType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="CreateByTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreatedByType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CreateByTypes(string value)
+        public CreatedByType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.Developer.LoadTesting.Models
         private const string ScheduledTriggerValue = "ScheduledTrigger";
 
         /// <summary> Entity was created by a user. </summary>
-        public static CreateByTypes User { get; } = new CreateByTypes(UserValue);
+        public static CreatedByType User { get; } = new CreatedByType(UserValue);
         /// <summary> Entity was created by a scheduled trigger. </summary>
-        public static CreateByTypes ScheduledTrigger { get; } = new CreateByTypes(ScheduledTriggerValue);
-        /// <summary> Determines if two <see cref="CreateByTypes"/> values are the same. </summary>
-        public static bool operator ==(CreateByTypes left, CreateByTypes right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="CreateByTypes"/> values are not the same. </summary>
-        public static bool operator !=(CreateByTypes left, CreateByTypes right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CreateByTypes"/>. </summary>
-        public static implicit operator CreateByTypes(string value) => new CreateByTypes(value);
+        public static CreatedByType ScheduledTrigger { get; } = new CreatedByType(ScheduledTriggerValue);
+        /// <summary> Determines if two <see cref="CreatedByType"/> values are the same. </summary>
+        public static bool operator ==(CreatedByType left, CreatedByType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="CreatedByType"/> values are not the same. </summary>
+        public static bool operator !=(CreatedByType left, CreatedByType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CreatedByType"/>. </summary>
+        public static implicit operator CreatedByType(string value) => new CreatedByType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CreateByTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is CreatedByType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(CreateByTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CreatedByType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

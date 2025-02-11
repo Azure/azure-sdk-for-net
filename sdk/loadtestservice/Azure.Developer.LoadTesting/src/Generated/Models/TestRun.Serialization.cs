@@ -293,7 +293,7 @@ namespace Azure.Developer.LoadTesting.Models
             RequestDataLevel? requestDataLevel = default;
             bool? debugLogsEnabled = default;
             bool? publicIPDisabled = default;
-            CreateByTypes? createdByType = default;
+            CreatedByType? createdByType = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
             DateTimeOffset? lastModifiedDateTime = default;
@@ -561,7 +561,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    createdByType = new CreateByTypes(property.Value.GetString());
+                    createdByType = new CreatedByType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdDateTime"u8))
