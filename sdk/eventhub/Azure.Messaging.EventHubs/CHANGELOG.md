@@ -1,6 +1,16 @@
 # Release History
 
-## 5.12.0-beta.2 (Unreleased)
+## 5.12.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.12.0-beta.2 (2025-02-11)
 
 ### Acknowledgments
 
@@ -26,8 +36,6 @@ Thank you to our developer community members who helped to make the Event Hubs c
   - [EventHubsModelFactory.EventData](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsmodelfactory.eventdata?view=azure-dotnet)
   - [BlobCheckpointStore.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.blobcheckpointstore.updatecheckpointasync?view=azure-dotnet)
   - [EventProcessorClient.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient.updatecheckpointasync?view=azure-dotnet)
-  
-### Breaking Changes
 
 ### Bugs Fixed
 
