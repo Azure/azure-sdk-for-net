@@ -148,7 +148,6 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
   )
   $additionalValidationPackages = @()
   $uniqueResultSet = @()
-
   function isOther($fileName) {
     $startsWithPrefixes = @(".config", ".devcontainer", ".github", ".vscode", "common", "doc", "eng", "samples")
 
@@ -162,14 +161,29 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
     return $startsWith
   }
 
-    # this section will identify the list of packages that we should treat as
+  # ensure we also resolve packages that had deleted files only
+  $targetedFiles = $diffObj.ChangedFiles
+  if ($diff.DeletedFiles) {
+    if (-not $targetedFiles) {
+      $targetedFiles = @()
+    }
+    $targetedFiles += $diff.DeletedFiles
+  }
+
+  # The targetedFiles needs to filter out anything in the ExcludePaths
+  # otherwise it'll end up processing things below that it shouldn't be.
+  foreach ($excludePath in $diffObj.ExcludePaths) {
+    $targetedFiles = $targetedFiles | Where-Object { -not $_.StartsWith($excludePath) }
+  }
+
+  # this section will identify the list of packages that we should treat as
   # "directly" changed for a given service level change. While that doesn't
   # directly change a package within the service, I do believe we should directly include all
   # packages WITHIN that service. This is because the service level file changes are likely to
   # have an impact on the packages within that service.
   $changedServices = @()
-  if ($diffObj.ChangedFiles) {
-    foreach($file in $diffObj.ChangedFiles) {
+  if ($targetedFiles) {
+    foreach($file in $targetedFiles) {
       $pathComponents = $file -split "/"
       # handle changes only in sdk/<service>/<file>/<extension>
       if ($pathComponents.Length -eq 3 -and $pathComponents[0] -eq "sdk") {
@@ -196,8 +210,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
   }
 
   $othersChanged = @()
-  if ($diffObj.ChangedFiles) {
-    $othersChanged = $diffObj.ChangedFiles | Where-Object { isOther($_) }
+  if ($targetedFiles) {
+    $othersChanged = $targetedFiles | Where-Object { isOther($_) }
   }
 
   if ($othersChanged) {
