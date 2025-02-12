@@ -1046,10 +1046,10 @@
 # ServiceOwners:                                                   @vipray-ms
 
 # PRLabel: %Nginx
-/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93 @george-ngugi
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93
 
 # ServiceLabel: %Nginx %Mgmt
-# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93 @george-ngugi
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93
 
 # PRLabel: %Operator Nexus - Network Cloud
 /sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud
