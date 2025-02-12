@@ -22,15 +22,15 @@ namespace Azure.Communication.Rooms
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AttendeeValue = "Attendee";
         private const string PresenterValue = "Presenter";
+        private const string AttendeeValue = "Attendee";
         private const string ConsumerValue = "Consumer";
         private const string CollaboratorValue = "Collaborator";
 
-        /// <summary> Attendee. </summary>
-        public static ParticipantRole Attendee { get; } = new ParticipantRole(AttendeeValue);
         /// <summary> Presenter. </summary>
         public static ParticipantRole Presenter { get; } = new ParticipantRole(PresenterValue);
+        /// <summary> Attendee. </summary>
+        public static ParticipantRole Attendee { get; } = new ParticipantRole(AttendeeValue);
         /// <summary> Consumer. </summary>
         public static ParticipantRole Consumer { get; } = new ParticipantRole(ConsumerValue);
         /// <summary> Collaborator. </summary>
