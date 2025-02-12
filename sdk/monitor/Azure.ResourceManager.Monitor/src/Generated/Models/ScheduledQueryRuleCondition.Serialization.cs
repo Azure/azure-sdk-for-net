@@ -34,11 +34,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(CriterionType))
-            {
-                writer.WritePropertyName("criterionType"u8);
-                writer.WriteStringValue(CriterionType.Value.ToString());
-            }
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
@@ -72,22 +67,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
-                writer.WriteStringValue(Operator.Value.ToString());
+                writer.WriteStringValue(Operator.Value.ToSerialString());
             }
             if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
-            }
-            if (Optional.IsDefined(AlertSensitivity))
-            {
-                writer.WritePropertyName("alertSensitivity"u8);
-                writer.WriteStringValue(AlertSensitivity);
-            }
-            if (Optional.IsDefined(IgnoreDataBefore))
-            {
-                writer.WritePropertyName("ignoreDataBefore"u8);
-                writer.WriteStringValue(IgnoreDataBefore.Value, "O");
             }
             if (Optional.IsDefined(FailingPeriods))
             {
@@ -136,7 +121,6 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            CriterionType? criterionType = default;
             string query = default;
             ScheduledQueryRuleTimeAggregationType? timeAggregation = default;
             string metricMeasureColumn = default;
@@ -144,23 +128,12 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<MonitorDimension> dimensions = default;
             MonitorConditionOperator? @operator = default;
             double? threshold = default;
-            string alertSensitivity = default;
-            DateTimeOffset? ignoreDataBefore = default;
             ConditionFailingPeriods failingPeriods = default;
             string metricName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("criterionType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    criterionType = new CriterionType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("query"u8))
                 {
                     query = property.Value.GetString();
@@ -205,7 +178,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    @operator = new MonitorConditionOperator(property.Value.GetString());
+                    @operator = property.Value.GetString().ToMonitorConditionOperator();
                     continue;
                 }
                 if (property.NameEquals("threshold"u8))
@@ -215,20 +188,6 @@ namespace Azure.ResourceManager.Monitor.Models
                         continue;
                     }
                     threshold = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("alertSensitivity"u8))
-                {
-                    alertSensitivity = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ignoreDataBefore"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ignoreDataBefore = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("failingPeriods"u8))
@@ -252,7 +211,6 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ScheduledQueryRuleCondition(
-                criterionType,
                 query,
                 timeAggregation,
                 metricMeasureColumn,
@@ -260,8 +218,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 dimensions ?? new ChangeTrackingList<MonitorDimension>(),
                 @operator,
                 threshold,
-                alertSensitivity,
-                ignoreDataBefore,
                 failingPeriods,
                 metricName,
                 serializedAdditionalRawData);

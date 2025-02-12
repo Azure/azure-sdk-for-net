@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -35,11 +34,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 throw new FormatException($"The model {nameof(ScheduledQueryRulePatch)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -153,11 +147,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);
             }
-            if (Optional.IsDefined(ResolveConfiguration))
-            {
-                writer.WritePropertyName("resolveConfiguration"u8);
-                writer.WriteObjectValue(ResolveConfiguration, options);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -196,7 +185,6 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             string createdWithApiVersion = default;
             bool? isLegacyLogAnalyticsRule = default;
@@ -216,20 +204,10 @@ namespace Azure.ResourceManager.Monitor.Models
             bool? checkWorkspaceAlertsStorageConfigured = default;
             bool? skipQueryValidation = default;
             bool? autoMitigate = default;
-            ScheduledQueryRuleResolveConfiguration resolveConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -413,15 +391,6 @@ namespace Azure.ResourceManager.Monitor.Models
                             autoMitigate = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("resolveConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resolveConfiguration = ScheduledQueryRuleResolveConfiguration.DeserializeScheduledQueryRuleResolveConfiguration(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -432,7 +401,6 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ScheduledQueryRulePatch(
-                identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 createdWithApiVersion,
                 isLegacyLogAnalyticsRule,
@@ -452,7 +420,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 checkWorkspaceAlertsStorageConfigured,
                 skipQueryValidation,
                 autoMitigate,
-                resolveConfiguration,
                 serializedAdditionalRawData);
         }
 

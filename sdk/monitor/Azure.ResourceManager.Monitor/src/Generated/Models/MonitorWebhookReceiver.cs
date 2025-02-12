@@ -66,9 +66,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="objectId"> Indicates the webhook app object Id for aad auth. </param>
         /// <param name="identifierUri"> Indicates the identifier uri for aad auth. </param>
         /// <param name="tenantId"> Indicates the tenant id for aad auth. </param>
-        /// <param name="managedIdentity"> The principal id of the managed identity. The value can be "None", "SystemAssigned". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorWebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId, string managedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MonitorWebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ServiceUri = serviceUri;
@@ -77,7 +76,6 @@ namespace Azure.ResourceManager.Monitor.Models
             ObjectId = objectId;
             IdentifierUri = identifierUri;
             TenantId = tenantId;
-            ManagedIdentity = managedIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,7 +98,5 @@ namespace Azure.ResourceManager.Monitor.Models
         public Uri IdentifierUri { get; set; }
         /// <summary> Indicates the tenant id for aad auth. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The principal id of the managed identity. The value can be "None", "SystemAssigned". </summary>
-        public string ManagedIdentity { get; set; }
     }
 }

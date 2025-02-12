@@ -52,22 +52,18 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleCondition"/>. </summary>
-        /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
         /// <param name="query"> Log query alert. </param>
         /// <param name="timeAggregation"> Aggregation type. Relevant and required only for rules of the kind LogAlert. </param>
         /// <param name="metricMeasureColumn"> The column containing the metric measure number. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="resourceIdColumn"> The column containing the resource id. The content of the column must be a uri formatted as resource id. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="dimensions"> List of Dimensions conditions. </param>
         /// <param name="operator"> The criteria operator. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="threshold"> the criteria threshold value that activates the alert. Relevant and required only for static threshold rules of the kind LogAlert. </param>
-        /// <param name="alertSensitivity"> The extent of deviation required to trigger an alert. Allowed values are 'Low', 'Medium' and 'High'. This will affect how tight the threshold is to the metric series pattern. Relevant and required only for dynamic threshold rules of the kind LogAlert. </param>
-        /// <param name="ignoreDataBefore"> Use this option to set the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format). Relevant only for dynamic threshold rules of the kind LogAlert. </param>
+        /// <param name="threshold"> the criteria threshold value that activates the alert. Relevant and required only for rules of the kind LogAlert. </param>
         /// <param name="failingPeriods"> The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="metricName"> The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleCondition(CriterionType? criterionType, string query, ScheduledQueryRuleTimeAggregationType? timeAggregation, string metricMeasureColumn, string resourceIdColumn, IList<MonitorDimension> dimensions, MonitorConditionOperator? @operator, double? threshold, string alertSensitivity, DateTimeOffset? ignoreDataBefore, ConditionFailingPeriods failingPeriods, string metricName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledQueryRuleCondition(string query, ScheduledQueryRuleTimeAggregationType? timeAggregation, string metricMeasureColumn, string resourceIdColumn, IList<MonitorDimension> dimensions, MonitorConditionOperator? @operator, double? threshold, ConditionFailingPeriods failingPeriods, string metricName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CriterionType = criterionType;
             Query = query;
             TimeAggregation = timeAggregation;
             MetricMeasureColumn = metricMeasureColumn;
@@ -75,15 +71,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Dimensions = dimensions;
             Operator = @operator;
             Threshold = threshold;
-            AlertSensitivity = alertSensitivity;
-            IgnoreDataBefore = ignoreDataBefore;
             FailingPeriods = failingPeriods;
             MetricName = metricName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the type of threshold criteria. </summary>
-        public CriterionType? CriterionType { get; set; }
         /// <summary> Log query alert. </summary>
         public string Query { get; set; }
         /// <summary> Aggregation type. Relevant and required only for rules of the kind LogAlert. </summary>
@@ -96,12 +88,8 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<MonitorDimension> Dimensions { get; }
         /// <summary> The criteria operator. Relevant and required only for rules of the kind LogAlert. </summary>
         public MonitorConditionOperator? Operator { get; set; }
-        /// <summary> the criteria threshold value that activates the alert. Relevant and required only for static threshold rules of the kind LogAlert. </summary>
+        /// <summary> the criteria threshold value that activates the alert. Relevant and required only for rules of the kind LogAlert. </summary>
         public double? Threshold { get; set; }
-        /// <summary> The extent of deviation required to trigger an alert. Allowed values are 'Low', 'Medium' and 'High'. This will affect how tight the threshold is to the metric series pattern. Relevant and required only for dynamic threshold rules of the kind LogAlert. </summary>
-        public string AlertSensitivity { get; set; }
-        /// <summary> Use this option to set the date from which to start learning the metric historical data and calculate the dynamic thresholds (in ISO8601 format). Relevant only for dynamic threshold rules of the kind LogAlert. </summary>
-        public DateTimeOffset? IgnoreDataBefore { get; set; }
         /// <summary> The minimum number of violations required within the selected lookback time window required to raise an alert. Relevant only for rules of the kind LogAlert. </summary>
         public ConditionFailingPeriods FailingPeriods { get; set; }
         /// <summary> The name of the metric to be sent. Relevant and required only for rules of the kind LogToMetric. </summary>

@@ -55,17 +55,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ActionProperties))
-            {
-                writer.WritePropertyName("actionProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ActionProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -105,7 +94,6 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             IList<string> actionGroups = default;
             IDictionary<string, string> customProperties = default;
-            IDictionary<string, string> actionProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,27 +126,13 @@ namespace Azure.ResourceManager.Monitor.Models
                     customProperties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("actionProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    actionProperties = dictionary;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScheduledQueryRuleActions(actionGroups ?? new ChangeTrackingList<string>(), customProperties ?? new ChangeTrackingDictionary<string, string>(), actionProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ScheduledQueryRuleActions(actionGroups ?? new ChangeTrackingList<string>(), customProperties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleActions>.Write(ModelReaderWriterOptions options)

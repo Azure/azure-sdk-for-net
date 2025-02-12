@@ -37,12 +37,6 @@ namespace Azure.ResourceManager.Monitor
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupShortName))
@@ -165,16 +159,6 @@ namespace Azure.ResourceManager.Monitor
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncidentReceivers))
-            {
-                writer.WritePropertyName("incidentReceivers"u8);
-                writer.WriteStartArray();
-                foreach (var item in IncidentReceivers)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             writer.WriteEndObject();
         }
 
@@ -198,7 +182,6 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -218,21 +201,10 @@ namespace Azure.ResourceManager.Monitor
             IList<MonitorAzureFunctionReceiver> azureFunctionReceivers = default;
             IList<MonitorArmRoleReceiver> armRoleReceivers = default;
             IList<MonitorEventHubReceiver> eventHubReceivers = default;
-            IList<IncidentReceiver> incidentReceivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -453,20 +425,6 @@ namespace Azure.ResourceManager.Monitor
                             eventHubReceivers = array;
                             continue;
                         }
-                        if (property0.NameEquals("incidentReceivers"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<IncidentReceiver> array = new List<IncidentReceiver>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(IncidentReceiver.DeserializeIncidentReceiver(item, options));
-                            }
-                            incidentReceivers = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -496,8 +454,6 @@ namespace Azure.ResourceManager.Monitor
                 azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(),
                 armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(),
                 eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(),
-                incidentReceivers ?? new ChangeTrackingList<IncidentReceiver>(),
-                identity,
                 serializedAdditionalRawData);
         }
 
