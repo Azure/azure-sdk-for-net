@@ -29,7 +29,8 @@ public partial class Sample_Agent_OpenAPI : SamplesBase<AIProjectsTestEnvironmen
         var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
-        AgentsClient client = new(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
         var file_path = GetFile();
 
         #region Snippet:OpenAPIDefineFunctionTools

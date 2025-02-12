@@ -24,7 +24,8 @@ public partial class Sample_Agent_Basics : SamplesBase<AIProjectsTestEnvironment
 #else
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
 #endif
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
         #endregion
 
         // Step 1: Create an agent

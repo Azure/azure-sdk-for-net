@@ -21,7 +21,8 @@ public partial class Sample_Agent_Enterprise_File_Search : SamplesBase<AIProject
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
 
         #region Snippet:CreateVectorStoreBlob
         var ds = new VectorStoreDataSource(
