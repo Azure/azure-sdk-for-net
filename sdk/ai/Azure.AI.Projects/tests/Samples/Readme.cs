@@ -6,6 +6,7 @@
 using System;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Agents;
 
 namespace Azure.AI.Projects.Tests;
 

@@ -16,7 +16,7 @@
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.AI.Inference" />
-    <PackageReference Include="Azure.AI.Agents" />
+    <ProjectReference Include="..\..\Azure.AI.Agents\src\Azure.AI.Agents.csproj" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
