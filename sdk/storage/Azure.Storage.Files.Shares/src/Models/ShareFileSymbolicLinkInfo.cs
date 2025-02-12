@@ -11,8 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// Infomation about a Symbolic Link.
     /// Only applicable to NFS files.
     /// </summary>
-    /// https://github.com/Azure/azure-sdk-for-net/issues/46907
-    internal class ShareFileSymbolicLinkInfo
+    public class ShareFileSymbolicLinkInfo
     {
         /// <summary>
         /// The ETag contains a value which represents the version of the file, in quotes.
@@ -35,8 +34,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <summary>
         /// Creates a new FileSymolicLinkInfo for mocking.
         /// </summary>
-        /// https://github.com/Azure/azure-sdk-for-net/issues/46907
-        internal static ShareFileSymbolicLinkInfo FileSymbolicLinkInfo(
+        public static ShareFileSymbolicLinkInfo FileSymbolicLinkInfo(
             ETag eTag = default,
             DateTimeOffset lastModified = default,
             string linkText = default)
