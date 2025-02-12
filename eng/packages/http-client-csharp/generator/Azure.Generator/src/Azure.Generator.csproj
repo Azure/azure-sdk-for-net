@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
 	  <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Microsoft.Generator.CSharp.ClientModel" />
+    <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
 	<Target Name="CheckEmitterBuild" BeforeTargets="Build">
