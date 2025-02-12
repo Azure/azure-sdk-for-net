@@ -61,7 +61,7 @@ class PackageProps {
             $this.ChangeLogPath = $null
         }
 
-        $this.CIParameters = @{}
+        $this.CIParameters = @{"CIMatrixConfigs" = @()}
         $this.InitializeCIArtifacts()
     }
 
@@ -131,13 +131,13 @@ class PackageProps {
                 $matrixConfigList = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("extends", "parameters", "MatrixConfigs")
 
                 if ($matrixConfigList) {
-                    $this.CIMatrixConfigs += $matrixConfigList
+                    $this.CIParameters["CIMatrixConfigs"] += $matrixConfigList
                 }
 
                 $additionalMatrixConfigList = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("extends", "parameters", "AdditionalMatrixConfigs")
 
                 if ($additionalMatrixConfigList) {
-                    $this.CIMatrixConfigs += $additionalMatrixConfigList
+                    $this.CIParameters["CIMatrixConfigs"] += $additionalMatrixConfigList
                 }
             }
         }
