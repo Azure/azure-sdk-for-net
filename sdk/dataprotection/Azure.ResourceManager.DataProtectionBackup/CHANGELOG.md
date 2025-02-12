@@ -1,14 +1,10 @@
 # Release History
 
-## 1.6.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.6.1 (2025-02-12)
 
 ### Other Changes
+
+- Stable version release of 1.6.0-beta.1.
 
 ## 1.6.0-beta.1 (2025-02-07)
 
