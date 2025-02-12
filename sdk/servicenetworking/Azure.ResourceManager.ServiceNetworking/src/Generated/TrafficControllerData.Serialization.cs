@@ -70,6 +70,21 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecurityPolicies))
+            {
+                writer.WritePropertyName("securityPolicies"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecurityPolicies)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SecurityPolicyConfigurations))
+            {
+                writer.WritePropertyName("securityPolicyConfigurations"u8);
+                writer.WriteObjectValue(SecurityPolicyConfigurations, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -107,6 +122,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             IReadOnlyList<string> configurationEndpoints = default;
             IReadOnlyList<SubResource> frontends = default;
             IReadOnlyList<SubResource> associations = default;
+            IReadOnlyList<SubResource> securityPolicies = default;
+            SecurityPolicyConfigurations securityPolicyConfigurations = default;
             ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -206,6 +223,29 @@ namespace Azure.ResourceManager.ServiceNetworking
                             associations = array;
                             continue;
                         }
+                        if (property0.NameEquals("securityPolicies"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SubResource> array = new List<SubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                            }
+                            securityPolicies = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("securityPolicyConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityPolicyConfigurations = SecurityPolicyConfigurations.DeserializeSecurityPolicyConfigurations(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -234,6 +274,8 @@ namespace Azure.ResourceManager.ServiceNetworking
                 configurationEndpoints ?? new ChangeTrackingList<string>(),
                 frontends ?? new ChangeTrackingList<SubResource>(),
                 associations ?? new ChangeTrackingList<SubResource>(),
+                securityPolicies ?? new ChangeTrackingList<SubResource>(),
+                securityPolicyConfigurations,
                 provisioningState,
                 serializedAdditionalRawData);
         }

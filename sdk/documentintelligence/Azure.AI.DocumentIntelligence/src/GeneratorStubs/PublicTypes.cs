@@ -7,11 +7,20 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    [CodeGenModel("AzureAIDocumentIntelligenceClientOptions")]
-    public partial class DocumentIntelligenceClientOptions { }
+    public partial class AnalyzeBatchOperationDetails
+    {
+        /// <summary> Analyze batch operation result ID. </summary>
+        public string ResultId { get; }
+    }
 
-    [CodeGenModel("AIDocumentIntelligenceModelFactory")]
-    public partial class DocumentIntelligenceModelFactory { }
+    public partial class AnalyzeResult
+    {
+        internal StringIndexType StringIndexType { get; }
+    }
+
+    public readonly partial struct BoundingRegion { }
+
+    public readonly partial struct DocumentSpan { }
 }
 
 namespace Microsoft.Extensions.Azure

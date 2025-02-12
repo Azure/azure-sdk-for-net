@@ -43,6 +43,12 @@ namespace Azure.Storage.DataMovement.JobPlan
             WriteLock = new SemaphoreSlim(1);
         }
 
+        private static string ToFullPath(string checkpointerPath, string transferId)
+        {
+            string fileName = $"{transferId}{DataMovementConstants.JobPlanFile.FileExtension}";
+            return Path.Combine(checkpointerPath, fileName);
+        }
+
         public static async Task<JobPlanFile> CreateJobPlanFileAsync(
             string checkpointerPath,
             string id,
@@ -53,8 +59,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(headerStream, nameof(headerStream));
 
-            string fileName = $"{id}{DataMovementConstants.JobPlanFile.FileExtension}";
-            string filePath = Path.Combine(checkpointerPath, fileName);
+            string filePath = ToFullPath(checkpointerPath, id);
 
             JobPlanFile jobPlanFile = new(id, filePath);
             try
@@ -90,6 +95,11 @@ namespace Azure.Storage.DataMovement.JobPlan
             }
 
             return new JobPlanFile(transferId, fullPath);
+        }
+
+        public static JobPlanFile LoadExistingJobPlanFile(string checkpointerPath, string transferId)
+        {
+            return LoadExistingJobPlanFile(ToFullPath(checkpointerPath, transferId));
         }
 
         public void Dispose()

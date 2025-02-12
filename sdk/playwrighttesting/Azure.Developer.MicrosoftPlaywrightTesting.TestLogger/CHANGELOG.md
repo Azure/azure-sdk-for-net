@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.4 (2025-01-17)
+
+### Features Added
+ 
+- Warning message when MPT access token is close to expiry
+ 
+### Bugs Fixed
+ 
+- Max character limits in reporting API calls
 
 ## 1.0.0-beta.3 (2024-11-18)
 

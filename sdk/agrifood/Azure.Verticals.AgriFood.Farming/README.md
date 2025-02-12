@@ -106,7 +106,7 @@ To learn more about other logging mechanisms see [here][azure_core_diagnostics].
 
 ### Additional documentation
 
-For more extensive documentation on the FarmBeats, see the [FarmBeats documentation][product_docs] on docs.microsoft.com.
+For more extensive documentation on the FarmBeats, see the [FarmBeats documentation][product_docs] on learn.microsoft.com.
 
 This client SDK exposes operations using *protocol methods*, you can learn more about how to use SDK Clients which use protocol methods in our [documentation][protocol_client_quickstart].
 
@@ -126,7 +126,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [product_documentation]: https://aka.ms/FarmBeatsProductDocumentationPaaS
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [protocol_client_quickstart]: https://aka.ms/azsdk/net/protocol/quickstart
-[default_cred_ref]: https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+[default_cred_ref]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
 [azure_core_diagnostics]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [scenes]: https://aka.ms/FarmBeatsSatellitePaaSDocumentation
@@ -137,5 +137,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fagrifood%2FAzure.Verticals.AgriFood.Farming%2FREADME.png)

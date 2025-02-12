@@ -36,6 +36,7 @@ Import-Module Az.Storage
 $storageContext = New-AzStorageContext -StorageAccountName $storageAccountName -UseConnectedAccount
 
 # FIXME Remove once vpn team fixes the network acl issue
+# TODO: disable local storage account auth
 $networkRuleSet = New-Object -TypeName Microsoft.Azure.Commands.Management.Storage.Models.PSNetworkRuleSet
 $networkRuleSet.DefaultAction = "Allow"
 Set-AzStorageAccount -ResourceGroupName $resourceGroup -Name $storageAccountName -NetworkRuleSet $networkRuleSet

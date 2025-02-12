@@ -48,26 +48,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, eg ArmId. </param>
-        /// <param name="opType"> Type of operation performed on the resources. </param>
-        /// <param name="subscriptionId"> Subscription id attached to the request. </param>
-        /// <param name="deadline"> Deadline for the operation. </param>
-        /// <param name="deadlineType"> Type of deadline of the operation. </param>
-        /// <param name="state"> Current state of the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/>, <paramref name="resourceId"/> or <paramref name="subscriptionId"/> is null. </exception>
-        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType opType, string subscriptionId, DateTimeOffset deadline, ScheduledActionDeadlineType deadlineType, ScheduledActionOperationState state)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        internal ResourceOperationDetails(string operationId)
         {
             Argument.AssertNotNull(operationId, nameof(operationId));
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             OperationId = operationId;
-            ResourceId = resourceId;
-            OpType = opType;
-            SubscriptionId = subscriptionId;
-            Deadline = deadline;
-            DeadlineType = deadlineType;
-            State = state;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceOperationDetails"/>. </summary>
@@ -78,12 +64,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="deadline"> Deadline for the operation. </param>
         /// <param name="deadlineType"> Type of deadline of the operation. </param>
         /// <param name="state"> Current state of the operation. </param>
-        /// <param name="timeZone"> Timezone for the operation. </param>
+        /// <param name="timezone"> Timezone for the operation. </param>
+        /// <param name="operationTimezone"> Timezone for the operation. </param>
         /// <param name="resourceOperationError"> Operation level errors if they exist. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType opType, string subscriptionId, DateTimeOffset deadline, ScheduledActionDeadlineType deadlineType, ScheduledActionOperationState state, string timeZone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, string operationTimezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             ResourceId = resourceId;
@@ -92,7 +79,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Deadline = deadline;
             DeadlineType = deadlineType;
             State = state;
-            TimeZone = timeZone;
+            Timezone = timezone;
+            OperationTimezone = operationTimezone;
             ResourceOperationError = resourceOperationError;
             CompletedOn = completedOn;
             RetryPolicy = retryPolicy;
@@ -109,17 +97,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Unique identifier for the resource involved in the operation, eg ArmId. </summary>
         public ResourceIdentifier ResourceId { get; }
         /// <summary> Type of operation performed on the resources. </summary>
-        public ResourceOperationType OpType { get; }
+        public ResourceOperationType? OpType { get; }
         /// <summary> Subscription id attached to the request. </summary>
         public string SubscriptionId { get; }
         /// <summary> Deadline for the operation. </summary>
-        public DateTimeOffset Deadline { get; }
+        public DateTimeOffset? Deadline { get; }
         /// <summary> Type of deadline of the operation. </summary>
-        public ScheduledActionDeadlineType DeadlineType { get; }
+        public ScheduledActionDeadlineType? DeadlineType { get; }
         /// <summary> Current state of the operation. </summary>
-        public ScheduledActionOperationState State { get; }
+        public ScheduledActionOperationState? State { get; }
         /// <summary> Timezone for the operation. </summary>
-        public string TimeZone { get; }
+        public string Timezone { get; }
+        /// <summary> Timezone for the operation. </summary>
+        public string OperationTimezone { get; }
         /// <summary> Operation level errors if they exist. </summary>
         public ResourceOperationError ResourceOperationError { get; }
         /// <summary> Time the operation was complete if errors are null. </summary>

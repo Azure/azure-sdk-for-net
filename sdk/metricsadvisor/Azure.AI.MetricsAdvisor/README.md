@@ -564,11 +564,9 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmetricsadvisor%2FAzure.AI.MetricsAdvisor%2FREADME.png)
-
 <!-- LINKS -->
 [metricsadv_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/src
-[metricsadv_docs]: https://docs.microsoft.com/azure/cognitive-services/metrics-advisor
+[metricsadv_docs]: https://learn.microsoft.com/azure/cognitive-services/metrics-advisor
 [metricsadv_nuget_package]: https://www.nuget.org/packages/Azure.AI.MetricsAdvisor
 [metricsadv_refdocs]: https://aka.ms/azsdk/net/docs/ref/metricsadvisor
 [metricsadv_rest_api]: https://westus2.dev.cognitive.microsoft.com/docs/services/MetricsAdvisor
@@ -590,18 +588,18 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [metricsadv-sample10]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample10_QueryTimeSeriesInformation.cs
 [metricsadv-sample11]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/metricsadvisor/Azure.AI.MetricsAdvisor/tests/Samples/Sample11_FeedbackCrudOperations.cs
 
-[aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
-[cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
-[cognitive_resource_portal]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
+[cognitive_resource_cli]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
+[cognitive_resource_portal]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
 
 [metricsadv_authentication]: https://aka.ms/metricsadvisor/authentication
 
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org

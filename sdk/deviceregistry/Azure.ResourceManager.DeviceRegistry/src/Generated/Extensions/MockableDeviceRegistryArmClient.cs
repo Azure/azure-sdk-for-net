@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistryAssetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeviceRegistryAssetResource"/> object. </returns>
+        public virtual DeviceRegistryAssetResource GetDeviceRegistryAssetResource(ResourceIdentifier id)
+        {
+            DeviceRegistryAssetResource.ValidateResourceId(id);
+            return new DeviceRegistryAssetResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="DeviceRegistryAssetEndpointProfileResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DeviceRegistryAssetEndpointProfileResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryAssetEndpointProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -47,15 +59,75 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeviceRegistryAssetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DeviceRegistryAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DeviceRegistryBillingContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryBillingContainerResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryBillingContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeviceRegistryAssetResource"/> object. </returns>
-        public virtual DeviceRegistryAssetResource GetDeviceRegistryAssetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DeviceRegistryBillingContainerResource"/> object. </returns>
+        public virtual DeviceRegistryBillingContainerResource GetDeviceRegistryBillingContainerResource(ResourceIdentifier id)
         {
-            DeviceRegistryAssetResource.ValidateResourceId(id);
-            return new DeviceRegistryAssetResource(Client, id);
+            DeviceRegistryBillingContainerResource.ValidateResourceId(id);
+            return new DeviceRegistryBillingContainerResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistryDiscoveredAssetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryDiscoveredAssetResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryDiscoveredAssetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeviceRegistryDiscoveredAssetResource"/> object. </returns>
+        public virtual DeviceRegistryDiscoveredAssetResource GetDeviceRegistryDiscoveredAssetResource(ResourceIdentifier id)
+        {
+            DeviceRegistryDiscoveredAssetResource.ValidateResourceId(id);
+            return new DeviceRegistryDiscoveredAssetResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistryDiscoveredAssetEndpointProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistryDiscoveredAssetEndpointProfileResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistryDiscoveredAssetEndpointProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeviceRegistryDiscoveredAssetEndpointProfileResource"/> object. </returns>
+        public virtual DeviceRegistryDiscoveredAssetEndpointProfileResource GetDeviceRegistryDiscoveredAssetEndpointProfileResource(ResourceIdentifier id)
+        {
+            DeviceRegistryDiscoveredAssetEndpointProfileResource.ValidateResourceId(id);
+            return new DeviceRegistryDiscoveredAssetEndpointProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistrySchemaRegistryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistrySchemaRegistryResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeviceRegistrySchemaRegistryResource"/> object. </returns>
+        public virtual DeviceRegistrySchemaRegistryResource GetDeviceRegistrySchemaRegistryResource(ResourceIdentifier id)
+        {
+            DeviceRegistrySchemaRegistryResource.ValidateResourceId(id);
+            return new DeviceRegistrySchemaRegistryResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistrySchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistrySchemaResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeviceRegistrySchemaResource"/> object. </returns>
+        public virtual DeviceRegistrySchemaResource GetDeviceRegistrySchemaResource(ResourceIdentifier id)
+        {
+            DeviceRegistrySchemaResource.ValidateResourceId(id);
+            return new DeviceRegistrySchemaResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DeviceRegistrySchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DeviceRegistrySchemaVersionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceRegistrySchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DeviceRegistrySchemaVersionResource"/> object. </returns>
+        public virtual DeviceRegistrySchemaVersionResource GetDeviceRegistrySchemaVersionResource(ResourceIdentifier id)
+        {
+            DeviceRegistrySchemaVersionResource.ValidateResourceId(id);
+            return new DeviceRegistrySchemaVersionResource(Client, id);
         }
     }
 }

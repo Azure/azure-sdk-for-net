@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Azure.Core;
@@ -26,6 +27,12 @@ public abstract class ClientWorkspace
     /// <param name="connectionId"></param>
     /// <returns>The connection options for the specified client type and instance ID.</returns>
     public abstract ClientConnection GetConnectionOptions(string connectionId);
+
+    /// <summary>
+    /// Retrieves all connection options.
+    /// </summary>
+    /// <returns></returns>
+    public abstract IEnumerable<ClientConnection> GetAllConnectionOptions();
 
     /// <summary>
     /// Gets the token credential.

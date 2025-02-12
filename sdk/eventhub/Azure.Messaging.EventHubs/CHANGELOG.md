@@ -1,6 +1,6 @@
 # Release History
 
-## 5.12.0-beta.2 (Unreleased)
+## 5.12.0-beta.2 (2025-02-11)
 
 ### Acknowledgments
 
@@ -10,11 +10,28 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
-### Breaking Changes
+- Support for the Event Hubs geographic data replication feature has been enabled. Checking for whether or not this feature is enabled for your namespace can be done by querying for Event Hub properties using `EventHubProducerClient` or `EventHubConsumerClient` and referencing the the `IsGeoReplicationEnabled` property of the result.
+
+  As part of this feature, the type of offset-related data has been changed from `long` to `string` to align with changes to the Event Hubs service API. To preserve backwards compatibility, the existing offset-related members have not been changed, and new members with names similar to `OffsetString` and string-based parameters for method overloads have been introduced.  
+  
+  The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
+  
+  Obsoleted properties:
+  - [EventData.Offset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventdata.offset?view=azure-dotnet#azure-messaging-eventhubs-eventdata-offset)
+  - [LastEnqueuedEventProperties.Offset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.lastenqueuedeventproperties.offset?view=azure-dotnet)
+  - [PartitionProperties.LastEnqueuedOffset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.partitionproperties.lastenqueuedoffset?view=azure-dotnet)
+
+  Obsoleted method overloads:
+  - [EventPosition.FromOffset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.eventposition.fromoffset?view=azure-dotnet)
+  - [EventHubsModelFactory.EventData](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsmodelfactory.eventdata?view=azure-dotnet)
+  - [BlobCheckpointStore.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.blobcheckpointstore.updatecheckpointasync?view=azure-dotnet)
+  - [EventProcessorClient.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient.updatecheckpointasync?view=azure-dotnet)
 
 ### Bugs Fixed
 
 - Querying runtime data and other management operations will now correctly guards against the race condition where an AMQP link is in the process of closing as the operation attempts to use it.  These errors will now properly be classified as retriable as they are for producer and consumer operations.
+
+- Fixed an obscure edge case in the `EventHubBufferedProducer` client where an obscure race condition when flushing/enqueuing events concurrently with disposing the producer could cause a semaphore to be released inappropriately.  This error superseded the `TaskCanceledException` that should have been surfaced.
 
 ### Other Changes
 
@@ -724,11 +741,11 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Features Added
 
-- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
 
 - The `EventHubConsumerClient` pipeline for reading events from a single partition was reworked to improve efficiency and make use of the new configuration options for `PrefetchCount` and `CacheEventCount`.
 
-- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
+- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
 
 - Logging for the core send and receive operations against the Event Hubs service can now be correlated by an `OperationId` in the logs and detail the number of retries attempted for the operation.
 
@@ -767,15 +784,15 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 #### Consuming events
 
-- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
+- The `ReadEventOptions` used with the `EventHubConsumerClient` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.readeventoptions?view=azure-dotnet).
 
 - The `EventHubConsumerClient` pipeline for reading events from a single partition was reworked to improve efficiency and make use of the new configuration options for `PrefetchCount` and `CacheEventCount`.
 
 #### Processing events
 
-- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
+- The `EventProcessor<TPartition>` now supports a configurable strategy for load balancing, allowing control over whether it claims ownership of partitions in a balanced manner _(default)_ or more aggressively.  The strategy may be set in the `EventProcessorOptions` when creating the processor.  More details about strategies can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.processor.loadbalancingstrategy?view=azure-dotnet).
 
-- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
+- The `EventProcessorClientOptions` now support setting a `PrefetchCount` and `CacheEventCount` for performance tuning.  More details about each can be found in the associated [documentation](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions?view=azure-dotnet).
 
 #### Diagnostics
 

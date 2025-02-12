@@ -5401,9 +5401,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="uri"> A full URL the entity points to. </param>
+        /// <param name="uriString"> A full URL the entity points to. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsUriEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, Uri uri = null)
+        public static SecurityInsightsUriEntity SecurityInsightsUriEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IReadOnlyDictionary<string, BinaryData> additionalData = null, string friendlyName = null, string uriString = null)
         {
             additionalData ??= new Dictionary<string, BinaryData>();
 
@@ -5416,7 +5416,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null,
                 additionalData,
                 friendlyName,
-                uri);
+                uriString);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NicEntity"/>. </summary>

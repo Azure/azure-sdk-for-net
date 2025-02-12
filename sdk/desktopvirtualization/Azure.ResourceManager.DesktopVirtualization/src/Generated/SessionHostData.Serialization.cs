@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("lastHeartBeat"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("resourceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("statusTimestamp"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("lastUpdateTime"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }

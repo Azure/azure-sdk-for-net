@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Quota.Models
                 throw new FormatException($"The model {nameof(SubscriptionQuotaDetails)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Region))
+            if (Optional.IsDefined(ResourceName))
             {
-                writer.WritePropertyName("region"u8);
-                writer.WriteStringValue(Region);
+                writer.WritePropertyName("resourceName"u8);
+                writer.WriteStringValue(ResourceName);
             }
             if (Optional.IsDefined(Limit))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            string region = default;
+            string resourceName = default;
             long? limit = default;
             long? shareableQuota = default;
             string value = default;
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.Quota.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("region"u8))
+                if (property.NameEquals("resourceName"u8))
                 {
-                    region = property.Value.GetString();
+                    resourceName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("limit"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new SubscriptionQuotaDetails(
-                region,
+                resourceName,
                 limit,
                 shareableQuota,
                 value,
@@ -180,25 +180,25 @@ namespace Azure.ResourceManager.Quota.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceName), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  region: ");
+                builder.Append("  resourceName: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Region))
+                if (Optional.IsDefined(ResourceName))
                 {
-                    builder.Append("  region: ");
-                    if (Region.Contains(Environment.NewLine))
+                    builder.Append("  resourceName: ");
+                    if (ResourceName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{Region}'''");
+                        builder.AppendLine($"{ResourceName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{Region}'");
+                        builder.AppendLine($"'{ResourceName}'");
                     }
                 }
             }

@@ -1,14 +1,14 @@
 # Release History
 
-## 1.3.0-beta.6 (Unreleased)
+## 1.3.0 (2025-02-11)
 
 ### Features Added
 
-### Breaking Changes
+- GA release of Number Insight.
+- API version `(2025-02-11)` is the default
 
 ### Bugs Fixed
-
-### Other Changes
+- OperatorDetails.Name is now optional in OperatorInformation Response.
 
 ## 1.3.0-beta.5 (2024-03-01)
 
@@ -102,4 +102,4 @@ Updated `Azure.Communication.PhoneNumbers` version.
 
 <!-- LINKS -->
 [read_me]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/communication/Azure.Communication.PhoneNumbers/README.md
-[documentation]: https://docs.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp
+[documentation]: https://learn.microsoft.com/azure/communication-services/quickstarts/access-tokens?pivots=programming-language-csharp

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="isSecuritySite"> IsSecuritySite flag. </param>
         /// <param name="vpnSiteLinks"> List of all vpn site links. </param>
         /// <param name="o365Policy"> Office365 Policy. </param>
-        internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, AddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        internal VpnSiteData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualWan, DeviceProperties deviceProperties, string ipAddress, string siteKey, VirtualNetworkAddressSpace addressSpace, BgpSettings bgpProperties, NetworkProvisioningState? provisioningState, bool? isSecuritySite, IList<VpnSiteLinkData> vpnSiteLinks, O365PolicyProperties o365Policy) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             VirtualWan = virtualWan;
@@ -81,18 +81,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The key for vpn-site that can be used for connections. </summary>
         public string SiteKey { get; set; }
         /// <summary> The AddressSpace that contains an array of IP address ranges. </summary>
-        internal AddressSpace AddressSpace { get; set; }
-        /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
-        public IList<string> AddressPrefixes
-        {
-            get
-            {
-                if (AddressSpace is null)
-                    AddressSpace = new AddressSpace();
-                return AddressSpace.AddressPrefixes;
-            }
-        }
-
+        public VirtualNetworkAddressSpace AddressSpace { get; set; }
         /// <summary> The set of bgp properties. </summary>
         public BgpSettings BgpProperties { get; set; }
         /// <summary> The provisioning state of the VPN site resource. </summary>
