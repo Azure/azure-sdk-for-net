@@ -10,14 +10,14 @@ namespace Azure.Communication
     public class JwtTokenParserTests
     {
         [Test]
-        public void DecodeJwtPayload_InvalidBase64String_ShouldThrowFormatException()
+        public void DecodeJwtPayload_WithInvalidBase64String_ShouldThrowFormatException()
         {
             string invalidBase64UrlString = "Invalid_Base64_String";
             Assert.Throws<FormatException>(() => JwtTokenParser.DecodeJwtPayload(invalidBase64UrlString), "Token payload is not formatted correctly.");
         }
 
         [Test]
-        public void DecodeJwtPayload_InvalidTokenParts_ShouldThrowFormatException()
+        public void DecodeJwtPayload_WithInvalidTokenParts_ShouldThrowFormatException()
         {
             string invalidToken = "Invalid.Token";
             Assert.Throws<FormatException>(() => JwtTokenParser.DecodeJwtPayload(invalidToken), "Token does not have the correct number of parts.");
