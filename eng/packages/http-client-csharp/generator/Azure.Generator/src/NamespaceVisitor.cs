@@ -50,6 +50,9 @@ namespace Azure.Generator
 
         private static void UpdateNamespace(TypeProvider type)
         {
+            // TODO: need to take consideration of model-namespace configuration
+            // if model-namespace is false, keep the default namespace
+            // if model-namespace is true, append ".Models" to the namespace
             if (!type.Type.Namespace.EndsWith("Models"))
             {
                 type.Type.Namespace = $"{type.Type.Namespace}.Models";
