@@ -1,15 +1,16 @@
 # Release History
 
-## 5.12.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 5.11.6 (2025-02-11)
 
 ### Other Changes
 
+- Bump `Azure.Messaging.EventHubs` dependency to 5.11.6, which includes bumps to several transitive dependencies.
+
+## 5.11.5 (2024-08-14)
+
+### Other Changes
+
+- Bump `Azure.Core.Amqp` dependency to 1.3.1, which includes a fix to serialization of binary application properties.
 ## 5.11.4 (2024-07-17)
 
 ### Bugs Fixed
