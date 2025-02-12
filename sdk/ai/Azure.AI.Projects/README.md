@@ -81,7 +81,8 @@ Agents in the Azure AI Projects client library are designed to facilitate variou
 First, you need to create an `AgentsClient`
 ```C# Snippet:OverviewCreateAgentClient
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+AgentsClient client = projectClient.GetAgentsClient();
 ```
 
 With an authenticated client, an agent can be created:
@@ -269,7 +270,8 @@ To attach a file with the context to the message, use the `MessageAttachment` cl
 Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:CreateAgentWithInterpreterTool
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+AgentsClient client = projectClient.GetAgentsClient();
 
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
 Response<Agent> agentResponse = await client.CreateAgentAsync(
