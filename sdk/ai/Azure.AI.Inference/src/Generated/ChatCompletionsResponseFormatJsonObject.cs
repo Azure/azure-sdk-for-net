@@ -15,18 +15,18 @@ namespace Azure.AI.Inference
     /// Note that to enable JSON mode, some AI models may also require you to instruct the model to produce JSON
     /// via a system or user message.
     /// </summary>
-    public partial class ChatCompletionsResponseFormatJSON : ChatCompletionsResponseFormat
+    public partial class ChatCompletionsResponseFormatJsonObject : ChatCompletionsResponseFormat
     {
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsResponseFormatJSON"/>. </summary>
-        public ChatCompletionsResponseFormatJSON()
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsResponseFormatJsonObject"/>. </summary>
+        public ChatCompletionsResponseFormatJsonObject()
         {
             Type = "json_object";
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsResponseFormatJSON"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsResponseFormatJsonObject"/>. </summary>
         /// <param name="type"> The response format type to use for chat completions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsResponseFormatJSON(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        internal ChatCompletionsResponseFormatJsonObject(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
         }
     }
