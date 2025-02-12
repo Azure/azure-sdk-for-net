@@ -238,7 +238,6 @@ namespace Azure.Communication.Identity
             try
             {
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
-                expiresIn = 60; // Hardcoding for testing
 
                 Response<CommunicationIdentityAccessToken> response = RestClient.IssueAccessToken(communicationUser.Id, scopes, expiresIn, cancellationToken);
 
