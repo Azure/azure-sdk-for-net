@@ -28,6 +28,36 @@ internal class ModelReaderWriterSamples
         #endregion
     }
 
+    public void Stj_Write_Simple()
+    {
+        #region Snippet:Readme_Stj_Write_Sample
+        JsonSerializerOptions options = new JsonSerializerOptions()
+        {
+            Converters = { new JsonModelConverter() }
+        };
+
+        InputModel model = new InputModel();
+        string data = JsonSerializer.Serialize(model);
+        #endregion
+    }
+
+    public void Stj_Read_Simple()
+    {
+        #region Snippet:Readme_Stj_Read_Sample
+        JsonSerializerOptions options = new JsonSerializerOptions()
+        {
+            Converters = { new JsonModelConverter() }
+        };
+
+        string json = @"{
+              ""x"": 1,
+              ""y"": 2,
+              ""z"": 3
+            }";
+        OutputModel? model = JsonSerializer.Deserialize<OutputModel>(json, options);
+        #endregion
+    }
+
     private class OutputModel : IJsonModel<OutputModel>
     {
         OutputModel IJsonModel<OutputModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

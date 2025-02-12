@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -22,21 +24,34 @@ public class ClientRetryPolicy : PipelinePolicy
     /// </summary>
     public static ClientRetryPolicy Default { get; } = new ClientRetryPolicy();
 
-    private const int DefaultMaxRetries = 3;
     private static readonly TimeSpan DefaultInitialDelay = TimeSpan.FromSeconds(0.8);
-    private const string RetryAfterHeaderName = "Retry-After";
 
     private readonly int _maxRetries;
     private readonly TimeSpan _initialDelay;
+    private readonly PipelineRetryLogger? _retryLogger;
+
+    internal const int DefaultMaxRetries = 3;
 
     /// <summary>
     /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
     /// </summary>
     /// <param name="maxRetries">The maximum number of retries to attempt.</param>
-    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries)
+    public ClientRetryPolicy(int maxRetries = DefaultMaxRetries) : this(maxRetries, ClientLoggingOptions.DefaultEnableLogging, default)
+    {
+    }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="ClientRetryPolicy"/> class.
+    /// </summary>
+    /// <param name="maxRetries">The maximum number of retries to attempt.</param>
+    /// <param name="enableLogging">If client-wide logging is enabled for this pipeline.</param>
+    /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use to create an <see cref="ILogger"/> instance for logging.
+    /// If one is not provided, logs are written to Event Source by default.</param>
+    public ClientRetryPolicy(int maxRetries, bool enableLogging, ILoggerFactory? loggerFactory)
     {
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
+        _retryLogger = enableLogging ? new PipelineRetryLogger(loggerFactory) : null;
     }
 
     /// <inheritdoc/>
@@ -54,6 +69,7 @@ public class ClientRetryPolicy : PipelinePolicy
         while (true)
         {
             Exception? thisTryException = null;
+            var before = Stopwatch.GetTimestamp();
 
             if (async)
             {
@@ -92,6 +108,9 @@ public class ClientRetryPolicy : PipelinePolicy
                 OnRequestSent(message);
             }
 
+            var after = Stopwatch.GetTimestamp();
+            double elapsed = (after-before) / (double)Stopwatch.Frequency;
+
             bool shouldRetry = async ?
                 await ShouldRetryInternalAsync(message, thisTryException).ConfigureAwait(false) :
                 ShouldRetryInternal(message, thisTryException);
@@ -116,6 +135,8 @@ public class ClientRetryPolicy : PipelinePolicy
 
                 message.RetryCount++;
                 OnTryComplete(message);
+
+                _retryLogger?.LogRequestRetrying(message.Request.ClientRequestId ?? string.Empty, message.RetryCount, elapsed);
 
                 continue;
             }
@@ -276,7 +297,7 @@ public class ClientRetryPolicy : PipelinePolicy
         double nextDelayMilliseconds = (1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds;
 
         if (message.Response is not null &&
-            TryGetRetryAfter(message.Response, out TimeSpan retryAfter) &&
+            PipelineResponseHeaders.TryGetRetryAfter(message.Response, out TimeSpan retryAfter) &&
             retryAfter.TotalMilliseconds > nextDelayMilliseconds)
         {
             return retryAfter;
@@ -318,27 +339,5 @@ public class ClientRetryPolicy : PipelinePolicy
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         }
-    }
-
-    private static bool TryGetRetryAfter(PipelineResponse response, out TimeSpan value)
-    {
-        // See: https://www.rfc-editor.org/rfc/rfc7231#section-7.1.3
-        if (response.Headers.TryGetValue(RetryAfterHeaderName, out string? retryAfter))
-        {
-            if (int.TryParse(retryAfter, out var delaySeconds))
-            {
-                value = TimeSpan.FromSeconds(delaySeconds);
-                return true;
-            }
-
-            if (DateTimeOffset.TryParse(retryAfter, out DateTimeOffset retryAfterDate))
-            {
-                value = retryAfterDate - DateTimeOffset.Now;
-                return true;
-            }
-        }
-
-        value = default;
-        return false;
     }
 }
