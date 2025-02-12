@@ -268,6 +268,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
 
+        // Test commented out: CustomJwtAuthenticationSettings feature is in preview (2024-06-01-preview) only
+        // and not included in GA version 2025-02-15
+        /*
         [Test]
         public async Task NamespaceCustomJwtAuthCreateGetUpdateDelete()
         {
@@ -350,6 +353,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
+        */
 
         [Test]
         public async Task NamespaceTopicsCreateUpdateDelete()
