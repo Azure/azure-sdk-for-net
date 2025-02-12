@@ -161,7 +161,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
     return $startsWith
   }
 
-  # ensure we also resolve packages that had deleted files only
+  # ensure we observe deleted files too
   $targetedFiles = $diffObj.ChangedFiles
   if ($diff.DeletedFiles) {
     if (-not $targetedFiles) {
@@ -176,23 +176,33 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
     $targetedFiles = $targetedFiles | Where-Object { -not $_.StartsWith($excludePath) }
   }
 
-  # this section will identify the list of packages that we should treat as
-  # "directly" changed for a given service level change. While that doesn't
-  # directly change a package within the service, I do believe we should directly include all
-  # packages WITHIN that service. This is because the service level file changes are likely to
-  # have an impact on the packages within that service.
+  # this section will identify
+  #  - any service-level changes
+  #  - any shared package changes that should be treated as a service-level change. EG changes to Azure.Storage.Shared.
+  # and add all packages within that service to the validation set. these will be treated as "directly" changed packages.
   $changedServices = @()
   if ($targetedFiles) {
     foreach($file in $targetedFiles) {
       $pathComponents = $file -split "/"
-      # handle changes only in sdk/<service>/<file>/<extension>
+      # handle changes only in sdk/<service>/<file>.<extension>
       if ($pathComponents.Length -eq 3 -and $pathComponents[0] -eq "sdk") {
-        $changedServices += $pathComponents[1]
+        if (-not $changedServices.Contains($pathComponents[1])) {
+          $changedServices += $pathComponents[1]
+        }
       }
 
       # handle any changes under sdk/<file>.<extension>
       if ($pathComponents.Length -eq 2 -and $pathComponents[0] -eq "sdk") {
-        $changedServices += "template"
+        if (-not $changedServices.Contains("template")) {
+          $changedServices += "template"
+        }
+      }
+
+      # changes to a Azure.*.Shared within a service directory should include all packages within that service directory
+      if ($file -match ".*sdk(\\|/).*(\\|/).*\.Shared(\\|/).*") {
+        if (-not $changedServices.Contains($pathComponents[1])) {
+          $changedServices += $pathComponents[1]
+        }
       }
     }
     foreach ($changedService in $changedServices) {
@@ -209,6 +219,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
     }
   }
 
+  # handle any changes to files that are not within a package directory
   $othersChanged = @()
   if ($targetedFiles) {
     $othersChanged = $targetedFiles | Where-Object { isOther($_) }
@@ -222,6 +233,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
     $additionalValidationPackages += $additionalPackages
   }
 
+  # walk the packages added purely for validation, if they haven't been added yet, add them
+  # these packages aren't considered "directly" changed, so we will set IncludedForValidation to true for them
   foreach ($pkg in $additionalValidationPackages) {
     if ($uniqueResultSet -notcontains $pkg -and $LocatedPackages -notcontains $pkg) {
       $pkg.IncludedForValidation = $true
