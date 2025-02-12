@@ -22,13 +22,13 @@ namespace Azure.Communication
             const string TokenNotFormattedCorrectly = "Token is not formatted correctly.";
 
             var tokenParts = token.Split('.');
-            if (tokenParts.Length != 3)
+            if (tokenParts.Length < 2)
                 throw new FormatException(TokenNotFormattedCorrectly);
 
             try
             {
-                var payloadJson = Base64Url.DecodeString(tokenParts[1]);
-                return JsonSerializer.Deserialize<JwtPayload>(payloadJson) ?? throw new FormatException(TokenNotFormattedCorrectly);
+                var payladJson = Base64Url.DecodeString(tokenParts[1]);
+                return JsonSerializer.Deserialize<JwtPayload>(payladJson) ?? throw new FormatException(TokenNotFormattedCorrectly);
             }
             catch (JsonException ex)
             {
