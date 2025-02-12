@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Nginx.Models;
@@ -50,8 +48,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             NginxDeploymentApiKeyRequestProperties apiKeyProperties = new NginxDeploymentApiKeyRequestProperties
             {
-                SecretText = NginxDeploymentApiKeySecretText,
-                EndOn = DateTimeOffset.UtcNow.AddDays(180)
+                SecretText = NginxDeploymentApiKeySecretText
             };
 
             NginxDeploymentApiKeyCreateOrUpdateContent nginxDeploymentApiKeyCreateOrUpdateContent = new NginxDeploymentApiKeyCreateOrUpdateContent

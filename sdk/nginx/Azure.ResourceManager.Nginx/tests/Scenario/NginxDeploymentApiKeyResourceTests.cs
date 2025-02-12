@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -114,15 +111,14 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             NginxDeploymentApiKeyRequestProperties apiKeyProperties = new NginxDeploymentApiKeyRequestProperties
             {
-                SecretText = NginxDeploymentApiKeySecretText,
-                EndOn = DateTimeOffset.UtcNow.AddDays(90)
+                SecretText = "U9d@t36" + NginxDeploymentApiKeySecretText,
             };
             NginxDeploymentApiKeyCreateOrUpdateContent nginxDeploymentApiKeyCreateOrUpdateContent = new NginxDeploymentApiKeyCreateOrUpdateContent
             {
                 Properties = apiKeyProperties
             };
             NginxDeploymentApiKeyResource updatedNginxDeploymentApiKey = (await nginxDeploymentApiKey.UpdateAsync(WaitUntil.Completed, nginxDeploymentApiKeyCreateOrUpdateContent)).Value;
-            Assert.AreEqual(apiKeyProperties.EndOn, updatedNginxDeploymentApiKey.Data.Properties.EndOn);
+            Assert.AreEqual(apiKeyProperties.SecretText.Substring(0, 3), updatedNginxDeploymentApiKey.Data.Properties.Hint);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeploymentApiKey.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
     }

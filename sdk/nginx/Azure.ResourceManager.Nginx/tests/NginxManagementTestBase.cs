@@ -354,8 +354,7 @@ namespace Azure.ResourceManager.Nginx.Tests
 
             NginxDeploymentApiKeyRequestProperties apiKeyProperties = new NginxDeploymentApiKeyRequestProperties
             {
-                SecretText = NginxDeploymentApiKeySecretText,
-                EndOn = DateTimeOffset.UtcNow.AddDays(180)
+                SecretText = NginxDeploymentApiKeySecretText
             };
 
             NginxDeploymentApiKeyCreateOrUpdateContent nginxDeploymentApiKeyCreateOrUpdateContent = new NginxDeploymentApiKeyCreateOrUpdateContent
