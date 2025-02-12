@@ -171,6 +171,9 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(falseResult);
         }
 
+        // Test commented out: networkSecurityPerimeter(NSP) feature is in preview (2024-06-01-preview) only
+        // and not included in GA version 2025-02-15
+        /*
         [Test]
         public async Task DomainNSPTests()
         {
@@ -206,6 +209,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var falseResult = (await DomainCollection.ExistsAsync(domainName)).Value;
             Assert.IsFalse(falseResult);
         }
+        */
 
         [Test]
         public async Task DomainDisableLocalAuthAndAutoCreateAndAutoDelete()
