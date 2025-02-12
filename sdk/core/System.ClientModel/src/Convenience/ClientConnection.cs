@@ -53,6 +53,23 @@ public readonly struct ClientConnection
     }
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="ClientConnection"/> struct with a with no authentication.
+    /// </summary>
+    /// <param name="id">The identifier for the connection.</param>
+    /// <param name="locator">The endpoint or resource identifier.</param>
+    public ClientConnection(string id, string locator)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            throw new ArgumentException("Id cannot be null or empty.", nameof(id));
+        if (string.IsNullOrWhiteSpace(locator))
+            throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
+
+        Id = id;
+        Locator = locator;
+        Authentication = ClientAuthenticationMethod.NoAuth;
+    }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified subclient ID.
     /// It is only for the JSON serializer.
     /// </summary>
@@ -96,7 +113,7 @@ public readonly struct ClientConnection
     /// Converts the connection to a URI.
     /// </summary>
     /// <returns>A URI representation of the connection.</returns>
-    public Uri ToUri()
+    public Uri LocatorAsUri()
     {
         if (!Uri.TryCreate(Locator, UriKind.Absolute, out var uri))
         {

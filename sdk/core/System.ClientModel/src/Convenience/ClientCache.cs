@@ -16,10 +16,10 @@ public class ClientCache
     /// Retrieves a client from the cache or creates a new one if it doesn't exist.
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
-    /// <param name="value">A factory function to create the client if not cached.</param>
+    /// <param name="createClient">A factory function to create the client if not cached.</param>
     /// <param name="id">An optional identifier for the client instance.</param>
     /// <returns>The cached or newly created client instance.</returns>
-    public T Get<T>(Func<T> value, string id = "") where T : class
+    public T GetClient<T>(Func<T> createClient, string id = "") where T : class
     {
         (Type, string) clientKey = (typeof(T), id ?? string.Empty);
 
@@ -29,7 +29,7 @@ public class ClientCache
             {
                 Cleanup();
             }
-            return value();
+            return createClient();
         });
     }
 

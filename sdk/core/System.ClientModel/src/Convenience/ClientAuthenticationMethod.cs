@@ -20,5 +20,5 @@ public enum ClientAuthenticationMethod
     /// <summary>
     /// Represents a connection using an out-of-band method.
     /// </summary>
-    Subclient
+    NoAuth
 }

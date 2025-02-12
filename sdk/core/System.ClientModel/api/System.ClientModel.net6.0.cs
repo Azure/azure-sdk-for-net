@@ -81,18 +81,19 @@ namespace System.ClientModel.Primitives
     {
         EntraId = 0,
         ApiKey = 1,
-        Subclient = 2,
+        NoAuth = 2,
     }
     public partial class ClientCache
     {
         public ClientCache() { }
-        public T Get<T>(System.Func<T> value, string id = "") where T : class { throw null; }
+        public T GetClient<T>(System.Func<T> createClient, string id = "") where T : class { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClientConnection
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
+        public ClientConnection(string id, string locator) { throw null; }
         public ClientConnection(string id, string locator, object credential) { throw null; }
         public ClientConnection(string id, string locator, string apiKey) { throw null; }
         public string? ApiKeyCredential { get { throw null; } }
@@ -100,8 +101,8 @@ namespace System.ClientModel.Primitives
         public object? Credential { get { throw null; } }
         public string Id { get { throw null; } }
         public string Locator { get { throw null; } }
+        public System.Uri LocatorAsUri() { throw null; }
         public override string ToString() { throw null; }
-        public System.Uri ToUri() { throw null; }
     }
     [System.FlagsAttribute]
     public enum ClientErrorBehaviors
