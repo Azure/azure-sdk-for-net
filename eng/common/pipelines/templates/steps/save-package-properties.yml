@@ -61,11 +61,10 @@ steps:
   - ${{ else }}:
       - task: Powershell@2
         displayName: Save package properties
-        condition: succeeded()
         inputs:
           filePath: ${{ parameters.ScriptDirectory }}/Save-Package-Properties.ps1
           arguments: >
             -ServiceDirectory '${{parameters.ServiceDirectory}}'
             -OutDirectory '${{ parameters.PackageInfoDirectory }}'
-            -AddDevVersion $$(SetDevVersion)
+            -AddDevVersion $${{ eq(variables['SetDevVersion'],'true') }}
           pwsh: true
