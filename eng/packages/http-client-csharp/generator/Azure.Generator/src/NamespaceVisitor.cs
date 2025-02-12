@@ -57,7 +57,7 @@ namespace Azure.Generator
             // TODO: need to take consideration of model-namespace configuration
             // if model-namespace is false, set namespace to $"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}"
             // if model-namespace is true, set namespace to $"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}.Models"
-            type.Type.Namespace = $"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}.Models";
+            type.Type.Namespace = AzureClientPlugin.Instance.TypeFactory.GetCleanNameSpace($"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}.Models");
         }
     }
 }

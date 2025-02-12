@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SpecialWords.Models;
+using SpecialWords._Models;
 
 namespace SpecialWords
 {
-    internal partial class Models
+    public partial class Models
     {
         protected Models() => throw null;
 
@@ -24,264 +24,264 @@ namespace SpecialWords
 
         public virtual Task<Response> WithAndAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithAnd(SpecialWords.Models.And body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithAnd(And body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithAndAsync(SpecialWords.Models.And body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithAndAsync(And body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithAs(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithAsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithAs(SpecialWords.Models.As body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithAs(As body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithAsAsync(SpecialWords.Models.As body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithAsAsync(As body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithAssert(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithAssertAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithAssert(SpecialWords.Models.Assert body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithAssert(Assert body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithAssertAsync(SpecialWords.Models.Assert body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithAssertAsync(Assert body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithAsync(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithAsyncAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithAsync(SpecialWords.Models.Async body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithAsync(Async body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithAsyncAsync(SpecialWords.Models.Async body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithAsyncAsync(Async body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithAwait(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithAwaitAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithAwait(SpecialWords.Models.Await body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithAwait(Await body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithAwaitAsync(SpecialWords.Models.Await body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithAwaitAsync(Await body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithBreak(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithBreakAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithBreak(SpecialWords.Models.Break body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithBreak(Break body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithBreakAsync(SpecialWords.Models.Break body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithBreakAsync(Break body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithClass(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithClassAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithClass(SpecialWords.Models.Class body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithClass(Class body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithClassAsync(SpecialWords.Models.Class body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithClassAsync(Class body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithConstructor(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithConstructorAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithConstructor(SpecialWords.Models.Constructor body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithConstructor(Constructor body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithConstructorAsync(SpecialWords.Models.Constructor body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithConstructorAsync(Constructor body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithContinue(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithContinueAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithContinue(SpecialWords.Models.Continue body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithContinue(Continue body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithContinueAsync(SpecialWords.Models.Continue body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithContinueAsync(Continue body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithDef(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithDefAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithDef(SpecialWords.Models.Def body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithDef(Def body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithDefAsync(SpecialWords.Models.Def body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithDefAsync(Def body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithDel(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithDelAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithDel(SpecialWords.Models.Del body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithDel(Del body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithDelAsync(SpecialWords.Models.Del body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithDelAsync(Del body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithElif(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithElifAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithElif(SpecialWords.Models.Elif body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithElif(Elif body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithElifAsync(SpecialWords.Models.Elif body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithElifAsync(Elif body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithElse(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithElseAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithElse(SpecialWords.Models.Else body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithElse(Else body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithElseAsync(SpecialWords.Models.Else body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithElseAsync(Else body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithExcept(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithExceptAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithExcept(SpecialWords.Models.Except body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithExcept(Except body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithExceptAsync(SpecialWords.Models.Except body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithExceptAsync(Except body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithExec(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithExecAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithExec(SpecialWords.Models.Exec body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithExec(Exec body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithExecAsync(SpecialWords.Models.Exec body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithExecAsync(Exec body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithFinally(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithFinallyAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithFinally(SpecialWords.Models.Finally body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithFinally(Finally body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithFinallyAsync(SpecialWords.Models.Finally body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithFinallyAsync(Finally body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithFor(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithForAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithFor(SpecialWords.Models.For body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithFor(For body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithForAsync(SpecialWords.Models.For body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithForAsync(For body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithFrom(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithFromAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithFrom(SpecialWords.Models.From body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithFrom(From body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithFromAsync(SpecialWords.Models.From body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithFromAsync(From body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithGlobal(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithGlobalAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithGlobal(SpecialWords.Models.Global body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithGlobal(Global body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithGlobalAsync(SpecialWords.Models.Global body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithGlobalAsync(Global body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithIf(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithIfAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithIf(SpecialWords.Models.If body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithIf(If body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithIfAsync(SpecialWords.Models.If body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithIfAsync(If body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithImport(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithImportAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithImport(SpecialWords.Models.Import body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithImport(Import body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithImportAsync(SpecialWords.Models.Import body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithImportAsync(Import body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithIn(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithInAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithIn(SpecialWords.Models.In body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithIn(In body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithInAsync(SpecialWords.Models.In body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithInAsync(In body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithIs(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithIsAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithIs(SpecialWords.Models.Is body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithIs(Is body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithIsAsync(SpecialWords.Models.Is body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithIsAsync(Is body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithLambda(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithLambdaAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithLambda(SpecialWords.Models.Lambda body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithLambda(Lambda body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithLambdaAsync(SpecialWords.Models.Lambda body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithLambdaAsync(Lambda body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithNot(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithNotAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithNot(SpecialWords.Models.Not body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithNot(Not body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithNotAsync(SpecialWords.Models.Not body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithNotAsync(Not body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithOr(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithOrAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithOr(SpecialWords.Models.Or body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithOr(Or body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithOrAsync(SpecialWords.Models.Or body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithOrAsync(Or body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithPass(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithPassAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithPass(SpecialWords.Models.Pass body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithPass(Pass body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithPassAsync(SpecialWords.Models.Pass body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithPassAsync(Pass body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithRaise(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithRaiseAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithRaise(SpecialWords.Models.Raise body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithRaise(Raise body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithRaiseAsync(SpecialWords.Models.Raise body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithRaiseAsync(Raise body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithReturn(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithReturnAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithReturn(SpecialWords.Models.Return body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithReturn(Return body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithReturnAsync(SpecialWords.Models.Return body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithReturnAsync(Return body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithTry(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithTryAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithTry(SpecialWords.Models.Try body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithTry(Try body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithTryAsync(SpecialWords.Models.Try body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithTryAsync(Try body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithWhile(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithWhileAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithWhile(SpecialWords.Models.While body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithWhile(While body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithWhileAsync(SpecialWords.Models.While body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithWhileAsync(While body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithWith(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithWithAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithWith(SpecialWords.Models.With body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithWith(With body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithWithAsync(SpecialWords.Models.With body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithWithAsync(With body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response WithYield(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> WithYieldAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithYield(SpecialWords.Models.Yield body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithYield(Yield body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithYieldAsync(SpecialWords.Models.Yield body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithYieldAsync(Yield body, CancellationToken cancellationToken = default) => throw null;
     }
 }
