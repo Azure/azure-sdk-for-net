@@ -20,7 +20,8 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
 
         // Example of a function that defines no parameters
         string GetUserFavoriteCity() => "Seattle, WA";

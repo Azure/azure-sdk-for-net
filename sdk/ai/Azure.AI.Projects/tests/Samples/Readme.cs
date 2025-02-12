@@ -29,7 +29,8 @@ public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
     public void Troubleshooting()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
 
         #region Snippet:Readme_Troubleshooting
         try

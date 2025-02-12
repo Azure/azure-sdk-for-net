@@ -19,7 +19,8 @@ public partial class Sample_Agent_FileSearch : SamplesBase<AIProjectsTestEnviron
     public async Task FilesSearchExample()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         #region Snippet:UploadAgentFilesToUse

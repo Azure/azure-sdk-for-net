@@ -16,7 +16,8 @@ namespace Azure.AI.Projects.Tests
         public async Task Streaming()
         {
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-            AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+            AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+            AgentsClient client = projectClient.GetAgentsClient();
             var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
             Response<Agent> agentResponse = await client.CreateAgentAsync(

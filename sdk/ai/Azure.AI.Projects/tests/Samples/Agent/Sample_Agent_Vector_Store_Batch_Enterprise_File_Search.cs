@@ -20,7 +20,8 @@ public partial class Sample_Agent_Vector_Store_Batch_Enterprise_File_Search : Sa
         // In future we may want to upload file to Azure here.
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
 
         #region Snippet:BatchFileAttachment
         var ds = new VectorStoreDataSource(

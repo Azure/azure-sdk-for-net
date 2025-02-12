@@ -20,6 +20,7 @@ public partial class Sample_Agent_Functions : SamplesBase<AIProjectsTestEnvironm
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
+
         AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
         #region Snippet:FunctionsDefineFunctionTools
