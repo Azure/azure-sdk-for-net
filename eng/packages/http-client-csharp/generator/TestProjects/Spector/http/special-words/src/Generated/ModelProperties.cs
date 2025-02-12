@@ -24,8 +24,8 @@ namespace SpecialWords
 
         public virtual Task<Response> SameAsModelAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response SameAsModel(SameAsModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response SameAsModel(SpecialWords.Models.SameAsModel body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> SameAsModelAsync(SameAsModel body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> SameAsModelAsync(SpecialWords.Models.SameAsModel body, CancellationToken cancellationToken = default) => throw null;
     }
 }

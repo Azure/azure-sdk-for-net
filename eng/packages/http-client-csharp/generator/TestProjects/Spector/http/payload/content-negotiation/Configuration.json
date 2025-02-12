@@ -1,6 +1,5 @@
 {
   "output-folder": ".",
   "namespace": "Payload.ContentNegotiation",
-  "library-name": "Payload.ContentNegotiation",
-  "use-model-reader-writer": true
+  "library-name": "Payload.ContentNegotiation"
 }
