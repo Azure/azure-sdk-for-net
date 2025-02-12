@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.Communication.Rooms
 {
-    public partial class ParticipantsCollection
+    internal partial class ParticipantsCollection
     {
         internal static ParticipantsCollection DeserializeParticipantsCollection(JsonElement element)
         {
