@@ -19,6 +19,11 @@ namespace Azure.AI.Inference.Tests
         [RecordedTest]
         public async Task TestEmbed()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                Assert.Inconclusive("Unable to run test with file path in playback mode.");
+            }
+
             var cohereEmbeddingEndpoint = new Uri(TestEnvironment.CohereEmbeddingEndpoint);
             var cohereEmbeddingCredential = new AzureKeyCredential(TestEnvironment.CohereEmbeddingApiKey);
 
@@ -49,6 +54,11 @@ namespace Azure.AI.Inference.Tests
         [RecordedTest]
         public async Task TestEmbedWithBase64()
         {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                Assert.Inconclusive("Unable to run test with file path in playback mode.");
+            }
+
             var cohereEmbeddingEndpoint = new Uri(TestEnvironment.CohereEmbeddingEndpoint);
             var cohereEmbeddingCredential = new AzureKeyCredential(TestEnvironment.CohereEmbeddingApiKey);
 
