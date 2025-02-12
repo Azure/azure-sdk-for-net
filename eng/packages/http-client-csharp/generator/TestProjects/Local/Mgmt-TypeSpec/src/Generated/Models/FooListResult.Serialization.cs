@@ -12,9 +12,8 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using MgmtTypeSpec;
-using MgmtTypeSpec.Models;
 
-namespace Azure.ResourceManager.Models
+namespace MgmtTypeSpec.Models
 {
     /// <summary></summary>
     public partial class FooListResult : IJsonModel<FooListResult>

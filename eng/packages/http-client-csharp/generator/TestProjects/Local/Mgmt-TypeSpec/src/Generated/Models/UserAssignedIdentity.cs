@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.CommonTypes.Models
+namespace MgmtTypeSpec.Models
 {
     /// <summary> User assigned identity properties. </summary>
     public partial class UserAssignedIdentity

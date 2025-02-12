@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using MgmtTypeSpec;
 
-namespace Azure.ResourceManager.CommonTypes.Models
+namespace MgmtTypeSpec.Models
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
     public partial class TrackedResource : Resource

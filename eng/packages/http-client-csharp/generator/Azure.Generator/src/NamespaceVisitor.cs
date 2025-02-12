@@ -14,7 +14,7 @@ namespace Azure.Generator
         {
             if (type is not null)
             {
-                UpdateNamespace(type);
+                UpdateModelsNamespace(type);
             }
             return type;
         }
@@ -28,7 +28,7 @@ namespace Azure.Generator
 
             if (type is not null)
             {
-                UpdateNamespace(type);
+                UpdateModelsNamespace(type);
             }
             return type;
         }
@@ -43,20 +43,21 @@ namespace Azure.Generator
             if (type is ModelProvider || type is EnumProvider || type is ModelFactoryProvider
                 || type is MrwSerializationTypeDefinition || type is FixedEnumSerializationProvider || type is ExtensibleEnumSerializationProvider)
             {
-                UpdateNamespace(type);
+                UpdateModelsNamespace(type);
+            }
+            else
+            {
+                type.Type.Namespace = AzureClientPlugin.Instance.TypeFactory.RootNamespace;
             }
             return type;
         }
 
-        private static void UpdateNamespace(TypeProvider type)
+        private static void UpdateModelsNamespace(TypeProvider type)
         {
             // TODO: need to take consideration of model-namespace configuration
-            // if model-namespace is false, keep the default namespace
-            // if model-namespace is true, append ".Models" to the namespace
-            if (!type.Type.Namespace.EndsWith("Models"))
-            {
-                type.Type.Namespace = $"{type.Type.Namespace}.Models";
-            }
+            // if model-namespace is false, set namespace to $"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}"
+            // if model-namespace is true, set namespace to $"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}.Models"
+            type.Type.Namespace = $"{AzureClientPlugin.Instance.TypeFactory.RootNamespace}.Models";
         }
     }
 }

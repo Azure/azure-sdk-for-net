@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CommonTypes.Models;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models

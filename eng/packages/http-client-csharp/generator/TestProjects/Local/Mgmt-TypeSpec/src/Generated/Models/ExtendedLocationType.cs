@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using MgmtTypeSpec;
 
-namespace Azure.ResourceManager.CommonTypes.Models
+namespace MgmtTypeSpec.Models
 {
     /// <summary> The supported ExtendedLocation types. </summary>
     public readonly partial struct ExtendedLocationType : IEquatable<ExtendedLocationType>

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using MgmtTypeSpec;
 
-namespace Azure.ResourceManager.CommonTypes.Models
+namespace MgmtTypeSpec.Models
 {
     /// <summary> Properties of a private link resource. </summary>
     public partial class PrivateLinkResourceProperties

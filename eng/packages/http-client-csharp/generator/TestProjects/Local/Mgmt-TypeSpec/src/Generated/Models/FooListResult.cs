@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MgmtTypeSpec.Models;
 
-namespace Azure.ResourceManager.Models
+namespace MgmtTypeSpec.Models
 {
     /// <summary> The response of a Foo list operation. </summary>
     public partial class FooListResult
