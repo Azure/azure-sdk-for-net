@@ -1,14 +1,9 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.11.0-beta.1 (2025-02-11)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added all operations related to NetworkSecurityPerimeter resource type and it's proxy resource types
 
 ## 1.10.0 (2024-12-20)
 
