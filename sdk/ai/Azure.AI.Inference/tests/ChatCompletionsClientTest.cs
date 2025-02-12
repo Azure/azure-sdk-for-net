@@ -50,6 +50,7 @@ namespace Azure.AI.Inference.Tests
         {
             TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
+            JsonPathSanitizers.Add("$.messages[*].content[*].audio_url.url");
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
