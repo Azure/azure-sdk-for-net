@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task WhatIf_PredictTemplateChangesAtManagementGroupScope()
+        public async Task WhatIf_PredictTemplateChangesAtTenantScope()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-11-01/examples/PostDeploymentWhatIfOnTenant.json
             // this example is just showing the usage of "Deployments_WhatIfAtTenantScope" operation, for the dependent resources, they will have to be created separately.

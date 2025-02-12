@@ -394,6 +394,14 @@ directive:
     where: $.definitions
     transform: >
       $.DeploymentStackProperties.properties.duration['format'] = 'duration';
+  - from: resources.json
+    where: $.paths['/providers/Microsoft.Resources/deployments/{deploymentName}/whatIf'].post
+    transform: >
+      $['x-ms-examples'] = {
+        "Predict template changes at tenant scope": {
+          "$ref": "./examples/PostDeploymentWhatIfOnTenant.json"
+        }
+      }
   # Add scope operations
   - from: deploymentStacks.json
     where: $.paths
