@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/12492edbcf4c2d43d153da544ffbf1ffe7cbd20b/specification/monitor/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f4092c2070791b90b2871578fcb20c04f37c5f4e/specification/monitor/resource-manager/readme.md
 tag: package-track2-stable
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
