@@ -10,7 +10,7 @@
     - Supported Get File Service Usage on Files Provisioned v2 account type.
     - Supported new File Share properties on Files Provisioned v2 account type: editable properties: "provisionedIops", "provisionedBandwidthMibps"; readonly properties: "includedBurstIops", "maxBurstCreditsForIops","nextAllowedQuotaDowngradeTime", "nextAllowedProvisionedIopsDowngradeTime", "nextAllowedProvisionedBandwidthDowngradeTime".
     - Supported new File Share properties on Files Provisioned v1 SSD account type: "fileSharePaidBursting", which include child properties "paidBurstingMaxIops", "paidBurstingMaxIops", "paidBurstingMaxBandwidthMibps".
-    - Support new ObjectReplicationPolicy Properties: "metrics.enabled".
+    - Supported new ObjectReplicationPolicy Properties: "metrics.enabled".
 
 ### Breaking Changes
 
