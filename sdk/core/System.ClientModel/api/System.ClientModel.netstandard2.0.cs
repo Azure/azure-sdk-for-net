@@ -59,20 +59,6 @@ namespace System.ClientModel
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
     }
-    public partial class Credential
-    {
-        public Credential(string token, string tokenType, System.DateTimeOffset expiresOn) { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } protected set { } }
-        public System.DateTimeOffset? RefreshOn { get { throw null; } protected set { } }
-        public string Token { get { throw null; } protected set { } }
-        public string TokenType { get { throw null; } protected set { } }
-    }
-    public abstract partial class CredentialProvider
-    {
-        protected CredentialProvider() { }
-        public abstract System.ClientModel.Credential GetCredential(System.Collections.Generic.IReadOnlyDictionary<string, object> context, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.Credential> GetCredentialAsync(System.Collections.Generic.IReadOnlyDictionary<string, object> context, System.Threading.CancellationToken cancellationToken);
-    }
     public partial interface IClaimsToken : System.ClientModel.IScopedToken, System.ClientModel.ITokenContext
     {
         string Claims { get; }
@@ -93,6 +79,11 @@ namespace System.ClientModel
         object CreateContext(System.Collections.Generic.IReadOnlyDictionary<string, object> properties);
         System.ClientModel.Token GetAccessToken(object context, System.Threading.CancellationToken cancellationToken);
         System.Threading.Tasks.ValueTask<System.ClientModel.Token> GetAccessTokenAsync(object context, System.Threading.CancellationToken cancellationToken);
+    }
+    public abstract partial class RefreshableToken : System.ClientModel.Token
+    {
+        public RefreshableToken(string tokenValue, string tokenType, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn = default(System.DateTimeOffset?)) : base (default(string), default(string), default(System.DateTimeOffset), default(System.DateTimeOffset?)) { }
+        public abstract System.Threading.Tasks.Task RefreshAsync(System.Threading.CancellationToken cancellationToken);
     }
     public partial class Token
     {

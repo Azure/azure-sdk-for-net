@@ -19,11 +19,11 @@ public class TokenProviderTests
     {
         // usage for TokenProvider abstract type
         TokenProvider2<IScopedToken> provider = new ScopedTokenProvider<IScopedToken>();
-        var client = new FooClient(new Uri("http://localhost"),  provider);
+        var client = new FooClient(new Uri("http://localhost"), provider);
 
         // usage for TokenProvider2 abstract type
         ITokenProvider provider2 = new ScopedTokenProvider2();
-        client = new FooClient(new Uri("http://localhost"),  provider);
+        client = new FooClient(new Uri("http://localhost"), provider);
 
         // usage for policy only and no public tokenProvider abstraction.
         var factory = new AuthenticationPolicyFactory();
@@ -154,12 +154,13 @@ public class TokenProviderTests
     {
         public override Token GetAccessToken(IScopedToken context, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return new ScopedRefreshableToken(this, "tokenValue", "tokenType", DateTimeOffset.UtcNow.AddHours(1));
         }
 
-        public override ValueTask<Token> GetAccessTokenAsync(IScopedToken context, CancellationToken cancellationToken)
+        public override async ValueTask<Token> GetAccessTokenAsync(IScopedToken context, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await Task.Yield();
+            return new ScopedRefreshableToken(this, "tokenValue", "tokenType", DateTimeOffset.UtcNow.AddHours(1));
         }
 
         public override IScopedToken CreateContext(IReadOnlyDictionary<string, object> properties)
@@ -257,6 +258,25 @@ public class TokenProviderTests
                 return (TContext)(IScopedToken)new ScopedWithClaimsContext(scopeArray, claimsString);
             }
             throw new InvalidOperationException("Scopes and claims are required.");
+        }
+    }
+
+    public class ScopedRefreshableToken : RefreshableToken
+    {
+        private TokenProvider2<IScopedToken> _provider;
+
+        public ScopedRefreshableToken(TokenProvider2<IScopedToken> provider, string tokenValue, string tokenType, DateTimeOffset expiresOn, DateTimeOffset? refreshOn = null)
+            : base(tokenValue, tokenType, expiresOn, refreshOn)
+        {
+            _provider = provider;
+        }
+        public override async Task RefreshAsync(CancellationToken cancellationToken)
+        {
+            var token = await _provider.GetAccessTokenAsync(new ScopedContext(["myscope"]), cancellationToken);
+            TokenValue = token.TokenValue;
+            TokenType = token.TokenType;
+            ExpiresOn = token.ExpiresOn;
+            RefreshOn = token.RefreshOn;
         }
     }
 }
