@@ -139,9 +139,9 @@ namespace Azure.Storage.Blobs.Models
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        public override async ValueTask<Response> UpdateStatusAsync(
+        public override ValueTask<Response> UpdateStatusAsync(
             CancellationToken cancellationToken = default) =>
-            await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
+            UpdateStatusAsync(true, cancellationToken);
 
         /// <summary>
         /// Check for the latest status of the copy operation.
@@ -152,7 +152,7 @@ namespace Azure.Storage.Blobs.Models
         /// </param>
         /// <param name="async" />
         /// <returns>The <see cref="Response"/> with the status update.</returns>
-        private async Task<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
+        private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)
         {
             // Short-circuit when already completed (which improves mocking
             // scenarios that won't have a client).

@@ -420,8 +420,8 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(Stream content) =>
-            await UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(Stream content) =>
+            UploadAsync(content, CancellationToken.None);
 
         /// <summary>
         /// The <see cref="UploadAsync(BinaryData)"/> operation creates a new block blob
@@ -448,8 +448,8 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(BinaryData content) =>
-            await UploadAsync(content, CancellationToken.None).ConfigureAwait(false);
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(BinaryData content) =>
+            UploadAsync(content, CancellationToken.None);
 
         /// <summary>
         /// The <see cref="UploadAsync(string)"/> operation
@@ -475,8 +475,8 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(string path) =>
-            await UploadAsync(path, CancellationToken.None).ConfigureAwait(false);
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(string path) =>
+            UploadAsync(path, CancellationToken.None);
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
@@ -686,14 +686,13 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(
             string path,
             CancellationToken cancellationToken) =>
-            await UploadAsync(
+            UploadAsync(
                 path,
                 overwrite: false,
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="Upload(Stream, CancellationToken)"/> operation
@@ -944,15 +943,14 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(
             string path,
             bool overwrite = false,
             CancellationToken cancellationToken = default) =>
-            await UploadAsync(
+            UploadAsync(
                 path,
                 conditions: overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
-                cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="Upload(Stream, BlobUploadOptions, CancellationToken)"/>
@@ -1044,15 +1042,12 @@ namespace Azure.Storage.Blobs
             BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (var stream = content.ToStream())
-            {
-                return StagedUploadInternal(
-                    stream,
-                    options,
-                    async: false,
-                    cancellationToken: cancellationToken)
-                    .EnsureCompleted();
-            }
+            return StagedUploadInternal(
+                content.ToStream(),
+                options,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
         }
 
         /// <summary>
@@ -1314,16 +1309,15 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(
             Stream content,
             BlobUploadOptions options,
             CancellationToken cancellationToken = default) =>
-            await StagedUploadInternal(
+            StagedUploadInternal(
                 content,
                 options,
                 async: true,
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+                cancellationToken: cancellationToken);
 
         /// <summary>
         /// The <see cref="UploadAsync(BinaryData, BlobUploadOptions, CancellationToken)"/>
@@ -1362,20 +1356,16 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContentInfo>> UploadAsync(
+        public virtual Task<Response<BlobContentInfo>> UploadAsync(
             BinaryData content,
             BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (var stream = content.ToStream())
-            {
-                return await StagedUploadInternal(
-                    stream,
-                    options,
-                    async: true,
-                    cancellationToken: cancellationToken)
-                .ConfigureAwait(false);
-            }
+            return StagedUploadInternal(
+                content.ToStream(),
+                options,
+                async: true,
+                cancellationToken: cancellationToken);
         }
 
         /// <summary>
@@ -1502,7 +1492,7 @@ namespace Azure.Storage.Blobs
             BlobUploadOptions options,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync: true))
             {
                 return await StagedUploadInternal(
                     stream,
@@ -1582,7 +1572,7 @@ namespace Azure.Storage.Blobs
             StorageTransferOptions transferOptions = default,
             CancellationToken cancellationToken = default)
         {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, useAsync: true))
             {
                 return await StagedUploadInternal(
                     stream,
@@ -1664,49 +1654,6 @@ namespace Azure.Storage.Blobs
                 cancellationToken)
                 .ConfigureAwait(false);
         }
-
-        /// <summary>
-        /// This operation will create a new
-        /// block blob of arbitrary size by uploading it as indiviually staged
-        /// blocks if it's larger than the
-        /// <paramref name="options"/>. MaximumTransferLength.
-        /// </summary>
-        /// <param name="path">
-        /// A file path of the file to upload.
-        /// </param>
-        /// <param name="options">
-        /// Options for this upload.
-        /// </param>
-        /// <param name="async">
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
-        /// </param>
-        /// <returns>
-        /// A <see cref="Response{BlobContentInfo}"/> describing the
-        /// state of the updated block blob.
-        /// </returns>
-        /// <remarks>
-        /// A <see cref="RequestFailedException"/> will be thrown if
-        /// a failure occurs.
-        /// </remarks>
-        internal async Task<Response<BlobContentInfo>> StagedUploadInternal(
-            string path,
-            BlobUploadOptions options,
-            bool async = true,
-            CancellationToken cancellationToken = default)
-        {
-            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
-            {
-                return await StagedUploadInternal(
-                    stream,
-                    options,
-                    async: async,
-                    cancellationToken: cancellationToken)
-                    .ConfigureAwait(false);
-            }
-        }
         #endregion Upload
 
         #region OpenWrite
@@ -1766,18 +1713,18 @@ namespace Azure.Storage.Blobs
         /// </remarks>
 #pragma warning disable AZC0015 // Unexpected client method return type.
         [ForwardsClientCalls]
-        public virtual async Task<Stream> OpenWriteAsync(
+        public virtual Task<Stream> OpenWriteAsync(
 #pragma warning restore AZC0015 // Unexpected client method return type.
             bool overwrite,
             BlobOpenWriteOptions options = default,
             CancellationToken cancellationToken = default)
-            => await OpenWriteInternal(
+            => OpenWriteInternal(
                 overwrite,
                 options,
                 async: true,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
 
-        internal async Task<Stream> OpenWriteInternal(
+        private Task<Stream> OpenWriteInternal(
             bool overwrite,
             BlobOpenWriteOptions options,
             bool async,
@@ -1786,20 +1733,20 @@ namespace Azure.Storage.Blobs
             if (UsingClientSideEncryption)
             {
                 IClientSideEncryptor encryptor = ClientSideEncryption.GetClientSideEncryptor();
-                return await new BlobClientSideEncryptor(encryptor)
+                return new BlobClientSideEncryptor(encryptor)
                     .ClientSideEncryptionOpenWriteInternal(
                         BlockBlobClient,
                         overwrite,
                         options?.ToBlockBlobOpenWriteOptions(),
                         async,
-                        cancellationToken).ConfigureAwait(false);
+                        cancellationToken);
             }
 
-            return await BlockBlobClient.OpenWriteInternal(
+            return BlockBlobClient.OpenWriteInternal(
                 overwrite,
                 options?.ToBlockBlobOpenWriteOptions(),
                 async,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
         }
         #endregion
 
@@ -1817,7 +1764,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
+        private PartitionedUploader<BlobUploadOptions, BlobContentInfo> GetPartitionedUploader(
             StorageTransferOptions transferOptions,
             UploadTransferValidationOptions validationOptions,
             ArrayPool<byte> arrayPool = null,
