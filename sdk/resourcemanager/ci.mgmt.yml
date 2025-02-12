@@ -52,6 +52,7 @@ trigger:
     - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
+    - sdk/contoso/Azure.ResourceManager.Contoso
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
     - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql
     - sdk/costmanagement/Azure.ResourceManager.CostManagement
@@ -79,7 +80,6 @@ trigger:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
-    - sdk/iotoperations/Azure.ResourceManager.IotOperations
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -108,6 +108,7 @@ trigger:
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
+    - sdk/iotoperations/Azure.ResourceManager.IotOperations
     - sdk/keyvault/Azure.ResourceManager.KeyVault
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
@@ -258,6 +259,7 @@ pr:
     - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
+    - sdk/contoso/Azure.ResourceManager.Contoso
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
     - sdk/cosmosdbforpostgresql/Azure.ResourceManager.CosmosDBForPostgreSql
     - sdk/costmanagement/Azure.ResourceManager.CostManagement
@@ -285,7 +287,6 @@ pr:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
-    - sdk/iotoperations/Azure.ResourceManager.IotOperations
     - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -314,6 +315,7 @@ pr:
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
+    - sdk/iotoperations/Azure.ResourceManager.IotOperations
     - sdk/keyvault/Azure.ResourceManager.KeyVault
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
