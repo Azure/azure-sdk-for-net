@@ -29,8 +29,8 @@ namespace Azure.Communication
 
             try
             {
-                var paylodJson = Base64Url.DecodeString(tokenParts[1]);
-                return JsonSerializer.Deserialize<JwtPayload>(paylodJson) ?? throw new FormatException(TokenDeserializationFailed);
+                var payloadJson = Base64Url.DecodeString(tokenParts[1]);
+                return JsonSerializer.Deserialize<JwtPayload>(payloadJson) ?? throw new FormatException(TokenDeserializationFailed);
             }
             catch (JsonException ex)
             {
