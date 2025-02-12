@@ -244,10 +244,16 @@ try {
                 $context = Get-AzContext
             }
         } else {
-            if ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
+            if ($context.Tenant.Name -like '*TME*') {
+                if ($currentSubscriptionId -ne '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') {
+                    Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
+                    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore
+                    # Update the context.
+                    $context = Get-AzContext
+                }
+            } elseif ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
                 Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
                 $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
-
                 # Update the context.
                 $context = Get-AzContext
             }
@@ -261,6 +267,7 @@ try {
             'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
             'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
             '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
+            '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' = 'Azure SDK Test Resources - TME '
         }
 
         # Print which subscription is currently selected.
@@ -313,7 +320,14 @@ try {
     # Make sure the provisioner OID is set so we can pass it through to the deployment.
     if (!$ProvisionerApplicationId -and !$ProvisionerApplicationOid) {
         if ($context.Account.Type -eq 'User') {
-            $user = Get-AzADUser -UserPrincipalName $context.Account.Id
+            # Support corp tenant and TME tenant user id lookups
+            $user = Get-AzADUser -Mail $context.Account.Id
+            if ($user -eq $null -or !$user.Id) {
+                $user = Get-AzADUser -UserPrincipalName $context.Account.Id
+            }
+            if ($user -eq $null -or !$user.Id) {
+                throw "Failed to find entra object ID for the current user"
+            }
             $ProvisionerApplicationOid = $user.Id
         } elseif ($context.Account.Type -eq 'ServicePrincipal') {
             $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
@@ -350,6 +364,10 @@ try {
         # to determine whether resources should be removed.
         Write-Host "Setting variable 'CI_HAS_DEPLOYED_RESOURCES': 'true'"
         LogVsoCommand "##vso[task.setvariable variable=CI_HAS_DEPLOYED_RESOURCES;]true"
+        # Set resource group env variable early in cases where deployment fails as we
+        # still want to clean up the group. The Remove-TestResources.ps1 script consumes this var.
+        $envVarName = (BuildServiceDirectoryPrefix $serviceName) + "RESOURCE_GROUP"
+        LogVsoCommand "##vso[task.setvariable variable=$envVarName;]$ResourceGroupName"
     }
 
     Log "Creating resource group '$ResourceGroupName' in location '$Location'"
@@ -379,7 +397,14 @@ try {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when -ServicePrincipalAutth is not set."
         }
 
-        $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
+        # Support corp tenant and TME tenant user id lookups
+        $userAccount = (Get-AzADUser -Mail (Get-AzContext).Account.Id)
+        if ($userAccount -eq $null -or !$userAccount.Id) {
+            $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
+        }
+        if ($userAccount -eq $null -or !$userAccount.Id) {
+            throw "Failed to find entra object ID for the current user"
+        }
         $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
         $userAccountName = $userAccount.UserPrincipalName
@@ -502,6 +527,8 @@ try {
     if ($CI -and $Environment -eq 'AzureCloud' -and $env:PoolSubnet) {
         $templateParameters.Add('azsdkPipelineSubnetList', @($env:PoolSubnet))
     }
+    # Some arm/bicep templates may want to change deployment settings (e.g. local auth) in sandboxed TME tenants
+    $templateParameters.Add('supportsSafeSecretStandard', ($context.Tenant.Name -notlike '*TME*'))
 
     $defaultCloudParameters = LoadCloudConfig $Environment
     MergeHashes $defaultCloudParameters $(Get-Variable templateParameters)
@@ -515,9 +542,9 @@ try {
 
     # Try to detect the shell based on the parent process name (e.g. launch via shebang).
     $shell, $shellExportFormat = if (($parentProcessName = (Get-Process -Id $PID).Parent.ProcessName) -and $parentProcessName -eq 'cmd') {
-        'cmd', 'set {0}={1}'
+        'cmd', 'set {0}=''{1}'''
     } elseif (@('bash', 'csh', 'tcsh', 'zsh') -contains $parentProcessName) {
-        'shell', 'export {0}={1}'
+        'shell', 'export {0}=''{1}'''
     } else {
         'PowerShell', '${{env:{0}}} = ''{1}'''
     }

@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Enum.Fixed",
+  "library-name": "Type.Enum.Fixed",
+  "use-model-reader-writer": true
+}
