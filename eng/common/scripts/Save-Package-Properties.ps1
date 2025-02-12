@@ -39,15 +39,10 @@ Param (
   [Parameter(Mandatory = $True)]
   [string] $outDirectory,
   [string] $prDiff,
-  [bool] $addDevVersion = $false
+  [switch] $addDevVersion
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
-
-Write-Host "Service directory: $serviceDirectory"
-Write-Host "Output directory: $outDirectory"
-Write-Host "PR diff file: $prDiff"
-Write-Host "Add dev version: $addDevVersion"
 
 function SetOutput($outputPath, $incomingPackageSpec)
 {
