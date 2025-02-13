@@ -161,6 +161,7 @@ namespace Azure.Storage.Blobs
                 {
                     initialResponse = await _client.DownloadStreamingInternal(
                         initialRange,
+                        true,
                         conditions,
                         ValidationOptions,
                         _progress,
@@ -172,6 +173,7 @@ namespace Azure.Storage.Blobs
                 {
                     initialResponse = await _client.DownloadStreamingInternal(
                         range: default,
+                        false,
                         conditions,
                         ValidationOptions,
                         _progress,
@@ -230,8 +232,8 @@ namespace Azure.Storage.Blobs
                 BlobRequestConditions conditionsWithEtag = conditions?.WithIfMatch(etag) ?? new BlobRequestConditions { IfMatch = etag };
 
 #pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                                // Rule checker cannot understand this section, but this
-                                // massively reduces code duplication.
+                // Rule checker cannot understand this section, but this
+                // massively reduces code duplication.
                 int effectiveWorkerCount = async ? _maxWorkerCount : 1;
                 if (effectiveWorkerCount > 1)
                 {
@@ -260,6 +262,7 @@ namespace Azure.Storage.Blobs
                     ValueTask<Response<BlobDownloadStreamingResult>> responseValueTask = _client
                         .DownloadStreamingInternal(
                             httpRange,
+                            true,
                             conditionsWithEtag,
                             ValidationOptions,
                             _progress,
@@ -338,13 +341,13 @@ namespace Azure.Storage.Blobs
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
-                            if (UseMasterCrc)
-                            {
-                                StorageCrc64Composer.Compose(
-                                    (composedCrc.ToArray(), 0L),
-                                    (partitionChecksum.ToArray(), response.Value.Details.ContentLength)
-                                ).CopyTo(composedCrc);
-                            }
+                        if (UseMasterCrc)
+                        {
+                            StorageCrc64Composer.Compose(
+                                (composedCrc.ToArray(), 0L),
+                                (partitionChecksum.ToArray(), response.Value.Details.ContentLength)
+                            ).CopyTo(composedCrc);
+                        }
                     }
                 }
             }
