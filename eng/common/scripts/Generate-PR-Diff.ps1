@@ -67,6 +67,9 @@ if (-not $ExcludePaths) {
 if (-not $deletedFiles) {
   $deletedFiles = @()
 }
+if (-not $changedServices) {
+  $changedServices = @()
+}
 $result = [PSCustomObject]@{
   "ChangedFiles"    = $changedFiles
   "ChangedServices" = $changedServices
