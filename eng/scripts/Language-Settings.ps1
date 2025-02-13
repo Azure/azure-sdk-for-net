@@ -116,6 +116,35 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       }
     }
 
+    # enhance with additional CI properties
+    $ciProps = $pkgProp.GetCIYmlForArtifact()
+
+    if ($ciProps) {
+      # CheckAOTCompat is opt _in_, so we should default to false if not specified
+      $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
+      if ($shouldAot) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
+        }
+      }
+      else {
+        $pkgProp.CIParameters["CheckAOTCompat"] = $false
+      }
+
+      # BuildSnippets is opt _out_, so we should default to true if not specified
+      $shouldSnippet = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "BuildSnippets")
+      if ($shouldSnippet) {
+        $parsedBool = $null
+        if ([bool]::TryParse($shouldSnippet, [ref]$parsedBool)) {
+          $pkgProp.CIParameters["BuildSnippets"] = $parsedBool
+        }
+      }
+      else {
+        $pkgProp.CIParameters["BuildSnippets"] = $true
+      }
+    }
+
     $allPackageProps += $pkgProp
   }
 
