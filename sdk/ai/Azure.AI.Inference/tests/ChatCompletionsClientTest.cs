@@ -867,7 +867,6 @@ namespace Azure.AI.Inference.Tests
         {
             var endpoint = targetModel switch
             {
-                TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
                 TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
                 TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
                 _ => throw new ArgumentException(nameof(targetModel)),
@@ -875,7 +874,6 @@ namespace Azure.AI.Inference.Tests
 
             var credential = targetModel switch
             {
-                TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
                 TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
                 TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
                 _ => throw new ArgumentException(nameof(targetModel)),
@@ -906,7 +904,7 @@ namespace Azure.AI.Inference.Tests
 
             var messages = new List<ChatRequestMessage>()
             {
-                // new ChatRequestSystemMessage("You are a helpful assistant."),
+                new ChatRequestSystemMessage("You are a helpful assistant."),
                 new ChatRequestUserMessage("Please give me directions and ingredients to bake a chocolate cake."),
             };
 
