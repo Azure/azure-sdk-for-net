@@ -3542,17 +3542,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="timestamp"> Gets the timestamp of the data chunk dropped. </param>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="bitrate"> Gets the bitrate of the track. </param>
-        /// <param name="timescale"> Gets the timescale of the Timestamp. </param>
         /// <param name="resultCode"> Gets the result code for fragment drop operation. </param>
         /// <param name="trackName"> Gets the name of the track for which fragment is dropped. </param>
         /// <returns> A new <see cref="SystemEvents.MediaLiveEventIncomingDataChunkDroppedEventData"/> instance for mocking. </returns>
-        public static MediaLiveEventIncomingDataChunkDroppedEventData MediaLiveEventIncomingDataChunkDroppedEventData(string timestamp = null, string trackType = null, long? bitrate = null, string timescale = null, string resultCode = null, string trackName = null)
+        public static MediaLiveEventIncomingDataChunkDroppedEventData MediaLiveEventIncomingDataChunkDroppedEventData(string timestamp = null, string trackType = null, long? bitrate = null, string resultCode = null, string trackName = null)
         {
             return new MediaLiveEventIncomingDataChunkDroppedEventData(
                 timestamp,
                 trackType,
                 bitrate,
-                timescale,
                 resultCode,
                 trackName,
                 serializedAdditionalRawData: null);
