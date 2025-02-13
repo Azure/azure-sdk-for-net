@@ -1007,7 +1007,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
-                false,
+                range != default,
                 conditions,
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler: default,
