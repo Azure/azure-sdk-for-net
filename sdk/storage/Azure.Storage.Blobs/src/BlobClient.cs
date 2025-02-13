@@ -1711,10 +1711,12 @@ namespace Azure.Storage.Blobs
 
         #region OpenWrite
         /// <summary>
-        /// Opens a stream for writing to the blob.
+        /// Opens a stream for writing to the blob. If the blob exists,
+        /// it will be overwritten.
         /// </summary>
         /// <param name="overwrite">
         /// Whether an existing blob should be deleted and recreated.
+        /// The only valid value for this operation is true.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -1744,11 +1746,12 @@ namespace Azure.Storage.Blobs
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Opens a stream for writing to the blob.  If the blob exists,
+        /// Opens a stream for writing to the blob. If the blob exists,
         /// it will be overwritten.
         /// </summary>
         /// <param name="overwrite">
         /// Whether an existing blob should be deleted and recreated.
+        /// The only valid value for this operation is true.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
