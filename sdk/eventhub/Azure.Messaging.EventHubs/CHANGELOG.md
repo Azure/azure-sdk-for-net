@@ -27,15 +27,15 @@ Thank you to our developer community members who helped to make the Event Hubs c
   The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
   
   Obsoleted properties:
-  - [EventData.Offset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventdata.offset?view=azure-dotnet#azure-messaging-eventhubs-eventdata-offset)
-  - [LastEnqueuedEventProperties.Offset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.lastenqueuedeventproperties.offset?view=azure-dotnet)
-  - [PartitionProperties.LastEnqueuedOffset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.partitionproperties.lastenqueuedoffset?view=azure-dotnet)
+  - EventData.Offset
+  - LastEnqueuedEventProperties.Offset
+  - PartitionProperties.LastEnqueuedOffset
 
   Obsoleted method overloads:
-  - [EventPosition.FromOffset](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.eventposition.fromoffset?view=azure-dotnet)
-  - [EventHubsModelFactory.EventData](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventhubsmodelfactory.eventdata?view=azure-dotnet)
-  - [BlobCheckpointStore.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.primitives.blobcheckpointstore.updatecheckpointasync?view=azure-dotnet)
-  - [EventProcessorClient.UpdateCheckpointAsync](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclient.updatecheckpointasync?view=azure-dotnet)
+  - EventPosition.FromOffset
+  - EventHubsModelFactory.EventData
+  - BlobCheckpointStore.UpdateCheckpointAsync
+  - EventProcessorClient.UpdateCheckpointAsync
 
 ### Bugs Fixed
 
