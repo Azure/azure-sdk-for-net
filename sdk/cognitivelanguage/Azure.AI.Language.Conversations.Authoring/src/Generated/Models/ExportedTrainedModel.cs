@@ -47,19 +47,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="ExportedTrainedModel"/>. </summary>
         /// <param name="modelId"> The model ID. </param>
-        /// <param name="lastTrainedDateTime"> The last trained date time of the model. </param>
-        /// <param name="lastExportedModelDateTime"> The last exported date time of the model. </param>
+        /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
+        /// <param name="lastExportedModelOn"> The last exported date time of the model. </param>
         /// <param name="modelExpirationDate"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="modelTrainingConfigVersion"/> is null. </exception>
-        internal ExportedTrainedModel(string modelId, DateTimeOffset lastTrainedDateTime, DateTimeOffset lastExportedModelDateTime, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion)
+        internal ExportedTrainedModel(string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastExportedModelOn, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion)
         {
             Argument.AssertNotNull(modelId, nameof(modelId));
             Argument.AssertNotNull(modelTrainingConfigVersion, nameof(modelTrainingConfigVersion));
 
             ModelId = modelId;
-            LastTrainedDateTime = lastTrainedDateTime;
-            LastExportedModelDateTime = lastExportedModelDateTime;
+            LastTrainedOn = lastTrainedOn;
+            LastExportedModelOn = lastExportedModelOn;
             ModelExpirationDate = modelExpirationDate;
             ModelTrainingConfigVersion = modelTrainingConfigVersion;
         }
@@ -67,17 +67,17 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="ExportedTrainedModel"/>. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="modelId"> The model ID. </param>
-        /// <param name="lastTrainedDateTime"> The last trained date time of the model. </param>
-        /// <param name="lastExportedModelDateTime"> The last exported date time of the model. </param>
+        /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
+        /// <param name="lastExportedModelOn"> The last exported date time of the model. </param>
         /// <param name="modelExpirationDate"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedTrainedModel(string exportedModelName, string modelId, DateTimeOffset lastTrainedDateTime, DateTimeOffset lastExportedModelDateTime, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportedTrainedModel(string exportedModelName, string modelId, DateTimeOffset lastTrainedOn, DateTimeOffset lastExportedModelOn, DateTimeOffset modelExpirationDate, string modelTrainingConfigVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExportedModelName = exportedModelName;
             ModelId = modelId;
-            LastTrainedDateTime = lastTrainedDateTime;
-            LastExportedModelDateTime = lastExportedModelDateTime;
+            LastTrainedOn = lastTrainedOn;
+            LastExportedModelOn = lastExportedModelOn;
             ModelExpirationDate = modelExpirationDate;
             ModelTrainingConfigVersion = modelTrainingConfigVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -93,9 +93,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> The model ID. </summary>
         public string ModelId { get; }
         /// <summary> The last trained date time of the model. </summary>
-        public DateTimeOffset LastTrainedDateTime { get; }
+        public DateTimeOffset LastTrainedOn { get; }
         /// <summary> The last exported date time of the model. </summary>
-        public DateTimeOffset LastExportedModelDateTime { get; }
+        public DateTimeOffset LastExportedModelOn { get; }
         /// <summary> The model expiration date. </summary>
         public DateTimeOffset ModelExpirationDate { get; }
         /// <summary> The model training config version. </summary>
