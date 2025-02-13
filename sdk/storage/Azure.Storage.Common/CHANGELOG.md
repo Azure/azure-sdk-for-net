@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where in rare cases, a `NullReferenceException` could be thrown when parsing an error response from the service.
 
 ### Other Changes
 
