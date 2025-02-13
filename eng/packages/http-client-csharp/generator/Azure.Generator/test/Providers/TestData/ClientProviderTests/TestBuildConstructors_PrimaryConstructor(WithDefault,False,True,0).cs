@@ -1,7 +1,7 @@
-﻿global::sample.test.Argument.AssertNotNull(endpoint, nameof(endpoint));
-global::sample.test.Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+﻿global::Samples.Argument.AssertNotNull(endpoint, nameof(endpoint));
+global::Samples.Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
 
-options ??= new global::sample.test.TestClientOptions();
+options ??= new global::Samples.TestClientOptions();
 
 _endpoint = endpoint;
 _tokenCredential = tokenCredential;

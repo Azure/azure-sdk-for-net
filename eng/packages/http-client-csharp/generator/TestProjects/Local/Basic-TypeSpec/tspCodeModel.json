@@ -33,6 +33,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
+   "clientNamespace": "BasicTypeSpec",
    "doc": "The ThingModel_requiredLiteralString",
    "isFixed": false,
    "isFlags": false,
@@ -66,6 +67,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
+   "clientNamespace": "BasicTypeSpec",
    "doc": "The ThingModel_requiredLiteralInt",
    "isFixed": false,
    "isFlags": false,
@@ -99,6 +101,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
+   "clientNamespace": "BasicTypeSpec",
    "doc": "The ThingModel_requiredLiteralFloat",
    "isFixed": false,
    "isFlags": false,
@@ -132,6 +135,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
+   "clientNamespace": "BasicTypeSpec",
    "doc": "The ThingModel_optionalLiteralString",
    "isFixed": false,
    "isFlags": false,
@@ -165,6 +169,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
+   "clientNamespace": "BasicTypeSpec",
    "doc": "The ThingModel_optionalLiteralInt",
    "isFixed": false,
    "isFlags": false,
@@ -198,6 +203,7 @@
     }
    ],
    "crossLanguageDefinitionId": "",
+   "clientNamespace": "BasicTypeSpec",
    "doc": "The ThingModel_optionalLiteralFloat",
    "isFixed": false,
    "isFlags": false,
@@ -269,6 +275,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "doc": "Simple enum",
    "isFixed": true,
    "isFlags": false,
@@ -340,6 +347,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "doc": "Extensible enum",
    "isFixed": false,
    "isFlags": false,
@@ -411,6 +419,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "doc": "Int based extensible enum",
    "isFixed": false,
    "isFlags": false,
@@ -482,6 +491,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "doc": "Float based extensible enum",
    "isFixed": false,
    "isFlags": false,
@@ -553,6 +563,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "doc": "float fixed enum",
    "isFixed": false,
    "isFlags": false,
@@ -624,6 +635,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "doc": "float fixed enum",
    "isFixed": true,
    "isFlags": false,
@@ -695,6 +707,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "doc": "float fixed enum",
    "isFixed": true,
    "isFlags": false,
@@ -766,6 +779,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "doc": "int fixed enum",
    "isFixed": true,
    "isFlags": false,
@@ -820,6 +834,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "BasicTypeSpec",
    "isFixed": true,
    "isFlags": false,
    "usage": "ApiVersionEnum",
@@ -831,6 +846,7 @@
    "$id": "90",
    "kind": "model",
    "name": "ThingModel",
+   "clientNamespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.ThingModel",
    "usage": "Input,Output,Spread,Json",
    "doc": "A model with a few properties of literal types",
@@ -903,6 +919,7 @@
         "decorators": []
        }
       ],
+      "clientNamespace": "",
       "decorators": []
      },
      "optional": false,
@@ -1208,7 +1225,8 @@
        },
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
-      }
+      },
+      "clientNamespace": ""
      },
      "optional": true,
      "readOnly": false,
@@ -1246,7 +1264,8 @@
        },
        "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
-      }
+      },
+      "clientNamespace": ""
      },
      "optional": false,
      "readOnly": false,
@@ -1268,6 +1287,7 @@
    "$id": "153",
    "kind": "model",
    "name": "RoundTripModel",
+   "clientNamespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.RoundTripModel",
    "usage": "Input,Output,Json",
    "doc": "this is a roundtrip model",
@@ -1916,6 +1936,7 @@
       "$id": "244",
       "kind": "model",
       "name": "ModelWithRequiredNullableProperties",
+      "clientNamespace": "BasicTypeSpec",
       "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithRequiredNullableProperties",
       "usage": "Input,Output,Json",
       "doc": "A model with a few required nullable properties",
@@ -1936,7 +1957,8 @@
           "name": "int32",
           "crossLanguageDefinitionId": "TypeSpec.int32",
           "decorators": []
-         }
+         },
+         "clientNamespace": ""
         },
         "optional": false,
         "readOnly": false,
@@ -1963,7 +1985,8 @@
          "kind": "nullable",
          "type": {
           "$ref": "28"
-         }
+         },
+         "clientNamespace": ""
         },
         "optional": false,
         "readOnly": false,
@@ -1990,7 +2013,8 @@
          "kind": "nullable",
          "type": {
           "$ref": "20"
-         }
+         },
+         "clientNamespace": ""
         },
         "optional": false,
         "readOnly": false,
@@ -2059,6 +2083,7 @@
    "$id": "264",
    "kind": "model",
    "name": "FriendModel",
+   "clientNamespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.NotFriend",
    "usage": "Output,Spread,Json",
    "doc": "this is not a friendly model but with a friendly name",
@@ -2097,6 +2122,7 @@
    "$id": "269",
    "kind": "model",
    "name": "ProjectedModel",
+   "clientNamespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.ModelWithProjectedName",
    "usage": "Output,Spread,Json",
    "doc": "this is a model with a projected name",
@@ -2135,6 +2161,7 @@
    "$id": "274",
    "kind": "model",
    "name": "ReturnsAnonymousModelResponse",
+   "clientNamespace": "BasicTypeSpec",
    "crossLanguageDefinitionId": "BasicTypeSpec.returnsAnonymousModel.Response.anonymous",
    "usage": "Output,Json",
    "decorators": [],
@@ -2145,6 +2172,7 @@
   {
    "$id": "275",
    "Name": "BasicTypeSpecClient",
+   "ClientNamespace": "BasicTypeSpec",
    "Doc": "This is a sample typespec project.",
    "Operations": [
     {

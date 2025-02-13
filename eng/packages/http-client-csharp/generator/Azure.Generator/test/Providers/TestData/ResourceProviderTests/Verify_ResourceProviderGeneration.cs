@@ -12,16 +12,17 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using sample.test.Models;
+using Sample;
+using Samples.Models;
 
-namespace sample.test
+namespace Samples
 {
     /// <summary></summary>
     public partial class ResponseTypeResource : global::Azure.ResourceManager.ArmResource
     {
-        private global::sample.test.Models.ResponseTypeData _data;
+        private global::Samples.Models.ResponseTypeData _data;
         private global::Azure.Core.Pipeline.ClientDiagnostics _responsetypeClientDiagnostics;
-        private global::sample.test.TestClient _restClient;
+        private global::Sample.TestClient _restClient;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly global::Azure.Core.ResourceType ResourceType = "a/test";
 
@@ -30,7 +31,7 @@ namespace sample.test
         {
         }
 
-        internal ResponseTypeResource(global::Azure.ResourceManager.ArmClient client, global::sample.test.Models.ResponseTypeData data) : this(client, data.Id)
+        internal ResponseTypeResource(global::Azure.ResourceManager.ArmClient client, global::Samples.Models.ResponseTypeData data) : this(client, data.Id)
         {
             this.HasData = true;
             _data = data;
@@ -38,11 +39,11 @@ namespace sample.test
 
         internal ResponseTypeResource(global::Azure.ResourceManager.ArmClient client, global::Azure.Core.ResourceIdentifier id) : base(client, id)
         {
-            _responsetypeClientDiagnostics = new global::Azure.Core.Pipeline.ClientDiagnostics("sample.test", ResourceType.Namespace, this.Diagnostics);
+            _responsetypeClientDiagnostics = new global::Azure.Core.Pipeline.ClientDiagnostics("Samples", ResourceType.Namespace, this.Diagnostics);
             this.TryGetApiVersion(ResourceType, out string responsetypeApiVersion);
-            _restClient = new global::sample.test.TestClient(this.Pipeline, this.Endpoint, responsetypeApiVersion);
+            _restClient = new global::Sample.TestClient(this.Pipeline, this.Endpoint, responsetypeApiVersion);
 #if DEBUG
-            global::sample.test.ResponseTypeResource.ValidateResourceId(id);
+            global::Samples.ResponseTypeResource.ValidateResourceId(id);
 #endif
         }
 
@@ -50,7 +51,7 @@ namespace sample.test
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual global::sample.test.Models.ResponseTypeData Data
+        public virtual global::Samples.Models.ResponseTypeData Data
         {
             get
             {
@@ -72,18 +73,18 @@ namespace sample.test
 
         /// <summary> GetOperation description. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual global::Azure.Response<global::sample.test.ResponseTypeResource> GetOperation(global::System.Threading.CancellationToken cancellationToken = default)
+        public virtual global::Azure.Response<global::Samples.ResponseTypeResource> GetOperation(global::System.Threading.CancellationToken cancellationToken = default)
         {
-            using global::Azure.Core.Pipeline.DiagnosticScope scope = _responsetypeClientDiagnostics.CreateScope("sample.test.GetOperation");
+            using global::Azure.Core.Pipeline.DiagnosticScope scope = _responsetypeClientDiagnostics.CreateScope("Samples.GetOperation");
             scope.Start();
             try
             {
-                global::Azure.Response<global::sample.test.Models.ResponseTypeData> response = _restClient.GetOperation(this.Id.Name, cancellationToken);
+                global::Azure.Response<global::Samples.Models.ResponseTypeData> response = _restClient.GetOperation(this.Id.Name, cancellationToken);
                 if ((response.Value == null))
                 {
                     throw new global::Azure.RequestFailedException(response.GetRawResponse());
                 }
-                return global::Azure.Response.FromValue(new global::sample.test.ResponseTypeResource(this.Client, response.Value), response.GetRawResponse());
+                return global::Azure.Response.FromValue(new global::Samples.ResponseTypeResource(this.Client, response.Value), response.GetRawResponse());
             }
             catch (global::System.Exception e)
             {
@@ -94,18 +95,18 @@ namespace sample.test
 
         /// <summary> GetOperation description. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual async global::System.Threading.Tasks.Task<global::Azure.Response<global::sample.test.ResponseTypeResource>> GetOperationAsync(global::System.Threading.CancellationToken cancellationToken = default)
+        public virtual async global::System.Threading.Tasks.Task<global::Azure.Response<global::Samples.ResponseTypeResource>> GetOperationAsync(global::System.Threading.CancellationToken cancellationToken = default)
         {
-            using global::Azure.Core.Pipeline.DiagnosticScope scope = _responsetypeClientDiagnostics.CreateScope("sample.test.GetOperation");
+            using global::Azure.Core.Pipeline.DiagnosticScope scope = _responsetypeClientDiagnostics.CreateScope("Samples.GetOperation");
             scope.Start();
             try
             {
-                global::Azure.Response<global::sample.test.Models.ResponseTypeData> response = await _restClient.GetOperationAsync(this.Id.Name, cancellationToken).ConfigureAwait(false);
+                global::Azure.Response<global::Samples.Models.ResponseTypeData> response = await _restClient.GetOperationAsync(this.Id.Name, cancellationToken).ConfigureAwait(false);
                 if ((response.Value == null))
                 {
                     throw new global::Azure.RequestFailedException(response.GetRawResponse());
                 }
-                return global::Azure.Response.FromValue(new global::sample.test.ResponseTypeResource(this.Client, response.Value), response.GetRawResponse());
+                return global::Azure.Response.FromValue(new global::Samples.ResponseTypeResource(this.Client, response.Value), response.GetRawResponse());
             }
             catch (global::System.Exception e)
             {

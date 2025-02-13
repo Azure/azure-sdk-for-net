@@ -1,6 +1,5 @@
 {
   "output-folder": ".",
   "namespace": "Authentication.OAuth2",
-  "library-name": "Authentication.OAuth2",
-  "use-model-reader-writer": true
+  "library-name": "Authentication.OAuth2"
 }

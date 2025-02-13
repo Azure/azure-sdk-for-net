@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Mgmt.Models;
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Linq;
 

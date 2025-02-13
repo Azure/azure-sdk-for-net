@@ -8,6 +8,7 @@
    "$id": "2",
    "kind": "model",
    "name": "Extension",
+   "clientNamespace": "Type.Model.Inheritance.Recursive",
    "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Extension",
    "usage": "Input,Output,Json",
    "doc": "extension",
@@ -16,6 +17,7 @@
     "$id": "3",
     "kind": "model",
     "name": "Element",
+    "clientNamespace": "Type.Model.Inheritance.Recursive",
     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Element",
     "usage": "Input,Output,Json",
     "doc": "element",
@@ -41,18 +43,25 @@
       "discriminator": false,
       "flatten": false,
       "decorators": [],
-      "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Element.extension"
+      "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Element.extension",
+      "serializationOptions": {
+       "$id": "6",
+       "json": {
+        "$id": "7",
+        "name": "extension"
+       }
+      }
      }
     ]
    },
    "properties": [
     {
-     "$id": "6",
+     "$id": "8",
      "kind": "property",
      "name": "level",
      "serializedName": "level",
      "type": {
-      "$id": "7",
+      "$id": "9",
       "kind": "int8",
       "name": "int8",
       "crossLanguageDefinitionId": "TypeSpec.int8",
@@ -63,7 +72,14 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Extension.level"
+     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.Extension.level",
+     "serializationOptions": {
+      "$id": "10",
+      "json": {
+       "$id": "11",
+       "name": "level"
+      }
+     }
     }
    ]
   },
@@ -73,26 +89,27 @@
  ],
  "Clients": [
   {
-   "$id": "8",
+   "$id": "12",
    "Name": "RecursiveClient",
+   "ClientNamespace": "Type.Model.Inheritance.Recursive",
    "Doc": "Illustrates inheritance recursion",
    "Operations": [
     {
-     "$id": "9",
+     "$id": "13",
      "Name": "put",
      "ResourceName": "Recursive",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "10",
+       "$id": "14",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Doc": "Body parameter's content type. Known values are application/json",
        "Type": {
-        "$id": "11",
+        "$id": "15",
         "kind": "constant",
         "valueType": {
-         "$id": "12",
+         "$id": "16",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -112,7 +129,7 @@
        "SkipUrlEncoding": false
       },
       {
-       "$id": "13",
+       "$id": "17",
        "Name": "input",
        "NameInRequest": "input",
        "Type": {
@@ -131,7 +148,7 @@
      ],
      "Responses": [
       {
-       "$id": "14",
+       "$id": "18",
        "StatusCodes": [
         204
        ],
@@ -154,20 +171,20 @@
      "Decorators": []
     },
     {
-     "$id": "15",
+     "$id": "19",
      "Name": "get",
      "ResourceName": "Recursive",
      "Accessibility": "public",
      "Parameters": [
       {
-       "$id": "16",
+       "$id": "20",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "17",
+        "$id": "21",
         "kind": "constant",
         "valueType": {
-         "$id": "18",
+         "$id": "22",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -189,7 +206,7 @@
      ],
      "Responses": [
       {
-       "$id": "19",
+       "$id": "23",
        "StatusCodes": [
         200
        ],
@@ -216,16 +233,16 @@
     }
    ],
    "Protocol": {
-    "$id": "20"
+    "$id": "24"
    },
    "Parameters": [
     {
-     "$id": "21",
+     "$id": "25",
      "Name": "endpoint",
      "NameInRequest": "endpoint",
      "Doc": "Service host",
      "Type": {
-      "$id": "22",
+      "$id": "26",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
@@ -240,9 +257,9 @@
      "Explode": false,
      "Kind": "Client",
      "DefaultValue": {
-      "$id": "23",
+      "$id": "27",
       "Type": {
-       "$id": "24",
+       "$id": "28",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"

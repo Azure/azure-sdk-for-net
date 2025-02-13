@@ -105,7 +105,7 @@ $responses = @{}
 
 $packageProperties = Get-ChildItem -Recurse -Force "$configFileDir" `
   | Where-Object { 
-      $_.Extension -eq '.json' -and ($_.FullName.Substring($configFileDir.Length + 1) -notmatch '^_.*?\\')
+      $_.Extension -eq '.json' -and ($_.FullName.Substring($configFileDir.Length + 1) -notmatch '^_.*?[\\\/]')
     }
 
 foreach ($packagePropFile in $packageProperties)

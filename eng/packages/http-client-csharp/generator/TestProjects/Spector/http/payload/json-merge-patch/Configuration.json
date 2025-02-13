@@ -1,6 +1,5 @@
 {
   "output-folder": ".",
   "namespace": "Payload.JsonMergePatch",
-  "library-name": "Payload.JsonMergePatch",
-  "use-model-reader-writer": true
+  "library-name": "Payload.JsonMergePatch"
 }

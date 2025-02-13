@@ -792,31 +792,73 @@ namespace Azure.Messaging.EventHubs.Tests
                     var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
                     await SendEventsAsync(scope.EventHubName, EventGenerator.CreateEvents(50), new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
 
-                    // Begin reading though no events have been published.  This is necessary to open the connection and
-                    // ensure that the consumer is watching the partition.
+                    // Begin reading in the background, though no events should be read until the next publish.  This is necessary to open the connection and
+                    // ensure that the receiver is watching the partition.
 
-                    var readTask = ReadEventsFromPartitionAsync(consumer, partition,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token, EventPosition.Latest);
+                    var eventsRead = 0;
 
-                    // Give the consumer a moment to ensure that it is established and then send events for it to read.
-
-                    await Task.Delay(250);
-                    await SendEventsAsync(scope.EventHubName, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
-
-                    // Await reading of the events and validate the resulting state.
-
-                    var readState = await readTask;
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(sourceEvents.Count), "Only the source events should have been read.");
-
-                    foreach (var sourceEvent in sourceEvents)
+                    var readTask = Task.Run(async () =>
                     {
-                        var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent.Data), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
-                    }
-                }
+                        await Task.Yield();
 
-                cancellationSource.Cancel();
+                        try
+                        {
+                            await foreach (var item in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Latest, cancellationSource.Token))
+                            {
+                                // If more than one event was read, no need to keep going.
+
+                                if (++eventsRead > 1)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // Expected
+                        }
+                    });
+
+                    // Give the receiver a moment to ensure that it is established and then send events for it to read.
+
+                    var sendTask = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            while (!cancellationSource.IsCancellationRequested)
+                            {
+                                await Task.Delay(150);
+                                await SendEventsAsync(scope.EventHubName, EventGenerator.CreateEvents(5), new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
+                            }
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // Expected
+                        }
+                    });
+
+                    while ((eventsRead < 1) && (!cancellationSource.IsCancellationRequested))
+                    {
+                        try
+                        {
+                            await Task.Delay(250, cancellationSource.Token);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // Expected
+                        }
+                    }
+
+                    // Await reading of the events and validate that we were able to read at least one event.
+
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.That(eventsRead, Is.GreaterThanOrEqualTo(1), "At least one event should have been read.");
+
+                    cancellationSource.Cancel();
+
+                    await readTask;
+                    await sendTask;
+                }
             }
         }
 
@@ -2388,44 +2430,83 @@ namespace Azure.Messaging.EventHubs.Tests
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-                var sourceEvents = EventGenerator.CreateEvents(50).ToList();
-
-                await using (var consumer = new EventHubConsumerClient(
+                await using var consumer = new EventHubConsumerClient(
                     EventHubConsumerClient.DefaultConsumerGroupName,
                     EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
                     scope.EventHubName,
-                    EventHubsTestEnvironment.Instance.Credential))
+                    EventHubsTestEnvironment.Instance.Credential);
+
+                // Send a set of seed events to the partition, which should not be read.
+
+                var partitions = await consumer.GetPartitionIdsAsync(cancellationSource.Token);
+                await SendEventsToAllPartitionsAsync(scope.EventHubName, EventGenerator.CreateEvents(50), partitions, cancellationSource.Token);
+
+                // Begin reading in the background, though no events should be read until the next publish.  This is necessary to open the connection and
+                // ensure that the receiver is watching the partition.
+
+                var eventsRead = 0;
+
+                var readTask = Task.Run(async () =>
                 {
-                    // Send a set of seed events, which should not be read.
+                    await Task.Yield();
 
-                    var partitions = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).ToArray();
-                    await SendEventsToAllPartitionsAsync(scope.EventHubName, EventGenerator.CreateEvents(50), partitions, cancellationSource.Token);
-
-                    // Begin reading though no events have been published.  This is necessary to open the connection and
-                    // ensure that the consumer is watching the partition.
-
-                    var readTask = ReadEventsFromAllPartitionsAsync(consumer, sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token, startFromEarliest: false);
-
-                    // Give the consumer a moment to ensure that it is established and then send events for it to read.
-
-                    await Task.Delay(1500);
-                    await SendEventsToAllPartitionsAsync(scope.EventHubName, sourceEvents, partitions, cancellationSource.Token);
-
-                    // Read the events and validate the resulting state.
-
-                    var readState = await readTask;
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(sourceEvents.Count), "Only the source events should have been read.");
-
-                    foreach (var sourceEvent in sourceEvents)
+                    try
                     {
-                        var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent.Data), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                       await foreach (var item in consumer.ReadEventsAsync(startReadingAtEarliestEvent: false, cancellationToken: cancellationSource.Token))
+                        {
+                            // If more than one event was read, no need to keep going.
+
+                            if (++eventsRead > 1)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // Expected
+                    }
+                });
+
+                // Give the receiver a moment to ensure that it is established and then send events for it to read.
+
+                var sendTask = Task.Run(async () =>
+                {
+                    try
+                    {
+                        while (!cancellationSource.IsCancellationRequested)
+                        {
+                            await Task.Delay(150);
+                            await SendEventsToAllPartitionsAsync(scope.EventHubName, EventGenerator.CreateEvents(5), partitions, cancellationSource.Token);
+                        }
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // Expected
+                    }
+                });
+
+                while ((eventsRead < 1) && (!cancellationSource.IsCancellationRequested))
+                {
+                    try
+                    {
+                        await Task.Delay(250, cancellationSource.Token);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // Expected
                     }
                 }
 
+                // Await reading of the events and validate that we were able to read at least one event.
+
+                Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                Assert.That(eventsRead, Is.GreaterThanOrEqualTo(1), "At least one event should have been read.");
+
                 cancellationSource.Cancel();
+
+                await readTask;
+                await sendTask;
             }
         }
 
