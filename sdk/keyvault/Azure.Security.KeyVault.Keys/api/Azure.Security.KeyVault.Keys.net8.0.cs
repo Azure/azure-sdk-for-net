@@ -485,9 +485,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm A256Cbc { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm A256CbcPad { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm A256Gcm { get { throw null; } }
-        [System.ObsoleteAttribute("Microsoft recommends using EncryptionAlgorithm.RsaOaep256 or stronger algorithms for enhanced security. Microsoft does not recommend EncryptionAlgorithm.Rsa15, which is included solely for backwards compatibility.", false)]
         public static Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm Rsa15 { get { throw null; } }
-        [System.ObsoleteAttribute("Microsoft recommends using EncryptionAlgorithm.RsaOaep256 or stronger algorithms for enhanced security. Microsoft does not recommend EncryptionAlgorithm.RsaOaep, which is included solely for backwards compatibility.", false)]
         public static Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm RsaOaep { get { throw null; } }
         public static Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm RsaOaep256 { get { throw null; } }
         public bool Equals(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm other) { throw null; }
