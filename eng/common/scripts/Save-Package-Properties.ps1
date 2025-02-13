@@ -44,6 +44,11 @@ Param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
+Write-Host "Service directory: $serviceDirectory"
+Write-Host "Output directory: $outDirectory"
+Write-Host "PR diff: $prDiff"
+Write-Host "Add dev version: $addDevVersion"
+
 function SetOutput($outputPath, $incomingPackageSpec)
 {
 
@@ -63,6 +68,7 @@ function SetOutput($outputPath, $incomingPackageSpec)
   {
     # Use the "Version" property which was provided by the incoming package spec
     # as the DevVersion. This may be overridden later.
+    Write-Host "Adding DevVersion property to package info json. Dev version: $($incomingPackageSpec.Version)"
     $outputObject.DevVersion = $incomingPackageSpec.Version
   }
 
