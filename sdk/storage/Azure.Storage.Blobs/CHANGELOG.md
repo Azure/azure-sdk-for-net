@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed ContentRange is null in BlobDownloadDetails when calling DownloadStreamingAsync with HttpRange "0-" #47882
 
 ### Other Changes
 
