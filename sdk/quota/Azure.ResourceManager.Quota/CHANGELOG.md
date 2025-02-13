@@ -1,14 +1,12 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.1.0-beta.4 (2025-02-28)
 
 ### Features Added
-
-### Breaking Changes
+- Upgraded api-version tag from 'package-2024-12-18-preview' to 'package-2025-03-01'.
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed an issue where the GroupQuotaLimits and SubscriptionQuotaAllocations operations were erroring out even though the action completed successfully.
 
 ## 1.1.0-beta.3 (2025-01-20)
 
