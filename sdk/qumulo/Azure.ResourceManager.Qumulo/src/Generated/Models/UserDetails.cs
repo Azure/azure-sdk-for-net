@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Qumulo.Models
 {
     /// <summary> User Details of Qumulo FileSystem resource. </summary>
-    public partial class QumuloUserDetails
+    public partial class UserDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,28 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QumuloUserDetails"/>. </summary>
-        public QumuloUserDetails()
+        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
+        /// <param name="email"> User Email. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
+        public UserDetails(string email)
         {
+            Argument.AssertNotNull(email, nameof(email));
+
+            Email = email;
         }
 
-        /// <summary> Initializes a new instance of <see cref="QumuloUserDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserDetails"/>. </summary>
         /// <param name="email"> User Email. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QumuloUserDetails(string email, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserDetails(string email, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Email = email;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserDetails"/> for deserialization. </summary>
+        internal UserDetails()
+        {
         }
 
         /// <summary> User Email. </summary>
