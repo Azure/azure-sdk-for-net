@@ -238,8 +238,8 @@ resource cm_servicebus_cm0c420d2f21084cd_role 'Microsoft.Authorization/roleAssig
   scope: cm_servicebus
 }
 
-resource cm0c420d2f21084cdcs 'Microsoft.CognitiveServices/accounts@2021-10-01' = {
-  name: 'cm0c420d2f21084cdcs'
+resource cm0c420d2f21084cd_foundry 'Microsoft.CognitiveServices/accounts@2021-10-01' = {
+  name: 'cm0c420d2f21084cd-foundry'
   location: location
   sku: {
     name: 'S0'
@@ -249,50 +249,35 @@ resource cm0c420d2f21084cdcs 'Microsoft.CognitiveServices/accounts@2021-10-01' =
     type: 'SystemAssigned'
   }
   properties: {
-    customSubDomainName: 'cm0c420d2f21084cdcs'
+    customSubDomainName: 'cm0c420d2f21084cd-foundry'
     disableLocalAuth: true
   }
 }
 
-resource cm0c420d2f21084cdhub 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
-  name: 'cm0c420d2f21084cdhub'
+resource cm0c420d2f21084cd_hub 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
+  name: 'cm0c420d2f21084cd_hub'
   location: location
   kind: 'hub'
   identity: {
     type: 'SystemAssigned'
   }
   properties: {
-    friendlyName: 'cm0c420d2f21084cdhub'
+    friendlyName: 'cm0c420d2f21084cd_hub'
     publicNetworkAccess: 'Enabled'
   }
 }
 
-resource cm0c420d2f21084cdproject 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
-  name: 'cm0c420d2f21084cdproject'
+resource cm0c420d2f21084cd_project 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
+  name: 'cm0c420d2f21084cd_project'
   location: location
   kind: 'Project'
   identity: {
     type: 'SystemAssigned'
   }
   properties: {
-    friendlyName: 'cm0c420d2f21084cdproject'
-    hubResourceId: cm0c420d2f21084cdhub.id
+    friendlyName: 'cm0c420d2f21084cd_project'
+    hubResourceId: cm0c420d2f21084cd_hub.id
     publicNetworkAccess: 'Enabled'
-  }
-}
-
-resource cm0c420d2f21084cdconnection1 'Microsoft.MachineLearningServices/workspaces/connections@2024-01-01-preview' = {
-  name: 'openai-connection'
-  parent: cm0c420d2f21084cdproject
-  properties: {
-    category: 'AzureOpenAI'
-    target: 'http://aaa.com'
-    authType: 'AAD'
-    isSharedToAll: true
-    metadata: {
-      ApiType: 'Azure'
-      ResourceId: cm0c420d2f21084cdproject.id
-    }
   }
 }
 
