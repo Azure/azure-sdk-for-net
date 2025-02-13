@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 using NUnit.Framework;
 
 namespace System.ClientModel.Primitives.Tests;
@@ -24,10 +21,10 @@ public class ClientCacheTests
             clientCache.GetClient(() => client, $"client{i}");
         }
 
-        var clientsField = typeof(ClientCache).GetField("_cacheMap", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), LinkedListNode<ClientCache.CacheItem>>;
+        var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
+        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), (object Client, long LastUsed)>;
 
-        Assert.IsNotNull(clients, "The _cacheMap field is null.");
+        Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
     }
 
@@ -43,10 +40,10 @@ public class ClientCacheTests
             clientCache.GetClient(() => client, $"client{i}");
         }
 
-        var clientsField = typeof(ClientCache).GetField("_cacheMap", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), LinkedListNode<ClientCache.CacheItem>>;
+        var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
+        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), (object Client, long LastUsed)>;
 
-        Assert.IsNotNull(clients, "The _cacheMap field is null.");
+        Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(50, clients!.Count, "Cache should not have cleaned up when under the limit.");
     }
 
@@ -67,11 +64,11 @@ public class ClientCacheTests
         clientCache.GetClient(() => new object(), "client0");
         clientCache.GetClient(() => new object(), "client1");
 
-        var clientsField = typeof(ClientCache).GetField("_cacheMap", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = (ConcurrentDictionary<(Type, string), LinkedListNode<ClientCache.CacheItem>>)clientsField?.GetValue(clientCache)!;
+        var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
+        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), (object Client, long LastUsed)>;
 
-        Assert.IsNotNull(clients, "The _cacheMap field is null.");
-        Assert.AreEqual(100, clients.Count, "Cache did not cleanup correctly.");
+        Assert.IsNotNull(clients, "The _clients field is null.");
+        Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
 
         // Ensure that recently accessed clients are still in the cache.
         Assert.IsTrue(clients.ContainsKey((typeof(object), "client0")), "Most recently accessed client 'client0' should be in the cache.");
@@ -105,11 +102,11 @@ public class ClientCacheTests
         clientCache.GetClient(() => new object(), "client101");
         clientCache.GetClient(() => new object(), "client102");
 
-        var clientsField = typeof(ClientCache).GetField("_cacheMap", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = (ConcurrentDictionary<(Type, string), LinkedListNode<ClientCache.CacheItem>>)clientsField?.GetValue(clientCache)!;
+        var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
+        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), (object Client, long LastUsed)>;
 
-        Assert.IsNotNull(clients, "The _cacheMap field is null.");
-        Assert.AreEqual(100, clients.Count, "Cache did not cleanup correctly.");
+        Assert.IsNotNull(clients, "The _clients field is null.");
+        Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
 
         // Ensure that recently accessed clients are still in the cache.
         Assert.IsTrue(clients.ContainsKey((typeof(object), "client0")), "Most recently accessed client 'client0' should be in the cache.");
@@ -136,10 +133,10 @@ public class ClientCacheTests
             clientCache.GetClient(() => client, $"client{i}");
         }
 
-        var clientsField = typeof(ClientCache).GetField("_cacheMap", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), LinkedListNode<ClientCache.CacheItem>>;
+        var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
+        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), (object Client, long LastUsed)>;
 
-        Assert.IsNotNull(clients, "The _cacheMap field is null.");
+        Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.IsTrue(disposableClient.IsDisposed, "Disposable client was not disposed correctly.");
     }
 
@@ -155,10 +152,10 @@ public class ClientCacheTests
         var client2 = new object();
         clientCache.GetClient(() => client2, "client2");
 
-        var clientsField = typeof(ClientCache).GetField("_cacheMap", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), LinkedListNode<ClientCache.CacheItem>>;
+        var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
+        var clients = clientsField?.GetValue(clientCache) as ConcurrentDictionary<(Type, string), (object Client, long LastUsed)>;
 
-        Assert.IsNotNull(clients, "The _cacheMap field is null.");
+        Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.IsTrue(clients!.ContainsKey((typeof(object), "client1")), "Client1 should be in the cache.");
         Assert.IsTrue(clients!.ContainsKey((typeof(object), "client2")), "Client2 should be in the cache.");
     }

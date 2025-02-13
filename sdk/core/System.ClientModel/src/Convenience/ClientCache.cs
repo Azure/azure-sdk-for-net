@@ -2,25 +2,24 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading;
+using System.Diagnostics;
+using System.Linq;
 
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// A cache for storing client instances with a Least Recently Used (LRU) eviction policy.
+/// A cache for storing client instances, ensuring efficient reuse.
+/// Implements an LRU eviction policy.
 /// </summary>
 public class ClientCache
 {
-    private readonly int _maxClients = 100;
-    private readonly ConcurrentDictionary<(Type Type, string Id), LinkedListNode<CacheItem>> _cacheMap = new();
-    // Doubly linked list to maintain LRU order. The head is the most recently used, the tail is the least.
-    private readonly LinkedList<CacheItem> _lruList = new();
-    // ReaderWriterLockSlim to allow concurrent reads while synchronizing writes.
-    private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.NoRecursion);
+    private readonly ConcurrentDictionary<(Type, string), (object Client, long LastUsed)> _clients = new();
+
+    private const int MaxCacheSize = 100;
 
     /// <summary>
-    /// Retrieves a client from the cache or creates a new one if it does not exist.
+    /// Retrieves a client from the cache or creates a new one if it doesn't exist.
+    /// Updates the last-used timestamp on every hit.
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
     /// <param name="createClient">A factory function to create the client if not cached.</param>
@@ -28,121 +27,50 @@ public class ClientCache
     /// <returns>The cached or newly created client instance.</returns>
     public T GetClient<T>(Func<T> createClient, string id = "") where T : class
     {
-        (Type Type, string Id) clientKey = (typeof(T), id ?? string.Empty);
-
-        // Try to retrieve an existing client.
-        _lock.EnterUpgradeableReadLock();
-        try
+        (Type, string) key = (typeof(T), id ?? string.Empty);
+        lock (_clients)
         {
-            if (_cacheMap.TryGetValue(clientKey, out var node))
+            // If the client exists, update its timestamp and return it.
+            if (_clients.TryGetValue(key, out var cached))
             {
-                // Update the LRU list: move the accessed node to the front.
-                _lock.EnterWriteLock();
-                try
-                {
-                    _lruList.Remove(node);
-                    node.Value.LastAccessTime = DateTime.UtcNow;
-                    _lruList.AddFirst(node);
-                }
-                finally
-                {
-                    _lock.ExitWriteLock();
-                }
-                return (T)node.Value.Client;
-            }
-        }
-        finally
-        {
-            _lock.ExitUpgradeableReadLock();
-        }
-
-        // Not found: create a new client.
-        _lock.EnterWriteLock();
-        try
-        {
-            // Double-check to see if another thread added the client meanwhile.
-            if (_cacheMap.TryGetValue(clientKey, out var existingNode))
-            {
-                _lruList.Remove(existingNode);
-                existingNode.Value.LastAccessTime = DateTime.UtcNow;
-                _lruList.AddFirst(existingNode);
-                return (T)existingNode.Value.Client;
+                long now = Stopwatch.GetTimestamp();
+                _clients[key] = (cached.Client, now); // update timestamp
+                return (T)cached.Client;
             }
 
-            T client = createClient();
-            var newNode = new LinkedListNode<CacheItem>(new CacheItem(clientKey, client, DateTime.UtcNow));
-            _lruList.AddFirst(newNode);
-            _cacheMap[clientKey] = newNode;
+            // Create and add the new client.
+            T created = createClient();
+            long timestamp = Stopwatch.GetTimestamp();
+            _clients[key] = (created, timestamp);
 
-            // Evict least recently used items if needed.
-            if (_cacheMap.Count > _maxClients)
+            // After insertion, if cache exceeds the limit, perform cleanup.
+            if (_clients.Count > MaxCacheSize)
             {
-                RemoveLeastRecentlyUsed();
+                Cleanup();
             }
 
-            return client;
-        }
-        finally
-        {
-            _lock.ExitWriteLock();
+            return created;
         }
     }
 
     /// <summary>
-    /// Removes the least recently used clients from the cache until the cache is within its limit.
+    /// Removes the least recently used cached clients until the cache size is below the limit.
     /// </summary>
-    private void RemoveLeastRecentlyUsed()
+    private void Cleanup()
     {
-        while (_lruList.Count > _maxClients)
+        int excess = _clients.Count - MaxCacheSize;
+        if (excess <= 0)
         {
-            var lruNode = _lruList.Last;
-            if (lruNode != null)
-            {
-                _lruList.RemoveLast();
-                _cacheMap.TryRemove(lruNode.Value.Key, out _);
-                if (lruNode.Value.Client is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
-            }
-            else
-            {
-                break;
-            }
+            return;
         }
-    }
 
-    /// <summary>
-    /// Represents an item stored in the cache.
-    /// </summary>
-    internal class CacheItem
-    {
-        /// <summary>
-        /// Gets the key that uniquely identifies the cache entry.
-        /// </summary>
-        public (Type Type, string Id) Key { get; }
-
-        /// <summary>
-        /// Gets the client instance.
-        /// </summary>
-        public object Client { get; }
-
-        /// <summary>
-        /// Gets or sets the last time this client was accessed.
-        /// </summary>
-        public DateTime LastAccessTime { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CacheItem"/> class.
-        /// </summary>
-        /// <param name="key">The key that uniquely identifies the cache entry.</param>
-        /// <param name="client">The client instance.</param>
-        /// <param name="lastAccessTime">The last access time.</param>
-        public CacheItem((Type Type, string Id) key, object client, DateTime lastAccessTime)
+        // Remove the 'excess' number of items based on the oldest timestamp.
+        foreach (var key in _clients.OrderBy(kvp => kvp.Value.LastUsed).Take(excess).Select(kvp => kvp.Key))
         {
-            Key = key;
-            Client = client;
-            LastAccessTime = lastAccessTime;
+            if (_clients.TryRemove(key, out var instance) && instance.Client is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
         }
     }
 }
