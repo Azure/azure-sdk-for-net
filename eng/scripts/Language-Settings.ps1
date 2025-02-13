@@ -162,7 +162,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
   }
 
   # ensure we observe deleted files too
-  $targetedFiles = @($diffObj.ChangedFiles + $diff.DeletedFiles)
+  $targetedFiles = @($diffObj.ChangedFiles + $diffObj.DeletedFiles)
 
   # The targetedFiles needs to filter out anything in the ExcludePaths
   # otherwise it'll end up processing things below that it shouldn't be.
