@@ -27,7 +27,7 @@ public class ConnectionCollection : KeyedCollection<string, ClientConnection>
     /// Adds a range of <see cref="ClientConnection"/> instances to the collection.
     /// </summary>
     /// <param name="connections">The connections to add.</param>
-    internal void AddRange(IEnumerable<ClientConnection> connections)
+    public void AddRange(IEnumerable<ClientConnection> connections)
     {
         foreach (ClientConnection connection in connections)
         {

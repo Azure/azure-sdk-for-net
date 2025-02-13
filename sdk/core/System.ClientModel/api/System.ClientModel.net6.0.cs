@@ -171,6 +171,7 @@ namespace System.ClientModel.Primitives
     public partial class ConnectionCollection : System.Collections.ObjectModel.KeyedCollection<string, System.ClientModel.Primitives.ClientConnection>
     {
         public ConnectionCollection() { }
+        public void AddRange(System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> connections) { }
         protected override string GetKeyForItem(System.ClientModel.Primitives.ClientConnection item) { throw null; }
     }
     public abstract partial class ConnectionProvider
