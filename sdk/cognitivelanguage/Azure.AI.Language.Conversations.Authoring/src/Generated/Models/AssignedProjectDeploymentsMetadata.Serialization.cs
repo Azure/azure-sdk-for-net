@@ -34,8 +34,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 throw new FormatException($"The model {nameof(AssignedProjectDeploymentsMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("projectName"u8);
-            writer.WriteStringValue(ProjectName);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("projectName"u8);
+                writer.WriteStringValue(ProjectName);
+            }
             writer.WritePropertyName("deploymentsMetadata"u8);
             writer.WriteStartArray();
             foreach (var item in DeploymentsMetadata)

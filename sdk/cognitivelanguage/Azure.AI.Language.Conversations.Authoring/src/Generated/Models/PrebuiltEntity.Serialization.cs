@@ -34,8 +34,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 throw new FormatException($"The model {nameof(PrebuiltEntity)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("category"u8);
-            writer.WriteStringValue(Category);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("examples"u8);

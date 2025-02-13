@@ -46,29 +46,29 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProjectMetadata"/>. </summary>
-        /// <param name="createdDateTime"> Represents the project creation datetime. </param>
-        /// <param name="lastModifiedDateTime"> Represents the project creation datetime. </param>
+        /// <param name="createdOn"> Represents the project creation datetime. </param>
+        /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="projectName"> The new project name. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="language"/> is null. </exception>
-        internal ProjectMetadata(DateTimeOffset createdDateTime, DateTimeOffset lastModifiedDateTime, ProjectKind projectKind, string projectName, string language)
+        internal ProjectMetadata(DateTimeOffset createdOn, DateTimeOffset lastModifiedOn, AnalyzeConversationAuthoringProjectKind projectKind, string projectName, string language)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(language, nameof(language));
 
-            CreatedDateTime = createdDateTime;
-            LastModifiedDateTime = lastModifiedDateTime;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             ProjectKind = projectKind;
             ProjectName = projectName;
             Language = language;
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectMetadata"/>. </summary>
-        /// <param name="createdDateTime"> Represents the project creation datetime. </param>
-        /// <param name="lastModifiedDateTime"> Represents the project creation datetime. </param>
-        /// <param name="lastTrainedDateTime"> Represents the project last trained datetime. </param>
-        /// <param name="lastDeployedDateTime"> Represents the project last deployed datetime. </param>
+        /// <param name="createdOn"> Represents the project creation datetime. </param>
+        /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>
+        /// <param name="lastTrainedOn"> Represents the project last trained datetime. </param>
+        /// <param name="lastDeployedOn"> Represents the project last deployed datetime. </param>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="settings"> The project settings. </param>
         /// <param name="storageInputContainerName"> The storage container name in case of conversation summarization. </param>
@@ -77,12 +77,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectMetadata(DateTimeOffset createdDateTime, DateTimeOffset lastModifiedDateTime, DateTimeOffset? lastTrainedDateTime, DateTimeOffset? lastDeployedDateTime, ProjectKind projectKind, ProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectMetadata(DateTimeOffset createdOn, DateTimeOffset lastModifiedOn, DateTimeOffset? lastTrainedOn, DateTimeOffset? lastDeployedOn, AnalyzeConversationAuthoringProjectKind projectKind, ProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CreatedDateTime = createdDateTime;
-            LastModifiedDateTime = lastModifiedDateTime;
-            LastTrainedDateTime = lastTrainedDateTime;
-            LastDeployedDateTime = lastDeployedDateTime;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
+            LastTrainedOn = lastTrainedOn;
+            LastDeployedOn = lastDeployedOn;
             ProjectKind = projectKind;
             Settings = settings;
             StorageInputContainerName = storageInputContainerName;
@@ -99,15 +99,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Represents the project creation datetime. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
         /// <summary> Represents the project creation datetime. </summary>
-        public DateTimeOffset LastModifiedDateTime { get; }
+        public DateTimeOffset LastModifiedOn { get; }
         /// <summary> Represents the project last trained datetime. </summary>
-        public DateTimeOffset? LastTrainedDateTime { get; }
+        public DateTimeOffset? LastTrainedOn { get; }
         /// <summary> Represents the project last deployed datetime. </summary>
-        public DateTimeOffset? LastDeployedDateTime { get; }
+        public DateTimeOffset? LastDeployedOn { get; }
         /// <summary> Represents the project kind. </summary>
-        public ProjectKind ProjectKind { get; }
+        public AnalyzeConversationAuthoringProjectKind ProjectKind { get; }
         /// <summary> The project settings. </summary>
         public ProjectSettings Settings { get; }
         /// <summary> The storage container name in case of conversation summarization. </summary>

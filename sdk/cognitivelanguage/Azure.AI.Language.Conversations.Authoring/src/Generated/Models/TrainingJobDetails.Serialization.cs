@@ -87,7 +87,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             string modelLabel = default;
             string trainingConfigVersion = default;
-            TrainingMode trainingMode = default;
+            AnalyzeConversationAuthoringTrainingMode trainingMode = default;
             EvaluationDetails evaluationOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("trainingMode"u8))
                 {
-                    trainingMode = new TrainingMode(property.Value.GetString());
+                    trainingMode = new AnalyzeConversationAuthoringTrainingMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evaluationOptions"u8))

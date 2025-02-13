@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.AI.Language.Conversations.Authoring;
 
-namespace Azure.AI.Language.Conversations.Authoring
+namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="AnalyzeConversationAuthoring"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="ConversationAnalysisAuthoringClient"/> to client builder. </summary>
     [CodeGenModel("AILanguageConversationsAuthoringClientBuilderExtensions")]
     public static partial class ConversationsAuthoringClientBuilderExtensions
     {

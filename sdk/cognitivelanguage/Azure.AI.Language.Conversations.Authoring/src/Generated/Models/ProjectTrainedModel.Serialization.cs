@@ -41,8 +41,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            writer.WritePropertyName("lastTrainedDateTime"u8);
-            writer.WriteStringValue(LastTrainedDateTime, "O");
+            writer.WritePropertyName("lastTrainedOn"u8);
+            writer.WriteStringValue(LastTrainedOn, "O");
             writer.WritePropertyName("lastTrainingDurationInSeconds"u8);
             writer.WriteNumberValue(LastTrainingDurationInSeconds);
             writer.WritePropertyName("modelExpirationDate"u8);
@@ -90,7 +90,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             string label = default;
             string modelId = default;
-            DateTimeOffset lastTrainedDateTime = default;
+            DateTimeOffset lastTrainedOn = default;
             int lastTrainingDurationInSeconds = default;
             DateTimeOffset modelExpirationDate = default;
             string modelTrainingConfigVersion = default;
@@ -109,9 +109,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastTrainedDateTime"u8))
+                if (property.NameEquals("lastTrainedOn"u8))
                 {
-                    lastTrainedDateTime = property.Value.GetDateTimeOffset("O");
+                    lastTrainedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastTrainingDurationInSeconds"u8))
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             return new ProjectTrainedModel(
                 label,
                 modelId,
-                lastTrainedDateTime,
+                lastTrainedOn,
                 lastTrainingDurationInSeconds,
                 modelExpirationDate,
                 modelTrainingConfigVersion,

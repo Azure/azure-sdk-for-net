@@ -46,15 +46,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SupportedLanguage"/>. </summary>
-        /// <param name="languageName"> The language name. </param>
         /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="languageName"/> or <paramref name="languageCode"/> is null. </exception>
-        internal SupportedLanguage(string languageName, string languageCode)
+        /// <exception cref="ArgumentNullException"> <paramref name="languageCode"/> is null. </exception>
+        internal SupportedLanguage(string languageCode)
         {
-            Argument.AssertNotNull(languageName, nameof(languageName));
             Argument.AssertNotNull(languageCode, nameof(languageCode));
 
-            LanguageName = languageName;
             LanguageCode = languageCode;
         }
 
