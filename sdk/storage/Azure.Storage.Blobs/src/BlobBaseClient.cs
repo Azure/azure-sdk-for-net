@@ -1372,7 +1372,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return DownloadStreamingDirect(
                 options?.Range ?? default,
-                options?.IsRangeSet ?? false,
+                options?._isRangeSet ?? false,
                 options?.Conditions,
                 options?.TransferValidation,
                 options?.ProgressHandler,
@@ -1420,7 +1420,7 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return await DownloadStreamingDirect(
                 options?.Range ?? default,
-                options?.IsRangeSet ?? false,
+                options?._isRangeSet ?? false,
                 options?.Conditions,
                 options?.TransferValidation,
                 options?.ProgressHandler,
@@ -2203,7 +2203,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
-                options?.IsRangeSet ?? false,
+                options?._isRangeSet ?? false,
                 options?.TransferValidation,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -2255,7 +2255,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
-                options?.IsRangeSet ?? false,
+                options?._isRangeSet ?? false,
                 options?.TransferValidation,
                 async: true,
                 cancellationToken).ConfigureAwait(false);

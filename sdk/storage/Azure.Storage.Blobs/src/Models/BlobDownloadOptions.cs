@@ -12,7 +12,7 @@ namespace Azure.Storage.Blobs.Models
     public class BlobDownloadOptions
     {
         private HttpRange _range;
-        private bool _isRangeSet;
+        internal bool _isRangeSet;
 
         /// <summary>
         /// If provided, only download the bytes of the blob in the specified
@@ -27,11 +27,6 @@ namespace Azure.Storage.Blobs.Models
                 _isRangeSet = true;
             }
         }
-
-        /// <summary>
-        /// Whether Range has been set
-        /// </summary>
-        public bool IsRangeSet => _isRangeSet;
 
         /// <summary>
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
