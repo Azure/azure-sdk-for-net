@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             NginxProvisioningState? provisioningState = default;
             IList<NginxConfigurationFile> files = default;
-            IList<NginxConfigurationFile> protectedFiles = default;
+            IList<NginxConfigurationProtectedFileContent> protectedFiles = default;
             NginxConfigurationPackage package = default;
             string rootFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
+                    List<NginxConfigurationProtectedFileContent> array = new List<NginxConfigurationProtectedFileContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item, options));
+                        array.Add(NginxConfigurationProtectedFileContent.DeserializeNginxConfigurationProtectedFileContent(item, options));
                     }
                     protectedFiles = array;
                     continue;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxConfigurationProperties(
                 provisioningState,
                 files ?? new ChangeTrackingList<NginxConfigurationFile>(),
-                protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>(),
+                protectedFiles ?? new ChangeTrackingList<NginxConfigurationProtectedFileContent>(),
                 package,
                 rootFile,
                 serializedAdditionalRawData);

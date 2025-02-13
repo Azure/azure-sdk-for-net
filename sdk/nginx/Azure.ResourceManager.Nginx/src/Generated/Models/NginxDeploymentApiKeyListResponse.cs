@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The AnalysisResultData. </summary>
-    internal partial class AnalysisResultData
+    /// <summary> The NginxDeploymentApiKeyListResponse. </summary>
+    internal partial class NginxDeploymentApiKeyListResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,26 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResultData"/>. </summary>
-        internal AnalysisResultData()
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyListResponse"/>. </summary>
+        internal NginxDeploymentApiKeyListResponse()
         {
-            Errors = new ChangeTrackingList<NginxAnalysisDiagnostic>();
+            Value = new ChangeTrackingList<NginxDeploymentApiKeyData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResultData"/>. </summary>
-        /// <param name="errors"></param>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyListResponse"/>. </summary>
+        /// <param name="value"></param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisResultData(IReadOnlyList<NginxAnalysisDiagnostic> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentApiKeyListResponse(IReadOnlyList<NginxDeploymentApiKeyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Errors = errors;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the errors. </summary>
-        public IReadOnlyList<NginxAnalysisDiagnostic> Errors { get; }
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<NginxDeploymentApiKeyData> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }
