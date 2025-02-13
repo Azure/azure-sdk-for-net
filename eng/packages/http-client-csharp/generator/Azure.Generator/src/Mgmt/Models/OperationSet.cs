@@ -3,7 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Utilities;
-using Microsoft.Generator.CSharp.Input;
+using Microsoft.TypeSpec.Generator.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
