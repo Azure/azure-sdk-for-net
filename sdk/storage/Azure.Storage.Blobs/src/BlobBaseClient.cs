@@ -1644,7 +1644,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// range.  If not provided, download the entire blob.
         /// </param>
         /// <param name="isRangeSet">
-        /// Whether rnage has been set.
+        /// Whether range has been set.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
