@@ -35,7 +35,7 @@ public readonly struct ClientConnection
     /// </summary>
     /// <param name="id">The identifier for the connection.</param>
     /// <param name="locator">The endpoint or resource identifier.</param>
-    /// <param name="credential">The token credential (required for Entra ID authentication).</param>
+    /// <param name="credential">The token credential.</param>
     public ClientConnection(string id, string locator, object credential)
     {
         if (string.IsNullOrWhiteSpace(id))
@@ -43,7 +43,7 @@ public readonly struct ClientConnection
         if (string.IsNullOrWhiteSpace(locator))
             throw new ArgumentException("Locator cannot be null or empty.", nameof(locator));
         if (credential is null)
-            throw new ArgumentNullException(nameof(credential), "Credential cannot be null for Entra ID authentication.");
+            throw new ArgumentNullException(nameof(credential), "Credential cannot be null.");
 
         Id = id;
         Locator = locator;
