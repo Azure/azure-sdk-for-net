@@ -11,24 +11,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--Pin the versions of packages that may be upgraded during the process of Azure SDK moving all dependencies to the 8.x line to avoid incompatibility, until a compatible dependency gragh is figured out and finalized.-->
     <PackageReference Include="MessagePack" />
-    <PackageReference Include="Microsoft.Extensions.Azure" />
-    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" VersionOverride="3.0.37"/>
     <PackageReference Include="Microsoft.Azure.SignalR.Management" />
     <PackageReference Include="Microsoft.Azure.SignalR" />
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-
-    <!--
-        Adding as a local override, as packages should not generally take this dependency.  It is
-        needed here due to a transitive version conflict due to the Microsoft.Azure.Functions.Extensions
-        reference.
-    -->
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride ="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.10.0"/>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" VersionOverride="6.35.0"/>
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.AspNetCore.Http.Connections" />
+    <!--
+        Adding as a local override, as packages should not generally take this dependency.  It is
+        needed here due to a transitive version conflict due to the 2.x version of Microsoft.* packages.
+        reference.
+    -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride ="8.0.1" />
   </ItemGroup>
 </Project>
