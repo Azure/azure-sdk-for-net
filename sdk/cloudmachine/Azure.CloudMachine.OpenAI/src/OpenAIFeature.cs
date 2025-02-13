@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.CloudMachine.Core;
 using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
@@ -23,7 +24,7 @@ internal class OpenAIFeature : CloudMachineFeature
         return cognitiveServices;
     }
 
-    protected override void EmitConnections(ConnectionCollection connections, string cmId)
+    protected override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
     {
         ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com");
 
@@ -32,7 +33,7 @@ internal class OpenAIFeature : CloudMachineFeature
             connections.Add(connection);
         }
     }
-    internal void EmitConnectionsInternal(ConnectionCollection connections, string cmId)
+    internal void EmitConnectionsInternal(ICollection<ClientConnection> connections, string cmId)
         => EmitConnections(connections, cmId);
 
     internal static CognitiveServicesAccount CreateOpenAIAccount(ProjectInfrastructure cm)

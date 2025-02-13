@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.CloudMachine.Core;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
@@ -32,7 +33,7 @@ internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature
         return subscription;
     }
 
-    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
+    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
     {
         ClientConnection connection = new(
             $"{name}",

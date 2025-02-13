@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using Azure.CloudMachine.Core;
 using Azure.Core;
 using Azure.Identity;
@@ -43,12 +44,14 @@ namespace Azure.CloudMachine.AIFoundry
         {
         }
 
+        public List<ClientConnection> Connections { get; set; } = new List<ClientConnection>();
+
         /// <summary>
         /// Emit the Foundry connection(s) into the shared <see cref="ConnectionCollection"/>.
         /// </summary>
         /// <param name="connections">The global collection of <see cref="ClientConnection"/> objects for this CloudMachine. </param>
         /// <param name="cmId">The unique CloudMachine ID</param>
-        protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
+        protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
         {
             if (_connectionString != null)
             {
@@ -81,16 +84,20 @@ namespace Azure.CloudMachine.AIFoundry
         protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
         {
             var cmId = cm.Id;
-            AIFoundryCognitiveServiceCdk cs = new($"{cmId}cs", $"{cmId}cs");
-            AIFoundryHubCdk hub = new($"{cmId}hub", $"{cmId}hub");
-            AIFoundryProjectCdk project = new($"{cmId}project", $"{cmId}project", hub);
-            AIFoundryConnectionCdk connection1 = new($"{cmId}{nameof(connection1)}", "openai-connection", "http://aaa.com", project);
-            project.Connections.Add(connection1);
+            AIFoundryCognitiveServiceCdk cs = new($"{cmId}_foundry", $"{cmId}-foundry");
+            AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
+            AIFoundryProjectCdk project = new($"{cmId}_project", $"{cmId}_project", hub);
 
             cm.AddResource(cs);
             cm.AddResource(hub);
             cm.AddResource(project);
-            cm.AddResource(connection1);
+
+            for (int i = 0; i < Connections.Count; i++)
+            {
+                ClientConnection connection = Connections[i];
+                AIFoundryConnectionCdk connectionCdk = new($"{cmId}connection{i}", connection.Id, connection.Locator, project);
+                cm.AddResource(connectionCdk);
+            }
 
             return project;
         }
