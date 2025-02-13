@@ -8,9 +8,9 @@ namespace System.ClientModel.Primitives;
 public enum ClientAuthenticationMethod
 {
     /// <summary>
-    /// Represents a connection using Entra ID.
+    /// Represents a connection using Credential.
     /// </summary>
-    EntraId,
+    Credential,
 
     /// <summary>
     /// Represents a connection using an API key.

@@ -47,7 +47,7 @@ public readonly struct ClientConnection
 
         Id = id;
         Locator = locator;
-        Authentication = ClientAuthenticationMethod.EntraId;
+        Authentication = ClientAuthenticationMethod.Credential;
         Credential = credential;
         ApiKeyCredential = null;
     }
@@ -110,16 +110,13 @@ public readonly struct ClientConnection
     public object? Credential { get; }
 
     /// <summary>
-    /// Converts the connection to a URI.
+    /// Tries to convert the connection locator to a URI.
     /// </summary>
-    /// <returns>A URI representation of the connection.</returns>
-    public Uri LocatorAsUri()
+    /// <param name="uri">When this method returns, contains the URI representation of the connection if the conversion succeeded; otherwise, null.</param>
+    /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c>.</returns>
+    public bool TryGetLocatorAsUri(out Uri? uri)
     {
-        if (!Uri.TryCreate(Locator, UriKind.Absolute, out var uri))
-        {
-            throw new InvalidOperationException($"Locator '{Locator}' is not a valid absolute URI.");
-        }
-        return uri;
+        return Uri.TryCreate(Locator, UriKind.Absolute, out uri);
     }
 
     /// <summary>

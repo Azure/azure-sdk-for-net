@@ -79,7 +79,7 @@ namespace System.ClientModel.Primitives
     }
     public enum ClientAuthenticationMethod
     {
-        EntraId = 0,
+        Credential = 0,
         ApiKey = 1,
         NoAuth = 2,
     }
@@ -101,8 +101,8 @@ namespace System.ClientModel.Primitives
         public object? Credential { get { throw null; } }
         public string Id { get { throw null; } }
         public string Locator { get { throw null; } }
-        public System.Uri LocatorAsUri() { throw null; }
         public override string ToString() { throw null; }
+        public bool TryGetLocatorAsUri(out System.Uri? uri) { throw null; }
     }
     [System.FlagsAttribute]
     public enum ClientErrorBehaviors
