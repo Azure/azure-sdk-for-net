@@ -45,6 +45,12 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
+## 5.11.6 (2025-02-11)
+
+### Other Changes
+
+- Bump `Azure.Messaging.EventHubs` dependency to 5.11.6, which includes bumps to several transitive dependencies.
+
 ## 5.11.5 (2024-08-14)
 
 ### Other Changes

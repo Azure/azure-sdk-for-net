@@ -51,6 +51,12 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
+## 5.11.6 (2025-02-11)
+
+### Bugs Fixed
+
+- Fixed an obscure edge case in the `EventHubBufferedProducer` client where an obscure race condition when flushing/enqueuing events concurrently with disposing the producer could cause a semaphore to be released inappropriately.  This error superseded the `TaskCanceledException` that should have been surfaced.
+
 ## 5.11.5 (2024-07-31)
 
 ### Other Changes
