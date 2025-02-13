@@ -19,9 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>An instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.Rsa15"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="ciphertext"/> is null.</exception>
         public static DecryptParameters Rsa15Parameters(byte[] ciphertext) =>
-#pragma warning disable CS0618 // Type or member is obsolete
             new DecryptParameters(EncryptionAlgorithm.Rsa15, ciphertext);
-#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Creates an instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep"/> encryption algorithm.
@@ -30,9 +28,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <returns>An instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep"/> encryption algorithm.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="ciphertext"/> is null.</exception>
         public static DecryptParameters RsaOaepParameters(byte[] ciphertext) =>
-#pragma warning disable CS0618 // Type or member is obsolete
             new DecryptParameters(EncryptionAlgorithm.RsaOaep, ciphertext);
-#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Creates an instance of the <see cref="DecryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep256"/> encryption algorithm.

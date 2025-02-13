@@ -30,10 +30,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CompareBodies = false;
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
         [RecordedTest]
         public async Task EncryptDecryptRoundTrip([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep), nameof(EncryptionAlgorithm.RsaOaep256))]EncryptionAlgorithm algorithm)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -330,10 +328,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsTrue(verifyResult.IsValid);
         }
 
-#pragma warning disable CS0618 // Type or member is obsolete
         [RecordedTest]
         public async Task EncryptLocalDecryptOnKeyVault([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep), nameof(EncryptionAlgorithm.RsaOaep256))] EncryptionAlgorithm algorithm)
-#pragma warning restore CS0618 // Type or member is obsolete
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -362,15 +358,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [RecordedTest]
         public async Task EncryptDecryptFromKeyClient()
         {
-            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep256);
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
             RegisterForCleanup(key.Name);
 
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
 
             // Make sure the same (instrumented) pipeline is used from the KeyClient.
             CryptographyClient cryptoClient = Client.GetCryptographyClient(key.Name, key.Properties.Version);
-            EncryptResult encryptResult = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep256, plaintext);
-            DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep256, encryptResult.Ciphertext);
+            EncryptResult encryptResult = await cryptoClient.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
+            DecryptResult decryptResult = await cryptoClient.DecryptAsync(EncryptionAlgorithm.RsaOaep, encryptResult.Ciphertext);
 
             Assert.AreEqual(plaintext, decryptResult.Plaintext);
         }
@@ -378,7 +374,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [RecordedTest]
         public async Task EncryptWithKeyNameReturnsFullKeyId()
         {
-            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep256);
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
             RegisterForCleanup(key.Name);
 
             byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
@@ -389,7 +385,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             }.Uri;
 
             CryptographyClient client = GetCryptoClient(keyId, forceRemote: true);
-            EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep256, plaintext);
+            EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
 
             Assert.AreEqual(key.Id.ToString(), encrypted.KeyId);
         }

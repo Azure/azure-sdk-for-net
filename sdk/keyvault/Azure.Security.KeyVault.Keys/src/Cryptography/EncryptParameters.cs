@@ -13,7 +13,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public class EncryptParameters : IJsonSerializable
     {
-#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.Rsa15"/> encryption algorithm.
         /// </summary>
@@ -22,9 +21,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters Rsa15Parameters(byte[] plaintext) =>
             new EncryptParameters(EncryptionAlgorithm.Rsa15, plaintext, null, null);
-#pragma warning restore CS0618 // Type or member is obsolete
 
-#pragma warning disable CS0618 // Type or member is obsolete
         /// <summary>
         /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep"/> encryption algorithm.
         /// </summary>
@@ -33,7 +30,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters RsaOaepParameters(byte[] plaintext) =>
             new EncryptParameters(EncryptionAlgorithm.RsaOaep, plaintext, null, null);
-#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// Creates an instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.RsaOaep256"/> encryption algorithm.

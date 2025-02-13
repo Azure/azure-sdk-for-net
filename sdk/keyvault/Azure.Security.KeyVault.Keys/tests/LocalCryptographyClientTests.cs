@@ -119,18 +119,15 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonWebKey jwk = CreateKey(KeyType.Rsa, keyOps: new[] { KeyOperation.Encrypt, KeyOperation.Decrypt });
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
 
-            EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep256, TestData);
+            EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep, TestData);
 
-            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.DecryptAsync(EncryptionAlgorithm.RsaOaep256, encrypted.Ciphertext));
+            Assert.ThrowsAsync(new InstanceOfTypeConstraint(typeof(CryptographicException)), async () => await client.DecryptAsync(EncryptionAlgorithm.RsaOaep, encrypted.Ciphertext));
         }
 
         // TODO: Record tests on Managed HSM for other EncryptionAlgorithm values.
         [Test]
-#pragma warning disable CS0618 // Type or member is obsolete
         public async Task EncryptDecryptRoundtrip([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep))] EncryptionAlgorithm algorithm)
         {
-#pragma warning restore CS0618 // Type or member is obsolete
-
             JsonWebKey jwk = CreateKey(KeyType.Rsa, includePrivateParameters: true);
             CryptographyClient client = CreateClient<CryptographyClient>(jwk);
 
