@@ -162,13 +162,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
   }
 
   # ensure we observe deleted files too
-  $targetedFiles = $diffObj.ChangedFiles
-  if ($diff.DeletedFiles) {
-    if (-not $targetedFiles) {
-      $targetedFiles = @()
-    }
-    $targetedFiles += $diff.DeletedFiles
-  }
+  $targetedFiles = @($diffObj.ChangedFiles + $diff.DeletedFiles)
 
   # The targetedFiles needs to filter out anything in the ExcludePaths
   # otherwise it'll end up processing things below that it shouldn't be.
@@ -199,7 +193,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
       }
 
       # changes to a Azure.*.Shared within a service directory should include all packages within that service directory
-      if ($file -match ".*sdk(\\|/).*(\\|/).*\.Shared(\\|/).*") {
+      if ($file.Replace('\', '/') -match ".*sdk/.*/.*\.Shared/.*") {
         if (-not $changedServices.Contains($pathComponents[1])) {
           $changedServices += $pathComponents[1]
         }
