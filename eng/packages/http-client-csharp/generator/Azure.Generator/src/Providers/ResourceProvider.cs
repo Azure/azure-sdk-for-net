@@ -7,6 +7,7 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Primitives;
 using Azure.Generator.Utilities;
 using Azure.ResourceManager;
+using Microsoft.Build.Evaluation;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -48,7 +49,7 @@ namespace Azure.Generator.Providers
 
             _dataField = new FieldProvider(FieldModifiers.Private, resourceData.Type, "_data", this);
             _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{specCleanName.ToLower()}ClientDiagnostics", this);
-            _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, "_restClient", this);
+            _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, $"_{specCleanName.ToLower()}RestClient", this);
             _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resrouceType));
         }
 
@@ -196,7 +197,7 @@ namespace Azure.Generator.Providers
                 operationMethods.Add(BuildOperationMethod(operation, asyncConvenienceMethod, true, isUpdateOnly));
             }
 
-            return [BuildValidateResourceIdMethod(), ..operationMethods];
+            return [BuildValidateResourceIdMethod(), .. operationMethods];
         }
 
         private MethodProvider BuildOperationMethod(InputOperation operation, MethodProvider convenienceMethod, bool isAsync, bool isUpdateOnly = false)
@@ -215,10 +216,7 @@ namespace Azure.Generator.Providers
                 convenienceMethod.Signature.ExplicitInterface,
                 convenienceMethod.Signature.NonDocumentComment);
 
-            var bodyStatements =
-                isLongRunning
-                ? [Throw(New.Instance<NotImplementedException>())] // TODO: implement body for LRO
-                : new MethodBodyStatement[]
+            var bodyStatements = new MethodBodyStatement[]
                 {
                     UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagonosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal($"{Type.Namespace}.{operation.Name}")]), out var scopeVariable),
                     scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
@@ -271,8 +269,9 @@ namespace Azure.Generator.Providers
             tryStatement.Add(responseDeclaration);
             if (isLongRunning)
             {
+                var armOperationType = new CSharpType(AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation, AzureClientPlugin.Instance.TypeFactory.RootNamespace , [Type], null);
                 var requestMethod = GetCorrespondingRequestMethod(operation);
-                var operationDeclaration = Declare("operation", New.Instance(typeof(ArmOperation), _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters)), responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out var operationVariable);
+                var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters)), responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out var operationVariable);
                 tryStatement.Add(operationDeclaration);
                 tryStatement.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
                 {

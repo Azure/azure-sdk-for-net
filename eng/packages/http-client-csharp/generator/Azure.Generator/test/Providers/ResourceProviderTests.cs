@@ -31,7 +31,7 @@ namespace Azure.Generator.Tests.Providers
             var testNameParameter = InputFactory.Parameter("testName", InputPrimitiveType.String, location: RequestLocation.Path);
             var operation = InputFactory.Operation(name: "GetOperation", responses: [responseType], parameters: [testNameParameter], path: "/providers/a/test/{testName}");
             var client = InputFactory.Client(TestClientName, operations: [operation], decorators: [new InputDecoratorInfo("Azure.ResourceManager.@armProviderNamespace", null)]);
-            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [responseModel], clients: () => [client], inputNameSpaceName: "MgmtTest");
+            var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [responseModel], clients: () => [client]);
 
             var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p.Name == "ResponseTypeResource") as ResourceProvider;
             Assert.NotNull(resourceProvider);

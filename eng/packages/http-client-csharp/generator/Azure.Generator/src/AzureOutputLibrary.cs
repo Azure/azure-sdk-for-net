@@ -29,6 +29,12 @@ namespace Azure.Generator
             _inputTypeMap = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().ToDictionary(model => model.Name);
         }
 
+        private MgmtLongRunningOperationProvider? _armOperation;
+        internal MgmtLongRunningOperationProvider ArmOperation => _armOperation ??= new MgmtLongRunningOperationProvider(false);
+
+        private MgmtLongRunningOperationProvider? _genericArmOperation;
+        internal MgmtLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new MgmtLongRunningOperationProvider(true);
+
         private IReadOnlyList<ResourceProvider> BuildResources()
         {
             var result = new List<ResourceProvider>();
@@ -102,21 +108,17 @@ namespace Azure.Generator
         {
             if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
             {
-                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), .. BuildLROProviders(), .. BuildResources()];
+                BuildLROProviders();
+                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. BuildResources()];
             }
             return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
         }
 
-        private static TypeProvider[] BuildLROProviders()
+        private void BuildLROProviders()
         {
-            var armOperation = new MgmtLongRunningOperationProvider(false);
-            var genericArmOperation = new MgmtLongRunningOperationProvider(true);
-
             // TODO: remove them once they are referenced in Resource operation implementation
-            AzureClientPlugin.Instance.AddTypeToKeep(armOperation.Name);
-            AzureClientPlugin.Instance.AddTypeToKeep(genericArmOperation.Name);
-
-            return [armOperation, genericArmOperation];
+            AzureClientPlugin.Instance.AddTypeToKeep(ArmOperation.Name);
+            AzureClientPlugin.Instance.AddTypeToKeep(GenericArmOperation.Name);
         }
 
         internal bool IsResource(string name) => _specNameToOperationSetsMap.ContainsKey(name);
