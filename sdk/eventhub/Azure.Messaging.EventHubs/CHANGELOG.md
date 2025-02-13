@@ -33,7 +33,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
   Obsoleted method overloads:
   - `EventPosition.FromOffset`
-  - EventHubsModelFactory.EventData
+  - `EventHubsModelFactory.EventData`
   - `BlobCheckpointStore.UpdateCheckpointAsync`
   - `EventProcessorClient.UpdateCheckpointAsync`
 
