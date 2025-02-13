@@ -262,7 +262,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20250205.1" />
+    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250211.5" />
   </ItemGroup>
 
   <!--

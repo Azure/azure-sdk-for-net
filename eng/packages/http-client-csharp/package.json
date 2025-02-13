@@ -23,13 +23,13 @@
     "dist/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "0.1.9-alpha.20250205.1"
+    "@typespec/http-client-csharp": "0.1.9-alpha.20250210.4"
   },
   "devDependencies": {
     "@typespec/http-specs": "0.1.0-alpha.7",
     "@azure-tools/azure-http-specs": "0.1.0-alpha.5",
     "@azure-tools/typespec-azure-core": "0.50.0",
-    "@azure-tools/typespec-client-generator-core": "0.50.0",
+    "@azure-tools/typespec-client-generator-core": "0.50.2",
     "@azure-tools/typespec-azure-resource-manager": "0.50.0",
     "@azure-tools/typespec-azure-rulesets": "0.50.0",
     "@azure-tools/typespec-autorest": "0.50.0",
