@@ -57,8 +57,6 @@ public class ClientCache
         }
 
         // Not found: create a new client.
-        T client = createClient();
-
         _lock.EnterWriteLock();
         try
         {
@@ -71,22 +69,23 @@ public class ClientCache
                 return (T)existingNode.Value.Client;
             }
 
+            T client = createClient();
             var newNode = new LinkedListNode<CacheItem>(new CacheItem(clientKey, client, DateTime.UtcNow));
             _lruList.AddFirst(newNode);
             _cacheMap[clientKey] = newNode;
+
+            // Evict least recently used items if needed.
+            if (_cacheMap.Count > _maxClients)
+            {
+                RemoveLeastRecentlyUsed();
+            }
+
+            return client;
         }
         finally
         {
             _lock.ExitWriteLock();
         }
-
-        // Evict least recently used items if needed.
-        if (_cacheMap.Count > _maxClients)
-        {
-            RemoveLeastRecentlyUsed();
-        }
-
-        return client;
     }
 
     /// <summary>
@@ -94,30 +93,22 @@ public class ClientCache
     /// </summary>
     private void RemoveLeastRecentlyUsed()
     {
-        _lock.EnterWriteLock();
-        try
+        while (_lruList.Count > _maxClients)
         {
-            while (_lruList.Count > _maxClients)
+            var lruNode = _lruList.Last;
+            if (lruNode != null)
             {
-                var lruNode = _lruList.Last;
-                if (lruNode != null)
+                _lruList.RemoveLast();
+                _cacheMap.TryRemove(lruNode.Value.Key, out _);
+                if (lruNode.Value.Client is IDisposable disposable)
                 {
-                    _lruList.RemoveLast();
-                    _cacheMap.TryRemove(lruNode.Value.Key, out _);
-                    if (lruNode.Value.Client is IDisposable disposable)
-                    {
-                        disposable.Dispose();
-                    }
-                }
-                else
-                {
-                    break;
+                    disposable.Dispose();
                 }
             }
-        }
-        finally
-        {
-            _lock.ExitWriteLock();
+            else
+            {
+                break;
+            }
         }
     }
 
