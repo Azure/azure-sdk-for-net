@@ -137,7 +137,6 @@ jobs:
               /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
               /p:ServiceDirectory=* `
               /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
-              /p:IncludeSamples=false `
               /p:IncludePerf=false `
               /p:IncludeStress=false `
               /p:EnableOverrideExclusions=true `
