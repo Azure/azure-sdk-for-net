@@ -27,7 +27,7 @@ Thank you to our developer community members who helped to make the Event Hubs c
   The long-based offset members will continue to work for Event Hubs namespaces that do not have GeoDR replication enabled, but are discouraged for use and have been marked as obsolete.
   
   Obsoleted properties:
-  - EventData.Offset
+  - `EventData.Offset`
   - `LastEnqueuedEventProperties.Offset`
   - `PartitionProperties.LastEnqueuedOffset`
 
