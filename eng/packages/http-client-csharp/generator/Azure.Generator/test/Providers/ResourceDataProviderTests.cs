@@ -28,7 +28,7 @@ namespace Azure.Generator.Tests.Providers
                             InputFactory.Property("name", InputFactory.Primitive.String()),
                         ]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
-            var operation = InputFactory.Operation(name: "GetOperation", responses: [responseType]);
+            var operation = InputFactory.Operation(name: "GetOperation", responses: [responseType], path: "/providers/a");
             var client = InputFactory.Client(TestClientName, operations: [operation]);
             var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [responseModel], clients: () => [client]);
 

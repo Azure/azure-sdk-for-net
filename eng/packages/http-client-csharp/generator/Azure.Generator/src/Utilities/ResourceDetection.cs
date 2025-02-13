@@ -8,16 +8,48 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 
 namespace Azure.Generator.Utilities
 {
     internal class ResourceDetection
     {
-        private const string ProvidersSegment = "/providers/";
-        private ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?>();
+        private const string ResourceGroupScopePrefix = "/subscriptions/{subscriptionId}/resourceGroups";
+        private const string SubscriptionScopePrefix = "/subscriptions";
+        private const string TenantScopePrefix = "/tenants";
 
-        private static InputModelType? FindObjectSchemaWithName(string name)
-            => AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().FirstOrDefault(inputModel => inputModel.Name == name);
+        private ConcurrentDictionary<RequestPath, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<RequestPath, (string Name, InputModelType? InputModel)?>();
+
+        public bool IsResource(OperationSet set) => TryGetResourceDataSchema(set, out _, out _);
+
+        public static string GetResourceTypeFromPath(RequestPath requestPath)
+        {
+            var index = requestPath.IndexOfLastProviders;
+            if (index < 0)
+            {
+                if (requestPath.SerializedPath.StartsWith(ResourceGroupScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/resourceGroups";
+                }
+                else if (requestPath.SerializedPath.StartsWith(SubscriptionScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/subscriptions";
+                }
+                else if (requestPath.SerializedPath.StartsWith(TenantScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/tenants";
+                }
+                throw new InvalidOperationException($"Cannot find resource type from path {requestPath}");
+            }
+
+            var left = new RequestPath(requestPath.SerializedPath.Substring(index+RequestPath.Providers.Length));
+            var result = new StringBuilder(left[0]);
+            for (int i = 1; i < left.Count; i += 2)
+            {
+                result.Append($"/{left[i]}");
+            }
+            return result.ToString();
+        }
 
         public bool TryGetResourceDataSchema(OperationSet set, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel)
         {
@@ -63,16 +95,15 @@ namespace Azure.Generator.Utilities
             return false;
         }
 
-        private static bool CheckEvenSegments(string requestPath)
+        private static bool CheckEvenSegments(RequestPath requestPath)
         {
-            var index = requestPath.LastIndexOf(ProvidersSegment);
+            var index = requestPath.IndexOfLastProviders;
             // this request path does not have providers segment - it can be a "ById" request, skip to next criteria
             if (index < 0)
                 return true;
             // get whatever following the providers
-            var following = requestPath.Substring(index);
-            var segments = following.Split("/", StringSplitOptions.RemoveEmptyEntries);
-            return segments.Length % 2 == 0;
+            var following = new RequestPath(requestPath.Take(index));
+            return following.Count % 2 == 0;
         }
 
         private bool TryOperationWithMethod(OperationSet set, RequestMethod method, [MaybeNullWhen(false)] out InputModelType inputModel)
