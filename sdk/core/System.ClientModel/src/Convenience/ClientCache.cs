@@ -31,42 +31,22 @@ public class ClientCache
     {
         (Type, string) key = (typeof(T), id ?? string.Empty);
 
-        _lock.EnterUpgradeableReadLock();
+        // If the client exists, update its timestamp.
+        if (_clients.TryGetValue(key, out var cached))
+        {
+            _clients[key] = (cached.Client, Stopwatch.GetTimestamp());
+            return (T)cached.Client;
+        }
+
+        // Client not found in cache, create a new one.
+        _lock.EnterWriteLock();
         try
         {
-            // If the client exists, update its timestamp.
-            if (_clients.TryGetValue(key, out var cached))
-            {
-                _lock.EnterWriteLock();
-                try
-                {
-                    _clients[key] = (cached.Client, Stopwatch.GetTimestamp());
-                }
-                finally
-                {
-                    _lock.ExitWriteLock();
-                }
-                return (T)cached.Client;
-            }
-
-            // Client not found in cache, create a new one.
             T created = createClient();
-            bool shouldCleanup = false;
+            _clients[key] = (created, Stopwatch.GetTimestamp());
 
-            _lock.EnterWriteLock();
-            try
-            {
-                _clients[key] = (created, Stopwatch.GetTimestamp());
-
-                // After insertion, if cache exceeds the limit, set flag for cleanup.
-                shouldCleanup = _clients.Count > MaxCacheSize;
-            }
-            finally
-            {
-                _lock.ExitWriteLock();
-            }
-
-            if (shouldCleanup)
+            // After insertion, if cache exceeds the limit, set flag for cleanup.
+            if (_clients.Count > MaxCacheSize)
             {
                 Cleanup();
             }
@@ -75,7 +55,7 @@ public class ClientCache
         }
         finally
         {
-            _lock.ExitUpgradeableReadLock();
+            _lock.ExitWriteLock();
         }
     }
 
@@ -84,31 +64,23 @@ public class ClientCache
     /// </summary>
     private void Cleanup()
     {
-        _lock.EnterWriteLock();
-        try
+        int excess = _clients.Count - MaxCacheSize;
+        if (excess <= 0)
         {
-            int excess = _clients.Count - MaxCacheSize;
-            if (excess <= 0)
-            {
-                return;
-            }
+            return;
+        }
 
-            // Remove the 'excess' number of items based on the oldest timestamp.
-            foreach (var key in _clients.OrderBy(kvp => kvp.Value.LastUsed).Take(excess).Select(kvp => kvp.Key).ToList())
+        // Remove the 'excess' number of items based on the oldest timestamp.
+        foreach (var key in _clients.OrderBy(kvp => kvp.Value.LastUsed).Take(excess).Select(kvp => kvp.Key).ToList())
+        {
+            if (_clients.TryGetValue(key, out var instance))
             {
-                if (_clients.TryGetValue(key, out var instance))
+                _clients.Remove(key);
+                if (instance.Client is IDisposable disposable)
                 {
-                    _clients.Remove(key);
-                    if (instance.Client is IDisposable disposable)
-                    {
-                        disposable.Dispose();
-                    }
+                    disposable.Dispose();
                 }
             }
-        }
-        finally
-        {
-            _lock.ExitWriteLock();
         }
     }
 }
