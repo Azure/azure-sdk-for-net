@@ -248,7 +248,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static string? GetTargetUsingServerAttributes(this AzMonList tagObjects, string? defaultPort = null)
+        internal static string? GetTargetUsingServerAttributes(this AzMonList tagObjects, string defaultPort)
         {
             var values = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerSocketAddress, SemanticConventions.AttributeServerPort);
             string? target = values[0]?.ToString() ?? values[1]?.ToString();
@@ -259,6 +259,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return target;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string? GetTargetUsingServerAddressAndPort(this AzMonList tagObjects)
+        {
+            var serverAttributes = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerPort);
+
+            var serverAddress = serverAttributes[0]?.ToString();
+            if (!string.IsNullOrEmpty(serverAddress))
+            {
+                var serverPort = serverAttributes[1]?.ToString();
+
+                return string.IsNullOrEmpty(serverPort)
+                    ? serverAddress
+                    : serverAddress + ":" + serverPort;
+            }
+
+            return null;
         }
 
         ///<summary>

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using Azure.Core;
@@ -35,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     SetMessagingDependencyProperties(activity, ref activityTagsProcessor.MappedTags);
                     break;
                 default:
-                    Target = activityTagsProcessor.MappedTags.GetTargetUsingServerAttributes();
+                    Target = activityTagsProcessor.MappedTags.GetTargetUsingServerAddressAndPort();
                     break;
             }
 

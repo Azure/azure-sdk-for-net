@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-* Always set Dependency.Target if "server.address" is set.
+* Always set Dependency.Target to "server.address" and "server.port" if present.
   ([#48317](https://github.com/Azure/azure-sdk-for-net/pull/48317))
 
 ### Other Changes
