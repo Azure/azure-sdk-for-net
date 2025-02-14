@@ -84,14 +84,20 @@ namespace MgmtTypeSpec
             try
             {
                 Response<FooData> response = _fooRestClient.CreateOrUpdate(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, cancellationToken);
-                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                }
-                ), response, OperationFinalStateVia.AzureAsyncOperation);
+                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
+                    new FooOperationSource(Client),
+                    _fooClientDiagnostics,
+                    Pipeline,
+                    _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    }
+                    ).Request,
+                    response.GetRawResponse(),
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken0);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -116,14 +122,20 @@ namespace MgmtTypeSpec
             try
             {
                 Response<FooData> response = await _fooRestClient.CreateOrUpdateAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, cancellationToken).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                }
-                ), response, OperationFinalStateVia.AzureAsyncOperation);
+                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
+                    new FooOperationSource(Client),
+                    _fooClientDiagnostics,
+                    Pipeline,
+                    _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    }
+                    ).Request,
+                    response.GetRawResponse(),
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken0).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -188,14 +200,14 @@ namespace MgmtTypeSpec
             try
             {
                 Response response = _fooRestClient.Delete(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken);
-                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, new RequestContext
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, new RequestContext
                 {
                     CancellationToken = cancellationToken
                 }
-                ), response, OperationFinalStateVia.Location);
+                ).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken0);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }
@@ -216,14 +228,14 @@ namespace MgmtTypeSpec
             try
             {
                 Response response = await _fooRestClient.DeleteAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, new RequestContext
+                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, new RequestContext
                 {
                     CancellationToken = cancellationToken
                 }
-                ), response, OperationFinalStateVia.Location);
+                ).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken0).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }

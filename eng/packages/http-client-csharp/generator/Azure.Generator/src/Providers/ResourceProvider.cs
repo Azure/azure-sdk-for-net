@@ -7,7 +7,6 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Primitives;
 using Azure.Generator.Utilities;
 using Azure.ResourceManager;
-using Microsoft.Build.Evaluation;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -68,6 +67,9 @@ namespace Azure.Generator.Providers
         }
 
         protected override string BuildName() => $"{_specCleanName}Resource";
+
+        private OperationSourceProvider? _source;
+        internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(_specCleanName, this, _resourceData);
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -207,7 +209,7 @@ namespace Azure.Generator.Providers
                 isUpdateOnly ? (isAsync ? "UpdateAsync" : "Update") : convenienceMethod.Signature.Name,
                 isUpdateOnly ? $"Update a {_specCleanName}" : convenienceMethod.Signature.Description,
                 convenienceMethod.Signature.Modifiers,
-                GetOperationMethodReturnType(isAsync, isLongRunning, operation.Responses),
+                GetOperationMethodReturnType(isAsync, isLongRunning, operation.Responses, out var isGeneric),
                 convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(convenienceMethod, isLongRunning),
                 convenienceMethod.Signature.Attributes,
@@ -221,7 +223,7 @@ namespace Azure.Generator.Providers
                     UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagonosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal($"{Type.Namespace}.{operation.Name}")]), out var scopeVariable),
                     scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                     new TryCatchFinallyStatement
-                    (BuildOperationMethodTryStatement(convenienceMethod, isAsync, isLongRunning, operation), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
+                    (BuildOperationMethodTryStatement(convenienceMethod, isAsync, isLongRunning, operation, isGeneric), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
                 };
 
             return new MethodProvider(signature, bodyStatements, this);
@@ -244,8 +246,9 @@ namespace Azure.Generator.Providers
             return result;
         }
 
-        private CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<OperationResponse> operationResponses)
+        private CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<OperationResponse> operationResponses, out bool isGeneric)
         {
+            isGeneric = false;
             if (isLongRunningOperation)
             {
                 var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
@@ -256,28 +259,34 @@ namespace Azure.Generator.Providers
                 }
                 else
                 {
+                    isGeneric = true;
                     return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(ArmOperation<>), Type)) : new CSharpType(typeof(ArmOperation<>), Type);
                 }
             }
             return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), Type)) : new CSharpType(typeof(Response<>), Type);
         }
 
-        private TryStatement BuildOperationMethodTryStatement(MethodProvider convenienceMethod, bool isAsync, bool isLongRunning, InputOperation operation)
+        private TryStatement BuildOperationMethodTryStatement(MethodProvider convenienceMethod, bool isAsync, bool isLongRunning, InputOperation operation, bool isGeneric)
         {
+            var cancellationToken = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
             var tryStatement = new TryStatement();
             var responseDeclaration = Declare("response", GetResponseType(convenienceMethod, isAsync), ((MemberExpression)_restClientField).Invoke(convenienceMethod.Signature.Name, PopulateArguments(convenienceMethod.Signature.Parameters, convenienceMethod), null, callAsAsync: isAsync, addConfigureAwaitFalse: isAsync), out var responseVariable);
             tryStatement.Add(responseDeclaration);
             if (isLongRunning)
             {
-                var armOperationType = new CSharpType(AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation, AzureClientPlugin.Instance.TypeFactory.RootNamespace , [Type], null);
+                var armOperationType = !isGeneric ? AzureClientPlugin.Instance.OutputLibrary.ArmOperation.Type : new CSharpType(AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation, AzureClientPlugin.Instance.TypeFactory.RootNamespace , [Type], null);
                 var requestMethod = GetCorrespondingRequestMethod(operation);
-                var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)), responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out var operationVariable);
+                VariableExpression operationVariable;
+                var operationDeclaration =
+                    isGeneric
+                    ? Declare("operation", armOperationType, New.Instance(armOperationType, New.Instance(Source.Type, This.Property("Client")), _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)).Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out operationVariable)
+                    : Declare("operation", armOperationType, New.Instance(armOperationType, _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)).Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out operationVariable);
                 tryStatement.Add(operationDeclaration);
                 tryStatement.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
                 {
                     isAsync
-                    ? operationVariable.Invoke("WaitForCompletionAsync", [KnownParameters.CancellationTokenParameter], null, isAsync).Terminate()
-                    : operationVariable.Invoke("WaitForCompletion", KnownParameters.CancellationTokenParameter).Terminate()
+                    ? operationVariable.Invoke(isGeneric ? "WaitForCompletionAsync" : "WaitForCompletionResponseAsync", [cancellationToken], null, isAsync).Terminate()
+                    : operationVariable.Invoke(isGeneric ? "WaitForCompletion" : "WaitForCompletionResponse", cancellationToken).Terminate()
                 });
                 tryStatement.Add(Return(operationVariable));
             }

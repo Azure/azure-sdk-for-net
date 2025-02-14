@@ -11,8 +11,7 @@ using Azure.Core;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
-    public partial class PrivateLinks
+    internal partial class PrivateLinks
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier200202;

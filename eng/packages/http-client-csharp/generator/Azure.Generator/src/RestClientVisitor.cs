@@ -22,10 +22,10 @@ namespace Azure.Generator
                 type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }
             // TODO: uncomment this once resources are generated
-            //if (type is RestClientProvider)
-            //{
-            //    type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForRestClient(type));
-            //}
+            if (type is RestClientProvider)
+            {
+                type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForRestClient(type));
+            }
             return type;
         }
 

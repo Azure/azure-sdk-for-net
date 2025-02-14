@@ -174,7 +174,7 @@ namespace Azure.Generator.Providers
                     skipApiVersionOverrideParameter,
                     apiVersionOverrideValueParameter,
                 };
-            var signature = new ConstructorSignature(Type, $"", MethodSignatureModifiers.Internal, parameters, null);
+            var signature = new ConstructorSignature(Type, $"", MethodSignatureModifiers.Internal, parameters);
             var responseDeclaration = Declare("nextLinkOperation", typeof(IOperation), Static(typeof(NextLinkOperationImplementation)).Invoke("Create", [pipelineParameter, requestParameter.Property("Method"), requestParameter.Property("Uri").Invoke("ToUri"), responseParameter, finalStateViaParameter, skipApiVersionOverrideParameter, apiVersionOverrideValueParameter]), out var nextLinkOperationVariable);
 
             var body = new MethodBodyStatement[]

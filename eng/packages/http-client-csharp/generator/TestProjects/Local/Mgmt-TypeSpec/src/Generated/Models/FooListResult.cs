@@ -12,7 +12,7 @@ using System.Linq;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The response of a Foo list operation. </summary>
-    public partial class FooListResult
+    internal partial class FooListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

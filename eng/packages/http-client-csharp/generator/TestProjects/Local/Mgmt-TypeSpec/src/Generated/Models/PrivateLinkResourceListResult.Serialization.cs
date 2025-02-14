@@ -16,7 +16,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class PrivateLinkResourceListResult : IJsonModel<PrivateLinkResourceListResult>
+    internal partial class PrivateLinkResourceListResult : IJsonModel<PrivateLinkResourceListResult>
     {
         internal PrivateLinkResourceListResult()
         {

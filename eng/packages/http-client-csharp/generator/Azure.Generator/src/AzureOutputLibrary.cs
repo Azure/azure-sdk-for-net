@@ -106,10 +106,12 @@ namespace Azure.Generator
         // TODO: generate collections
         protected override TypeProvider[] BuildTypeProviders()
         {
+            var baseProviders = base.BuildTypeProviders();
             if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
             {
-                BuildLROProviders();
-                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. BuildResources()];
+                //BuildLROProviders();
+                var resources = BuildResources();
+                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
             }
             return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
         }

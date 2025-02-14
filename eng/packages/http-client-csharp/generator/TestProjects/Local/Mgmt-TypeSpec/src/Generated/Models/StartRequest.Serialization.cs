@@ -16,7 +16,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class StartRequest : IJsonModel<StartRequest>
+    internal partial class StartRequest : IJsonModel<StartRequest>
     {
         void IJsonModel<StartRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
