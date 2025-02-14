@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An action group object for the body of patch operations. </summary>
-    public partial class ActionGroupPatch
+    /// <summary> The connection info for Incident Receiver. </summary>
+    public partial class IncidentServiceConnection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,30 +45,38 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroupPatch"/>. </summary>
-        public ActionGroupPatch()
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/>. </summary>
+        /// <param name="name"> The name of the connection. </param>
+        /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="id"/> is null. </exception>
+        public IncidentServiceConnection(string name, string id)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(id, nameof(id));
+
+            Name = name;
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroupPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </param>
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/>. </summary>
+        /// <param name="name"> The name of the connection. </param>
+        /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActionGroupPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IncidentServiceConnection(string name, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            Identity = identity;
-            IsEnabled = isEnabled;
+            Name = name;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </summary>
-        public bool? IsEnabled { get; set; }
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/> for deserialization. </summary>
+        internal IncidentServiceConnection()
+        {
+        }
+
+        /// <summary> The name of the connection. </summary>
+        public string Name { get; set; }
+        /// <summary> GUID value representing the connection ID for the incident management service. </summary>
+        public string Id { get; set; }
     }
 }
