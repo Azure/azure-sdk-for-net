@@ -48,7 +48,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         internal MetricDefinition()
         {
-            Dimensions = new ChangeTrackingList<NameAndDesc>();
+            Dimensions = new ChangeTrackingList<NameAndDescription>();
             SupportedAggregationTypes = new ChangeTrackingList<string>();
             MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
         }
@@ -66,7 +66,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// frequency).
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDefinition(IReadOnlyList<NameAndDesc> dimensions, string description, string name, string @namespace, AggregationType? primaryAggregationType, IReadOnlyList<string> supportedAggregationTypes, MetricUnit? unit, IReadOnlyList<MetricAvailability> metricAvailabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetricDefinition(IReadOnlyList<NameAndDescription> dimensions, string description, string name, string @namespace, AggregationType? primaryAggregationType, IReadOnlyList<string> supportedAggregationTypes, MetricUnit? unit, IReadOnlyList<MetricAvailability> metricAvailabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Dimensions = dimensions;
             Description = description;
@@ -80,7 +80,7 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> List of dimensions. </summary>
-        public IReadOnlyList<NameAndDesc> Dimensions { get; }
+        public IReadOnlyList<NameAndDescription> Dimensions { get; }
         /// <summary> The metric description. </summary>
         public string Description { get; }
         /// <summary> The metric name. </summary>

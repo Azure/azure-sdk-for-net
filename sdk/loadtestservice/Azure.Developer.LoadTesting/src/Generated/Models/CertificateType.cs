@@ -22,10 +22,10 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AKVCERTURIValue = "AKV_CERT_URI";
+        private const string KeyVaultCertificateUriValue = "AKV_CERT_URI";
 
         /// <summary> If the certificate is stored in an Azure Key Vault. </summary>
-        public static CertificateType AKVCERTURI { get; } = new CertificateType(AKVCERTURIValue);
+        public static CertificateType KeyVaultCertificateUri { get; } = new CertificateType(KeyVaultCertificateUriValue);
         /// <summary> Determines if two <see cref="CertificateType"/> values are the same. </summary>
         public static bool operator ==(CertificateType left, CertificateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CertificateType"/> values are not the same. </summary>

@@ -39,10 +39,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(SecretKind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(SecretKind.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

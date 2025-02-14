@@ -126,7 +126,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            IReadOnlyList<NameAndDesc> dimensions = default;
+            IReadOnlyList<NameAndDescription> dimensions = default;
             string description = default;
             string name = default;
             string @namespace = default;
@@ -144,10 +144,10 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    List<NameAndDesc> array = new List<NameAndDesc>();
+                    List<NameAndDescription> array = new List<NameAndDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameAndDesc.DeserializeNameAndDesc(item, options));
+                        array.Add(NameAndDescription.DeserializeNameAndDescription(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -220,7 +220,7 @@ namespace Azure.Developer.LoadTesting.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MetricDefinition(
-                dimensions ?? new ChangeTrackingList<NameAndDesc>(),
+                dimensions ?? new ChangeTrackingList<NameAndDescription>(),
                 description,
                 name,
                 @namespace,

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> The name and description. </summary>
-    public partial class NameAndDesc
+    public partial class NameAndDescription
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NameAndDesc"/>. </summary>
-        internal NameAndDesc()
+        /// <summary> Initializes a new instance of <see cref="NameAndDescription"/>. </summary>
+        internal NameAndDescription()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NameAndDesc"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NameAndDescription"/>. </summary>
         /// <param name="description"> The description. </param>
         /// <param name="name"> The name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NameAndDesc(string description, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NameAndDescription(string description, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Name = name;

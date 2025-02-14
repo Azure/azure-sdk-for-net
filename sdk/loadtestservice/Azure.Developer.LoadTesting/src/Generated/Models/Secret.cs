@@ -52,18 +52,18 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="Secret"/>. </summary>
         /// <param name="value"> The value of the secret for the respective type. </param>
-        /// <param name="type"> Type of secret. </param>
+        /// <param name="secretKind"> Type of secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Secret(string value, SecretType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Secret(string value, SecretType? secretKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
-            Type = type;
+            SecretKind = secretKind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The value of the secret for the respective type. </summary>
         public string Value { get; set; }
         /// <summary> Type of secret. </summary>
-        public SecretType? Type { get; set; }
+        public SecretType? SecretKind { get; set; }
     }
 }

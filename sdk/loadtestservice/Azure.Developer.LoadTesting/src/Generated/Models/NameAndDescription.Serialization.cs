@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class NameAndDesc : IUtf8JsonSerializable, IJsonModel<NameAndDesc>
+    public partial class NameAndDescription : IUtf8JsonSerializable, IJsonModel<NameAndDescription>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NameAndDesc>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NameAndDescription>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NameAndDesc>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NameAndDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NameAndDesc>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NameAndDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NameAndDesc)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NameAndDescription)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Description))
@@ -61,19 +61,19 @@ namespace Azure.Developer.LoadTesting.Models
             }
         }
 
-        NameAndDesc IJsonModel<NameAndDesc>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NameAndDescription IJsonModel<NameAndDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NameAndDesc>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NameAndDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NameAndDesc)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NameAndDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNameAndDesc(document.RootElement, options);
+            return DeserializeNameAndDescription(document.RootElement, options);
         }
 
-        internal static NameAndDesc DeserializeNameAndDesc(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NameAndDescription DeserializeNameAndDescription(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,46 +103,46 @@ namespace Azure.Developer.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NameAndDesc(description, name, serializedAdditionalRawData);
+            return new NameAndDescription(description, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NameAndDesc>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NameAndDescription>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NameAndDesc>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NameAndDescription>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NameAndDesc)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NameAndDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NameAndDesc IPersistableModel<NameAndDesc>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NameAndDescription IPersistableModel<NameAndDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NameAndDesc>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NameAndDescription>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNameAndDesc(document.RootElement, options);
+                        return DeserializeNameAndDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NameAndDesc)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NameAndDescription)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NameAndDesc>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NameAndDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static NameAndDesc FromResponse(Response response)
+        internal static NameAndDescription FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeNameAndDesc(document.RootElement);
+            return DeserializeNameAndDescription(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

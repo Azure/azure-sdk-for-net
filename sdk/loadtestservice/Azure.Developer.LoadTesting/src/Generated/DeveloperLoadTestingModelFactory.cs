@@ -607,9 +607,9 @@ namespace Azure.Developer.LoadTesting.Models
         /// frequency).
         /// </param>
         /// <returns> A new <see cref="Models.MetricDefinition"/> instance for mocking. </returns>
-        public static MetricDefinition MetricDefinition(IEnumerable<NameAndDesc> dimensions = null, string description = null, string name = null, string @namespace = null, AggregationType? primaryAggregationType = null, IEnumerable<string> supportedAggregationTypes = null, MetricUnit? unit = null, IEnumerable<MetricAvailability> metricAvailabilities = null)
+        public static MetricDefinition MetricDefinition(IEnumerable<NameAndDescription> dimensions = null, string description = null, string name = null, string @namespace = null, AggregationType? primaryAggregationType = null, IEnumerable<string> supportedAggregationTypes = null, MetricUnit? unit = null, IEnumerable<MetricAvailability> metricAvailabilities = null)
         {
-            dimensions ??= new List<NameAndDesc>();
+            dimensions ??= new List<NameAndDescription>();
             supportedAggregationTypes ??= new List<string>();
             metricAvailabilities ??= new List<MetricAvailability>();
 
@@ -625,13 +625,13 @@ namespace Azure.Developer.LoadTesting.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NameAndDesc"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NameAndDescription"/>. </summary>
         /// <param name="description"> The description. </param>
         /// <param name="name"> The name. </param>
-        /// <returns> A new <see cref="Models.NameAndDesc"/> instance for mocking. </returns>
-        public static NameAndDesc NameAndDesc(string description = null, string name = null)
+        /// <returns> A new <see cref="Models.NameAndDescription"/> instance for mocking. </returns>
+        public static NameAndDescription NameAndDescription(string description = null, string name = null)
         {
-            return new NameAndDesc(description, name, serializedAdditionalRawData: null);
+            return new NameAndDescription(description, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>

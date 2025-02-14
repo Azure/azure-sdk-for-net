@@ -52,13 +52,13 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="CertificateMetadata"/>. </summary>
         /// <param name="value"> The value of the certificate for respective type. </param>
-        /// <param name="type"> Type of certificate. </param>
+        /// <param name="certificateKind"> Type of certificate. </param>
         /// <param name="name"> Name of the certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateMetadata(string value, CertificateType? type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CertificateMetadata(string value, CertificateType? certificateKind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
-            Type = type;
+            CertificateKind = certificateKind;
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -66,7 +66,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> The value of the certificate for respective type. </summary>
         public string Value { get; set; }
         /// <summary> Type of certificate. </summary>
-        public CertificateType? Type { get; set; }
+        public CertificateType? CertificateKind { get; set; }
         /// <summary> Name of the certificate. </summary>
         public string Name { get; set; }
     }

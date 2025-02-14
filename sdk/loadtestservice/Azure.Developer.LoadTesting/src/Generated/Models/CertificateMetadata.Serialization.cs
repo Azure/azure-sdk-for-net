@@ -39,10 +39,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(CertificateKind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(CertificateKind.Value.ToString());
             }
             if (Optional.IsDefined(Name))
             {
