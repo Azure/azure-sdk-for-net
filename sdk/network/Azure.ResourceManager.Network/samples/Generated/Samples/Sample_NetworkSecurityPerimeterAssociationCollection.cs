@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 PrivateLinkResourceId = new ResourceIdentifier("/subscriptions/{paasSubscriptionId}/resourceGroups/{paasResourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}"),
                 ProfileId = new ResourceIdentifier("/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/networkSecurityPerimeters/nsp1/profiles/{profileName}"),
-                AccessMode = AssociationAccessMode.Enforced,
+                AccessMode = NetworkSecurityPerimeterAssociationAccessMode.Enforced,
             };
             ArmOperation<NetworkSecurityPerimeterAssociationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, associationName, data);
             NetworkSecurityPerimeterAssociationResource result = lro.Value;

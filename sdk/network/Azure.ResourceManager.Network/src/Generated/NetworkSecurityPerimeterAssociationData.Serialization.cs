@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network
             NetworkSecurityPerimeterProvisioningState? provisioningState = default;
             WritableSubResource privateLinkResource = default;
             WritableSubResource profile = default;
-            AssociationAccessMode? accessMode = default;
+            NetworkSecurityPerimeterAssociationAccessMode? accessMode = default;
             string hasProvisioningIssues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            accessMode = new AssociationAccessMode(property0.Value.GetString());
+                            accessMode = new NetworkSecurityPerimeterAssociationAccessMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hasProvisioningIssues"u8))

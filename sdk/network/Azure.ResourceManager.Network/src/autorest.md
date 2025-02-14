@@ -40,6 +40,7 @@ resource-model-requires-type: false
 
 rename-mapping:
   Access: NetworkAccess
+  AssociationAccessMode: NetworkSecurityPerimeterAssociationAccessMode
   AccessRuleDirection: NetworkSecurityPerimeterAccessRuleDirection
   Action: RouteMapAction
   ActionType: RuleMatchActionType

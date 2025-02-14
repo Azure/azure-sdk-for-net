@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="accessMode"> Access mode on the association. </param>
         /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterAssociationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, ResourceIdentifier privateLinkResourceId = null, ResourceIdentifier profileId = null, AssociationAccessMode? accessMode = null, string hasProvisioningIssues = null)
+        public static NetworkSecurityPerimeterAssociationData NetworkSecurityPerimeterAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = null, ResourceIdentifier privateLinkResourceId = null, ResourceIdentifier profileId = null, NetworkSecurityPerimeterAssociationAccessMode? accessMode = null, string hasProvisioningIssues = null)
         {
             tags ??= new Dictionary<string, string>();
 
