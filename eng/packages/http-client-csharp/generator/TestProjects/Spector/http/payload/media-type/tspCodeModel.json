@@ -8,6 +8,7 @@
   {
    "$id": "2",
    "Name": "MediaTypeClient",
+   "ClientNamespace": "Payload.MediaType",
    "Doc": "Test the payload with different media types and different types of the payload itself.",
    "Operations": [],
    "Protocol": {
@@ -51,6 +52,7 @@
   {
    "$id": "8",
    "Name": "StringBody",
+   "ClientNamespace": "Payload.MediaType.StringBody",
    "Operations": [
     {
      "$id": "9",

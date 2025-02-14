@@ -143,6 +143,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Type.Enum.Fixed",
    "doc": "Days of the week",
    "isFixed": true,
    "isFlags": false,
@@ -155,6 +156,7 @@
   {
    "$id": "18",
    "Name": "FixedClient",
+   "ClientNamespace": "Type.Enum.Fixed",
    "Operations": [],
    "Protocol": {
     "$id": "19"
@@ -197,6 +199,7 @@
   {
    "$id": "24",
    "Name": "String",
+   "ClientNamespace": "Type.Enum.Fixed",
    "Operations": [
     {
      "$id": "25",
