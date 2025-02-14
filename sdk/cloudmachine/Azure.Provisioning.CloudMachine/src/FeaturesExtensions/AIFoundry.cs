@@ -1,10 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.Projects;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
-using Microsoft.Azure.Amqp.Framing;
+using Azure.Provisioning.Roles;
 using System.Collections.Generic;
 
 namespace Azure.Provisioning.AIFoundry;
@@ -34,7 +33,12 @@ internal class AIFoundryCognitiveServiceCdk : NamedProvisionableConstruct
                 new PropertyExpression("kind", "AIServices"),
                 new PropertyExpression("identity",
                     new ObjectExpression(
-                        new PropertyExpression("type", "SystemAssigned")
+                        new PropertyExpression("type", "UserAssigned"),
+                        new PropertyExpression("userAssignedIdentities",
+                            new ObjectExpression(
+                                new PropertyExpression("${cm_identity.id}", new ObjectExpression())
+                            )
+                        )
                     )
                 ),
                 new PropertyExpression("properties",
@@ -62,6 +66,8 @@ internal class AIFoundryHubCdk : NamedProvisionableConstruct
 
     public string FriendlyName { get; set; }
 
+    public UserAssignedIdentity? Identity { get; set; }
+
     protected override IEnumerable<BicepStatement> Compile()
     {
         ResourceStatement hub = new(
@@ -73,15 +79,18 @@ internal class AIFoundryHubCdk : NamedProvisionableConstruct
                 new PropertyExpression("kind", "hub"),
                 new PropertyExpression("identity",
                     new ObjectExpression(
-                        new PropertyExpression("type", "SystemAssigned")
+                        new PropertyExpression("type", "UserAssigned"),
+                        new PropertyExpression("userAssignedIdentities",
+                            new ObjectExpression(
+                                new PropertyExpression("${cm_identity.id}", new ObjectExpression())
+                            )
+                        )
                     )
                 ),
                 new PropertyExpression("properties",
                     new ObjectExpression(
                         new PropertyExpression("friendlyName", FriendlyName),
                         new PropertyExpression("publicNetworkAccess", "Enabled")
-                        //new PropertyExpression("keyVault", ...),
-                        //new PropertyExpression("storageAccount", ...)
                     )
                 )
             )
@@ -121,7 +130,12 @@ internal class AIFoundryProjectCdk : ProvisionableResource
                 new PropertyExpression("kind", "Project"),
                 new PropertyExpression("identity",
                     new ObjectExpression(
-                        new PropertyExpression("type", "SystemAssigned")
+                        new PropertyExpression("type", "UserAssigned"),
+                        new PropertyExpression("userAssignedIdentities",
+                            new ObjectExpression(
+                                new PropertyExpression("${cm_identity.id}", new ObjectExpression())
+                            )
+                        )
                     )
                 ),
                 new PropertyExpression("properties",

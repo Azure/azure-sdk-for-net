@@ -32,7 +32,7 @@ public class BicepGenerationTests
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new AIFoundry.AIFoundryFeature());
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        //File.WriteAllText("d:\\f.bicep", actualBicep);
+        File.WriteAllText("d:\\foundry.bicep", actualBicep);
         string expectedBicep = LoadTestFile("Foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }

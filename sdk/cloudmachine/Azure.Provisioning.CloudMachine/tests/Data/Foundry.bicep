@@ -246,7 +246,10 @@ resource cm0c420d2f21084cd_foundry 'Microsoft.CognitiveServices/accounts@2021-10
   }
   kind: 'AIServices'
   identity: {
-    type: 'SystemAssigned'
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${cm_identity.id}': { }
+    }
   }
   properties: {
     customSubDomainName: 'cm0c420d2f21084cd-foundry'
@@ -259,7 +262,10 @@ resource cm0c420d2f21084cd_hub 'Microsoft.MachineLearningServices/workspaces@202
   location: location
   kind: 'hub'
   identity: {
-    type: 'SystemAssigned'
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${cm_identity.id}': { }
+    }
   }
   properties: {
     friendlyName: 'cm0c420d2f21084cd_hub'
@@ -272,7 +278,10 @@ resource cm0c420d2f21084cd_project 'Microsoft.MachineLearningServices/workspaces
   location: location
   kind: 'Project'
   identity: {
-    type: 'SystemAssigned'
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${cm_identity.id}': { }
+    }
   }
   properties: {
     friendlyName: 'cm0c420d2f21084cd_project'

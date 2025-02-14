@@ -16,7 +16,7 @@ public class E2ETests
     [TestCase("")]
     public void Foundry(string arg)
     {
-        ProjectInfrastructure infra = new("cm0c110d2f21084bb");
+        ProjectInfrastructure infra = new("cm0a110d2f21084bb");
         var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         var foundry = infra.AddFeature(new AIFoundryFeature()
         {
