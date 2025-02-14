@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NspLinkReferenceListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityPerimeterLinkReferenceListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -307,9 +307,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspLinkReferenceListResult value = default;
+                        NetworkSecurityPerimeterLinkReferenceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NspLinkReferenceListResult.DeserializeNspLinkReferenceListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterLinkReferenceListResult.DeserializeNetworkSecurityPerimeterLinkReferenceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NspLinkReferenceListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityPerimeterLinkReferenceListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -338,9 +338,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspLinkReferenceListResult value = default;
+                        NetworkSecurityPerimeterLinkReferenceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NspLinkReferenceListResult.DeserializeNspLinkReferenceListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterLinkReferenceListResult.DeserializeNetworkSecurityPerimeterLinkReferenceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NspLinkReferenceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityPerimeterLinkReferenceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -393,9 +393,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspLinkReferenceListResult value = default;
+                        NetworkSecurityPerimeterLinkReferenceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NspLinkReferenceListResult.DeserializeNspLinkReferenceListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterLinkReferenceListResult.DeserializeNetworkSecurityPerimeterLinkReferenceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NspLinkReferenceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityPerimeterLinkReferenceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -426,9 +426,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspLinkReferenceListResult value = default;
+                        NetworkSecurityPerimeterLinkReferenceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NspLinkReferenceListResult.DeserializeNspLinkReferenceListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterLinkReferenceListResult.DeserializeNetworkSecurityPerimeterLinkReferenceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

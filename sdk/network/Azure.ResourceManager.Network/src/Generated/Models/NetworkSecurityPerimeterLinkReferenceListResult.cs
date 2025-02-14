@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Result of the request to list NSP logging configuration. Contains a list of NSP logging configurations and a URL link to get the next set of results. </summary>
-    internal partial class NspLoggingConfigurationListResult
+    /// <summary> Result of the request to list NSP linkReference resources. Contains a list of NSP linkReference resources and a URL link to get the next set of results. </summary>
+    internal partial class NetworkSecurityPerimeterLinkReferenceListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspLoggingConfigurationListResult"/>. </summary>
-        internal NspLoggingConfigurationListResult()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkReferenceListResult"/>. </summary>
+        internal NetworkSecurityPerimeterLinkReferenceListResult()
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterLoggingConfigurationData>();
+            Value = new ChangeTrackingList<NetworkSecurityPerimeterLinkReferenceData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspLoggingConfigurationListResult"/>. </summary>
-        /// <param name="value"> Gets a page of NSP logging configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkReferenceListResult"/>. </summary>
+        /// <param name="value"> Gets a page of NSP LinkReference resources. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspLoggingConfigurationListResult(IReadOnlyList<NetworkSecurityPerimeterLoggingConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterLinkReferenceListResult(IReadOnlyList<NetworkSecurityPerimeterLinkReferenceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of NSP logging configuration. </summary>
-        public IReadOnlyList<NetworkSecurityPerimeterLoggingConfigurationData> Value { get; }
+        /// <summary> Gets a page of NSP LinkReference resources. </summary>
+        public IReadOnlyList<NetworkSecurityPerimeterLinkReferenceData> Value { get; }
         /// <summary> Gets the URL to get the next page of results. </summary>
         public string NextLink { get; }
     }

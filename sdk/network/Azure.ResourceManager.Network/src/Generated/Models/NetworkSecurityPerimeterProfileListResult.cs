@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Result of the request to list NSP link resources. Contains a list of NSP link resources and a URL link to get the next set of results. </summary>
-    internal partial class NspLinkListResult
+    /// <summary> Result of the request to list NSP profiles. Contains a list of NSP profiles and a URL link to get the next set of results. </summary>
+    internal partial class NetworkSecurityPerimeterProfileListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspLinkListResult"/>. </summary>
-        internal NspLinkListResult()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileListResult"/>. </summary>
+        internal NetworkSecurityPerimeterProfileListResult()
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterLinkData>();
+            Value = new ChangeTrackingList<NetworkSecurityPerimeterProfileData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspLinkListResult"/>. </summary>
-        /// <param name="value"> Gets a page of NSP Link resources. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterProfileListResult"/>. </summary>
+        /// <param name="value"> Gets a page of NSP profile. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspLinkListResult(IReadOnlyList<NetworkSecurityPerimeterLinkData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterProfileListResult(IReadOnlyList<NetworkSecurityPerimeterProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of NSP Link resources. </summary>
-        public IReadOnlyList<NetworkSecurityPerimeterLinkData> Value { get; }
+        /// <summary> Gets a page of NSP profile. </summary>
+        public IReadOnlyList<NetworkSecurityPerimeterProfileData> Value { get; }
         /// <summary> Gets the URL to get the next page of results. </summary>
         public string NextLink { get; }
     }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
         /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NspProvisioningState? provisioningState, Guid? perimeterGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkSecurityPerimeterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProvisioningState? provisioningState, Guid? perimeterGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PerimeterGuid = perimeterGuid;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
-        public NspProvisioningState? ProvisioningState { get; }
+        public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
         /// <summary> perimeter guid of the network security perimeter. </summary>
         public Guid? PerimeterGuid { get; }
     }

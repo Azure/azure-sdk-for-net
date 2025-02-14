@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
             AddressPrefixes = new ChangeTrackingList<string>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<WritableSubResource>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<PerimeterBasedAccessRule>();
+            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
             ServiceTags = new ChangeTrackingList<string>();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="phoneNumbers"> Outbound rules phone number format. </param>
         /// <param name="serviceTags"> Inbound rules service tag names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NspProvisioningState? provisioningState, AccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<WritableSubResource> subscriptions, IReadOnlyList<PerimeterBasedAccessRule> networkSecurityPerimeters, IList<string> emailAddresses, IList<string> phoneNumbers, IList<string> serviceTags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProvisioningState? provisioningState, NetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<WritableSubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters, IList<string> emailAddresses, IList<string> phoneNumbers, IList<string> serviceTags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Direction = direction;
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
-        public NspProvisioningState? ProvisioningState { get; }
+        public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
         /// <summary> Direction that specifies whether the access rules is inbound/outbound. </summary>
-        public AccessRuleDirection? Direction { get; set; }
+        public NetworkSecurityPerimeterAccessRuleDirection? Direction { get; set; }
         /// <summary> Inbound address prefixes (IPv4/IPv6). </summary>
         public IList<string> AddressPrefixes { get; }
         /// <summary> Outbound rules fully qualified domain name format. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of subscription ids. </summary>
         public IList<WritableSubResource> Subscriptions { get; }
         /// <summary> Rule specified by the perimeter id. </summary>
-        public IReadOnlyList<PerimeterBasedAccessRule> NetworkSecurityPerimeters { get; }
+        public IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> NetworkSecurityPerimeters { get; }
         /// <summary> Outbound rules email address format. </summary>
         public IList<string> EmailAddresses { get; }
         /// <summary> Outbound rules phone number format. </summary>

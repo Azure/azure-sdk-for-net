@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The NSP logging configuration properties. </summary>
-    public partial class NspLoggingConfigurationProperties
+    /// <summary> Result of the request to list NSP access rules. Contains a list of NSP access rules and a URL link to get the next set of results. </summary>
+    internal partial class NetworkSecurityPerimeterAccessRuleListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,26 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspLoggingConfigurationProperties"/>. </summary>
-        public NspLoggingConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleListResult"/>. </summary>
+        internal NetworkSecurityPerimeterAccessRuleListResult()
         {
-            EnabledLogCategories = new ChangeTrackingList<string>();
+            Value = new ChangeTrackingList<NetworkSecurityPerimeterAccessRuleData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspLoggingConfigurationProperties"/>. </summary>
-        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
-        /// <param name="version"> The version of the NSP logging configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleListResult"/>. </summary>
+        /// <param name="value"> Gets a page of NSP access rule. </param>
+        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspLoggingConfigurationProperties(IList<string> enabledLogCategories, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterAccessRuleListResult(IReadOnlyList<NetworkSecurityPerimeterAccessRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EnabledLogCategories = enabledLogCategories;
-            Version = version;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The log categories to enable in the NSP logging configuration. </summary>
-        public IList<string> EnabledLogCategories { get; }
-        /// <summary> The version of the NSP logging configuration. </summary>
-        public string Version { get; set; }
+        /// <summary> Gets a page of NSP access rule. </summary>
+        public IReadOnlyList<NetworkSecurityPerimeterAccessRuleData> Value { get; }
+        /// <summary> Gets the URL to get the next page of results. </summary>
+        public string NextLink { get; }
     }
 }

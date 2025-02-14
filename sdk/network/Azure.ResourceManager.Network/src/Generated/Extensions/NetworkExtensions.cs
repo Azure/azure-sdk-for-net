@@ -173,25 +173,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OperationStatusResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OperationStatusResultResource.CreateResourceIdentifier" /> to create an <see cref="OperationStatusResultResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkArmClient.GetOperationStatusResultResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="OperationStatusResultResource"/> object. </returns>
-        public static OperationStatusResultResource GetOperationStatusResultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableNetworkArmClient(client).GetOperationStatusResultResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -7269,101 +7250,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of OperationStatusResultResources in the SubscriptionResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetOperationStatusResults()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of OperationStatusResultResources and their operations over a OperationStatusResultResource. </returns>
-        public static OperationStatusResultCollection GetOperationStatusResults(this SubscriptionResource subscriptionResource)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetOperationStatusResults();
-        }
-
-        /// <summary>
-        /// Gets the operation status for the given operation id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/networkSecurityPerimeterOperationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterOperationStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationStatusResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetOperationStatusResultAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of network security perimeter. </param>
-        /// <param name="operationId"> The operation id of the async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<OperationStatusResultResource>> GetOperationStatusResultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableNetworkSubscriptionResource(subscriptionResource).GetOperationStatusResultAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the operation status for the given operation id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/networkSecurityPerimeterOperationStatuses/{operationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkSecurityPerimeterOperationStatus_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="OperationStatusResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetOperationStatusResult(AzureLocation,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of network security perimeter. </param>
-        /// <param name="operationId"> The operation id of the async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<OperationStatusResultResource> GetOperationStatusResult(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetOperationStatusResult(location, operationId, cancellationToken);
         }
 
         /// <summary>

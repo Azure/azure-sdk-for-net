@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Result of the request to list NSP access rules. Contains a list of NSP access rules and a URL link to get the next set of results. </summary>
-    internal partial class NspAccessRuleListResult
+    /// <summary> Result of the request to list NSP resource associations. Contains a list of NSP resource associations and a URL link to get the next set of results. </summary>
+    internal partial class NetworkSecurityPerimeterAssociationsListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspAccessRuleListResult"/>. </summary>
-        internal NspAccessRuleListResult()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationsListResult"/>. </summary>
+        internal NetworkSecurityPerimeterAssociationsListResult()
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterAccessRuleData>();
+            Value = new ChangeTrackingList<NetworkSecurityPerimeterAssociationData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspAccessRuleListResult"/>. </summary>
-        /// <param name="value"> Gets a page of NSP access rule. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationsListResult"/>. </summary>
+        /// <param name="value"> Gets a page of NSP resource associations. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRuleListResult(IReadOnlyList<NetworkSecurityPerimeterAccessRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterAssociationsListResult(IReadOnlyList<NetworkSecurityPerimeterAssociationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of NSP access rule. </summary>
-        public IReadOnlyList<NetworkSecurityPerimeterAccessRuleData> Value { get; }
+        /// <summary> Gets a page of NSP resource associations. </summary>
+        public IReadOnlyList<NetworkSecurityPerimeterAssociationData> Value { get; }
         /// <summary> Gets the URL to get the next page of results. </summary>
         public string NextLink { get; }
     }

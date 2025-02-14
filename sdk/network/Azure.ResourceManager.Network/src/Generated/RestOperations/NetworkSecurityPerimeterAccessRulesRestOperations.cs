@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NspAccessRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string profileName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityPerimeterAccessRuleListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string profileName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -445,9 +445,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspAccessRuleListResult value = default;
+                        NetworkSecurityPerimeterAccessRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NspAccessRuleListResult.DeserializeNspAccessRuleListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterAccessRuleListResult.DeserializeNetworkSecurityPerimeterAccessRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NspAccessRuleListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string profileName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityPerimeterAccessRuleListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string profileName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspAccessRuleListResult value = default;
+                        NetworkSecurityPerimeterAccessRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NspAccessRuleListResult.DeserializeNspAccessRuleListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterAccessRuleListResult.DeserializeNetworkSecurityPerimeterAccessRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NspAccessRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string profileName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityPerimeterAccessRuleListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string profileName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -535,9 +535,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspAccessRuleListResult value = default;
+                        NetworkSecurityPerimeterAccessRuleListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NspAccessRuleListResult.DeserializeNspAccessRuleListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterAccessRuleListResult.DeserializeNetworkSecurityPerimeterAccessRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="profileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkSecurityPerimeterName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NspAccessRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string profileName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityPerimeterAccessRuleListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, string profileName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -570,9 +570,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspAccessRuleListResult value = default;
+                        NetworkSecurityPerimeterAccessRuleListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NspAccessRuleListResult.DeserializeNspAccessRuleListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterAccessRuleListResult.DeserializeNetworkSecurityPerimeterAccessRuleListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

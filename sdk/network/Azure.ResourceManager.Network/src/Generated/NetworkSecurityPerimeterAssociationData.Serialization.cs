@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NspProvisioningState? provisioningState = default;
+            NetworkSecurityPerimeterProvisioningState? provisioningState = default;
             WritableSubResource privateLinkResource = default;
             WritableSubResource profile = default;
             AssociationAccessMode? accessMode = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            provisioningState = new NspProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkSecurityPerimeterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkResource"u8))

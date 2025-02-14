@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NspLinkProvisioningState? provisioningState = default;
+            NetworkSecurityPerimeterLinkProvisioningState? provisioningState = default;
             string autoApprovedRemotePerimeterResourceId = default;
             Guid? remotePerimeterGuid = default;
             string remotePerimeterLocation = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
             IList<string> remoteInboundProfiles = default;
             IReadOnlyList<string> remoteOutboundProfiles = default;
             string description = default;
-            NspLinkStatus? status = default;
+            NetworkSecurityPerimeterLinkStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            provisioningState = new NspLinkProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkSecurityPerimeterLinkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("autoApprovedRemotePerimeterResourceId"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            status = new NspLinkStatus(property0.Value.GetString());
+                            status = new NetworkSecurityPerimeterLinkStatus(property0.Value.GetString());
                             continue;
                         }
                     }

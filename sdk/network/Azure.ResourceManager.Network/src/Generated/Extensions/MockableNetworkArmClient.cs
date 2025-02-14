@@ -119,18 +119,6 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OperationStatusResultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OperationStatusResultResource.CreateResourceIdentifier" /> to create an <see cref="OperationStatusResultResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationStatusResultResource"/> object. </returns>
-        public virtual OperationStatusResultResource GetOperationStatusResultResource(ResourceIdentifier id)
-        {
-            OperationStatusResultResource.ValidateResourceId(id);
-            return new OperationStatusResultResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

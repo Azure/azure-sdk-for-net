@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Result of the request to list NSP resource associations. Contains a list of NSP resource associations and a URL link to get the next set of results. </summary>
-    internal partial class NspAssociationsListResult
+    /// <summary> The NSP logging configuration properties. </summary>
+    public partial class NetworkSecurityPerimeterLoggingConfigurationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,26 @@ namespace Azure.ResourceManager.Network.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspAssociationsListResult"/>. </summary>
-        internal NspAssociationsListResult()
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationProperties"/>. </summary>
+        public NetworkSecurityPerimeterLoggingConfigurationProperties()
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterAssociationData>();
+            EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspAssociationsListResult"/>. </summary>
-        /// <param name="value"> Gets a page of NSP resource associations. </param>
-        /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLoggingConfigurationProperties"/>. </summary>
+        /// <param name="enabledLogCategories"> The log categories to enable in the NSP logging configuration. </param>
+        /// <param name="version"> The version of the NSP logging configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspAssociationsListResult(IReadOnlyList<NetworkSecurityPerimeterAssociationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterLoggingConfigurationProperties(IList<string> enabledLogCategories, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            EnabledLogCategories = enabledLogCategories;
+            Version = version;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets a page of NSP resource associations. </summary>
-        public IReadOnlyList<NetworkSecurityPerimeterAssociationData> Value { get; }
-        /// <summary> Gets the URL to get the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The log categories to enable in the NSP logging configuration. </summary>
+        public IList<string> EnabledLogCategories { get; }
+        /// <summary> The version of the NSP logging configuration. </summary>
+        public string Version { get; set; }
     }
 }

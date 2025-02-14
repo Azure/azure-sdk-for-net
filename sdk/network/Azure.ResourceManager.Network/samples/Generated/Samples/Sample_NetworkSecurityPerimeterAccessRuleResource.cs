@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             NetworkSecurityPerimeterAccessRuleData data = new NetworkSecurityPerimeterAccessRuleData(default)
             {
-                Direction = AccessRuleDirection.Inbound,
+                Direction = NetworkSecurityPerimeterAccessRuleDirection.Inbound,
                 AddressPrefixes = { "10.11.0.0/16", "10.10.1.0/24" },
             };
             ArmOperation<NetworkSecurityPerimeterAccessRuleResource> lro = await networkSecurityPerimeterAccessRule.UpdateAsync(WaitUntil.Completed, data);

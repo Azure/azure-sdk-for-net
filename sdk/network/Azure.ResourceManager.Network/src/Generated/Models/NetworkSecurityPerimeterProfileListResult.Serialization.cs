@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class NspProfileListResult : IUtf8JsonSerializable, IJsonModel<NspProfileListResult>
+    internal partial class NetworkSecurityPerimeterProfileListResult : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterProfileListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspProfileListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterProfileListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspProfileListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterProfileListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspProfileListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileListResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Value))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        NspProfileListResult IJsonModel<NspProfileListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterProfileListResult IJsonModel<NetworkSecurityPerimeterProfileListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspProfileListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspProfileListResult(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterProfileListResult(document.RootElement, options);
         }
 
-        internal static NspProfileListResult DeserializeNspProfileListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityPerimeterProfileListResult DeserializeNetworkSecurityPerimeterProfileListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -117,38 +117,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspProfileListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileData>(), nextLink, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterProfileListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileData>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NspProfileListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityPerimeterProfileListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NspProfileListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspProfileListResult IPersistableModel<NspProfileListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterProfileListResult IPersistableModel<NetworkSecurityPerimeterProfileListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterProfileListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNspProfileListResult(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterProfileListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspProfileListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspProfileListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterProfileListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

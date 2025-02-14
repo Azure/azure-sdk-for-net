@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class NspAccessRuleListResult : IUtf8JsonSerializable, IJsonModel<NspAccessRuleListResult>
+    internal partial class NetworkSecurityPerimeterAccessRuleListResult : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterAccessRuleListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspAccessRuleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterAccessRuleListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspAccessRuleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterAccessRuleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAccessRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAccessRuleListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterAccessRuleListResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Value))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        NspAccessRuleListResult IJsonModel<NspAccessRuleListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterAccessRuleListResult IJsonModel<NetworkSecurityPerimeterAccessRuleListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAccessRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAccessRuleListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterAccessRuleListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspAccessRuleListResult(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterAccessRuleListResult(document.RootElement, options);
         }
 
-        internal static NspAccessRuleListResult DeserializeNspAccessRuleListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityPerimeterAccessRuleListResult DeserializeNetworkSecurityPerimeterAccessRuleListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -117,38 +117,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspAccessRuleListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterAccessRuleData>(), nextLink, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterAccessRuleListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterAccessRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NspAccessRuleListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityPerimeterAccessRuleListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAccessRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NspAccessRuleListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterAccessRuleListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspAccessRuleListResult IPersistableModel<NspAccessRuleListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterAccessRuleListResult IPersistableModel<NetworkSecurityPerimeterAccessRuleListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterAccessRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNspAccessRuleListResult(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterAccessRuleListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspAccessRuleListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterAccessRuleListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspAccessRuleListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterAccessRuleListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

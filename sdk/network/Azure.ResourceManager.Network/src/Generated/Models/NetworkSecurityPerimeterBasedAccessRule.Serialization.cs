@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PerimeterBasedAccessRule : IUtf8JsonSerializable, IJsonModel<PerimeterBasedAccessRule>
+    public partial class NetworkSecurityPerimeterBasedAccessRule : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterBasedAccessRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerimeterBasedAccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterBasedAccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PerimeterBasedAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterBasedAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PerimeterBasedAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterBasedAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerimeterBasedAccessRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterBasedAccessRule)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Id))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        PerimeterBasedAccessRule IJsonModel<PerimeterBasedAccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterBasedAccessRule IJsonModel<NetworkSecurityPerimeterBasedAccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PerimeterBasedAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterBasedAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PerimeterBasedAccessRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterBasedAccessRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePerimeterBasedAccessRule(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterBasedAccessRule(document.RootElement, options);
         }
 
-        internal static PerimeterBasedAccessRule DeserializePerimeterBasedAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityPerimeterBasedAccessRule DeserializeNetworkSecurityPerimeterBasedAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PerimeterBasedAccessRule(id, perimeterGuid, location, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterBasedAccessRule(id, perimeterGuid, location, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PerimeterBasedAccessRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityPerimeterBasedAccessRule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PerimeterBasedAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterBasedAccessRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PerimeterBasedAccessRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterBasedAccessRule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PerimeterBasedAccessRule IPersistableModel<PerimeterBasedAccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterBasedAccessRule IPersistableModel<NetworkSecurityPerimeterBasedAccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PerimeterBasedAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterBasedAccessRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePerimeterBasedAccessRule(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterBasedAccessRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PerimeterBasedAccessRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterBasedAccessRule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PerimeterBasedAccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterBasedAccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

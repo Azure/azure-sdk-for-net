@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NspProfileListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityPerimeterProfileListResult>> ListAsync(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -415,9 +415,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspProfileListResult value = default;
+                        NetworkSecurityPerimeterProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NspProfileListResult.DeserializeNspProfileListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterProfileListResult.DeserializeNetworkSecurityPerimeterProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NspProfileListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityPerimeterProfileListResult> List(string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -446,9 +446,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspProfileListResult value = default;
+                        NetworkSecurityPerimeterProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NspProfileListResult.DeserializeNspProfileListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterProfileListResult.DeserializeNetworkSecurityPerimeterProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NspProfileListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkSecurityPerimeterProfileListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -501,9 +501,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspProfileListResult value = default;
+                        NetworkSecurityPerimeterProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NspProfileListResult.DeserializeNspProfileListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterProfileListResult.DeserializeNetworkSecurityPerimeterProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkSecurityPerimeterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NspProfileListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<NetworkSecurityPerimeterProfileListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string networkSecurityPerimeterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -534,9 +534,9 @@ namespace Azure.ResourceManager.Network
             {
                 case 200:
                     {
-                        NspProfileListResult value = default;
+                        NetworkSecurityPerimeterProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NspProfileListResult.DeserializeNspProfileListResult(document.RootElement);
+                        value = NetworkSecurityPerimeterProfileListResult.DeserializeNetworkSecurityPerimeterProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

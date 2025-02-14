@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             NetworkSecurityPerimeterLoggingConfigurationData data = new NetworkSecurityPerimeterLoggingConfigurationData
             {
-                Properties = new NspLoggingConfigurationProperties
+                Properties = new NetworkSecurityPerimeterLoggingConfigurationProperties
                 {
                     EnabledLogCategories = { "NspPublicInboundPerimeterRulesDenied", "NspPublicOutboundPerimeterRulesDenied" },
                 },

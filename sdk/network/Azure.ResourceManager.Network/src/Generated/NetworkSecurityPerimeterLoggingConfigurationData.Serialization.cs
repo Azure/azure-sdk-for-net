@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            NspLoggingConfigurationProperties properties = default;
+            NetworkSecurityPerimeterLoggingConfigurationProperties properties = default;
             ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = NspLoggingConfigurationProperties.DeserializeNspLoggingConfigurationProperties(property.Value, options);
+                    properties = NetworkSecurityPerimeterLoggingConfigurationProperties.DeserializeNetworkSecurityPerimeterLoggingConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

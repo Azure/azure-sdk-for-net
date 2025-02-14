@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="accessMode"> Access mode on the association. </param>
         /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NspProvisioningState? provisioningState, WritableSubResource privateLinkResource, WritableSubResource profile, AssociationAccessMode? accessMode, string hasProvisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProvisioningState? provisioningState, WritableSubResource privateLinkResource, WritableSubResource profile, AssociationAccessMode? accessMode, string hasProvisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             PrivateLinkResource = privateLinkResource;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the resource  association resource. </summary>
-        public NspProvisioningState? ProvisioningState { get; }
+        public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
         /// <summary> The PaaS resource to be associated. </summary>
         internal WritableSubResource PrivateLinkResource { get; set; }
         /// <summary> Gets or sets Id. </summary>

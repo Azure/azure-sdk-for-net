@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Samples
             string accessRuleName = "accessRule1";
             NetworkSecurityPerimeterAccessRuleData data = new NetworkSecurityPerimeterAccessRuleData(default)
             {
-                Direction = AccessRuleDirection.Inbound,
+                Direction = NetworkSecurityPerimeterAccessRuleDirection.Inbound,
                 AddressPrefixes = { "10.11.0.0/16", "10.10.1.0/24" },
             };
             ArmOperation<NetworkSecurityPerimeterAccessRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accessRuleName, data);

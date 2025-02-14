@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="status"> The NSP link state. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NspLinkProvisioningState? provisioningState, string autoApprovedRemotePerimeterResourceId, Guid? remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NspLinkStatus? status, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterLinkProvisioningState? provisioningState, string autoApprovedRemotePerimeterResourceId, Guid? remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NetworkSecurityPerimeterLinkStatus? status, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AutoApprovedRemotePerimeterResourceId = autoApprovedRemotePerimeterResourceId;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the NSP Link resource. </summary>
-        public NspLinkProvisioningState? ProvisioningState { get; }
+        public NetworkSecurityPerimeterLinkProvisioningState? ProvisioningState { get; }
         /// <summary> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </summary>
         public string AutoApprovedRemotePerimeterResourceId { get; set; }
         /// <summary> Remote NSP Guid with which the link gets created. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </summary>
         public string Description { get; set; }
         /// <summary> The NSP link state. </summary>
-        public NspLinkStatus? Status { get; }
+        public NetworkSecurityPerimeterLinkStatus? Status { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
     }

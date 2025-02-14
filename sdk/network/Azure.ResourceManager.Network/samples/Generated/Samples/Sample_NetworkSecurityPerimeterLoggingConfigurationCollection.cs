@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Samples
             string loggingConfigurationName = "instance";
             NetworkSecurityPerimeterLoggingConfigurationData data = new NetworkSecurityPerimeterLoggingConfigurationData
             {
-                Properties = new NspLoggingConfigurationProperties
+                Properties = new NetworkSecurityPerimeterLoggingConfigurationProperties
                 {
                     EnabledLogCategories = { "NspPublicInboundPerimeterRulesDenied", "NspPublicOutboundPerimeterRulesDenied" },
                 },

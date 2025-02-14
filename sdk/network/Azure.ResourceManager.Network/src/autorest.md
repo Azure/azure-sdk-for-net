@@ -24,6 +24,7 @@ sample-gen:
     - VirtualMachineScaleSetVMs_ListPublicIPAddresses
     - VirtualMachineScaleSetVMs_ListNetworkInterfaces
     - VirtualMachineScaleSets_GetNetworkInterface
+    - NetworkSecurityPerimeterOperationStatus_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -39,6 +40,7 @@ resource-model-requires-type: false
 
 rename-mapping:
   Access: NetworkAccess
+  AccessRuleDirection: NetworkSecurityPerimeterAccessRuleDirection
   Action: RouteMapAction
   ActionType: RuleMatchActionType
   ActiveConfigurationParameter.regions: -|azure-location
@@ -133,6 +135,7 @@ rename-mapping:
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
   IsWorkloadProtected: WorkloadProtectedFlag
+  LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
   MigratedPools: MigrateLoadBalancerToIPBasedResult
   NetworkManagerConnection.properties.networkManagerId: -|arm-id
   NetworkManagerDeploymentStatus.deploymentStatus: DeploymentState
@@ -163,6 +166,8 @@ rename-mapping:
   QosDefinition: DscpQosDefinition
   QueryRequestOptions: NetworkManagementQueryContent
   QueryResults: IdpsSignatureListResult
+  PerimeterAssociableResource: NetworkSecurityPerimeterAssociableResourceType
+  PerimeterBasedAccessRule: NetworkSecurityPerimeterBasedAccessRule
   ResiliencyModel: ExpressRouteGatewayResiliencyModel
   Resource: NetworkTrackedResourceData
   ResourceBasics: IpamResourceBasics
@@ -220,15 +225,6 @@ rename-mapping:
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
-  LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
-  NspProfile: NetworkSecurityPerimeterProfile
-  NspAccessRule: NetworkSecurityPerimeterAccessRule
-  NspAssociation: NetworkSecurityPerimeterAssociation
-  NspLink: NetworkSecurityPerimeterLink
-  NspLinkReference: NetworkSecurityPerimeterLinkReference
-  NspLoggingConfiguration: NetworkSecurityPerimeterLoggingConfiguration
-  PerimeterAssociableResource: NetworkSecurityPerimeterAssociableResourceType 
-  
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -298,6 +294,7 @@ acronym-mapping:
   IKEv2: IkeV2
   IkeV2: IkeV2
   Stag: STag|stag
+  Nsp: NetworkSecurityPerimeter
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:
@@ -358,6 +355,7 @@ directive:
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
   - remove-operation: 'NetworkSecurityPerimeterAssociations_Reconcile'
   - remove-operation: 'NetworkSecurityPerimeterAccessRules_Reconcile'
+  - remove-operation: 'NetworkSecurityPerimeterOperationStatus_Get'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
   # - rename-operation:

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class NspAssociationsListResult : IUtf8JsonSerializable, IJsonModel<NspAssociationsListResult>
+    internal partial class NetworkSecurityPerimeterLinkListResult : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterLinkListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspAssociationsListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterLinkListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspAssociationsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetworkSecurityPerimeterLinkListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAssociationsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterLinkListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAssociationsListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLinkListResult)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Value))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        NspAssociationsListResult IJsonModel<NspAssociationsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterLinkListResult IJsonModel<NetworkSecurityPerimeterLinkListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAssociationsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterLinkListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAssociationsListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLinkListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspAssociationsListResult(document.RootElement, options);
+            return DeserializeNetworkSecurityPerimeterLinkListResult(document.RootElement, options);
         }
 
-        internal static NspAssociationsListResult DeserializeNspAssociationsListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetworkSecurityPerimeterLinkListResult DeserializeNetworkSecurityPerimeterLinkListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            IReadOnlyList<NetworkSecurityPerimeterAssociationData> value = default;
+            IReadOnlyList<NetworkSecurityPerimeterLinkData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeterAssociationData> array = new List<NetworkSecurityPerimeterAssociationData>();
+                    List<NetworkSecurityPerimeterLinkData> array = new List<NetworkSecurityPerimeterLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterAssociationData.DeserializeNetworkSecurityPerimeterAssociationData(item, options));
+                        array.Add(NetworkSecurityPerimeterLinkData.DeserializeNetworkSecurityPerimeterLinkData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,38 +117,38 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspAssociationsListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterAssociationData>(), nextLink, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterLinkListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterLinkData>(), nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NspAssociationsListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetworkSecurityPerimeterLinkListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAssociationsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterLinkListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NspAssociationsListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLinkListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspAssociationsListResult IPersistableModel<NspAssociationsListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetworkSecurityPerimeterLinkListResult IPersistableModel<NetworkSecurityPerimeterLinkListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAssociationsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterLinkListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNspAssociationsListResult(document.RootElement, options);
+                        return DeserializeNetworkSecurityPerimeterLinkListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspAssociationsListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLinkListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspAssociationsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetworkSecurityPerimeterLinkListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

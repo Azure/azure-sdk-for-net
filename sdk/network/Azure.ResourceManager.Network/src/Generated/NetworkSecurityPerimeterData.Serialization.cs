@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NspProvisioningState? provisioningState = default;
+            NetworkSecurityPerimeterProvisioningState? provisioningState = default;
             Guid? perimeterGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            provisioningState = new NspProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkSecurityPerimeterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("perimeterGuid"u8))

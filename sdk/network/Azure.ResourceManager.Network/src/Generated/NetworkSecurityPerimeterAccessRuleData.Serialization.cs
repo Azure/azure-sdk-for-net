@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.Network
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            NspProvisioningState? provisioningState = default;
-            AccessRuleDirection? direction = default;
+            NetworkSecurityPerimeterProvisioningState? provisioningState = default;
+            NetworkSecurityPerimeterAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
             IList<string> fullyQualifiedDomainNames = default;
             IList<WritableSubResource> subscriptions = default;
-            IReadOnlyList<PerimeterBasedAccessRule> networkSecurityPerimeters = default;
+            IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters = default;
             IList<string> emailAddresses = default;
             IList<string> phoneNumbers = default;
             IList<string> serviceTags = default;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            provisioningState = new NspProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkSecurityPerimeterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("direction"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            direction = new AccessRuleDirection(property0.Value.GetString());
+                            direction = new NetworkSecurityPerimeterAccessRuleDirection(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("addressPrefixes"u8))
@@ -280,10 +280,10 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            List<PerimeterBasedAccessRule> array = new List<PerimeterBasedAccessRule>();
+                            List<NetworkSecurityPerimeterBasedAccessRule> array = new List<NetworkSecurityPerimeterBasedAccessRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PerimeterBasedAccessRule.DeserializePerimeterBasedAccessRule(item, options));
+                                array.Add(NetworkSecurityPerimeterBasedAccessRule.DeserializeNetworkSecurityPerimeterBasedAccessRule(item, options));
                             }
                             networkSecurityPerimeters = array;
                             continue;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<WritableSubResource>(),
-                networkSecurityPerimeters ?? new ChangeTrackingList<PerimeterBasedAccessRule>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
                 phoneNumbers ?? new ChangeTrackingList<string>(),
                 serviceTags ?? new ChangeTrackingList<string>(),
