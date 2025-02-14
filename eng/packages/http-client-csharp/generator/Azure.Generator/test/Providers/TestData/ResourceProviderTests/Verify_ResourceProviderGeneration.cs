@@ -22,7 +22,7 @@ namespace Samples
     {
         private global::Samples.Models.ResponseTypeData _data;
         private global::Azure.Core.Pipeline.ClientDiagnostics _responsetypeClientDiagnostics;
-        private global::Sample.TestClient _restClient;
+        private global::Sample.TestClient _responsetypeRestClient;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly global::Azure.Core.ResourceType ResourceType = "a/test";
 
@@ -41,7 +41,7 @@ namespace Samples
         {
             _responsetypeClientDiagnostics = new global::Azure.Core.Pipeline.ClientDiagnostics("Samples", ResourceType.Namespace, this.Diagnostics);
             this.TryGetApiVersion(ResourceType, out string responsetypeApiVersion);
-            _restClient = new global::Sample.TestClient(this.Pipeline, this.Endpoint, responsetypeApiVersion);
+            _responsetypeRestClient = new global::Sample.TestClient(this.Pipeline, this.Endpoint, responsetypeApiVersion);
 #if DEBUG
             global::Samples.ResponseTypeResource.ValidateResourceId(id);
 #endif
@@ -79,7 +79,7 @@ namespace Samples
             scope.Start();
             try
             {
-                global::Azure.Response<global::Samples.Models.ResponseTypeData> response = _restClient.GetOperation(this.Id.Name, cancellationToken);
+                global::Azure.Response<global::Samples.Models.ResponseTypeData> response = _responsetypeRestClient.GetOperation(this.Id.Name, cancellationToken);
                 if ((response.Value == null))
                 {
                     throw new global::Azure.RequestFailedException(response.GetRawResponse());
@@ -101,7 +101,7 @@ namespace Samples
             scope.Start();
             try
             {
-                global::Azure.Response<global::Samples.Models.ResponseTypeData> response = await _restClient.GetOperationAsync(this.Id.Name, cancellationToken).ConfigureAwait(false);
+                global::Azure.Response<global::Samples.Models.ResponseTypeData> response = await _responsetypeRestClient.GetOperationAsync(this.Id.Name, cancellationToken).ConfigureAwait(false);
                 if ((response.Value == null))
                 {
                     throw new global::Azure.RequestFailedException(response.GetRawResponse());
