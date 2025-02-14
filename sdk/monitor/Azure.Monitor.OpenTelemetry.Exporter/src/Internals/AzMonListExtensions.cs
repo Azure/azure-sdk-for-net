@@ -253,7 +253,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             var values = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerSocketAddress, SemanticConventions.AttributeServerPort);
             string? target = values[0]?.ToString() ?? values[1]?.ToString();
             var port = values[2]?.ToString();
-            if (!string.IsNullOrWhiteSpace(target) && port != null && port != defaultPort)
+            if (!string.IsNullOrWhiteSpace(target) &&  port != null && port != defaultPort)
             {
                 target = target + ":" + port;
             }
