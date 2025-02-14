@@ -79,12 +79,7 @@ internal class AIFoundryHubCdk : NamedProvisionableConstruct
                 new PropertyExpression("kind", "hub"),
                 new PropertyExpression("identity",
                     new ObjectExpression(
-                        new PropertyExpression("type", "UserAssigned"),
-                        new PropertyExpression("userAssignedIdentities",
-                            new ObjectExpression(
-                                new PropertyExpression("${cm_identity.id}", new ObjectExpression())
-                            )
-                        )
+                        new PropertyExpression("type", "SystemAssigned")
                     )
                 ),
                 new PropertyExpression("properties",
@@ -130,12 +125,7 @@ internal class AIFoundryProjectCdk : ProvisionableResource
                 new PropertyExpression("kind", "Project"),
                 new PropertyExpression("identity",
                     new ObjectExpression(
-                        new PropertyExpression("type", "UserAssigned"),
-                        new PropertyExpression("userAssignedIdentities",
-                            new ObjectExpression(
-                                new PropertyExpression("${cm_identity.id}", new ObjectExpression())
-                            )
-                        )
+                        new PropertyExpression("type", "SystemAssigned")
                     )
                 ),
                 new PropertyExpression("properties",
