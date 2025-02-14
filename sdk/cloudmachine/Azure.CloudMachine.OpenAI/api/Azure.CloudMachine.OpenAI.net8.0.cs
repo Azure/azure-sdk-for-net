@@ -46,7 +46,8 @@ namespace Azure.CloudMachine.OpenAI
         public OpenAIModelFeature(string model, string modelVersion, Azure.CloudMachine.OpenAI.AIModelKind kind = Azure.CloudMachine.OpenAI.AIModelKind.Chat) { }
         public string Model { get { throw null; } }
         public string ModelVersion { get { throw null; } }
-        protected override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
+        public Azure.Core.ClientConnection CreateConnection(string cmId) { throw null; }
+        protected override void EmitConnections(System.Collections.Generic.ICollection<Azure.Core.ClientConnection> connections, string cmId) { }
         protected override void EmitFeatures(Azure.CloudMachine.Core.FeatureCollection features, string cmId) { }
         protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure cm) { throw null; }
     }

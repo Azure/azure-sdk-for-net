@@ -51,8 +51,10 @@ namespace Azure.CloudMachine.AIFoundry
 {
     public partial class AIFoundryFeature : Azure.CloudMachine.Core.CloudMachineFeature
     {
+        public AIFoundryFeature() { }
         public AIFoundryFeature(string connectionString) { }
-        protected internal override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
+        public System.Collections.Generic.List<Azure.Core.ClientConnection> Connections { get { throw null; } set { } }
+        protected internal override void EmitConnections(System.Collections.Generic.ICollection<Azure.Core.ClientConnection> connections, string cmId) { }
         protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure cm) { throw null; }
     }
 }
@@ -73,7 +75,7 @@ namespace Azure.CloudMachine.Core
         protected internal System.Collections.Generic.Dictionary<Azure.Provisioning.Primitives.Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.Primitives.ProvisionableResource Resource { get { throw null; } }
-        protected internal virtual void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
+        protected internal virtual void EmitConnections(System.Collections.Generic.ICollection<Azure.Core.ClientConnection> connections, string cmId) { }
         protected internal virtual void EmitFeatures(Azure.CloudMachine.Core.FeatureCollection features, string cmId) { }
         protected abstract Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure cm);
         protected static T EnsureEmits<T>(Azure.CloudMachine.Core.CloudMachineFeature feature) { throw null; }
@@ -99,7 +101,7 @@ namespace Azure.CloudMachine.KeyVault
     {
         public KeyVaultFeature(Azure.Provisioning.KeyVault.KeyVaultSku? sku = null) { }
         public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
-        protected internal override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
+        protected internal override void EmitConnections(System.Collections.Generic.ICollection<Azure.Core.ClientConnection> connections, string cmId) { }
         protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure infrastructure) { throw null; }
     }
 }
