@@ -888,7 +888,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="caption"> The caption for the media object, if supported and provided. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
+        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType, string mediaId, string fileName, string caption)
         {
             return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption, default);
         }
