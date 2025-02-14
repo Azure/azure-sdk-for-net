@@ -5,6 +5,8 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using BenchmarkDotNet.Toolchains.InProcess.NoEmit;
+using Microsoft.Diagnostics.Tracing.Parsers;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -24,16 +26,28 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long MaxSupportedSingleTransferSize => Constants.GB;
 
-        protected internal override long MaxSupportedChunkSize => Constants.GB;
+        protected internal override long MaxSupportedChunkSize => _maxSupportedChunkSize;
+        private long _maxSupportedChunkSize;
+
+        protected internal override int MaxSupportedChunkCount => _maxSupportedChunkCount;
+        private int _maxSupportedChunkCount;
 
         protected internal override long? Length { get; }
 
-        private MockStorageResourceItem(long? length, Uri uri, int failAfter, TransferOrder transferOrder = TransferOrder.Sequential)
+        private MockStorageResourceItem(
+            long? length,
+            Uri uri,
+            int failAfter,
+            TransferOrder transferOrder = TransferOrder.Sequential,
+            long maxSupportedChunkSize = Constants.GB,
+            int maxSupportedChunkCount = int.MaxValue)
         {
             Length = length;
             _uri = uri ?? new Uri("https://example.com");
             _failAfter = failAfter;
             TransferType = transferOrder;
+            _maxSupportedChunkSize = maxSupportedChunkSize;
+            _maxSupportedChunkCount = maxSupportedChunkCount;
         }
 
         public static MockStorageResourceItem MakeSourceResource(long length, Uri uri = default, int failAfter = int.MaxValue)
@@ -41,9 +55,14 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockStorageResourceItem(length, uri, failAfter);
         }
 
-        public static MockStorageResourceItem MakeDestinationResource(Uri uri = default, TransferOrder transferOrder = TransferOrder.Sequential, int failAfter = int.MaxValue)
+        public static MockStorageResourceItem MakeDestinationResource(
+            Uri uri = default,
+            TransferOrder transferOrder = TransferOrder.Sequential,
+            int failAfter = int.MaxValue,
+            long maxSupportedChunkSize = Constants.GB,
+            int maxSupportChunkCount = int.MaxValue)
         {
-            return new MockStorageResourceItem(default, uri, failAfter, transferOrder);
+            return new MockStorageResourceItem(default, uri, failAfter, transferOrder, maxSupportedChunkSize, maxSupportChunkCount);
         }
 
         protected internal override Task CompleteTransferAsync(
