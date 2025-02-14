@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-* fixed an issue where array attributes on metrics weren't exported correctly.
+* Fixed an issue where array attributes on metrics weren't exported correctly.
   ([#47300](https://github.com/Azure/azure-sdk-for-net/pull/47300))
 
 ### Other Changes
