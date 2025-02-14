@@ -1,8 +1,6 @@
 # Release History
 
-## 12.0.0-beta.4 (Unreleased)
-
-### Features Added
+## 12.0.0 (2025-02-11)
 
 ### Breaking Changes
 - Changed `ShareFileStorangeResourceOptions.FilePermissions` from `DataTransferProperty` to `bool?`
@@ -22,10 +20,16 @@
      - `ShareFileStorageResourceOptions.FileChangedOn`
 - Changed `ShareDirectoryClient.StartUploadDirectoryAsync` to `ShareDirectoryClient.UploadDirectoryAsync` and added a required `waitUntil` parameter.
 - Changed `ShareDirectoryClient.StartDownloadToDirectoryAsync` to `ShareDirectoryClient.DownloadToDirectoryAsync` and added a required `waitUntil` parameter.
+- Several refactors to `ShareFilesStorageResourceProvider`:
+  - Removed nested delegates `GetStorageSharedKeyCredential`, `GetTokenCredential`, and `GetAzureSasCredential`.
+  - Removed default constructor.
+  - Removed constructor overload for `GetTokenCredential` entirely.
+  - Changed constructor overloads for `GetStorageSharedKeyCredential` and `GetAzureSasCredential` to use `Func`. These callbacks are also now async, returning a `ValueTask`, and the `readOnly` parameter was removed.
+  - Changed `FromFile` and `FromDirectory` to async, returning a `ValueTask`, and renamed to `FromFileAsync` and `FromDirectoryAsync` respectively.
+  - Changed `FromClient` methods to `static` methods.
 
 ### Bugs Fixed
-
-### Other Changes
+- Fixed File Attributes with ReadOnly does not transfer / copy correctly bug #2167
 
 ## 12.0.0-beta.3 (2024-10-14)
 

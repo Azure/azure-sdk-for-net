@@ -40,8 +40,6 @@ namespace Azure.AI.Inference
             writer.WriteNumberValue(Created, "U");
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
-            writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage, options);
             writer.WritePropertyName("choices"u8);
             writer.WriteStartArray();
             foreach (var item in Choices)
@@ -49,6 +47,8 @@ namespace Azure.AI.Inference
                 writer.WriteObjectValue<ChatChoice>(item, options);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("usage"u8);
+            writer.WriteObjectValue(Usage, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,8 +89,8 @@ namespace Azure.AI.Inference
             string id = default;
             DateTimeOffset created = default;
             string model = default;
-            CompletionsUsage usage = default;
             IReadOnlyList<ChatChoice> choices = default;
+            CompletionsUsage usage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,11 +110,6 @@ namespace Azure.AI.Inference
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("usage"u8))
-                {
-                    usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("choices"u8))
                 {
                     List<ChatChoice> array = new List<ChatChoice>();
@@ -123,6 +118,11 @@ namespace Azure.AI.Inference
                         array.Add(ChatChoice.DeserializeChatChoice(item, options));
                     }
                     choices = array;
+                    continue;
+                }
+                if (property.NameEquals("usage"u8))
+                {
+                    usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,8 +135,8 @@ namespace Azure.AI.Inference
                 id,
                 created,
                 model,
-                usage,
                 choices,
+                usage,
                 serializedAdditionalRawData);
         }
 

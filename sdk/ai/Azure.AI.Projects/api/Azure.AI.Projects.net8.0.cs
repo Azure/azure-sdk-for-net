@@ -218,9 +218,9 @@ namespace Azure.AI.Projects
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateVectorStoreAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.VectorStore>> CreateVectorStoreAsync(System.Collections.Generic.IEnumerable<string> fileIds = null, string name = null, Azure.AI.Projects.VectorStoreConfiguration storeConfiguration = null, Azure.AI.Projects.VectorStoreExpirationPolicy expiresAfter = null, Azure.AI.Projects.VectorStoreChunkingStrategyRequest chunkingStrategy = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateVectorStoreFile(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStoreDataSource> dataSources = null, Azure.AI.Projects.VectorStoreChunkingStrategyRequest chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Projects.VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, Azure.AI.Projects.VectorStoreDataSource dataSource = null, Azure.AI.Projects.VectorStoreChunkingStrategyRequest chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateVectorStoreFileAsync(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStoreDataSource> dataSources = null, Azure.AI.Projects.VectorStoreChunkingStrategyRequest chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, Azure.AI.Projects.VectorStoreDataSource dataSource = null, Azure.AI.Projects.VectorStoreChunkingStrategyRequest chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateVectorStoreFileBatch(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.AI.Projects.VectorStoreFileBatch> CreateVectorStoreFileBatch(string vectorStoreId, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.VectorStoreDataSource> dataSources = null, Azure.AI.Projects.VectorStoreChunkingStrategyRequest chunkingStrategy = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateVectorStoreFileBatchAsync(string vectorStoreId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -494,6 +494,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.FileSearchToolCallContent FileSearchToolCallContent(Azure.AI.Projects.FileSearchToolCallContentType type = default(Azure.AI.Projects.FileSearchToolCallContentType), string text = null) { throw null; }
         public static Azure.AI.Projects.GetWorkspaceResponse GetWorkspaceResponse(string id = null, string name = null, Azure.AI.Projects.WorkspaceProperties properties = null) { throw null; }
         public static Azure.AI.Projects.IncompleteRunDetails IncompleteRunDetails(Azure.AI.Projects.IncompleteDetailsReason reason = default(Azure.AI.Projects.IncompleteDetailsReason)) { throw null; }
+        public static Azure.AI.Projects.InternalConnectionPropertiesNoAuth InternalConnectionPropertiesNoAuth(Azure.AI.Projects.ConnectionType category = Azure.AI.Projects.ConnectionType.AzureOpenAI, string target = null) { throw null; }
         public static Azure.AI.Projects.ListConnectionsResponse ListConnectionsResponse(System.Collections.Generic.IEnumerable<Azure.AI.Projects.ConnectionResponse> value = null) { throw null; }
         public static Azure.AI.Projects.MessageDelta MessageDelta(Azure.AI.Projects.MessageRole role = default(Azure.AI.Projects.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.Projects.MessageDeltaContent> content = null) { throw null; }
         public static Azure.AI.Projects.MessageDeltaChunk MessageDeltaChunk(string id = null, Azure.AI.Projects.MessageDeltaChunkObject @object = default(Azure.AI.Projects.MessageDeltaChunkObject), Azure.AI.Projects.MessageDelta delta = null) { throw null; }
@@ -559,7 +560,7 @@ namespace Azure.AI.Projects
     }
     public partial class ApplicationInsightsConfiguration : Azure.AI.Projects.InputData, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ApplicationInsightsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ApplicationInsightsConfiguration>
     {
-        public ApplicationInsightsConfiguration(string resourceId, string query, string serviceName) { }
+        public ApplicationInsightsConfiguration(string resourceId, string query) { }
         public string ConnectionString { get { throw null; } set { } }
         public string Query { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
@@ -576,6 +577,7 @@ namespace Azure.AI.Projects
         ApiKey = 0,
         EntraId = 1,
         SAS = 2,
+        None = 3,
     }
     public partial class AzureAISearchResource : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAISearchResource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchResource>
     {
@@ -1135,6 +1137,16 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.InputData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class InternalConnectionPropertiesNoAuth : Azure.AI.Projects.ConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InternalConnectionPropertiesNoAuth>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InternalConnectionPropertiesNoAuth>
+    {
+        internal InternalConnectionPropertiesNoAuth() : base (default(Azure.AI.Projects.ConnectionType), default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.InternalConnectionPropertiesNoAuth System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InternalConnectionPropertiesNoAuth>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InternalConnectionPropertiesNoAuth>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.InternalConnectionPropertiesNoAuth System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InternalConnectionPropertiesNoAuth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InternalConnectionPropertiesNoAuth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InternalConnectionPropertiesNoAuth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ListConnectionsResponse : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ListConnectionsResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ListConnectionsResponse>
     {

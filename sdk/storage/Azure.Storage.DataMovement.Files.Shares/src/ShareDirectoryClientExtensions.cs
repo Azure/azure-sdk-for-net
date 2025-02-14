@@ -15,8 +15,6 @@ namespace Azure.Storage.Files.Shares
     public static class ShareDirectoryClientExtensions
     {
         private static Lazy<TransferManager> s_defaultTransferManager = new(() => new TransferManager(default));
-        private static Lazy<LocalFilesStorageResourceProvider> s_localFilesProvider = new();
-        private static Lazy<ShareFilesStorageResourceProvider> s_shareFilesProvider = new();
 
         /// <summary>
         /// Uploads the entire contents of local directory to the share directory.
@@ -47,8 +45,8 @@ namespace Azure.Storage.Files.Shares
             ShareDirectoryClientTransferOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            StorageResource localDirectory = s_localFilesProvider.Value.FromDirectory(localDirectoryPath);
-            StorageResource shareDirectory = s_shareFilesProvider.Value.FromClient(client, options?.ShareDirectoryOptions);
+            StorageResource localDirectory = LocalFilesStorageResourceProvider.FromDirectory(localDirectoryPath);
+            StorageResource shareDirectory = ShareFilesStorageResourceProvider.FromClient(client, options?.ShareDirectoryOptions);
 
             TransferOperation trasnfer = await s_defaultTransferManager.Value.StartTransferAsync(
                 localDirectory,
@@ -92,8 +90,8 @@ namespace Azure.Storage.Files.Shares
             ShareDirectoryClientTransferOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            StorageResource localDirectory = s_localFilesProvider.Value.FromDirectory(localDirectoryPath);
-            StorageResource shareDirectory = s_shareFilesProvider.Value.FromClient(client, options?.ShareDirectoryOptions);
+            StorageResource localDirectory = LocalFilesStorageResourceProvider.FromDirectory(localDirectoryPath);
+            StorageResource shareDirectory = ShareFilesStorageResourceProvider.FromClient(client, options?.ShareDirectoryOptions);
 
             TransferOperation trasnfer = await s_defaultTransferManager.Value.StartTransferAsync(
                 shareDirectory,

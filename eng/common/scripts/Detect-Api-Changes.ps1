@@ -104,37 +104,41 @@ if (!($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiR
 $responses = @{}
 
 $packageProperties = Get-ChildItem -Recurse -Force "$configFileDir" `
-  | Where-Object { $_.Extension -eq '.json' }
+  | Where-Object { 
+      $_.Extension -eq '.json' -and ($_.FullName.Substring($configFileDir.Length + 1) -notmatch '^_.*?[\\\/]')
+    }
 
 foreach ($packagePropFile in $packageProperties)
 {
     $packageMetadata = Get-Content $packagePropFile | ConvertFrom-Json
-    Write-Host "Processing $($packageMetadata.ArtifactName)"
+    $pkgArtifactName = $packageMetadata.ArtifactName ?? $packageMetadata.Name
 
-    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $packageMetadata.ArtifactName
+    Write-Host "Processing $($pkgArtifactName)"
+
+    $packages = &$FindArtifactForApiReviewFn $ArtifactPath $pkgArtifactName
 
     if ($packages)
     {
         $pkgPath = $packages.Values[0]
-        $isRequired = Should-Process-Package -pkgPath $pkgPath -packageName $($packageMetadata.ArtifactName)
-        Write-Host "Is API change detect required for $($packages.ArtifactName):$($isRequired)"
+        $isRequired = Should-Process-Package -pkgPath $pkgPath -packageName $pkgArtifactName
+        Write-Host "Is API change detect required for $($pkgArtifactName):$($isRequired)"
         if ($isRequired -eq $True)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
-            $respCode = Submit-Request -filePath $filePath -packageName $($packageMetadata.ArtifactName)
+            $respCode = Submit-Request -filePath $filePath -packageName $pkgArtifactName
             if ($respCode -ne '200')
             {
-                $responses[$($packageMetadata.ArtifactName)] = $respCode
+                $responses[$pkgArtifactName] = $respCode
             }
         }
         else
         {
-            Write-Host "Pull request does not have any change for $($packageMetadata.ArtifactName)). Skipping API change detect."
+            Write-Host "Pull request does not have any change for $($pkgArtifactName)). Skipping API change detect."
         }
     }
     else
     {
-        Write-Host "No package is found in artifact path to find API changes for $($packageMetadata.ArtifactName)"
+        Write-Host "No package is found in artifact path to find API changes for $($pkgArtifactName)"
     }
 }
 

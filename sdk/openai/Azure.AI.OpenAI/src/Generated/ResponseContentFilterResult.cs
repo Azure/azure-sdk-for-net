@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
         /// <param name="protectedMaterialCode"> A detection result that describes a match against licensed code or other protected source material. </param>
         /// <param name="ungroundedMaterial"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, InternalAzureContentFilterResultForPromptContentFilterResultsError error, ContentFilterDetectionResult protectedMaterialText, ContentFilterProtectedMaterialResult protectedMaterialCode, ContentFilterTextSpanResult ungroundedMaterial, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResponseContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, InternalAzureContentFilterResultForChoiceError error, ContentFilterDetectionResult protectedMaterialText, ContentFilterProtectedMaterialResult protectedMaterialCode, ContentFilterTextSpanResult ungroundedMaterial, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sexual = sexual;
             Hate = hate;
@@ -127,7 +127,5 @@ namespace Azure.AI.OpenAI
         public ContentFilterDetectionResult ProtectedMaterialText { get; }
         /// <summary> A detection result that describes a match against licensed code or other protected source material. </summary>
         public ContentFilterProtectedMaterialResult ProtectedMaterialCode { get; }
-        /// <summary> Gets the ungrounded material. </summary>
-        public ContentFilterTextSpanResult UngroundedMaterial { get; }
     }
 }

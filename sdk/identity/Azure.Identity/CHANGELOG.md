@@ -1,15 +1,25 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.14.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added a `Subscription` property to `AzureCliCredentialOptions` to allow specifying the Azure subscription ID or name to use when authenticating with the Azure CLI.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.14.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added a `Subscription` property to `AzureCliCredentialOptions` to allow specifying the Azure subscription ID or name to use when authenticating with the Azure CLI.
+
+### Bugs Fixed
+- Null or empty responses from IMDS probe attempts will now fall through to the next credential in the chain ([#47844](https://github.com/Azure/azure-sdk-for-net/issues/47844))
+
+### Other Changes
+- `AzurePowerShellCredential` no longer relies on APIs that are not available in Constrained Language Mode.
 
 ## 1.13.2 (2025-01-14)
 

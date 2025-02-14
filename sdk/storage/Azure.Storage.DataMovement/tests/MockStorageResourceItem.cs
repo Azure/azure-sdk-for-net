@@ -24,8 +24,6 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long MaxSupportedSingleTransferSize => Constants.GB;
 
-        protected internal override long MaxSupportedSingleTransferSize => Constants.GB;
-
         protected internal override long MaxSupportedChunkSize => Constants.GB;
 
         protected internal override long? Length { get; }

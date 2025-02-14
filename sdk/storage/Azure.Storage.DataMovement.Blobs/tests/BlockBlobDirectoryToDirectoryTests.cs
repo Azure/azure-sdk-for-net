@@ -64,14 +64,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 };
             }
             return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() {
-                BlobDirectoryPrefix = directoryPath,
+                BlobPrefix = directoryPath,
                 BlobType = BlobType.Block,
                 BlobOptions = options
             });
         }
 
         protected override StorageResourceContainer GetSourceStorageResourceContainer(BlobContainerClient containerClient, string directoryPath)
-            => new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Block });
+            => new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() { BlobPrefix = directoryPath, BlobType = BlobType.Block });
 
         protected internal override BlockBlobClient GetDestinationBlob(BlobContainerClient containerClient, string blobName)
             => containerClient.GetBlockBlobClient(blobName);

@@ -6,7 +6,9 @@ param (
   [Parameter(mandatory = $true)]
   [string]$PackageNames,
   [Parameter(mandatory = $true)]
-  [string]$ServiceDirectory
+  [string]$ServiceDirectory,
+  [Parameter(mandatory = $false)]
+  [string]$TagSeparator = "_"
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -20,23 +22,23 @@ $packageNamesArray = @()
 if ([String]::IsNullOrWhiteSpace($PackageNames)) {
   LogError "PackageNames cannot be empty."
   exit 1
-} else {
+}
+else {
   $packageNamesArray = $PackageNames.Split(',')
 }
 
 foreach ($packageName in $packageNamesArray) {
   Write-Host "Processing $packageName"
   $newVersion = [AzureEngSemanticVersion]::new("1.0.0")
-  $latestTags = git tag -l "${packageName}_*"
+  $prefix = "$packageName$TagSeparator"
+  Write-Host "Get Latest Tag : git tag -l $prefix*"
+  $latestTags = git tag -l "$prefix*"
 
-  Write-Host "Get Latest Tag : git tag -l ${packageName}_*"
   $semVars = @()
 
-  if ($latestTags -and ($latestTags.Length -gt 0))
-  {
-    foreach ($tags in $latestTags)
-    {
-      $semVars += $tags.Replace("${packageName}_", "")
+  if ($latestTags -and ($latestTags.Length -gt 0)) {
+    foreach ($tag in $latestTags) {
+      $semVars += $tag.Substring($prefix.Length)
     }
 
     $semVarsSorted = [AzureEngSemanticVersion]::SortVersionStrings($semVars)

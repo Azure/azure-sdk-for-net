@@ -26,14 +26,23 @@ namespace Azure.AI.Projects
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsResponseFormatJSON.Serialization.cs
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsResponseFormatJSON>)this).GetFormatFromOptions(options) : options.Format;
+========
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaMessageCreationObject>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RunStepDeltaMessageCreationObject)} does not support writing '{format}' format.");
             }
 
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsResponseFormatJSON.Serialization.cs
+            base.JsonModelWriteCore(writer, options);
+========
             if (Optional.IsDefined(MessageId))
             {
                 writer.WritePropertyName("message_id"u8);
@@ -54,6 +63,7 @@ namespace Azure.AI.Projects
 #endif
                 }
             }
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
         }
 
         RunStepDeltaMessageCreationObject IJsonModel<RunStepDeltaMessageCreationObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

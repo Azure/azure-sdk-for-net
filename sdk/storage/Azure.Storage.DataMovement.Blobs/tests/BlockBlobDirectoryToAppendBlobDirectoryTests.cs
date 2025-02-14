@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions()
             {
-                BlobDirectoryPrefix = directoryPath,
+                BlobPrefix = directoryPath,
                 BlobType = BlobType.Append,
                 BlobOptions = options
             });
@@ -99,7 +99,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 containerClient,
                 new BlobStorageResourceContainerOptions()
                 {
-                    BlobDirectoryPrefix = directoryPath,
+                    BlobPrefix = directoryPath,
                     BlobType = BlobType.Block
                 });
 

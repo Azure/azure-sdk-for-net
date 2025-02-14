@@ -10,7 +10,6 @@
       <Aliases>DMShare</Aliases>
     </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement.Files.Shares\src\Azure.Storage.DataMovement.Files.Shares.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\src\Azure.Storage.Files.Shares.csproj">
       <Aliases>BaseShares</Aliases>
     </ProjectReference>
@@ -36,9 +35,6 @@
     <None Include="$(AzureStorageSharedTestSources)\azurite_cert.pem" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageDataMovementSharedSources)TransferStatusInternal.cs" LinkBase="Shared\DataMovement" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestConstants.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TestEventsRaised.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
@@ -51,6 +47,8 @@
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferDownloadTestBase.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferDirectoryDownloadTestBase.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TestTransferWithTimeout.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)PauseResumeTransferTestBase.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferDirection.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\**">

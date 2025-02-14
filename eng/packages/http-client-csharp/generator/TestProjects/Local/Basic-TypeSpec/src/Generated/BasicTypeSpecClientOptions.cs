@@ -27,6 +27,7 @@ namespace BasicTypeSpec
             };
         }
 
+        /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
         /// <summary> The version of the service to use. </summary>

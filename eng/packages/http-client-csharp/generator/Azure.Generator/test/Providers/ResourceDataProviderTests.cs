@@ -1,8 +1,11 @@
-﻿using Azure.Generator.Providers;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Providers;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Linq;
 
@@ -12,7 +15,7 @@ namespace Azure.Generator.Tests.Providers
     {
         private const string TestClientName = "TestClient";
 
-        [TestCase()]
+        [TestCase]
         public void ValidateResourceDataProviderIsGenerated()
         {
             var resourceModelName = "responseType";

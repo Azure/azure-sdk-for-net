@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -359,7 +359,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -483,7 +483,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -571,7 +571,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
     }
