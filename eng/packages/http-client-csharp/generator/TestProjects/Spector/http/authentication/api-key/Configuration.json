@@ -1,6 +1,5 @@
 {
   "output-folder": ".",
   "namespace": "Authentication.ApiKey",
-  "library-name": "Authentication.ApiKey",
-  "use-model-reader-writer": true
+  "library-name": "Authentication.ApiKey"
 }

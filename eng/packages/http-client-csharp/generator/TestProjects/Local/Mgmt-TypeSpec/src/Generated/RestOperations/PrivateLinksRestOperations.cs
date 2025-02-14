@@ -32,6 +32,7 @@ namespace MgmtTypeSpec
             _apiVersion = apiVersion;
         }
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline { get; }
 
         /// <summary>

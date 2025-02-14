@@ -1,11 +1,5 @@
 # Azure Storage Data Movement File Shares client library for .NET
 
-## Project Status: Beta
-
-This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
-
----
-
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
 includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files,
@@ -27,8 +21,8 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.DataMovement.Files.Shares` client library will be included:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement --prerelease
-dotnet add package Azure.Storage.DataMovement.Files.Shares --prerelease
+dotnet add package Azure.Storage.DataMovement
+dotnet add package Azure.Storage.DataMovement.Files.Shares
 ```
 
 ### Prerequisites
@@ -45,7 +39,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ```
 
 ### Authenticate the client
-The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares#authenticate-the-client).
+The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/README.md#authenticate-the-client).
 
 ### Permissions
 
@@ -113,6 +107,9 @@ An upload takes place between a local file `StorageResource` as source and file 
 Upload a file.
 
 ```C# Snippet:SimplefileUpload_Shares
+TokenCredential tokenCredential = new DefaultAzureCredential();
+ShareFilesStorageResourceProvider shares = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
     destinationResource: await shares.FromFileAsync(destinationFileUri));
@@ -172,9 +169,35 @@ TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
 await directoryTransfer.WaitForCompletionAsync();
 ```
 
+### Resume using ShareFilesStorageResourceProvider
+
+To resume a transfer with Share File(s), valid credentials must be provided. See the sample below.
+
+```C# Snippet:TransferManagerResumeTransfers_Shares
+TokenCredential tokenCredential = new DefaultAzureCredential();
+ShareFilesStorageResourceProvider shares = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+{
+    ProvidersForResuming = new List<StorageResourceProvider>() { shares }
+});
+// Get resumable transfers from transfer manager
+await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+{
+    // Resume the transfer
+    if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+    {
+        await transferManager.ResumeTransferAsync(properties.TransferId);
+    }
+}
+```
+
+For more information regarding pause, resume, and/or checkpointing, see [Pause and Resume Checkpointing](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/samples/PauseResumeCheckpointing.md).
+
 ## Troubleshooting
 
 See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
+
+See [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
 
 ## Next steps
 
@@ -196,8 +219,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src

@@ -8,6 +8,7 @@
   {
    "$id": "2",
    "Name": "SingleClient",
+   "ClientNamespace": "Server.Path.Single",
    "Doc": "Illustrates server with a single path parameter @server",
    "Operations": [
     {
