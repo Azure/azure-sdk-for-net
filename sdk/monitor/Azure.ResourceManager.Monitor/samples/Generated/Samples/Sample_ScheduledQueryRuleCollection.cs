@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAScheduledQueryRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/createOrUpdateScheduledQueryRule.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/createOrUpdateScheduledQueryRule.json
             // this example is just showing the usage of "ScheduledQueryRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -74,19 +74,10 @@ MinFailingPeriodsToAlert = 1L,
 ["key11"] = "value11",
 ["key12"] = "value12"
 },
-                    ActionProperties =
-{
-["Icm.Title"] = "Custom title in ICM",
-["Icm.TsgId"] = "https://tsg.url"
-},
                 },
                 CheckWorkspaceAlertsStorageConfigured = true,
                 SkipQueryValidation = true,
-                ResolveConfiguration = new ScheduledQueryRuleResolveConfiguration
-                {
-                    IsAutoResolved = true,
-                    TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
-                },
+                AutoMitigate = true,
             };
             ArmOperation<ScheduledQueryRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
             ScheduledQueryRuleResource result = lro.Value;
@@ -102,7 +93,7 @@ MinFailingPeriodsToAlert = 1L,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAScheduledQueryRuleOnResourceGroupS()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/createOrUpdateScheduledQueryRuleResourceGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/createOrUpdateScheduledQueryRuleResourceGroup.json
             // this example is just showing the usage of "ScheduledQueryRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,19 +144,10 @@ MinFailingPeriodsToAlert = 1L,
 ["key11"] = "value11",
 ["key12"] = "value12"
 },
-                    ActionProperties =
-{
-["Icm.Title"] = "Custom title in ICM",
-["Icm.TsgId"] = "https://tsg.url"
-},
                 },
                 CheckWorkspaceAlertsStorageConfigured = true,
                 SkipQueryValidation = true,
-                ResolveConfiguration = new ScheduledQueryRuleResolveConfiguration
-                {
-                    IsAutoResolved = true,
-                    TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
-                },
+                AutoMitigate = true,
             };
             ArmOperation<ScheduledQueryRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
             ScheduledQueryRuleResource result = lro.Value;
@@ -181,7 +163,7 @@ MinFailingPeriodsToAlert = 1L,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAScheduledQueryRuleOnSubscription()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/createOrUpdateScheduledQueryRuleSubscription.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/createOrUpdateScheduledQueryRuleSubscription.json
             // this example is just showing the usage of "ScheduledQueryRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,19 +216,10 @@ MinFailingPeriodsToAlert = 1L,
 ["key11"] = "value11",
 ["key12"] = "value12"
 },
-                    ActionProperties =
-{
-["Icm.Title"] = "Custom title in ICM",
-["Icm.TsgId"] = "https://tsg.url"
-},
                 },
                 CheckWorkspaceAlertsStorageConfigured = true,
                 SkipQueryValidation = true,
-                ResolveConfiguration = new ScheduledQueryRuleResolveConfiguration
-                {
-                    IsAutoResolved = true,
-                    TimeToResolve = XmlConvert.ToTimeSpan("PT10M"),
-                },
+                AutoMitigate = true,
             };
             ArmOperation<ScheduledQueryRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, data);
             ScheduledQueryRuleResource result = lro.Value;
@@ -262,7 +235,7 @@ MinFailingPeriodsToAlert = 1L,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAScheduledQueryRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/getScheduledQueryRule.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/getScheduledQueryRule.json
             // this example is just showing the usage of "ScheduledQueryRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -295,7 +268,7 @@ MinFailingPeriodsToAlert = 1L,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListScheduledQueryRulesByResourceGroup()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/listScheduledQueryRulesByResourceGroup.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/listScheduledQueryRulesByResourceGroup.json
             // this example is just showing the usage of "ScheduledQueryRules_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -330,7 +303,7 @@ MinFailingPeriodsToAlert = 1L,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAScheduledQueryRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/getScheduledQueryRule.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/getScheduledQueryRule.json
             // this example is just showing the usage of "ScheduledQueryRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -359,7 +332,7 @@ MinFailingPeriodsToAlert = 1L,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAScheduledQueryRuleForSingleResource()
         {
-            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/preview/2024-01-01-preview/examples/getScheduledQueryRule.json
+            // Generated from example definition: specification/monitor/resource-manager/Microsoft.Insights/stable/2022-06-15/examples/getScheduledQueryRule.json
             // this example is just showing the usage of "ScheduledQueryRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
