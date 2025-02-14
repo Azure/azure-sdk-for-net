@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.KeyVault;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.KeyVault;
+namespace Azure.Projects.KeyVault;
 
-public class KeyVaultFeature : CloudMachineFeature
+public class KeyVaultFeature : AzureProjectFeature
 {
     public KeyVaultSku Sku { get; set; }
 
@@ -27,7 +27,7 @@ public class KeyVaultFeature : CloudMachineFeature
 
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
-        // Add a KeyVault to the CloudMachine infrastructure.
+        // Add a KeyVault to the infrastructure.
         KeyVaultService keyVaultResource = new("cm_kv")
         {
             Name = infrastructure.Id,

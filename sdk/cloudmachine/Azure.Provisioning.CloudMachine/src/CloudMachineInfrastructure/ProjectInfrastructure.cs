@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Azure.CloudMachine.Core;
-using Azure.CloudMachine.EventGrid;
-using Azure.CloudMachine.ServiceBus;
-using Azure.CloudMachine.Storage;
+using Azure.Projects.Core;
+using Azure.Projects.EventGrid;
+using Azure.Projects.ServiceBus;
+using Azure.Projects.Storage;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
@@ -17,7 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 public class ProjectInfrastructure
 {
@@ -50,7 +50,7 @@ public class ProjectInfrastructure
     {
         if (cmId == default)
         {
-            cmId = ProjectClient.ReadOrCreateCloudMachineId();
+            cmId = ProjectClient.ReadOrCreateProjectId();
         }
         Id = cmId;
 
@@ -72,7 +72,7 @@ public class ProjectInfrastructure
         AddFeature(new SystemTopicEventSubscriptionFeature("cm-eventgrid-subscription-blob", systemTopic, sbTopicPrivate, sbNamespace));
     }
 
-    public T AddFeature<T>(T feature) where T: CloudMachineFeature
+    public T AddFeature<T>(T feature) where T: AzureProjectFeature
     {
         feature.EmitFeatures(Features, Id);
         feature.EmitConnections(Connections, Id);
@@ -136,7 +136,7 @@ public class ProjectInfrastructure
     public override bool Equals(object? obj) => base.Equals(obj);
 }
 
-public static class CloudMachineInfrastructureConfiguration
+public static class ProjectInfrastructureConfiguration
 {
     /// <summary>
     /// Adds a connections and CM ID to the config system.
@@ -144,20 +144,20 @@ public static class CloudMachineInfrastructureConfiguration
     /// <param name="builder"></param>
     /// <param name="cm"></param>
     /// <returns></returns>
-    public static IConfigurationBuilder AddCloudMachineConfiguration(this IConfigurationBuilder builder, ProjectInfrastructure cm)
+    public static IConfigurationBuilder AddProjectClientConfiguration(this IConfigurationBuilder builder, ProjectInfrastructure cm)
     {
-        builder.AddCloudMachineConnections(cm.Connections);
-        builder.AddCloudMachineId(cm.Id);
+        builder.AddAzureProjectConnections(cm.Connections);
+        builder.AddProjectId(cm.Id);
         return builder;
     }
 
     /// <summary>
-    /// Adds the CloudMachine to DI.
+    /// Adds the ProjectClient to DI.
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="cm"></param>
     /// <returns></returns>
-    public static IHostApplicationBuilder AddCloudMachine(this IHostApplicationBuilder builder, ProjectInfrastructure cm)
+    public static IHostApplicationBuilder AddProjectClient(this IHostApplicationBuilder builder, ProjectInfrastructure cm)
     {
         builder.Services.AddSingleton(new ProjectClient(cm.Connections));
         return builder;

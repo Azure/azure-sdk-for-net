@@ -3,12 +3,12 @@
 
 #nullable enable
 
-using Azure.CloudMachine.AIFoundry;
-using Azure.CloudMachine.OpenAI;
+using Azure.Projects.AIFoundry;
+using Azure.Projects.OpenAI;
 using NUnit.Framework;
 using OpenAI.Chat;
 
-namespace Azure.CloudMachine.Tests;
+namespace Azure.Projects.Tests;
 
 public class E2ETests
 {
