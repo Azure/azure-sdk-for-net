@@ -10,6 +10,7 @@ param(
     [string]$DeployId,
     [switch]$SkipLogin,
     [string]$Subscription,
+    [string]$Tenant,
 
     # Default to true in Azure Pipelines environments
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),

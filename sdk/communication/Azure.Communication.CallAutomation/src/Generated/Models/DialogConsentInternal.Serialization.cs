@@ -17,40 +17,17 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            UserConsent userConsent = default;
-            string operationContext = default;
-            ResultInformation resultInformation = default;
             DialogInputType? dialogInputType = default;
+            UserConsent userConsent = default;
             string dialogId = default;
             object ivrContext = default;
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userConsent"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userConsent = UserConsent.DeserializeUserConsent(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("dialogInputType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -58,6 +35,15 @@ namespace Azure.Communication.CallAutomation
                         continue;
                     }
                     dialogInputType = new DialogInputType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("userConsent"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userConsent = UserConsent.DeserializeUserConsent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("dialogId"u8))
@@ -89,17 +75,31 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resultInformation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    continue;
+                }
             }
             return new DialogConsentInternal(
-                userConsent,
-                operationContext,
-                resultInformation,
                 dialogInputType,
+                userConsent,
                 dialogId,
                 ivrContext,
                 callConnectionId,
                 serverCallId,
-                correlationId);
+                correlationId,
+                operationContext,
+                resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

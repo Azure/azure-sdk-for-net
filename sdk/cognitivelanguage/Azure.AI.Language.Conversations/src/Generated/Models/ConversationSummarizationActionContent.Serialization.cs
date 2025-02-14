@@ -66,6 +66,11 @@ namespace Azure.AI.Language.Conversations.Models
                 writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Instruction))
+            {
+                writer.WritePropertyName("instruction"u8);
+                writer.WriteStringValue(Instruction);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -109,6 +114,7 @@ namespace Azure.AI.Language.Conversations.Models
             StringIndexType? stringIndexType = default;
             SummaryLengthBucket? summaryLength = default;
             IList<SummaryAspect> summaryAspects = default;
+            string instruction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,6 +170,11 @@ namespace Azure.AI.Language.Conversations.Models
                     summaryAspects = array;
                     continue;
                 }
+                if (property.NameEquals("instruction"u8))
+                {
+                    instruction = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -177,6 +188,7 @@ namespace Azure.AI.Language.Conversations.Models
                 stringIndexType,
                 summaryLength,
                 summaryAspects,
+                instruction,
                 serializedAdditionalRawData);
         }
 

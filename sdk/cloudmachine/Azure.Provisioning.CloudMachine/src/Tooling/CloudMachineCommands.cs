@@ -15,12 +15,12 @@ namespace Azure.CloudMachine;
 
 public static class CloudMachineCommands
 {
-    public static bool TryExecuteCommand(this CloudMachineInfrastructure cmi, string[] args)
+    public static bool TryExecuteCommand(this ProjectInfrastructure cmi, string[] args)
     {
         if (args.Length < 1)
             return false;
 
-        string cmid = CloudMachineClient.ReadOrCreateCloudMachineId();
+        string cmid = ProjectClient.ReadOrCreateCloudMachineId();
 
         if (args[0] == "-bicep")
         {

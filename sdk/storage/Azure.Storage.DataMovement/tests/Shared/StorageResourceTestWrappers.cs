@@ -47,8 +47,6 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
 
     protected internal override long MaxSupportedSingleTransferSize => ThrowOr(_inner.MaxSupportedSingleTransferSize);
 
-    protected internal override long MaxSupportedSingleTransferSize => ThrowOr(_inner.MaxSupportedSingleTransferSize);
-
     protected internal override long MaxSupportedChunkSize => ThrowOr(_inner.MaxSupportedChunkSize);
 
     protected internal override long? Length => ThrowOr(_inner.Length);

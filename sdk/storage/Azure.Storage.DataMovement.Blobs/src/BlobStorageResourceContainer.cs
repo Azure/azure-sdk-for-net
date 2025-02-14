@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             BlobContainerClient = blobContainerClient;
             _options = options;
-            DirectoryPrefix = _options?.BlobDirectoryPrefix;
+            DirectoryPrefix = _options?.BlobPrefix;
 
             _uri = DirectoryPrefix != null
                 ? new BlobUriBuilder(BlobContainerClient.Uri)
@@ -234,7 +234,7 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceContainer GetChildStorageResourceContainer(string path)
         {
             BlobStorageResourceContainerOptions options = _options.DeepCopy();
-            options.BlobDirectoryPrefix = string.Join("/", DirectoryPrefix, path);
+            options.BlobPrefix = string.Join("/", DirectoryPrefix, path);
             return new BlobStorageResourceContainer(
                 BlobContainerClient,
                 options);

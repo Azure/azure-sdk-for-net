@@ -13,7 +13,7 @@ internal class OpenAIFeature : CloudMachineFeature
     public OpenAIFeature()
     { }
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cloudMachine)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure cloudMachine)
     {
         CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
         cloudMachine.AddResource(cognitiveServices);
@@ -35,7 +35,7 @@ internal class OpenAIFeature : CloudMachineFeature
     internal void EmitConnectionsInternal(ConnectionCollection connections, string cmId)
         => EmitConnections(connections, cmId);
 
-    internal static CognitiveServicesAccount CreateOpenAIAccount(CloudMachineInfrastructure cm)
+    internal static CognitiveServicesAccount CreateOpenAIAccount(ProjectInfrastructure cm)
     {
         return new("openai")
         {

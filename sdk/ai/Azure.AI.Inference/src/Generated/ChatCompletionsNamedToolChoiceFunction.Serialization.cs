@@ -11,6 +11,15 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestration.Serialization.cs
+namespace Azure.AI.Language.Conversations.Authoring.Models
+{
+    public partial class ExportedQuestionAnsweringOrchestration : IUtf8JsonSerializable, IJsonModel<ExportedQuestionAnsweringOrchestration>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportedQuestionAnsweringOrchestration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ExportedQuestionAnsweringOrchestration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+========
 namespace Azure.AI.Inference
 {
     public partial class ChatCompletionsNamedToolChoiceFunction : IUtf8JsonSerializable, IJsonModel<ChatCompletionsNamedToolChoiceFunction>
@@ -18,6 +27,7 @@ namespace Azure.AI.Inference
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionsNamedToolChoiceFunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -26,27 +36,27 @@ namespace Azure.AI.Inference
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/AnalyzeTextDynamicClassificationResult.Serialization.cs
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextDynamicClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
-========
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestration.Serialization.cs
+            var format = options.Format == "W" ? ((IPersistableModel<ExportedQuestionAnsweringOrchestration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExportedQuestionAnsweringOrchestration)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("projectName"u8);
+            writer.WriteStringValue(ProjectName);
+========
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{format}' format.");
             }
 
-<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/AnalyzeTextDynamicClassificationResult.Serialization.cs
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
-========
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,9 +72,23 @@ namespace Azure.AI.Inference
 #endif
                 }
             }
->>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
         }
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestration.Serialization.cs
+        ExportedQuestionAnsweringOrchestration IJsonModel<ExportedQuestionAnsweringOrchestration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportedQuestionAnsweringOrchestration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExportedQuestionAnsweringOrchestration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportedQuestionAnsweringOrchestration(document.RootElement, options);
+        }
+
+        internal static ExportedQuestionAnsweringOrchestration DeserializeExportedQuestionAnsweringOrchestration(JsonElement element, ModelReaderWriterOptions options = null)
+========
         ChatCompletionsNamedToolChoiceFunction IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
@@ -78,6 +102,7 @@ namespace Azure.AI.Inference
         }
 
         internal static ChatCompletionsNamedToolChoiceFunction DeserializeChatCompletionsNamedToolChoiceFunction(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,14 +110,24 @@ namespace Azure.AI.Inference
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestration.Serialization.cs
+            string projectName = default;
+========
             string name = default;
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestration.Serialization.cs
+                if (property.NameEquals("projectName"u8))
+                {
+                    projectName = property.Value.GetString();
+========
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,18 +136,36 @@ namespace Azure.AI.Inference
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestration.Serialization.cs
+            return new ExportedQuestionAnsweringOrchestration(projectName, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ExportedQuestionAnsweringOrchestration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportedQuestionAnsweringOrchestration>)this).GetFormatFromOptions(options) : options.Format;
+========
             return new ChatCompletionsNamedToolChoiceFunction(name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestration.Serialization.cs
+                    throw new FormatException($"The model {nameof(ExportedQuestionAnsweringOrchestration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExportedQuestionAnsweringOrchestration IPersistableModel<ExportedQuestionAnsweringOrchestration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportedQuestionAnsweringOrchestration>)this).GetFormatFromOptions(options) : options.Format;
+========
                     throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{options.Format}' format.");
             }
         }
@@ -120,12 +173,30 @@ namespace Azure.AI.Inference
         ChatCompletionsNamedToolChoiceFunction IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/src/Generated/Models/ExportedQuestionAnsweringOrchestration.Serialization.cs
+                        return DeserializeExportedQuestionAnsweringOrchestration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExportedQuestionAnsweringOrchestration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExportedQuestionAnsweringOrchestration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ExportedQuestionAnsweringOrchestration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExportedQuestionAnsweringOrchestration(document.RootElement);
+========
                         return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement, options);
                     }
                 default:
@@ -141,6 +212,7 @@ namespace Azure.AI.Inference
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement);
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

@@ -15,8 +15,16 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue(CallLocator);
+            if (Optional.IsDefined(CallLocator))
+            {
+                writer.WritePropertyName("callLocator"u8);
+                writer.WriteObjectValue(CallLocator);
+            }
+            if (Optional.IsDefined(CallConnectionId))
+            {
+                writer.WritePropertyName("callConnectionId"u8);
+                writer.WriteStringValue(CallConnectionId);
+            }
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
@@ -61,6 +69,11 @@ namespace Azure.Communication.CallAutomation
             {
                 writer.WritePropertyName("pauseOnStart"u8);
                 writer.WriteBooleanValue(PauseOnStart.Value);
+            }
+            if (Optional.IsDefined(ExternalStorage))
+            {
+                writer.WritePropertyName("externalStorage"u8);
+                writer.WriteObjectValue(ExternalStorage);
             }
             writer.WriteEndObject();
         }
