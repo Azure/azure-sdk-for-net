@@ -13,8 +13,10 @@ namespace Azure.CloudMachine;
 /// </summary>
 public readonly struct MessagingServices
 {
-    private readonly CloudMachineClient _cm;
-    internal MessagingServices(CloudMachineClient cm) => _cm = cm;
+    internal const string DEFAULT_SB_TOPIC = "cm_servicebus_default_topic";
+
+    private readonly ProjectClient _cm;
+    internal MessagingServices(ProjectClient cm) => _cm = cm;
 
     /// <summary>
     /// Sends a message to the service bus.
@@ -46,8 +48,8 @@ public readonly struct MessagingServices
     /// <param name="received"></param>
     public void WhenMessageReceived(Action<string> received)
     {
-        var processor = _cm.Messaging.GetServiceBusProcessor(default);
-        var cm = _cm;
+        ServiceBusProcessor processor = _cm.Messaging.GetServiceBusProcessor(default);
+        ProjectClient cm = _cm;
 
         // TODO: How to unsubscribe?
         // TODO: Use a subscription filter to ignore Event Grid system events
@@ -76,10 +78,10 @@ public readonly struct MessagingServices
         return sender;
     }
 
-    internal ServiceBusProcessor GetServiceBusProcessor(string id)
+    internal ServiceBusProcessor GetServiceBusProcessor(string subscriptionName)
     {
         MessagingServices messagingServices = this;
-        ServiceBusProcessor processor = _cm.Subclients.Get(() => messagingServices.CreateProcessor(id), id);
+        ServiceBusProcessor processor = _cm.Subclients.Get(() => messagingServices.CreateProcessor(subscriptionName), subscriptionName);
         return processor;
     }
 
@@ -87,22 +89,22 @@ public readonly struct MessagingServices
     {
         ServiceBusClient client = GetServiceBusClient();
 
-        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusSender), default);
-        ServiceBusSender sender = client.CreateSender(connection.Id);
+        ClientConnection connection = _cm.GetConnectionOptions(DEFAULT_SB_TOPIC);
+        ServiceBusSender sender = client.CreateSender(connection.Locator);
         return sender;
     }
     private ServiceBusClient CreateClient()
     {
-        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusClient), default);
-        ServiceBusClient client = new(connection.Endpoint!.AbsoluteUri, connection.TokenCredential);
+        ClientConnection connection = _cm.GetConnectionOptions(typeof(ServiceBusClient).FullName);
+        ServiceBusClient client = new(connection.ToUri().AbsoluteUri, _cm.Credential);
         return client;
     }
-    private ServiceBusProcessor CreateProcessor(string id)
+    private ServiceBusProcessor CreateProcessor(string subscriptionName)
     {
         ServiceBusClient client = GetServiceBusClient();
 
-        ClientConnectionOptions connection = _cm.GetConnectionOptions(typeof(ServiceBusProcessor), id);
-        string[] topicAndSubscription = connection.Id.Split('/');
+        ClientConnection connection = _cm.GetConnectionOptions(subscriptionName);
+        string[] topicAndSubscription = connection.Locator.Split('/');
         ServiceBusProcessor processor = client.CreateProcessor(topicAndSubscription[0], topicAndSubscription[1], new() { MaxConcurrentCalls = 5 });
         processor.ProcessErrorAsync += (args) => throw new Exception("error processing event", args.Exception);
         return processor;

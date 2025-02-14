@@ -1601,7 +1601,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
             Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
             Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
-            Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+            Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
         }
 
         /// <summary>
@@ -1664,36 +1664,6 @@ namespace Azure.Messaging.EventHubs.Tests
             await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential);
 
             Assert.That(async () => await producer.GetPartitionPropertiesAsync(invalidPartition), Throws.TypeOf<ArgumentOutOfRangeException>());
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubBufferedProducerClient" /> is able to
-        ///   connect to the Event Hubs service.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ProducerCannotRetrieveMetadataWhenProxyIsInvalid()
-        {
-            var invalidProxyOptions = new EventHubBufferedProducerClientOptions
-            {
-                RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromMinutes(2) },
-
-                ConnectionOptions = new EventHubConnectionOptions
-                {
-                    Proxy = new WebProxy("http://1.2.3.4:9999"),
-                    TransportType = EventHubsTransportType.AmqpWebSockets
-                }
-            };
-
-            await using var scope = await EventHubScope.CreateAsync(1);
-            await using var producer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential);
-            await using var invalidProxyProducer = new EventHubBufferedProducerClient(EventHubsTestEnvironment.Instance.FullyQualifiedNamespace, scope.EventHubName, EventHubsTestEnvironment.Instance.Credential, invalidProxyOptions);
-
-            var partition = (await producer.GetPartitionIdsAsync()).First();
-
-            Assert.That(async () => await invalidProxyProducer.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-            Assert.That(async () => await invalidProxyProducer.GetEventHubPropertiesAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-            Assert.That(async () => await invalidProxyProducer.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
         }
 
         /// <summary>

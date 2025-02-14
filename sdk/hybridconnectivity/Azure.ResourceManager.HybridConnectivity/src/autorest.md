@@ -9,8 +9,8 @@ csharp: true
 library-name: HybridConnectivity
 namespace: Azure.ResourceManager.HybridConnectivity
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/fe44d3261ff0ea816315126120672ccec78c3074/specification/hybridconnectivity/resource-manager/readme.md
-#tag: package-2024-12
+require: https://github.com/Azure/azure-rest-api-specs/blob/5f869da70574588b5af7c46a20de802cb8edc093/specification/hybridconnectivity/resource-manager/readme.md
+#tag: package-2023-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -55,31 +55,31 @@ acronym-mapping:
   Etag: ETag|etag
 
 prepend-rp-prefix:
-  - CloudNativeType
+  # - CloudNativeType
   - EndpointProperties
-  - HostType
-  - InventoryProperties
+  # - HostType
+  # - InventoryProperties
   - ProvisioningState
-  - ResourceProvisioningState
+  # - ResourceProvisioningState
   - ServiceName
-  - SolutionConfiguration
-  - PublicCloudConnector
-  - OperationStatusResult
-  - SolutionTypeProperties
+  # - SolutionConfiguration
+  # - PublicCloudConnector
+  # - OperationStatusResult
+  # - SolutionTypeProperties
 
 rename-mapping:
   EndpointResource: HybridConnectivityEndpoint
-  InventoryResource: HybridConnectivityInventory
+  # InventoryResource: HybridConnectivityInventory
   ServiceConfigurationResource: HybridConnectivityServiceConfiguration
-  SolutionTypeResource: HybridConnectivitySolutionType
+  # SolutionTypeResource: HybridConnectivitySolutionType
   IngressGatewayResource: IngressGatewayAsset
   ManagedProxyResource: ManagedProxyAsset
   IngressGatewayResource.ingress.aadProfile.serverId: -|uuid
-  PublicCloudConnectorProperties.connectorPrimaryIdentifier: -|uuid
+  # PublicCloudConnectorProperties.connectorPrimaryIdentifier: -|uuid
   EndpointProperties.resourceId: -|arm-id
-  InventoryProperties.azureResourceId: -|arm-id
+  # InventoryProperties.azureResourceId: -|arm-id
   ServiceConfigurationResource.properties.resourceId: -|arm-id
-  GenerateAwsTemplateRequest.connectorId: -|arm-id
+  # GenerateAwsTemplateRequest.connectorId: -|arm-id
   EndpointAccessResource: TargetResourceEndpointAccess
 
 directive:

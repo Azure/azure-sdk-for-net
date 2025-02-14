@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.OpenAI.Tests;
 
+#if !AZURE_OPENAI_GA
+
 #nullable disable
 #pragma warning disable OPENAI002
 
@@ -21,9 +23,11 @@ public class ConversationProtocolTests : ConversationTestFixtureBase
 
 #if NET6_0_OR_GREATER
     [Test]
-    public async Task ProtocolCanConfigureSession()
+    [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_01_Preview)]
+    [TestCase(null)]
+    public async Task ProtocolCanConfigureSession(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeConversationClient client = GetTestClient();
+        RealtimeConversationClient client = GetTestClient(GetTestClientOptions(version));
         using RealtimeConversationSession session = await client.StartConversationSessionAsync(CancellationToken);
 
         BinaryData configureSessionCommand = BinaryData.FromString("""
@@ -81,3 +85,5 @@ public class ConversationProtocolTests : ConversationTestFixtureBase
     }
 #endif
 }
+
+#endif

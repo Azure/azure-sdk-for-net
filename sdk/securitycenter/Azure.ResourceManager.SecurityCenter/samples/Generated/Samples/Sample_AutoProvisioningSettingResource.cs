@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             AutoProvisioningSettingResource autoProvisioningSetting = client.GetAutoProvisioningSettingResource(autoProvisioningSettingResourceId);
 
             // invoke the operation
-            AutoProvisioningSettingData data = new AutoProvisioningSettingData()
+            AutoProvisioningSettingData data = new AutoProvisioningSettingData
             {
                 AutoProvision = AutoProvisionState.On,
             };

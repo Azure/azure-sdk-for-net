@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
@@ -20,6 +20,8 @@ namespace Azure.Generator.Providers
         public HttpRequestProvider(ValueExpression original) : base(typeof(Request), original)
         {
         }
+
+        public override Type UriBuilderType => typeof(RawRequestUriBuilder);
 
         public override ValueExpression Content()
             => Original.Property(nameof(Request.Content));

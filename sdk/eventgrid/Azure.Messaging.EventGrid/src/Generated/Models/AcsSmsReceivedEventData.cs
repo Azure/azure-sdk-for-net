@@ -13,8 +13,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsSmsReceivedEventData : AcsSmsEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
-        internal AcsSmsReceivedEventData()
+        /// <param name="segmentCount"> Number of segments in the message. </param>
+        internal AcsSmsReceivedEventData(int segmentCount)
         {
+            SegmentCount = segmentCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsSmsReceivedEventData"/>. </summary>
@@ -23,15 +25,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="to"> The identity of SMS message receiver. </param>
         /// <param name="message"> The SMS content. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
-        internal AcsSmsReceivedEventData(string messageId, string @from, string to, string message, DateTimeOffset? receivedTimestamp) : base(messageId, @from, to)
+        /// <param name="segmentCount"> Number of segments in the message. </param>
+        internal AcsSmsReceivedEventData(string messageId, string @from, string to, string message, DateTimeOffset? receivedTimestamp, int segmentCount) : base(messageId, @from, to)
         {
             Message = message;
             ReceivedTimestamp = receivedTimestamp;
+            SegmentCount = segmentCount;
         }
 
         /// <summary> The SMS content. </summary>
         public string Message { get; }
         /// <summary> The time at which the SMS was received. </summary>
         public DateTimeOffset? ReceivedTimestamp { get; }
+        /// <summary> Number of segments in the message. </summary>
+        public int SegmentCount { get; }
     }
 }

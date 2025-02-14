@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateOrUpdateOracleSubscription()
+        public async Task Delete_DeleteOracleSubscription()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/oracleSubscriptions_create.json
-            // this example is just showing the usage of "OracleSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/oracleSubscriptions_delete.json
+            // this example is just showing the usage of "OracleSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -64,23 +64,9 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
 
             // invoke the operation
-            OracleSubscriptionData data = new OracleSubscriptionData()
-            {
-                Properties = new OracleSubscriptionProperties(),
-                Plan = new ArmPlan("plan1", "publisher1", "product1")
-                {
-                    PromotionCode = "none",
-                    Version = "alpha",
-                },
-            };
-            ArmOperation<OracleSubscriptionResource> lro = await oracleSubscription.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            OracleSubscriptionResource result = lro.Value;
+            await oracleSubscription.DeleteAsync(WaitUntil.Completed);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            OracleSubscriptionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -115,10 +101,10 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteOracleSubscription()
+        public async Task CreateOrUpdate_CreateOrUpdateOracleSubscription()
         {
-            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/oracleSubscriptions_delete.json
-            // this example is just showing the usage of "OracleSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/oracleSubscriptions_create.json
+            // this example is just showing the usage of "OracleSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -132,9 +118,23 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
 
             // invoke the operation
-            await oracleSubscription.DeleteAsync(WaitUntil.Completed);
+            OracleSubscriptionData data = new OracleSubscriptionData
+            {
+                Properties = new OracleSubscriptionProperties(),
+                Plan = new ArmPlan("plan1", "publisher1", "product1")
+                {
+                    PromotionCode = "none",
+                    Version = "alpha",
+                },
+            };
+            ArmOperation<OracleSubscriptionResource> lro = await oracleSubscription.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            OracleSubscriptionResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OracleSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]

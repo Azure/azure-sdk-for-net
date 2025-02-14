@@ -1,6 +1,6 @@
 # Release History
 
-## 12.22.0-beta.1 (Unreleased)
+## 12.22.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.22.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added support for service version 2025-05-05.
+- Added support for NFS over REST.
+
+### Breaking Changes
+- The following APIs no longer send the x-ms-file-permission-key, x-ms-file-attributes, x-ms-file-creation-time, and x-ms-file-last-write-time request headers by default.  These headers have been optional in the REST API since x-ms-version 2021-06-08:
+    - ShareFileClient.Create() and .CreateAsync()
+    - ShareFileClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+    - ShareDirectoryClient.Create() and .CreateAsync()
+    - ShareDirectoryClient.SetHttpHeaders() and .SetHttpHeadersAsync()
+
+### Bugs Fixed
+- Fixed \[BUG\] Unable to create directory with only whiteSpaceChars #42891
 
 ## 12.21.0 (2024-11-12)
 

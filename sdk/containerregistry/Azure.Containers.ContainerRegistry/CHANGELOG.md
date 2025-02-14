@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2025-02-11)
+
+### Other Changes
+
+- Updated dependencies to ensure they are up-to-date with the latest targets and trimming from built-in dependencies.
 
 ## 1.1.1 (2023-12-13)
 
@@ -136,7 +142,7 @@
 
 ### Features Added
 
-- Added support for [anonymous pull access](https://docs.microsoft.com/azure/container-registry/anonymous-pull-access#configure-anonymous-pull-access) using the `ContainerRegistryBlobClient`
+- Added support for [anonymous pull access](https://learn.microsoft.com/azure/container-registry/anonymous-pull-access#configure-anonymous-pull-access) using the `ContainerRegistryBlobClient`
 
 ## 1.1.0-beta.2 (2021-10-13)
 

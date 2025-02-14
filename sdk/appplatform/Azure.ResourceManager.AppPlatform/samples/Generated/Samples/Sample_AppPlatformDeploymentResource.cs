@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            AppPlatformDeploymentData data = new AppPlatformDeploymentData()
+            AppPlatformDeploymentData data = new AppPlatformDeploymentData
             {
-                Properties = new AppPlatformDeploymentProperties()
+                Properties = new AppPlatformDeploymentProperties
                 {
-                    Source = new SourceUploadedUserSourceInfo()
+                    Source = new SourceUploadedUserSourceInfo
                     {
                         ArtifactSelector = "sub-module-1",
                         RelativePath = "resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc",
@@ -176,25 +176,19 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            AppPlatformDeploymentData data = new AppPlatformDeploymentData()
+            AppPlatformDeploymentData data = new AppPlatformDeploymentData
             {
-                Properties = new AppPlatformDeploymentProperties()
+                Properties = new AppPlatformDeploymentProperties
                 {
-                    Source = new AppPlatformCustomContainerUserSourceInfo()
+                    Source = new AppPlatformCustomContainerUserSourceInfo
                     {
-                        CustomContainer = new AppPlatformCustomContainer()
+                        CustomContainer = new AppPlatformCustomContainer
                         {
                             Server = "mynewacr.azurecr.io",
                             ContainerImage = "myNewContainerImage:v1",
-                            Command =
-{
-"/bin/sh"
-},
-                            Args =
-{
-"-c","while true; do echo hello; sleep 10;done"
-},
-                            ImageRegistryCredential = new AppPlatformImageRegistryCredential()
+                            Command = { "/bin/sh" },
+                            Args = { "-c", "while true; do echo hello; sleep 10;done" },
+                            ImageRegistryCredential = new AppPlatformImageRegistryCredential
                             {
                                 Username = "myNewUsername",
                                 Password = "<myNewPassword>",
@@ -435,7 +429,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent()
+            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent
             {
                 AppInstance = "myappinstance",
                 FilePath = "/byos/diagnose",
@@ -468,7 +462,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent()
+            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent
             {
                 AppInstance = "myappinstance",
                 FilePath = "/byos/diagnose",
@@ -501,7 +495,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent()
+            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent
             {
                 AppInstance = "myappinstance",
                 FilePath = "/byos/diagnose",

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -52,18 +53,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionIdentityDetails"/>. </summary>
         /// <param name="useSystemAssignedIdentity"> Specifies if the BI is protected by System Identity. </param>
-        /// <param name="userAssignedIdentityArmUri"> ARM URL for User Assigned Identity. </param>
+        /// <param name="userAssignedIdentityId"> ARM URL for User Assigned Identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionIdentityDetails(bool? useSystemAssignedIdentity, Uri userAssignedIdentityArmUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataProtectionIdentityDetails(bool? useSystemAssignedIdentity, ResourceIdentifier userAssignedIdentityId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UseSystemAssignedIdentity = useSystemAssignedIdentity;
-            UserAssignedIdentityArmUri = userAssignedIdentityArmUri;
+            UserAssignedIdentityId = userAssignedIdentityId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies if the BI is protected by System Identity. </summary>
         public bool? UseSystemAssignedIdentity { get; set; }
         /// <summary> ARM URL for User Assigned Identity. </summary>
-        public Uri UserAssignedIdentityArmUri { get; set; }
+        public ResourceIdentifier UserAssignedIdentityId { get; set; }
     }
 }

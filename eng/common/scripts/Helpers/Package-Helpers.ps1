@@ -46,7 +46,6 @@ function GetDocsTocDisplayName($pkg) {
   return $displayName
 }
 
-
 <#
 .SYNOPSIS
 This function is a safe wrapper around `yq` and `ConvertFrom-Yaml` to convert YAML content to a PowerShell HashTable object
@@ -68,7 +67,7 @@ Get-Content -Raw path/to/file.yml | CompatibleConvertFrom-Yaml
 #>
 function CompatibleConvertFrom-Yaml {
   param(
-    [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
     [string]$Content
   )
 
@@ -76,20 +75,10 @@ function CompatibleConvertFrom-Yaml {
     throw "Content to parse is a required input."
   }
 
-  # Initialize any variables or checks that need to be done once
-  $yqPresent = Get-Command 'yq' -ErrorAction SilentlyContinue
-  if (-not $yqPresent) {
-    . (Join-Path $PSScriptRoot PSModule-Helpers.ps1)
-    Install-ModuleIfNotInstalled -WhatIf:$false "powershell-yaml" "0.4.7" | Import-Module
-  }
+  . (Join-Path $PSScriptRoot PSModule-Helpers.ps1)
+  InstallAndImport-ModuleIfNotInstalled "powershell-yaml" "0.4.7"
 
-  # Process the content (for example, you could convert from YAML here)
-  if ($yqPresent) {
-      return ($content | yq -o=json | ConvertFrom-Json -AsHashTable)
-  }
-  else {
-      return ConvertFrom-Yaml $content
-  }
+  return ConvertFrom-Yaml $content
 }
 
 <#
@@ -114,7 +103,7 @@ LoadFrom-Yaml -YmlFile path/to/file.yml
 #>
 function LoadFrom-Yaml {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string]$YmlFile
   )
   if (Test-Path -Path $YmlFile) {
@@ -159,19 +148,19 @@ GetValueSafelyFrom-Yaml -YamlContentAsHashtable $YmlFileContent -Keys @("extends
 #>
 function GetValueSafelyFrom-Yaml {
   param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     $YamlContentAsHashtable,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string[]]$Keys
   )
   $current = $YamlContentAsHashtable
   foreach ($key in $Keys) {
-      if ($current.ContainsKey($key) -or $current[$key]) {
-        $current = $current[$key]
-      }
-      else {
-        return $null
-      }
+    if ($current.ContainsKey($key) -or $current[$key]) {
+      $current = $current[$key]
+    }
+    else {
+      return $null
+    }
   }
 
   return [object]$current
@@ -189,13 +178,13 @@ function Get-ObjectKey {
 
   if ($Object -is [hashtable] -or $Object -is [System.Collections.Specialized.OrderedDictionary]) {
     $sortedEntries = $Object.GetEnumerator() | Sort-Object Name
-    $hashString = ($sortedEntries | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join ";"
+    $hashString = ($sortedEntries | ForEach-Object { "$($_.Key)=$(Get-ObjectKey $_.Value)" }) -join ";"
     return $hashString.GetHashCode()
   }
 
   elseif ($Object -is [PSCustomObject]) {
     $sortedProperties = $Object.PSObject.Properties | Sort-Object Name
-    $propertyString = ($sortedProperties | ForEach-Object { "$($_.Name)=$($_.Value)" }) -join ";"
+    $propertyString = ($sortedProperties | ForEach-Object { "$($_.Name)=$(Get-ObjectKey $_.Value)" }) -join ";"
     return $propertyString.GetHashCode()
   }
 
@@ -205,7 +194,12 @@ function Get-ObjectKey {
   }
 
   else {
-    return $Object.GetHashCode()
+    $parsedBool = $null
+    if ([bool]::TryParse($Object, [ref]$parsedBool)) {
+      return $parsedBool.GetHashCode()
+    } else {
+      return $Object.GetHashCode()
+    }
   }
 }
 
@@ -221,14 +215,33 @@ function Group-ByObjectKey {
   $groupedDictionary = @{}
 
   foreach ($item in $Items) {
-    $key = Get-ObjectKey $item."$GroupByProperty"
+    # if the item is an array, we need to group by each element in the array
+    # however if it's an empty array we want to treat it as a single item
+    if ($item."$GroupByProperty" -and $item."$GroupByProperty" -is [array]) {
+      foreach ($GroupByPropertyValue in $item."$GroupByProperty") {
+        $key = Get-ObjectKey $GroupByPropertyValue
 
-    if (-not $groupedDictionary.ContainsKey($key)) {
-      $groupedDictionary[$key] = @()
+        if (-not $groupedDictionary.ContainsKey($key)) {
+          $groupedDictionary[$key] = @()
+        }
+
+        $groupedDictionary[$key] += $item
+      }
     }
+    else {
+      if ($item."$GroupByProperty") {
+        $key = Get-ObjectKey $item."$GroupByProperty"
+      }
+      else {
+        $key = "unset"
+      }
 
-    # Add the current item to the array for this key
-    $groupedDictionary[$key] += $item
+      if (-not $groupedDictionary.ContainsKey($key)) {
+        $groupedDictionary[$key] = @()
+      }
+
+      $groupedDictionary[$key] += $item
+    }
   }
 
   return $groupedDictionary

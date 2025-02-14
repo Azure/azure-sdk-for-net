@@ -7,10 +7,13 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.CloudMachine;
+using Azure.Core;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Azure.CloudMachine;
 
@@ -19,6 +22,18 @@ namespace Azure.CloudMachine;
 /// </summary>
 public static class CloudMachineExtensions
 {
+    /// <summary>
+    /// Maps TSP endpoints. CloudMachineClient needs to be in the container for this method to work.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="application"></param>
+    public static void MapCloudMachineApplication<T>(this WebApplication application) where T : class
+    {
+        ProjectClient cm = application.Services.GetRequiredService<ProjectClient>();
+        T service = (T)Activator.CreateInstance(typeof(T), cm)!;
+        application.Map<T>(service);
+    }
+
     /// <summary>
     /// Uploads a document to the storage service.
     /// </summary>
@@ -75,7 +90,7 @@ public static class CloudMachineExtensions
             ParameterInfo[] parameters = interfaceMethod!.GetParameters();
             object[] implementationArguments = new object[parameters.Length];
 
-            foreach (var parameter in parameters)
+            foreach (ParameterInfo parameter in parameters)
             {
                 implementationArguments[0] = await CreateArgumentAsync(parameter, request).ConfigureAwait(false);
             }
@@ -128,13 +143,13 @@ public static class CloudMachineExtensions
 
         if (parameterType == typeof(byte[]))
         {
-            var bd = await BinaryData.FromStreamAsync(request.Body).ConfigureAwait(false);
+            BinaryData bd = await BinaryData.FromStreamAsync(request.Body).ConfigureAwait(false);
             return bd.ToArray();
         }
         if (parameterType == typeof(BinaryData))
         {
             string? contentType = request.ContentType;
-            var bd = await BinaryData.FromStreamAsync(request.Body, contentType).ConfigureAwait(false);
+            BinaryData bd = await BinaryData.FromStreamAsync(request.Body, contentType).ConfigureAwait(false);
             return bd;
         }
         if (parameterType == typeof(string))
@@ -164,10 +179,10 @@ public static class CloudMachineExtensions
     // TODO: this is a hack. We should use MRW
     private static object DeserializeModel(Type modelType, Stream stream)
     {
-        var fromJson = modelType.GetMethod("FromJson", BindingFlags.Static);
+        MethodInfo? fromJson = modelType.GetMethod("FromJson", BindingFlags.Static);
         if (fromJson == default)
             throw new InvalidOperationException($"{modelType} does not provide FromJson static method");
-        object? deserialized = fromJson.Invoke(null, new object[] { stream });
+        object? deserialized = fromJson.Invoke(null, [stream]);
         if (deserialized == default)
             throw new InvalidOperationException($"Failed to deserialize {modelType}");
         return deserialized;

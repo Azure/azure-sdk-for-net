@@ -980,7 +980,7 @@ namespace Azure.Storage.Blobs.Test
             RequestFailedException ex = Assert.CatchAsync<RequestFailedException>(async () => {
                 BlobDownloadStreamingResult result = await blob.DownloadStreamingAsync();
                 await result.Content.CopyToAsync(Stream.Null);
-                });
+            });
 
             // Assert
             Assert.IsTrue(ex.ErrorCode == BlobErrorCode.ConditionNotMet);
@@ -1080,6 +1080,120 @@ namespace Azure.Storage.Blobs.Test
             await response.Value.Content.CopyToAsync(actual);
             Assert.AreEqual(count, actual.Length);
             TestHelper.AssertSequenceEqual(data.Skip(offset).Take(count), actual.ToArray());
+        }
+
+        [RecordedTest]
+        public async Task DownloadStreamingAsync_RangeNotSet_AssertContentRange()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            int size = Constants.KB;
+            BlockBlobClient blob1 = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(GetRandomBuffer(size)))
+            {
+                await blob1.UploadAsync(stream);
+            }
+            BlockBlobClient blob2 = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(GetRandomBuffer(size)))
+            {
+                await blob2.UploadAsync(stream);
+            }
+
+            // Act
+            Response<BlobDownloadStreamingResult> response1 = await blob1.DownloadStreamingAsync();
+            Response<BlobDownloadStreamingResult> response2 = await blob2.DownloadStreamingAsync(new BlobDownloadOptions());
+
+            // Assert
+            Assert.IsNull(response1.Value.Details.ContentRange);
+            Assert.IsNull(response2.Value.Details.ContentRange);
+        }
+
+        [RecordedTest]
+        [TestCase(0)]
+        [TestCase(1)]
+        public async Task DownloadStreamingAsync_RangeSet_AssertContentRange(long offset)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlobDownloadOptions blobDownloadOptions = new BlobDownloadOptions
+            {
+                Range = new HttpRange(offset)
+            };
+
+            // Act
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(blobDownloadOptions);
+
+            // Assert
+            Assert.NotNull(response.Value.Details.ContentRange);
+            string expectedContentRange = $"bytes {offset}-{size - 1}/{size}";
+            Assert.AreEqual(expectedContentRange, response.Value.Details.ContentRange);
+        }
+
+        [RecordedTest]
+        public async Task DownloadContentAsync_RangeNotSet_AssertContentRange()
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            int size = Constants.KB;
+            BlockBlobClient blob1 = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(GetRandomBuffer(size)))
+            {
+                await blob1.UploadAsync(stream);
+            }
+            BlockBlobClient blob2 = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(GetRandomBuffer(size)))
+            {
+                await blob2.UploadAsync(stream);
+            }
+
+            // Act
+            Response<BlobDownloadResult> response1 = await blob1.DownloadContentAsync();
+            Response<BlobDownloadResult> response2 = await blob2.DownloadContentAsync(new BlobDownloadOptions());
+
+            // Assert
+            Assert.IsNull(response1.Value.Details.ContentRange);
+            Assert.IsNull(response2.Value.Details.ContentRange);
+        }
+
+        [RecordedTest]
+        [TestCase(0)]
+        [TestCase(1)]
+        public async Task DownloadContentAsync_RangeSet_AssertContentRange(long offset)
+        {
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Arrange
+            int size = Constants.KB;
+            var data = GetRandomBuffer(size);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            BlobDownloadOptions blobDownloadOptions = new BlobDownloadOptions
+            {
+                Range = new HttpRange(offset)
+            };
+
+            // Act
+            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(blobDownloadOptions);
+
+            // Assert
+            Assert.NotNull(response.Value.Details.ContentRange);
+            string expectedContentRange = $"bytes {offset}-{size - 1}/{size}";
+            Assert.AreEqual(expectedContentRange, response.Value.Details.ContentRange);
         }
 
         [RecordedTest]
@@ -2620,7 +2734,7 @@ namespace Azure.Storage.Blobs.Test
                     await operation.WaitForCompletionAsync();
 
                     // Assert
-                    Assert.AreEqual(operation.Value,0);
+                    Assert.AreEqual(operation.Value, 0);
                     Assert.True(operation.HasCompleted);
                     Assert.IsNotNull(operation.GetRawResponse());
                 }
@@ -8597,7 +8711,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 blobClient.GetAccountInfoAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         public IEnumerable<AccessConditionParameters> AccessConditions_Data

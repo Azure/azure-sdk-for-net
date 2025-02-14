@@ -34,7 +34,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-01-05". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-05-05". </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. The default value is "update". </param>
         /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Shares
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
-        internal HttpMessage CreateCreateRequest(long fileContentLength, string fileAttributes, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateCreateRequest(long fileContentLength, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, NfsFileType? nfsFileType, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -111,7 +111,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
             }
-            request.Headers.Add("x-ms-file-attributes", fileAttributes);
+            if (fileAttributes != null)
+            {
+                request.Headers.Add("x-ms-file-attributes", fileAttributes);
+            }
             if (fileCreationTime != null)
             {
                 request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
@@ -132,33 +135,47 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
+            if (owner != null)
+            {
+                request.Headers.Add("x-ms-owner", owner);
+            }
+            if (group != null)
+            {
+                request.Headers.Add("x-ms-group", group);
+            }
+            if (fileMode != null)
+            {
+                request.Headers.Add("x-ms-mode", fileMode);
+            }
+            if (nfsFileType != null)
+            {
+                request.Headers.Add("x-ms-file-file-type", nfsFileType.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
         /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileCreateHeaders>> CreateAsync(long fileContentLength, string fileAttributes, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileCreateHeaders>> CreateAsync(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            if (fileAttributes == null)
-            {
-                throw new ArgumentNullException(nameof(fileAttributes));
-            }
-
-            using var message = CreateCreateRequest(fileContentLength, fileAttributes, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileCreationTime, fileLastWriteTime, fileChangeTime, fileHttpHeaders, shareFileRequestConditions);
+            using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, fileHttpHeaders, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -172,27 +189,25 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Creates a new file or replaces a file. Note it only initializes the file with no content. </summary>
         /// <param name="fileContentLength"> Specifies the maximum size for the file, up to 4 TB. </param>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="nfsFileType"> Optional, NFS only. Type of the file or directory. </param>
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/> is null. </exception>
-        public ResponseWithHeaders<FileCreateHeaders> Create(long fileContentLength, string fileAttributes, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileCreateHeaders> Create(long fileContentLength, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, NfsFileType? nfsFileType = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            if (fileAttributes == null)
-            {
-                throw new ArgumentNullException(nameof(fileAttributes));
-            }
-
-            using var message = CreateCreateRequest(fileContentLength, fileAttributes, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileCreationTime, fileLastWriteTime, fileChangeTime, fileHttpHeaders, shareFileRequestConditions);
+            using var message = CreateCreateRequest(fileContentLength, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, nfsFileType, fileHttpHeaders, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -432,7 +447,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateSetHttpHeadersRequest(string fileAttributes, int? timeout, long? fileContentLength, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateSetHttpHeadersRequest(int? timeout, long? fileContentLength, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, FileHttpHeaders fileHttpHeaders, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -486,7 +501,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-permission-key", filePermissionKey);
             }
-            request.Headers.Add("x-ms-file-attributes", fileAttributes);
+            if (fileAttributes != null)
+            {
+                request.Headers.Add("x-ms-file-attributes", fileAttributes);
+            }
             if (fileCreationTime != null)
             {
                 request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
@@ -511,32 +529,41 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
+            if (owner != null)
+            {
+                request.Headers.Add("x-ms-owner", owner);
+            }
+            if (group != null)
+            {
+                request.Headers.Add("x-ms-group", group);
+            }
+            if (fileMode != null)
+            {
+                request.Headers.Add("x-ms-mode", fileMode);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
 
         /// <summary> Sets HTTP headers on the file. </summary>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="fileContentLength"> Resizes a file to the specified size. If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileSetHttpHeadersHeaders>> SetHttpHeadersAsync(string fileAttributes, int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileSetHttpHeadersHeaders>> SetHttpHeadersAsync(int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            if (fileAttributes == null)
-            {
-                throw new ArgumentNullException(nameof(fileAttributes));
-            }
-
-            using var message = CreateSetHttpHeadersRequest(fileAttributes, timeout, fileContentLength, filePermission, filePermissionFormat, filePermissionKey, fileCreationTime, fileLastWriteTime, fileChangeTime, fileHttpHeaders, shareFileRequestConditions);
+            using var message = CreateSetHttpHeadersRequest(timeout, fileContentLength, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, fileHttpHeaders, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileSetHttpHeadersHeaders(message.Response);
             switch (message.Response.Status)
@@ -549,27 +576,24 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Sets HTTP headers on the file. </summary>
-        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="fileContentLength"> Resizes a file to the specified size. If the specified byte value is less than the current size of the file, then all ranges above the specified byte value are cleared. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="fileAttributes"> If specified, the provided file attributes shall be set. Default value: ‘Archive’ for file and ‘Directory’ for directory. ‘None’ can also be specified as default. </param>
         /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
         /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
         /// <param name="fileChangeTime"> Change time for the file/directory. Default value: Now. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="fileHttpHeaders"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileAttributes"/> is null. </exception>
-        public ResponseWithHeaders<FileSetHttpHeadersHeaders> SetHttpHeaders(string fileAttributes, int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileSetHttpHeadersHeaders> SetHttpHeaders(int? timeout = null, long? fileContentLength = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FileHttpHeaders fileHttpHeaders = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
-            if (fileAttributes == null)
-            {
-                throw new ArgumentNullException(nameof(fileAttributes));
-            }
-
-            using var message = CreateSetHttpHeadersRequest(fileAttributes, timeout, fileContentLength, filePermission, filePermissionFormat, filePermissionKey, fileCreationTime, fileLastWriteTime, fileChangeTime, fileHttpHeaders, shareFileRequestConditions);
+            using var message = CreateSetHttpHeadersRequest(timeout, fileContentLength, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, fileHttpHeaders, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileSetHttpHeadersHeaders(message.Response);
             switch (message.Response.Status)
@@ -1308,7 +1332,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateStartCopyRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, CopyFileSmbInfo copyFileSmbInfo, ShareFileRequestConditions shareFileRequestConditions)
+        internal HttpMessage CreateStartCopyRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string owner, string group, string fileMode, ModeCopyMode? fileModeCopyMode, OwnerCopyMode? fileOwnerCopyMode, CopyFileSmbInfo copyFileSmbInfo, ShareFileRequestConditions shareFileRequestConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1382,6 +1406,26 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
+            if (owner != null)
+            {
+                request.Headers.Add("x-ms-owner", owner);
+            }
+            if (group != null)
+            {
+                request.Headers.Add("x-ms-group", group);
+            }
+            if (fileMode != null)
+            {
+                request.Headers.Add("x-ms-mode", fileMode);
+            }
+            if (fileModeCopyMode != null)
+            {
+                request.Headers.Add("x-ms-file-mode-copy-mode", fileModeCopyMode.Value.ToSerialString());
+            }
+            if (fileOwnerCopyMode != null)
+            {
+                request.Headers.Add("x-ms-file-owner-copy-mode", fileOwnerCopyMode.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1393,18 +1437,23 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="fileModeCopyMode"> NFS only. Applicable only when the copy source is a File. Determines the copy behavior of the mode bits of the file. source: The mode on the destination file is copied from the source file. override: The mode on the destination file is determined via the x-ms-mode header. </param>
+        /// <param name="fileOwnerCopyMode"> NFS only. Determines the copy behavior of the owner user identifier (UID) and group identifier (GID) of the file. source: The owner user identifier (UID) and group identifier (GID) on the destination file is copied from the source file. override: The owner user identifier (UID) and group identifier (GID) on the destination file is determined via the x-ms-owner and x-ms-group  headers. </param>
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public async Task<ResponseWithHeaders<FileStartCopyHeaders>> StartCopyAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<FileStartCopyHeaders>> StartCopyAsync(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string owner = null, string group = null, string fileMode = null, ModeCopyMode? fileModeCopyMode = null, OwnerCopyMode? fileOwnerCopyMode = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateStartCopyRequest(copySource, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, copyFileSmbInfo, shareFileRequestConditions);
+            using var message = CreateStartCopyRequest(copySource, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, owner, group, fileMode, fileModeCopyMode, fileOwnerCopyMode, copyFileSmbInfo, shareFileRequestConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileStartCopyHeaders(message.Response);
             switch (message.Response.Status)
@@ -1423,18 +1472,23 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionFormat"> Optional. Available for version 2023-06-01 and later. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. If x-ms-file-permission-format is unspecified or explicitly set to SDDL, the permission is returned in SDDL format. If x-ms-file-permission-format is explicitly set to binary, the permission is returned as a base64 string representing the binary encoding of the permission. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="fileModeCopyMode"> NFS only. Applicable only when the copy source is a File. Determines the copy behavior of the mode bits of the file. source: The mode on the destination file is copied from the source file. override: The mode on the destination file is determined via the x-ms-mode header. </param>
+        /// <param name="fileOwnerCopyMode"> NFS only. Determines the copy behavior of the owner user identifier (UID) and group identifier (GID) of the file. source: The owner user identifier (UID) and group identifier (GID) on the destination file is copied from the source file. override: The owner user identifier (UID) and group identifier (GID) on the destination file is determined via the x-ms-owner and x-ms-group  headers. </param>
         /// <param name="copyFileSmbInfo"> Parameter group. </param>
         /// <param name="shareFileRequestConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="copySource"/> is null. </exception>
-        public ResponseWithHeaders<FileStartCopyHeaders> StartCopy(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<FileStartCopyHeaders> StartCopy(string copySource, int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string owner = null, string group = null, string fileMode = null, ModeCopyMode? fileModeCopyMode = null, OwnerCopyMode? fileOwnerCopyMode = null, CopyFileSmbInfo copyFileSmbInfo = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
         {
             if (copySource == null)
             {
                 throw new ArgumentNullException(nameof(copySource));
             }
 
-            using var message = CreateStartCopyRequest(copySource, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, copyFileSmbInfo, shareFileRequestConditions);
+            using var message = CreateStartCopyRequest(copySource, timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, owner, group, fileMode, fileModeCopyMode, fileOwnerCopyMode, copyFileSmbInfo, shareFileRequestConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileStartCopyHeaders(message.Response);
             switch (message.Response.Status)
@@ -1854,6 +1908,251 @@ namespace Azure.Storage.Files.Shares
             switch (message.Response.Status)
             {
                 case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateSymbolicLinkRequest(string linkText, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, string owner, string group, ShareFileRequestConditions shareFileRequestConditions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "symboliclink", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            if (metadata != null)
+            {
+                request.Headers.Add("x-ms-meta-", metadata);
+            }
+            if (fileCreationTime != null)
+            {
+                request.Headers.Add("x-ms-file-creation-time", fileCreationTime);
+            }
+            if (fileLastWriteTime != null)
+            {
+                request.Headers.Add("x-ms-file-last-write-time", fileLastWriteTime);
+            }
+            if (shareFileRequestConditions?.LeaseId != null)
+            {
+                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
+            }
+            if (owner != null)
+            {
+                request.Headers.Add("x-ms-owner", owner);
+            }
+            if (group != null)
+            {
+                request.Headers.Add("x-ms-group", group);
+            }
+            request.Headers.Add("x-ms-link-text", linkText);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> Creates a symbolic link. </summary>
+        /// <param name="linkText"> NFS only. Required. The path to the original file, the symbolic link is pointing to. The path is of type string which is not resolved and is stored as is. The path can be absolute path or the relative path depending on the content stored in the symbolic link file. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkText"/> is null. </exception>
+        public async Task<ResponseWithHeaders<FileCreateSymbolicLinkHeaders>> CreateSymbolicLinkAsync(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, string owner = null, string group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (linkText == null)
+            {
+                throw new ArgumentNullException(nameof(linkText));
+            }
+
+            using var message = CreateCreateSymbolicLinkRequest(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, owner, group, shareFileRequestConditions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileCreateSymbolicLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates a symbolic link. </summary>
+        /// <param name="linkText"> NFS only. Required. The path to the original file, the symbolic link is pointing to. The path is of type string which is not resolved and is stored as is. The path can be absolute path or the relative path depending on the content stored in the symbolic link file. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="metadata"> A name-value pair to associate with a file storage object. </param>
+        /// <param name="fileCreationTime"> Creation time for the file/directory. Default value: Now. </param>
+        /// <param name="fileLastWriteTime"> Last write time for the file/directory. Default value: Now. </param>
+        /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
+        /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkText"/> is null. </exception>
+        public ResponseWithHeaders<FileCreateSymbolicLinkHeaders> CreateSymbolicLink(string linkText, int? timeout = null, IDictionary<string, string> metadata = null, string fileCreationTime = null, string fileLastWriteTime = null, string owner = null, string group = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (linkText == null)
+            {
+                throw new ArgumentNullException(nameof(linkText));
+            }
+
+            using var message = CreateCreateSymbolicLinkRequest(linkText, timeout, metadata, fileCreationTime, fileLastWriteTime, owner, group, shareFileRequestConditions);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileCreateSymbolicLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetSymbolicLinkRequest(int? timeout, string sharesnapshot)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "symboliclink", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            if (sharesnapshot != null)
+            {
+                uri.AppendQuery("sharesnapshot", sharesnapshot, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<FileGetSymbolicLinkHeaders>> GetSymbolicLinkAsync(int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetSymbolicLinkRequest(timeout, sharesnapshot);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileGetSymbolicLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the share snapshot to query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<FileGetSymbolicLinkHeaders> GetSymbolicLink(int? timeout = null, string sharesnapshot = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetSymbolicLinkRequest(timeout, sharesnapshot);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileGetSymbolicLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateCreateHardLinkRequest(string targetFile, int? timeout, ShareFileRequestConditions shareFileRequestConditions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendQuery("restype", "hardlink", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("x-ms-type", "file");
+            if (shareFileRequestConditions?.LeaseId != null)
+            {
+                request.Headers.Add("x-ms-lease-id", shareFileRequestConditions.LeaseId);
+            }
+            request.Headers.Add("x-ms-file-target-file", targetFile);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> Creates a hard link. </summary>
+        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. It should be full path of the target from the root.The target file must be in the same share and hence the same storage account. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetFile"/> is null. </exception>
+        public async Task<ResponseWithHeaders<FileCreateHardLinkHeaders>> CreateHardLinkAsync(string targetFile, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (targetFile == null)
+            {
+                throw new ArgumentNullException(nameof(targetFile));
+            }
+
+            using var message = CreateCreateHardLinkRequest(targetFile, timeout, shareFileRequestConditions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new FileCreateHardLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates a hard link. </summary>
+        /// <param name="targetFile"> NFS only. Required. Specifies the path of the target file to which the link will be created, up to 2 KiB in length. It should be full path of the target from the root.The target file must be in the same share and hence the same storage account. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="shareFileRequestConditions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetFile"/> is null. </exception>
+        public ResponseWithHeaders<FileCreateHardLinkHeaders> CreateHardLink(string targetFile, int? timeout = null, ShareFileRequestConditions shareFileRequestConditions = null, CancellationToken cancellationToken = default)
+        {
+            if (targetFile == null)
+            {
+                throw new ArgumentNullException(nameof(targetFile));
+            }
+
+            using var message = CreateCreateHardLinkRequest(targetFile, timeout, shareFileRequestConditions);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new FileCreateHardLinkHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 201:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);

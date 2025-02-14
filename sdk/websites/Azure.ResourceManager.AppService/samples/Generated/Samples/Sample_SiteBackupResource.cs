@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Samples
             SiteBackupResource siteBackup = client.GetSiteBackupResource(siteBackupResourceId);
 
             // invoke the operation
-            WebAppBackupInfo info = new WebAppBackupInfo()
+            WebAppBackupInfo info = new WebAppBackupInfo
             {
                 BackupName = "abcdwe",
                 IsEnabled = true,
@@ -105,20 +105,17 @@ namespace Azure.ResourceManager.AppService.Samples
                 {
                     StartOn = DateTimeOffset.Parse("2022-09-02T17:33:11.641Z"),
                 },
-                Databases =
-{
-new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+                Databases = {new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "backenddb",
 ConnectionStringName = "backend",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-},new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+}, new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "statsdb",
 ConnectionStringName = "stats",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-}
-},
+}},
             };
             SiteBackupResource result = await siteBackup.GetBackupStatusSecretsAsync(info);
 
@@ -151,25 +148,22 @@ ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value
             SiteBackupResource siteBackup = client.GetSiteBackupResource(siteBackupResourceId);
 
             // invoke the operation
-            RestoreRequestInfo info = new RestoreRequestInfo()
+            RestoreRequestInfo info = new RestoreRequestInfo
             {
                 StorageAccountUri = new Uri("DefaultEndpointsProtocol=https;AccountName=storagesample;AccountKey=<account-key>"),
                 CanOverwrite = true,
                 SiteName = "sitef6141",
-                Databases =
-{
-new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+                Databases = {new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "backenddb",
 ConnectionStringName = "backend",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-},new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
+}, new AppServiceDatabaseBackupSetting(AppServiceDatabaseType.SqlAzure)
 {
 Name = "statsdb",
 ConnectionStringName = "stats",
 ConnectionString = "DSN=data-source-name[;SERVER=value] [;PWD=value] [;UID=value] [;<Attribute>=<value>]",
-}
-},
+}},
             };
             await siteBackup.RestoreAsync(WaitUntil.Completed, info);
 

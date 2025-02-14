@@ -29,6 +29,7 @@ dotnet add package Azure.AI.Language.Text --prerelease
 |SDK version  |Supported API version of service
 |-------------|-----------------------------------------------------
 |1.0.0-beta.1 | 2022-05-01, 2023-04-01, 2023-11-15-preview (default)
+|1.0.0-beta.2 | 2022-05-01, 2023-04-01, 2024-11-01, 2024-11-15-preview (default)
 
 ### Prerequisites
 
@@ -261,17 +262,16 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
-[custom_domain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[custom_domain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples
 [source_migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/MigrationGuide.md
 [source_root]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/src
 [package]: https://www.nuget.org/packages/
 [text_refdocs]: https://learn.microsoft.com/dotnet/
-[text_docs]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/
+[text_docs]: https://learn.microsoft.com/azure/cognitive-services/text-analytics/
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [textanalysisclient_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/src/TextAnalysisClient.cs
-[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[cognitive_auth]: https://learn.microsoft.com/azure/cognitive-services/authentication/
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_portal]: https://portal.azure.com
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/cognitivelanguage/Azure.AI.Language.Text/README.png)

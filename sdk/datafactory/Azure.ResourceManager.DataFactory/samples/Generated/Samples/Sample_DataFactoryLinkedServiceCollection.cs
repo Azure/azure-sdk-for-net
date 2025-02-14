@@ -19,42 +19,6 @@ namespace Azure.ResourceManager.DataFactory.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_LinkedServicesListByFactory()
-        {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/LinkedServices_ListByFactory.json
-            // this example is just showing the usage of "LinkedServices_ListByFactory" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataFactoryResource created on azure
-            // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
-            string resourceGroupName = "exampleResourceGroup";
-            string factoryName = "exampleFactoryName";
-            ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
-            DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
-
-            // get the collection of this DataFactoryLinkedServiceResource
-            DataFactoryLinkedServiceCollection collection = dataFactory.GetDataFactoryLinkedServices();
-
-            // invoke the operation and iterate over the result
-            await foreach (DataFactoryLinkedServiceResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DataFactoryLinkedServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_LinkedServicesCreate()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/LinkedServices_Create.json
@@ -78,9 +42,9 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string linkedServiceName = "exampleLinkedService";
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
+            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureStorageLinkedService
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("DefaultEndpointsProtocol=https;AccountName=examplestorageaccount;AccountKey=<storage key>"),
+                ConnectionString = null,
             });
             ArmOperation<DataFactoryLinkedServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
             DataFactoryLinkedServiceResource result = lro.Value;
@@ -117,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string linkedServiceName = "exampleLinkedService";
-            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureStorageLinkedService()
+            DataFactoryLinkedServiceData data = new DataFactoryLinkedServiceData(new AzureStorageLinkedService
             {
-                ConnectionString = DataFactoryElement<string>.FromSecretString("DefaultEndpointsProtocol=https;AccountName=examplestorageaccount;AccountKey=<storage key>"),
+                ConnectionString = null,
                 Description = "Example description",
             });
             ArmOperation<DataFactoryLinkedServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
@@ -164,6 +128,42 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryLinkedServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_LinkedServicesListByFactory()
+        {
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/LinkedServices_ListByFactory.json
+            // this example is just showing the usage of "LinkedServices_ListByFactory" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataFactoryResource created on azure
+            // for more information of creating DataFactoryResource, please refer to the document of DataFactoryResource
+            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string resourceGroupName = "exampleResourceGroup";
+            string factoryName = "exampleFactoryName";
+            ResourceIdentifier dataFactoryResourceId = DataFactoryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName);
+            DataFactoryResource dataFactory = client.GetDataFactoryResource(dataFactoryResourceId);
+
+            // get the collection of this DataFactoryLinkedServiceResource
+            DataFactoryLinkedServiceCollection collection = dataFactory.GetDataFactoryLinkedServices();
+
+            // invoke the operation and iterate over the result
+            await foreach (DataFactoryLinkedServiceResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DataFactoryLinkedServiceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

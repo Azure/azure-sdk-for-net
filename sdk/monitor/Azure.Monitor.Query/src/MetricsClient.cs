@@ -148,11 +148,24 @@ namespace Azure.Monitor.Query
 
             if (options != null)
             {
-                if (options.TimeRange != null)
+                if (options.TimeRange.HasValue)
                 {
                     startTime = options.TimeRange.Value.Start.ToIsoString();
                     endTime = options.TimeRange.Value.End.ToIsoString();
                 }
+                else
+                {
+                    // Use values from Start and End TimeRange properties if they are set
+                    if (options.StartTime.HasValue)
+                    {
+                        startTime = options.StartTime.Value.ToIsoString();
+                    }
+                    if (options.EndTime.HasValue)
+                    {
+                        endTime = options.EndTime.Value.ToIsoString();
+                    }
+                }
+
                 aggregations = MetricsClientExtensions.CommaJoin(options.Aggregations);
                 top = options.Size;
                 orderBy = options.OrderBy;

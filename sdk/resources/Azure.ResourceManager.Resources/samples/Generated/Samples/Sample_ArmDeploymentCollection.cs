@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -21,7 +20,7 @@ namespace Azure.ResourceManager.Resources.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateDeploymentAtAGivenScope()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/examples/PutDeploymentAtScope.json
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2024-11-01/examples/PutDeploymentAtScope.json
             // this example is just showing the usage of "Deployments_CreateOrUpdateAtScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -42,20 +41,18 @@ namespace Azure.ResourceManager.Resources.Samples
             string deploymentName = "my-deployment";
             ArmDeploymentContent content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink()
+                TemplateLink = new ArmDeploymentTemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                 },
-                Parameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                }),
+                Parameters = BinaryData.FromObjectAsJson(new object()),
             })
             {
                 Location = new AzureLocation("eastus"),
                 Tags =
 {
 ["tagKey1"] = "tag-value-1",
-["tagKey2"] = "tag-value-2",
+["tagKey2"] = "tag-value-2"
 },
             };
             ArmOperation<ArmDeploymentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, content);

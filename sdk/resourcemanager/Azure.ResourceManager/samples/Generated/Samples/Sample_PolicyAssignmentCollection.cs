@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -30,40 +29,33 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
-            PolicyAssignmentData data = new PolicyAssignmentData()
+            PolicyAssignmentData data = new PolicyAssignmentData
             {
                 DisplayName = "Enforce resource naming rules",
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming",
                 Parameters =
 {
-["prefix"] = new ArmPolicyParameterValue()
+["prefix"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromString("\"DeptA\""),
+Value = BinaryData.FromObjectAsJson("DeptA"),
 },
-["suffix"] = new ArmPolicyParameterValue()
+["suffix"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromString("\"-LC\""),
-},
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
 },
                 Description = "Force resource names to begin with given DeptA and end with -LC",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["assignedBy"] = "Special Someone"
+                    assignedBy = "Special Someone",
                 }),
-                NonComplianceMessages =
-{
-new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-LC'.")
-},
+                NonComplianceMessages = { new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-LC'.") },
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -87,17 +79,13 @@ new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
-            PolicyAssignmentData data = new PolicyAssignmentData()
+            PolicyAssignmentData data = new PolicyAssignmentData
             {
                 Location = new AzureLocation("eastus"),
                 ManagedIdentity = new ManagedServiceIdentity("SystemAssigned"),
@@ -105,19 +93,19 @@ new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming",
                 Parameters =
 {
-["prefix"] = new ArmPolicyParameterValue()
+["prefix"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromString("\"DeptA\""),
+Value = BinaryData.FromObjectAsJson("DeptA"),
 },
-["suffix"] = new ArmPolicyParameterValue()
+["suffix"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromString("\"-LC\""),
-},
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
 },
                 Description = "Force resource names to begin with given DeptA and end with -LC",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["assignedBy"] = "Foo Bar"
+                    assignedBy = "Foo Bar",
                 }),
                 EnforcementMode = EnforcementMode.Default,
             };
@@ -143,43 +131,39 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
-            PolicyAssignmentData data = new PolicyAssignmentData()
+            PolicyAssignmentData data = new PolicyAssignmentData
             {
                 Location = new AzureLocation("eastus"),
                 ManagedIdentity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/resourceGroups/testResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity()
 },
                 },
                 DisplayName = "Enforce resource naming rules",
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming",
                 Parameters =
 {
-["prefix"] = new ArmPolicyParameterValue()
+["prefix"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromString("\"DeptA\""),
+Value = BinaryData.FromObjectAsJson("DeptA"),
 },
-["suffix"] = new ArmPolicyParameterValue()
+["suffix"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromString("\"-LC\""),
-},
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
 },
                 Description = "Force resource names to begin with given DeptA and end with -LC",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["assignedBy"] = "Foo Bar"
+                    assignedBy = "Foo Bar",
                 }),
                 EnforcementMode = EnforcementMode.Default,
             };
@@ -205,30 +189,23 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "securityInitAssignment";
-            PolicyAssignmentData data = new PolicyAssignmentData()
+            PolicyAssignmentData data = new PolicyAssignmentData
             {
                 DisplayName = "Enforce security policies",
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policySetDefinitions/securityInitiative",
-                NonComplianceMessages =
-{
-new NonComplianceMessage("Resources must comply with all internal security policies. See <internal site URL> for more info."),new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-LC'.")
+                NonComplianceMessages = {new NonComplianceMessage("Resources must comply with all internal security policies. See <internal site URL> for more info."), new NonComplianceMessage("Resource names must start with 'DeptA' and end with '-LC'.")
 {
 PolicyDefinitionReferenceId = "10420126870854049575",
-},new NonComplianceMessage("Storage accounts must have firewall rules configured.")
+}, new NonComplianceMessage("Storage accounts must have firewall rules configured.")
 {
 PolicyDefinitionReferenceId = "8572513655450389710",
-}
-},
+}},
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -252,44 +229,31 @@ PolicyDefinitionReferenceId = "8572513655450389710",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
-            PolicyAssignmentData data = new PolicyAssignmentData()
+            PolicyAssignmentData data = new PolicyAssignmentData
             {
                 DisplayName = "Limit the resource location and resource SKU",
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policySetDefinitions/CostManagement",
                 Description = "Limit the resource location and resource SKU",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["assignedBy"] = "Special Someone"
+                    assignedBy = "Special Someone",
                 }),
-                Overrides =
-{
-new PolicyOverride()
+                Overrides = {new PolicyOverride
 {
 Kind = PolicyOverrideKind.PolicyEffect,
 Value = "Audit",
-Selectors =
-{
-new ResourceSelectorExpression()
+Selectors = {new ResourceSelectorExpression
 {
 Kind = ResourceSelectorKind.PolicyDefinitionReferenceId,
-In =
-{
-"Limit_Skus","Limit_Locations"
-},
-}
-},
-}
-},
+In = {"Limit_Skus", "Limit_Locations"},
+}},
+}},
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -313,43 +277,30 @@ In =
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
-            PolicyAssignmentData data = new PolicyAssignmentData()
+            PolicyAssignmentData data = new PolicyAssignmentData
             {
                 DisplayName = "Limit the resource location and resource SKU",
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policySetDefinitions/CostManagement",
                 Description = "Limit the resource location and resource SKU",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["assignedBy"] = "Special Someone"
+                    assignedBy = "Special Someone",
                 }),
-                ResourceSelectors =
-{
-new ResourceSelector()
+                ResourceSelectors = {new ResourceSelector
 {
 Name = "SDPRegions",
-Selectors =
-{
-new ResourceSelectorExpression()
+Selectors = {new ResourceSelectorExpression
 {
 Kind = ResourceSelectorKind.ResourceLocation,
-In =
-{
-"eastus2euap","centraluseuap"
-},
-}
-},
-}
-},
+In = {"eastus2euap", "centraluseuap"},
+}},
+}},
             };
             ArmOperation<PolicyAssignmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyAssignmentName, data);
             PolicyAssignmentResource result = lro.Value;
@@ -373,35 +324,31 @@ In =
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
-            PolicyAssignmentData data = new PolicyAssignmentData()
+            PolicyAssignmentData data = new PolicyAssignmentData
             {
                 DisplayName = "Enforce resource naming rules",
                 PolicyDefinitionId = "/subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2/providers/Microsoft.Authorization/policyDefinitions/ResourceNaming",
                 Parameters =
 {
-["prefix"] = new ArmPolicyParameterValue()
+["prefix"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromString("\"DeptA\""),
+Value = BinaryData.FromObjectAsJson("DeptA"),
 },
-["suffix"] = new ArmPolicyParameterValue()
+["suffix"] = new ArmPolicyParameterValue
 {
-Value = BinaryData.FromString("\"-LC\""),
-},
+Value = BinaryData.FromObjectAsJson("-LC"),
+}
 },
                 Description = "Force resource names to begin with given DeptA and end with -LC",
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["assignedBy"] = "Special Someone"
+                    assignedBy = "Special Someone",
                 }),
                 EnforcementMode = EnforcementMode.DoNotEnforce,
             };
@@ -427,13 +374,9 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -444,72 +387,6 @@ Value = BinaryData.FromString("\"-LC\""),
             PolicyAssignmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_RetrieveAPolicyAssignment()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "EnforceNaming";
-            bool result = await collection.ExistsAsync(policyAssignmentName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_RetrieveAPolicyAssignment()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "EnforceNaming";
-            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
-            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -524,13 +401,9 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -541,72 +414,6 @@ Value = BinaryData.FromString("\"-LC\""),
             PolicyAssignmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "EnforceNaming";
-            bool result = await collection.ExistsAsync(policyAssignmentName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "EnforceNaming";
-            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
-            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -621,13 +428,9 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "EnforceNaming";
@@ -638,72 +441,6 @@ Value = BinaryData.FromString("\"-LC\""),
             PolicyAssignmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "EnforceNaming";
-            bool result = await collection.ExistsAsync(policyAssignmentName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "EnforceNaming";
-            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
-            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -718,13 +455,9 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -735,72 +468,6 @@ Value = BinaryData.FromString("\"-LC\""),
             PolicyAssignmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_RetrieveAPolicyAssignmentWithOverrides()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "CostManagement";
-            bool result = await collection.ExistsAsync(policyAssignmentName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_RetrieveAPolicyAssignmentWithOverrides()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "CostManagement";
-            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
-            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -815,13 +482,9 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation
             string policyAssignmentName = "CostManagement";
@@ -836,72 +499,6 @@ Value = BinaryData.FromString("\"-LC\""),
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_RetrieveAPolicyAssignmentWithResourceSelectors()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "CostManagement";
-            bool result = await collection.ExistsAsync(policyAssignmentName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_RetrieveAPolicyAssignmentWithResourceSelectors()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
-            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this PolicyAssignmentResource
-            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
-
-            // invoke the operation
-            string policyAssignmentName = "CostManagement";
-            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
-            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyAssignmentData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPolicyAssignmentsThatApplyToAResourceGroup()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/listPolicyAssignmentsForResourceGroup.json
@@ -912,14 +509,11 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
             string resourceGroupName = "TestResourceGroup";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}", subscriptionId, resourceGroupName));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation and iterate over the result
             string filter = "atScope()";
@@ -947,9 +541,6 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
             string resourceGroupName = "TestResourceGroup";
@@ -957,8 +548,8 @@ Value = BinaryData.FromString("\"-LC\""),
             string parentResourcePath = "virtualMachines/MyTestVm";
             string resourceType = "domainNames";
             string resourceName = "MyTestComputer.cloudapp.net";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/{2}/{3}/{4}/{5}", subscriptionId, resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation and iterate over the result
             await foreach (PolicyAssignmentResource item in collection.GetAllAsync())
@@ -985,13 +576,10 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string managementGroupId = "TestManagementGroup";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/providers/Microsoft.Management/managementGroups/{0}", managementGroupId));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            string scope = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation and iterate over the result
             string filter = "atScope()";
@@ -1019,13 +607,10 @@ Value = BinaryData.FromString("\"-LC\""),
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this PolicyAssignmentResource
             string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}", subscriptionId));
-            PolicyAssignmentCollection collection = client.GetGenericResource(scopeId).GetPolicyAssignments();
+            string scope = $"/subscriptions/{subscriptionId}";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
 
             // invoke the operation and iterate over the result
             string filter = "atScope()";
@@ -1039,6 +624,296 @@ Value = BinaryData.FromString("\"-LC\""),
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_RetrieveAPolicyAssignment()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "EnforceNaming";
+            bool result = await collection.ExistsAsync(policyAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "EnforceNaming";
+            bool result = await collection.ExistsAsync(policyAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "EnforceNaming";
+            bool result = await collection.ExistsAsync(policyAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_RetrieveAPolicyAssignmentWithOverrides()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "CostManagement";
+            bool result = await collection.ExistsAsync(policyAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_RetrieveAPolicyAssignmentWithResourceSelectors()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "CostManagement";
+            bool result = await collection.ExistsAsync(policyAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_RetrieveAPolicyAssignment()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignment.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "EnforceNaming";
+            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
+            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyAssignmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_RetrieveAPolicyAssignmentWithASystemAssignedIdentity()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithIdentity.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "EnforceNaming";
+            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
+            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyAssignmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_RetrieveAPolicyAssignmentWithAUserAssignedIdentity()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithUserAssignedIdentity.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "EnforceNaming";
+            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
+            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyAssignmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_RetrieveAPolicyAssignmentWithOverrides()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithOverrides.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "CostManagement";
+            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
+            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyAssignmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_RetrieveAPolicyAssignmentWithResourceSelectors()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/examples/getPolicyAssignmentWithResourceSelectors.json
+            // this example is just showing the usage of "PolicyAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this PolicyAssignmentResource
+            string scope = "subscriptions/ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            PolicyAssignmentCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetPolicyAssignments();
+
+            // invoke the operation
+            string policyAssignmentName = "CostManagement";
+            NullableResponse<PolicyAssignmentResource> response = await collection.GetIfExistsAsync(policyAssignmentName);
+            PolicyAssignmentResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyAssignmentData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 5.3.4 (2025-02-11)
+
+### Bugs Fixed
+- Fixed bug where calling StopAsync in QueueListener while drain mode was enabled would cancel the execution cancellation token.
+- Fixed bug where the cancellation token passed to QueueListener.ProcessMessageAsync was being propagated to the QueueProcessor.CompleteProcessingMessageAsync call. Since this token is always canceled when QueueListener.StopAsync is invoked, it caused messages to be processed but not deleted.
+
+
 ## 5.3.3 (2024-10-10)
 
 ### Other Changes

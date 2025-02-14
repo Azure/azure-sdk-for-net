@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.JobPlan
@@ -14,7 +13,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The schema version.
         /// </summary>
-        public string Version;
+        public int Version;
 
         /// <summary>
         /// The Transfer/Job Id.
@@ -54,7 +53,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The resource creation preference.
         /// </summary>
-        public StorageResourceCreationPreference CreatePreference;
+        public StorageResourceCreationMode CreatePreference;
 
         /// <summary>
         /// Ths initial transfer size for the transfer.
@@ -74,10 +73,10 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The current status of the job part.
         /// </summary>
-        public DataTransferStatus JobPartStatus;
+        public TransferStatus JobPartStatus;
 
         public JobPartPlanHeader(
-            string version,
+            int version,
             string transferId,
             long partNumber,
             DateTimeOffset createTime,
@@ -85,13 +84,12 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationTypeId,
             string sourcePath,
             string destinationPath,
-            StorageResourceCreationPreference createPreference,
+            StorageResourceCreationMode createPreference,
             long initialTransferSize,
             long chunkSize,
             byte priority,
-            DataTransferStatus jobPartStatus)
+            TransferStatus jobPartStatus)
         {
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             Argument.AssertNotNull(createTime, nameof(createTime));
             Argument.AssertNotNullOrEmpty(sourceTypeId, nameof(sourceTypeId));
@@ -100,13 +98,6 @@ namespace Azure.Storage.DataMovement.JobPlan
             Argument.AssertNotNullOrWhiteSpace(destinationPath, nameof(destinationPath));
             Argument.AssertNotNull(jobPartStatus, nameof(jobPartStatus));
 
-            if (version.Length != DataMovementConstants.JobPartPlanFile.VersionStrLength)
-            {
-                throw Errors.InvalidPartHeaderElementLength(
-                    elementName: nameof(Version),
-                    expectedSize: DataMovementConstants.JobPartPlanFile.VersionStrLength,
-                    actualSize: version.Length);
-            }
             if (!Guid.TryParse(transferId, out Guid _))
             {
                 throw Errors.InvalidPartHeaderElement(nameof(transferId), transferId);
@@ -148,7 +139,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             int currentVariableLengthIndex = DataMovementConstants.JobPartPlanFile.VariableLengthStartIndex;
 
             // Version
-            writer.WritePaddedString(Version, DataMovementConstants.JobPartPlanFile.VersionStrNumBytes);
+            writer.Write(Version);
 
             // TransferId (write as bytes)
             Guid transferId = Guid.Parse(TransferId);
@@ -203,10 +194,11 @@ namespace Azure.Storage.DataMovement.JobPlan
             reader.BaseStream.Position = 0;
 
             // Version
-            string version = reader.ReadPaddedString(DataMovementConstants.JobPartPlanFile.VersionStrNumBytes);
-
-            // Assert the schema version before continuing
-            CheckSchemaVersion(version);
+            int version = reader.ReadInt32();
+            if (version != DataMovementConstants.JobPartPlanFile.SchemaVersion)
+            {
+                throw Errors.UnsupportedJobPartSchemaVersionHeader(version);
+            }
 
             // TransferId
             byte[] transferIdBuffer = reader.ReadBytes(DataMovementConstants.GuidSizeInBytes);
@@ -235,7 +227,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             int destinationPathLength = reader.ReadInt32();
 
             // CreatePreference
-            StorageResourceCreationPreference createPreference = (StorageResourceCreationPreference)reader.ReadByte();
+            StorageResourceCreationMode createPreference = (StorageResourceCreationMode)reader.ReadByte();
 
             // InitialTransferSize
             long initialTransferSize = reader.ReadInt64();
@@ -248,7 +240,7 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // JobPartStatus
             JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
-            DataTransferStatus jobPartStatus = jobPlanStatus.ToDataTransferStatus();
+            TransferStatus jobPartStatus = jobPlanStatus.ToTransferStatus();
 
             // SourcePath
             string sourcePath = null;
@@ -308,14 +300,6 @@ namespace Azure.Storage.DataMovement.JobPlan
                 (ChunkSize == other.ChunkSize) &&
                 (Priority == other.Priority) &&
                 (JobPartStatus == other.JobPartStatus);
-        }
-
-        private static void CheckSchemaVersion(string version)
-        {
-            if (version != DataMovementConstants.JobPartPlanFile.SchemaVersion)
-            {
-                throw Errors.UnsupportedJobPartSchemaVersionHeader(version);
-            }
         }
     }
 }

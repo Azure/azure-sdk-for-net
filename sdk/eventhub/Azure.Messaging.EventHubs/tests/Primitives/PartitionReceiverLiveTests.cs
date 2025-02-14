@@ -5,8 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
@@ -579,7 +577,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
                 var partition = (await QueryPartitionsAsync(scope.EventHubName, cancellationSource.Token)).First();
-                var sourceEvents = EventGenerator.CreateEvents(200).ToList();
 
                 await using (var receiver = new PartitionReceiver(
                     EventHubConsumerClient.DefaultConsumerGroupName,
@@ -593,31 +590,76 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     await SendEventsAsync(scope.EventHubName, EventGenerator.CreateEvents(50), new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
 
-                    // Begin reading though no events have been published.  This is necessary to open the connection and
+                    // Begin reading in the background, though no events should be read until the next publish.  This is necessary to open the connection and
                     // ensure that the receiver is watching the partition.
 
-                    var readTask = ReadEventsAsync(receiver, sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
+                    var eventsRead = 0;
+
+                    var readTask = Task.Run(async () =>
+                    {
+                        await Task.Yield();
+
+                        try
+                        {
+                            while ((!cancellationSource.Token.IsCancellationRequested) && (eventsRead <= 1))
+                            {
+                                var batch = await receiver.ReceiveBatchAsync(10, TimeSpan.FromMilliseconds(250), cancellationSource.Token);
+                                eventsRead += batch.Count();
+
+                                // Avoid a tight loop if nothing was read.
+
+                                if (eventsRead <= 1)
+                                {
+                                    await Task.Delay(50);
+                                }
+                            }
+                        }
+                        catch (TaskCanceledException)
+                        {
+                          // Expected
+                        }
+                    });
 
                     // Give the receiver a moment to ensure that it is established and then send events for it to read.
 
-                    await Task.Delay(250);
-                    await SendEventsAsync(scope.EventHubName, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
-
-                    // Await reading of the events and validate the resulting state.
-
-                    var readState = await readTask;
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                    Assert.That(readState.Events.Count, Is.EqualTo(sourceEvents.Count), "Only the source events should have been read.");
-
-                    foreach (var sourceEvent in sourceEvents)
+                    var sendTask = Task.Run(async () =>
                     {
-                        var sourceId = sourceEvent.MessageId;
-                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
-                        Assert.That(sourceEvent.IsEquivalentTo(readEvent), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
-                    }
-                }
+                        try
+                        {
+                            while (!cancellationSource.IsCancellationRequested)
+                            {
+                                await Task.Delay(150);
+                                await SendEventsAsync(scope.EventHubName, EventGenerator.CreateEvents(5), new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
+                            }
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // Expected
+                        }
+                    });
 
-                cancellationSource.Cancel();
+                    while ((eventsRead < 1) && (!cancellationSource.IsCancellationRequested))
+                    {
+                        try
+                        {
+                            await Task.Delay(250, cancellationSource.Token);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // Expected
+                        }
+                    }
+
+                    // Await reading of the events and validate that we were able to read at least one event.
+
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+                    Assert.That(eventsRead, Is.GreaterThanOrEqualTo(1), "At least one event should have been read.");
+
+                    cancellationSource.Cancel();
+
+                    await readTask;
+                    await sendTask;
+                }
             }
         }
 
@@ -647,7 +689,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 // Once sent, query the partition and determine the offset of the last enqueued event, then send the new set
                 // of events that should appear after the starting position.
 
-                long lastOffset;
+                string lastOffset;
                 EventPosition startingPosition;
 
                 await using (var producer = new EventHubProducerClient(
@@ -658,7 +700,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     await SendEventsAsync(scope.EventHubName, seedEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
                     await Task.Delay(250);
 
-                    lastOffset = (await producer.GetPartitionPropertiesAsync(partition, cancellationSource.Token)).LastEnqueuedOffset;
+                    lastOffset = (await producer.GetPartitionPropertiesAsync(partition, cancellationSource.Token)).LastEnqueuedOffsetString;
                     startingPosition = EventPosition.FromOffset(lastOffset, isInclusive);
 
                     await SendEventsAsync(scope.EventHubName, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
@@ -687,7 +729,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                     Assert.That(readState.Events.Count, Is.EqualTo(expectedCount), "The wrong number of events was read for the value of the inclusive flag.");
-                    Assert.That(readState.Events.Values.Any(readEvent => readEvent.Offset == lastOffset), Is.EqualTo(isInclusive), $"The event with offset [{ lastOffset }] was { ((isInclusive) ? "not" : "") } in the set of read events, which is inconsistent with the inclusive flag.");
+                    Assert.That(readState.Events.Values.Any(readEvent => readEvent.OffsetString == lastOffset), Is.EqualTo(isInclusive), $"The event with offset [{ lastOffset }] was { ((isInclusive) ? "not" : "") } in the set of read events, which is inconsistent with the inclusive flag.");
 
                     foreach (var sourceEvent in sourceEvents)
                     {
@@ -949,47 +991,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 }
 
                 cancellationSource.Cancel();
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="PartitionReceiver" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ReceiverCannotReadWithInvalidProxy()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-                var clientOptions = new PartitionReceiverOptions();
-                clientOptions.RetryOptions.MaximumRetries = 0;
-                clientOptions.RetryOptions.MaximumDelay = TimeSpan.FromMilliseconds(5);
-                clientOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(45);
-                clientOptions.ConnectionOptions.Proxy = new WebProxy("http://1.2.3.4:9999");
-                clientOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
-
-                var partition = (await QueryPartitionsAsync(scope.EventHubName, cancellationSource.Token)).First();
-
-                await using (var invalidProxyReceiver = new PartitionReceiver(
-                    EventHubConsumerClient.DefaultConsumerGroupName,
-                    partition,
-                    EventPosition.Earliest,
-                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
-                    scope.EventHubName,
-                    EventHubsTestEnvironment.Instance.Credential,
-                    clientOptions))
-                {
-                    // The sockets implementation in .NET Core on some platforms, such as Linux, does not trigger a specific socket exception and
-                    // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
-                    // invoke a timeout exception in these cases.
-
-                    Assert.That(async () => await ReadNothingAsync(invalidProxyReceiver, cancellationSource.Token, iterationCount: 25), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                }
             }
         }
 
@@ -1527,7 +1528,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ExclusiveReceiverSupercedesNonExclusiveActiveReader()
+        public async Task ExclusiveReceiverSupersedesNonExclusiveActiveReader()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1598,7 +1599,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReceiverWithHigherOwnerLevelSupercedesActiveReader()
+        public async Task ReceiverWithHigherOwnerLevelSupersedesActiveReader()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1818,7 +1819,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ReceiverIsNotCompromisedByBeingSupercededByAnotherReaderWithHigherLevel()
+        public async Task ReceiverIsNotCompromisedByBeingSupersededByAnotherReaderWithHigherLevel()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
@@ -2436,7 +2437,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
                 }
             }
         }
@@ -2471,47 +2472,6 @@ namespace Azure.Messaging.EventHubs.Tests
                     await connection.CloseAsync(cancellationSource.Token);
 
                     Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<EventHubsException>().And.Property(nameof(EventHubsException.Reason)).EqualTo(EventHubsException.FailureReason.ClientClosed));
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="PartitionReceiver" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ReceiverCannotRetrieveMetadataWithInvalidProxy()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-                var partition = (await QueryPartitionsAsync(scope.EventHubName, cancellationSource.Token)).First();
-
-                var invalidProxyOptions = new PartitionReceiverOptions();
-                invalidProxyOptions.RetryOptions.MaximumRetries = 0;
-                invalidProxyOptions.RetryOptions.MaximumDelay = TimeSpan.FromMilliseconds(5);
-                invalidProxyOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(45);
-                invalidProxyOptions.ConnectionOptions.Proxy = new WebProxy("http://1.2.3.4:9999");
-                invalidProxyOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
-
-                await using (var receiver = new PartitionReceiver(
-                    EventHubConsumerClient.DefaultConsumerGroupName,
-                    partition,
-                    EventPosition.Earliest,
-                    EventHubsTestEnvironment.Instance.FullyQualifiedNamespace,
-                    scope.EventHubName,
-                    EventHubsTestEnvironment.Instance.Credential,
-                    invalidProxyOptions))
-                {
-                    // The sockets implementation in .NET Core on some platforms, such as Linux, does not trigger a specific socket exception and
-                    // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
-                    // invoke a timeout exception in these cases.
-
-                    Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 }
             }

@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.SecurityDevOps.Samples
             AzureDevOpsOrgResource azureDevOpsOrg = client.GetAzureDevOpsOrgResource(azureDevOpsOrgResourceId);
 
             // invoke the operation
-            AzureDevOpsOrgData data = new AzureDevOpsOrgData()
+            AzureDevOpsOrgData data = new AzureDevOpsOrgData
             {
-                Properties = new AzureDevOpsOrgProperties()
+                Properties = new AzureDevOpsOrgProperties
                 {
                     AutoDiscovery = AutoDiscovery.Disabled,
                 },
