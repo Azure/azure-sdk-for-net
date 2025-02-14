@@ -219,6 +219,7 @@ $configs = Get-Content -Raw $PRMatrixFile | ConvertFrom-Json
 # get all the package property objects loaded
 $packageProperties = Get-ChildItem -Recurse "$PackagePropertiesFolder" *.json `
 | ForEach-Object { Get-Content -Path $_.FullName | ConvertFrom-Json }
+| ForEach-Object { Add-Member -InputObject $_ -MemberType NoteProperty -Name CIMatrixConfigs -Value $_.CIParameters.CIMatrixConfigs -PassThru }
 
 # enhance the package props with a default matrix config if one isn't present
 $packageProperties | ForEach-Object {

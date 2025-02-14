@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp;
-using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +23,10 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientPlugin.Instance.Configuration.RootNamespace} client library for developing .NET applications with rich experience.",
-                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.Configuration.RootNamespace}",
+                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.RootNamespace} client library for developing .NET applications with rich experience.",
+                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.RootNamespace}",
                 Version = "1.0.0-beta.1",
-                PackageTags = AzureClientPlugin.Instance.Configuration.RootNamespace,
+                PackageTags = AzureClientPlugin.Instance.TypeFactory.RootNamespace,
                 GenerateDocumentationFile = true,
             };
 
@@ -162,7 +162,7 @@ Global
     EndGlobalSection
 EndGlobal
 ";
-            return string.Format(slnContent, AzureClientPlugin.Instance.Configuration.RootNamespace);
+            return string.Format(slnContent, AzureClientPlugin.Instance.TypeFactory.RootNamespace);
         }
     }
 }

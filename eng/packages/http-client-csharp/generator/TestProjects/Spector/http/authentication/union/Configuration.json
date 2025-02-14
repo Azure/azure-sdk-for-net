@@ -1,6 +1,5 @@
 {
   "output-folder": ".",
   "namespace": "Authentication.Union",
-  "library-name": "Authentication.Union",
-  "use-model-reader-writer": true
+  "library-name": "Authentication.Union"
 }

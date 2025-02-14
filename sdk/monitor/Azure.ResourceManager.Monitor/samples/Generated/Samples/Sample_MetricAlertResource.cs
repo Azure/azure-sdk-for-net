@@ -281,8 +281,8 @@ namespace Azure.ResourceManager.Monitor.Samples
                 Severity = 3,
                 IsEnabled = true,
                 Scopes = { "/subscriptions/14ddf0c5-77c5-4b53-84f6-e1fa43ad68f7/resourceGroups/gigtest/providers/Microsoft.Compute/virtualMachines/gigwadme" },
-                EvaluationFrequency = XmlConvert.ToTimeSpan("Pt1m"),
-                WindowSize = XmlConvert.ToTimeSpan("Pt15m"),
+                EvaluationFrequency = XmlConvert.ToTimeSpan("PT1M"),
+                WindowSize = XmlConvert.ToTimeSpan("PT15M"),
                 Criteria = new MetricAlertSingleResourceMultipleMetricCriteria
                 {
                     AllOf = {new MetricCriteria("High_CPU_80", "\\Processor(_Total)\\% Processor Time", MetricCriteriaTimeAggregationType.Average, MetricCriteriaOperator.GreaterThan, 80.5)

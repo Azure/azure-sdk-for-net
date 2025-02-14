@@ -20,7 +20,7 @@ class PackageProps {
     # additional packages required for validation of this one
     [string[]]$AdditionalValidationPackages
     [HashTable]$ArtifactDetails
-    [HashTable[]]$CIMatrixConfigs
+    [HashTable]$CIParameters
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory) {
         $this.Initialize($name, $version, $directoryPath, $serviceDirectory)
@@ -61,6 +61,7 @@ class PackageProps {
             $this.ChangeLogPath = $null
         }
 
+        $this.CIParameters = @{"CIMatrixConfigs" = @()}
         $this.InitializeCIArtifacts()
     }
 
@@ -89,21 +90,7 @@ class PackageProps {
             if ($artifactForCurrentPackage) {
                 $result = [PSCustomObject]@{
                     ArtifactConfig = [HashTable]$artifactForCurrentPackage
-                    MatrixConfigs  = @()
-                    AdditionalMatrixConfigs = @()
-                }
-
-                # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
-                $matrixConfigList = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "MatrixConfigs")
-
-                if ($matrixConfigList) {
-                    $result.MatrixConfigs += $matrixConfigList
-                }
-
-                $additionalMatrixConfigList = GetValueSafelyFrom-Yaml $content @("extends", "parameters", "AdditionalMatrixConfigs")
-
-                if ($additionalMatrixConfigList) {
-                    $result.AdditionalMatrixConfigs += $additionalMatrixConfigList
+                    ParsedYml = $content
                 }
 
                 return $result
@@ -112,28 +99,45 @@ class PackageProps {
         return $null
     }
 
+    [PSCustomObject]GetCIYmlForArtifact() {
+        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+
+        $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
+        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
+        $ciArtifactResult = $null
+
+        foreach ($ciFile in $ciFiles) {
+            $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
+            if ($ciArtifactResult) {
+                break
+            }
+        }
+
+        return $ciArtifactResult
+    }
+
     [void]InitializeCIArtifacts() {
         if (-not $env:SYSTEM_TEAMPROJECTID  -and -not $env:GITHUB_ACTIONS) {
             return
         }
 
-        $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
-
-        $ciFolderPath = Join-Path -Path $RepoRoot -ChildPath (Join-Path "sdk" $this.ServiceDirectory)
-        $ciFiles = Get-ChildItem -Path $ciFolderPath -Filter "ci*.yml" -File
-
         if (-not $this.ArtifactDetails) {
-            foreach ($ciFile in $ciFiles) {
-                $ciArtifactResult = $this.ParseYmlForArtifact($ciFile.FullName)
-                if ($ciArtifactResult) {
-                    $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
-                    $this.CIMatrixConfigs = $ciArtifactResult.MatrixConfigs
-                    # if this package appeared in this ci file, then we should
-                    # treat this CI file as the source of the Matrix for this package
-                    if ($ciArtifactResult.PSObject.Properties.Name -contains "AdditionalMatrixConfigs" -and $ciArtifactResult.AdditionalMatrixConfigs) {
-                        $this.CIMatrixConfigs += $ciArtifactResult.AdditionalMatrixConfigs
-                    }
-                    break
+            $ciArtifactResult = $this.GetCIYmlForArtifact()
+
+            if ($ciArtifactResult) {
+                $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
+
+                # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
+                $matrixConfigList = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("extends", "parameters", "MatrixConfigs")
+
+                if ($matrixConfigList) {
+                    $this.CIParameters["CIMatrixConfigs"] += $matrixConfigList
+                }
+
+                $additionalMatrixConfigList = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("extends", "parameters", "AdditionalMatrixConfigs")
+
+                if ($additionalMatrixConfigList) {
+                    $this.CIParameters["CIMatrixConfigs"] += $additionalMatrixConfigList
                 }
             }
         }
