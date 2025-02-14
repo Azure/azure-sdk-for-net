@@ -17,12 +17,6 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/ConnectFailed.Serialization.cs
-========
-            DialogInputType? dialogInputType = default;
-            string dialogId = default;
-            object ivrContext = default;
->>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/DialogUpdatedInternal.Serialization.cs
             string callConnectionId = default;
             string serverCallId = default;
             string correlationId = default;
@@ -30,32 +24,6 @@ namespace Azure.Communication.CallAutomation
             ResultInformation resultInformation = default;
             foreach (var property in element.EnumerateObject())
             {
-<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/ConnectFailed.Serialization.cs
-========
-                if (property.NameEquals("dialogInputType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dialogInputType = new DialogInputType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dialogId"u8))
-                {
-                    dialogId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ivrContext"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ivrContext = property.Value.GetObject();
-                    continue;
-                }
->>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/DialogUpdatedInternal.Serialization.cs
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -86,19 +54,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-<<<<<<<< HEAD:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/ConnectFailed.Serialization.cs
             return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-========
-            return new DialogUpdatedInternal(
-                dialogInputType,
-                dialogId,
-                ivrContext,
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation);
->>>>>>>> main:sdk/communication/Azure.Communication.CallAutomation/src/Generated/Models/DialogUpdatedInternal.Serialization.cs
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

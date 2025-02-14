@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("TranscriptionOptions")]
+    [CodeGenModel("TranscriptionConfiguration")]
     internal partial class TranscriptionOptionsInternal
     {
     }

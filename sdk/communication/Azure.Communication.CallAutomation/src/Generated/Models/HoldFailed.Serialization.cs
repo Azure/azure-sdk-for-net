@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class ContinuousDtmfRecognitionStopped
+    public partial class HoldFailed
     {
-        internal static ContinuousDtmfRecognitionStopped DeserializeContinuousDtmfRecognitionStopped(JsonElement element)
+        internal static HoldFailed DeserializeHoldFailed(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,15 +54,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new ContinuousDtmfRecognitionStopped(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
+            return new HoldFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ContinuousDtmfRecognitionStopped FromResponse(Response response)
+        internal static HoldFailed FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeContinuousDtmfRecognitionStopped(document.RootElement);
+            return DeserializeHoldFailed(document.RootElement);
         }
     }
 }
