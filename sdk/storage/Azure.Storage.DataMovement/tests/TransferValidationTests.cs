@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
