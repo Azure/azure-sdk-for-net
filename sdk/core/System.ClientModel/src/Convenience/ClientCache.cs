@@ -14,7 +14,7 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ClientCache
 {
-    private readonly Dictionary<(Type, string), (object Client, long LastUsed)> _clients = new();
+    private readonly Dictionary<(Type, string), ClientEntry> _clients = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.NoRecursion);
 
     private const int MaxCacheSize = 100;
@@ -34,7 +34,7 @@ public class ClientCache
         // If the client exists, update its timestamp.
         if (_clients.TryGetValue(key, out var cached))
         {
-            _clients[key] = (cached.Client, Stopwatch.GetTimestamp());
+            cached.LastUsed = Stopwatch.GetTimestamp();
             return (T)cached.Client;
         }
 
@@ -43,14 +43,13 @@ public class ClientCache
         try
         {
             T created = createClient();
-            _clients[key] = (created, Stopwatch.GetTimestamp());
+            _clients[key] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
             // After insertion, if cache exceeds the limit, set flag for cleanup.
             if (_clients.Count > MaxCacheSize)
             {
                 Cleanup();
             }
-
             return created;
         }
         finally
@@ -82,5 +81,20 @@ public class ClientCache
                 }
             }
         }
+    }
+}
+
+/// <summary>
+/// Represents a cached client and its last-used timestamp.
+/// </summary>
+internal class ClientEntry
+{
+    public object Client { get; }
+    public long LastUsed { get; set; }
+
+    public ClientEntry(object client, long lastUsed)
+    {
+        Client = client;
+        LastUsed = lastUsed;
     }
 }

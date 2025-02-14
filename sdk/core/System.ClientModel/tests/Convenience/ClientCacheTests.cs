@@ -22,7 +22,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), (object Client, long LastUsed)>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
@@ -41,7 +41,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), (object Client, long LastUsed)>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(50, clients!.Count, "Cache should not have cleaned up when under the limit.");
@@ -65,7 +65,7 @@ public class ClientCacheTests
         clientCache.GetClient(() => new object(), "client1");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), (object Client, long LastUsed)>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
@@ -103,7 +103,7 @@ public class ClientCacheTests
         clientCache.GetClient(() => new object(), "client102");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), (object Client, long LastUsed)>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.AreEqual(100, clients!.Count, "Cache did not cleanup correctly.");
@@ -134,7 +134,7 @@ public class ClientCacheTests
         }
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), (object Client, long LastUsed)>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.IsTrue(disposableClient.IsDisposed, "Disposable client was not disposed correctly.");
@@ -153,7 +153,7 @@ public class ClientCacheTests
         clientCache.GetClient(() => client2, "client2");
 
         var clientsField = typeof(ClientCache).GetField("_clients", BindingFlags.NonPublic | BindingFlags.Instance);
-        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), (object Client, long LastUsed)>;
+        var clients = clientsField?.GetValue(clientCache) as Dictionary<(Type, string), ClientEntry>;
 
         Assert.IsNotNull(clients, "The _clients field is null.");
         Assert.IsTrue(clients!.ContainsKey((typeof(object), "client1")), "Client1 should be in the cache.");
