@@ -18,7 +18,7 @@ namespace Azure.Projects;
 /// <summary>
 /// ASp.NET Core extension methods for mapping a service implementation to a set of HTTP endpoints.
 /// </summary>
-public static class CloudMachineExtensions
+public static class AzureProjectsExtensions
 {
     /// <summary>
     /// Maps TSP endpoints. CloudMachineClient needs to be in the container for this method to work.
