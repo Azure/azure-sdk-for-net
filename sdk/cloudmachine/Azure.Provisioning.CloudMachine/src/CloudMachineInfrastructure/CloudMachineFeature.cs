@@ -14,7 +14,7 @@ public abstract class CloudMachineFeature
     private ProvisionableResource? _resource;
 
     protected abstract ProvisionableResource EmitResources(ProjectInfrastructure cm);
-    protected internal virtual void EmitConnections(ConnectionCollection connections, string cmId) { }
+    protected internal virtual void EmitConnections(ICollection<ClientConnection> connections, string cmId) { }
     protected internal virtual void EmitFeatures(FeatureCollection features, string cmId)
         => features.Add(this);
 

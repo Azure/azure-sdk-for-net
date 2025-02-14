@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.CloudMachine.Core;
 using Azure.Core;
 using Azure.Provisioning.Expressions;
@@ -71,7 +72,7 @@ internal class BlobContainerFeature : CloudMachineFeature
         return container;
     }
 
-    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
+    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
     {
         ClientConnection connection = new(
             $"Azure.Storage.Blobs.BlobContainerClient@{ContainerName}",

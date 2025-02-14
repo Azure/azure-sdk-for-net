@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.CloudMachine.Core;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
@@ -39,6 +40,6 @@ internal class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = S
         return _serviceBusNamespace;
     }
 
-    protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
+    protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
         => connections.Add(CloudMachineConnections.CreateDefaultServiceBusConnection(cmId));
 }

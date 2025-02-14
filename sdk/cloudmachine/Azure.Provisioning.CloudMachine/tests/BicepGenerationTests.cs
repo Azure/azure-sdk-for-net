@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.CloudMachine.Tests;
 
-public class ProvisioningTests
+public class BicepGenerationTests
 {
     [Test]
     public void JustCloudMachine()
@@ -23,6 +23,17 @@ public class ProvisioningTests
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
         string expectedBicep = LoadTestFile("JustCloudMachine.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void Foundry()
+    {
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        infra.AddFeature(new AIFoundry.AIFoundryFeature());
+        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        File.WriteAllText("d:\\foundry.bicep", actualBicep);
+        string expectedBicep = LoadTestFile("Foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
