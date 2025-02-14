@@ -9,7 +9,7 @@
 ### Bugs Fixed
 
 * Always set Dependency.Target if "server.address" is set.
-  ([]())
+  ([#48317](https://github.com/Azure/azure-sdk-for-net/pull/48317))
 
 ### Other Changes
 
