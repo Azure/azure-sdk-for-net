@@ -199,7 +199,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 await Task.Delay(milliSeconds);
         }
 
-        protected async Task CleanUpCall(CallAutomationClient client, string? callConnectionId)
+        protected async Task CleanUpCall(CallAutomationClient client, string? callConnectionId, string? uniqueId)
         {
             try
             {
@@ -212,6 +212,11 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                             await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
                         }
                     }
+                }
+
+                if (!string.IsNullOrEmpty(uniqueId))
+                {
+                    await DeRegisterCallBackWithDispatcher(uniqueId);
                 }
             }
             catch
@@ -353,7 +358,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             }
         }
 
-        private HttpMessage CreateDeRegisterCallBackWithDispatcherRequest(IEnumerable<string> ids)
+        private HttpMessage CreateDeRegisterCallBackWithDispatcherRequest(string uniqueId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -362,25 +367,22 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(TestEnvironment.DispatcherEndpoint, false);
             uri.AppendPath("/api/servicebuscallback/unsubscribe", false);
-
+            uri.AppendQuery("q", uniqueId, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(ids);
-            request.Content = content;
+            ;
             return message;
         }
 
-        private async Task DeRegisterCallBackWithDispatcher()
+        private async Task DeRegisterCallBackWithDispatcher(string? uniqueId)
         {
-            if (Mode == RecordedTestMode.Playback)
+            if (Mode == RecordedTestMode.Playback || string.IsNullOrEmpty(uniqueId))
             {
                 // Skip when playback
                 return;
             }
-            using var message = CreateDeRegisterCallBackWithDispatcherRequest(_recordedEventListener.ActiveQueues);
+            using var message = CreateDeRegisterCallBackWithDispatcherRequest(uniqueId!);
             await _pipeline.SendAsync(message, CancellationToken.None).ConfigureAwait(false);
             var response = message.Response;
             if (response.IsError)
