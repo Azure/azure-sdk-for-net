@@ -45,7 +45,7 @@ public class ClientCache
             T created = createClient();
             _clients[key] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
-            // After insertion, if cache exceeds the limit, set flag for cleanup.
+            // After insertion, if cache exceeds the limit, perform cleanup.
             if (_clients.Count > MaxCacheSize)
             {
                 Cleanup();
