@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Nginx.Models
+namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The AnalysisResultData. </summary>
-    internal partial class AnalysisResultData
+    /// <summary> The connection info for Incident Receiver. </summary>
+    public partial class IncidentServiceConnection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,38 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResultData"/>. </summary>
-        internal AnalysisResultData()
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/>. </summary>
+        /// <param name="name"> The name of the connection. </param>
+        /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="id"/> is null. </exception>
+        public IncidentServiceConnection(string name, string id)
         {
-            Errors = new ChangeTrackingList<NginxAnalysisDiagnostic>();
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(id, nameof(id));
+
+            Name = name;
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalysisResultData"/>. </summary>
-        /// <param name="errors"></param>
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/>. </summary>
+        /// <param name="name"> The name of the connection. </param>
+        /// <param name="id"> GUID value representing the connection ID for the incident management service. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisResultData(IReadOnlyList<NginxAnalysisDiagnostic> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IncidentServiceConnection(string name, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Errors = errors;
+            Name = name;
+            Id = id;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the errors. </summary>
-        public IReadOnlyList<NginxAnalysisDiagnostic> Errors { get; }
+        /// <summary> Initializes a new instance of <see cref="IncidentServiceConnection"/> for deserialization. </summary>
+        internal IncidentServiceConnection()
+        {
+        }
+
+        /// <summary> The name of the connection. </summary>
+        public string Name { get; set; }
+        /// <summary> GUID value representing the connection ID for the incident management service. </summary>
+        public string Id { get; set; }
     }
 }
