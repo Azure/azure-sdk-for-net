@@ -109,18 +109,10 @@ namespace Azure.Generator
             var baseProviders = base.BuildTypeProviders();
             if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
             {
-                //BuildLROProviders();
                 var resources = BuildResources();
                 return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
             }
             return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
-        }
-
-        private void BuildLROProviders()
-        {
-            // TODO: remove them once they are referenced in Resource operation implementation
-            AzureClientPlugin.Instance.AddTypeToKeep(ArmOperation.Name);
-            AzureClientPlugin.Instance.AddTypeToKeep(GenericArmOperation.Name);
         }
 
         internal bool IsResource(string name) => _specNameToOperationSetsMap.ContainsKey(name);
