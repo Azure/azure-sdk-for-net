@@ -59,6 +59,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
                 writer.WriteObjectValue(MediaStreamingConfiguration);
             }
+            if (Optional.IsDefined(TeamsAppSource))
+            {
+                writer.WritePropertyName("teamsAppSource"u8);
+                writer.WriteObjectValue(TeamsAppSource);
+            }
             writer.WriteEndObject();
         }
 

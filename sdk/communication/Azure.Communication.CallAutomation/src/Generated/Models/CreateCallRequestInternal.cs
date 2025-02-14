@@ -40,7 +40,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration)
+        /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, MicrosoftTeamsAppIdentifierModel teamsAppSource)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -51,6 +52,7 @@ namespace Azure.Communication.CallAutomation
             CallIntelligenceOptions = callIntelligenceOptions;
             TranscriptionConfiguration = transcriptionConfiguration;
             MediaStreamingConfiguration = mediaStreamingConfiguration;
+            TeamsAppSource = teamsAppSource;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -74,5 +76,7 @@ namespace Azure.Communication.CallAutomation
         public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> Media Streaming Configuration. </summary>
         public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
+        /// <summary> The identifier of the source for creating call with Teams resource account ID. </summary>
+        public MicrosoftTeamsAppIdentifierModel TeamsAppSource { get; set; }
     }
 }
