@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.AI.Projects;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+using Microsoft.Azure.Amqp.Framing;
 using System.Collections.Generic;
 
 namespace Azure.Provisioning.AIFoundry;

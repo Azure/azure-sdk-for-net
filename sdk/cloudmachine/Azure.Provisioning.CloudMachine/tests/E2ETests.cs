@@ -25,7 +25,7 @@ public class E2ETests
 
         infra.TryExecuteCommand([arg]);
 
-        ProjectClient project = infra.GetClient();
+        ProjectClient project = new(infra.Connections);
         ChatClient chat = project.GetOpenAIChatClient();
 
         Assert.AreEqual(8, project.Connections.Count);
