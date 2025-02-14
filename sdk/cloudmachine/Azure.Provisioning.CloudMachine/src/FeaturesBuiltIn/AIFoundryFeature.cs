@@ -84,11 +84,9 @@ namespace Azure.CloudMachine.AIFoundry
         protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
         {
             var cmId = cm.Id;
-            AIFoundryCognitiveServiceCdk cs = new($"{cmId}_foundry", $"{cmId}-foundry");
             AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
             AIFoundryProjectCdk project = new($"{cmId}_project", $"{cmId}_project", hub);
 
-            cm.AddResource(cs);
             cm.AddResource(hub);
             cm.AddResource(project);
 
