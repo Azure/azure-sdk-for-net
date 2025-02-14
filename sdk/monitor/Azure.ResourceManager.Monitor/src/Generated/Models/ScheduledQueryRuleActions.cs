@@ -50,19 +50,16 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             ActionGroups = new ChangeTrackingList<string>();
             CustomProperties = new ChangeTrackingDictionary<string, string>();
-            ActionProperties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleActions"/>. </summary>
         /// <param name="actionGroups"> Action Group resource Ids to invoke when the alert fires. </param>
         /// <param name="customProperties"> The properties of an alert payload. </param>
-        /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledQueryRuleActions(IList<string> actionGroups, IDictionary<string, string> customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionGroups = actionGroups;
             CustomProperties = customProperties;
-            ActionProperties = actionProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,7 +67,5 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<string> ActionGroups { get; }
         /// <summary> The properties of an alert payload. </summary>
         public IDictionary<string, string> CustomProperties { get; }
-        /// <summary> The properties of an action properties. </summary>
-        public IDictionary<string, string> ActionProperties { get; }
     }
 }

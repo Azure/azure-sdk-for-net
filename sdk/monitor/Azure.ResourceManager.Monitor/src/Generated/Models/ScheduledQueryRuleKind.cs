@@ -23,13 +23,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         private const string LogAlertValue = "LogAlert";
-        private const string EventLogAlertValue = "EventLogAlert";
         private const string LogToMetricValue = "LogToMetric";
 
         /// <summary> LogAlert. </summary>
         public static ScheduledQueryRuleKind LogAlert { get; } = new ScheduledQueryRuleKind(LogAlertValue);
-        /// <summary> EventLogAlert. </summary>
-        public static ScheduledQueryRuleKind EventLogAlert { get; } = new ScheduledQueryRuleKind(EventLogAlertValue);
         /// <summary> LogToMetric. </summary>
         public static ScheduledQueryRuleKind LogToMetric { get; } = new ScheduledQueryRuleKind(LogToMetricValue);
         /// <summary> Determines if two <see cref="ScheduledQueryRuleKind"/> values are the same. </summary>

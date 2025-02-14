@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.Monitor
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -154,11 +149,6 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("autoMitigate"u8);
                 writer.WriteBooleanValue(AutoMitigate.Value);
             }
-            if (Optional.IsDefined(ResolveConfiguration))
-            {
-                writer.WritePropertyName("resolveConfiguration"u8);
-                writer.WriteObjectValue(ResolveConfiguration, options);
-            }
             writer.WriteEndObject();
         }
 
@@ -182,7 +172,6 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             ScheduledQueryRuleKind? kind = default;
             ETag? etag = default;
             IDictionary<string, string> tags = default;
@@ -209,20 +198,10 @@ namespace Azure.ResourceManager.Monitor
             bool? checkWorkspaceAlertsStorageConfigured = default;
             bool? skipQueryValidation = default;
             bool? autoMitigate = default;
-            ScheduledQueryRuleResolveConfiguration resolveConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
-                    continue;
-                }
                 if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -453,15 +432,6 @@ namespace Azure.ResourceManager.Monitor
                             autoMitigate = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("resolveConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resolveConfiguration = ScheduledQueryRuleResolveConfiguration.DeserializeScheduledQueryRuleResolveConfiguration(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -478,7 +448,6 @@ namespace Azure.ResourceManager.Monitor
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 kind,
                 etag,
                 createdWithApiVersion,
@@ -499,7 +468,6 @@ namespace Azure.ResourceManager.Monitor
                 checkWorkspaceAlertsStorageConfigured,
                 skipQueryValidation,
                 autoMitigate,
-                resolveConfiguration,
                 serializedAdditionalRawData);
         }
 
