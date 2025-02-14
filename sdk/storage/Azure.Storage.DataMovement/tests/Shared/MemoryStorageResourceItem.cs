@@ -23,8 +23,6 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long MaxSupportedSingleTransferSize => long.MaxValue;
 
-        protected internal override long MaxSupportedSingleTransferSize => long.MaxValue;
-
         protected internal override long MaxSupportedChunkSize => long.MaxValue;
 
         protected internal override long? Length => Buffer.Length;

@@ -77,7 +77,8 @@ namespace Azure.AI.Inference
             {
                 switch (discriminator.GetString())
                 {
-                    case "json_object": return ChatCompletionsResponseFormatJSON.DeserializeChatCompletionsResponseFormatJSON(element, options);
+                    case "json_object": return ChatCompletionsResponseFormatJsonObject.DeserializeChatCompletionsResponseFormatJsonObject(element, options);
+                    case "json_schema": return ChatCompletionsResponseFormatJsonSchema.DeserializeChatCompletionsResponseFormatJsonSchema(element, options);
                     case "text": return ChatCompletionsResponseFormatText.DeserializeChatCompletionsResponseFormatText(element, options);
                 }
             }

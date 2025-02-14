@@ -13,15 +13,72 @@ using Azure.Core;
 
 namespace Azure.AI.Projects
 {
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
+    public partial class RunStepDeltaMessageCreationObject : IUtf8JsonSerializable, IJsonModel<RunStepDeltaMessageCreationObject>
+    {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepDeltaMessageCreationObject>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RunStepDeltaMessageCreationObject>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+========
     internal partial class UnknownRunStepDeltaCodeInterpreterOutput : IUtf8JsonSerializable, IJsonModel<RunStepDeltaCodeInterpreterOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepDeltaCodeInterpreterOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RunStepDeltaCodeInterpreterOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/UnknownRunStepDeltaCodeInterpreterOutput.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaMessageCreationObject>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RunStepDeltaMessageCreationObject)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("message_id"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        RunStepDeltaMessageCreationObject IJsonModel<RunStepDeltaMessageCreationObject>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaMessageCreationObject>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RunStepDeltaMessageCreationObject)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRunStepDeltaMessageCreationObject(document.RootElement, options);
+        }
+
+        internal static RunStepDeltaMessageCreationObject DeserializeRunStepDeltaMessageCreationObject(JsonElement element, ModelReaderWriterOptions options = null)
+========
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -50,6 +107,7 @@ namespace Azure.AI.Projects
         }
 
         internal static UnknownRunStepDeltaCodeInterpreterOutput DeserializeUnknownRunStepDeltaCodeInterpreterOutput(JsonElement element, ModelReaderWriterOptions options = null)
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/UnknownRunStepDeltaCodeInterpreterOutput.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -57,20 +115,28 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
+            string messageId = default;
+========
             int index = default;
             string type = "Unknown";
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/UnknownRunStepDeltaCodeInterpreterOutput.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
+                if (property.NameEquals("message_id"u8))
+========
                 if (property.NameEquals("index"u8))
                 {
                     index = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/UnknownRunStepDeltaCodeInterpreterOutput.Serialization.cs
                 {
-                    type = property.Value.GetString();
+                    messageId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -79,18 +145,36 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
+            return new RunStepDeltaMessageCreationObject(messageId, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RunStepDeltaMessageCreationObject>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaMessageCreationObject>)this).GetFormatFromOptions(options) : options.Format;
+========
             return new UnknownRunStepDeltaCodeInterpreterOutput(index, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RunStepDeltaCodeInterpreterOutput>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaCodeInterpreterOutput>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/UnknownRunStepDeltaCodeInterpreterOutput.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
+                    throw new FormatException($"The model {nameof(RunStepDeltaMessageCreationObject)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RunStepDeltaMessageCreationObject IPersistableModel<RunStepDeltaMessageCreationObject>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaMessageCreationObject>)this).GetFormatFromOptions(options) : options.Format;
+========
                     throw new FormatException($"The model {nameof(RunStepDeltaCodeInterpreterOutput)} does not support writing '{options.Format}' format.");
             }
         }
@@ -98,12 +182,30 @@ namespace Azure.AI.Projects
         RunStepDeltaCodeInterpreterOutput IPersistableModel<RunStepDeltaCodeInterpreterOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RunStepDeltaCodeInterpreterOutput>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/UnknownRunStepDeltaCodeInterpreterOutput.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
+                        return DeserializeRunStepDeltaMessageCreationObject(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RunStepDeltaMessageCreationObject)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RunStepDeltaMessageCreationObject>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RunStepDeltaMessageCreationObject FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRunStepDeltaMessageCreationObject(document.RootElement);
+========
                         return DeserializeRunStepDeltaCodeInterpreterOutput(document.RootElement, options);
                     }
                 default:
@@ -119,13 +221,18 @@ namespace Azure.AI.Projects
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeUnknownRunStepDeltaCodeInterpreterOutput(document.RootElement);
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/UnknownRunStepDeltaCodeInterpreterOutput.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
+        internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
+<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/RunStepDeltaMessageCreationObject.Serialization.cs
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+========
             content.JsonWriter.WriteObjectValue<RunStepDeltaCodeInterpreterOutput>(this, ModelSerializationExtensions.WireOptions);
+>>>>>>>> main:sdk/ai/Azure.AI.Projects/src/Generated/UnknownRunStepDeltaCodeInterpreterOutput.Serialization.cs
             return content;
         }
     }

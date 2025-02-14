@@ -2,23 +2,28 @@ namespace Azure.CloudMachine
 {
     public static partial class Azd
     {
-        public static void Init(Azure.CloudMachine.CloudMachineClient client, string? infraDirectory = null) { }
-        public static void Init(Azure.CloudMachine.CloudMachineInfrastructure infra, string? infraDirectory = null) { }
-        public static void InitDeployment(Azure.CloudMachine.CloudMachineInfrastructure infra, string? webProjectName) { }
+        public static void Init(Azure.CloudMachine.ProjectClient client, string? infraDirectory = null) { }
+        public static void Init(Azure.CloudMachine.ProjectInfrastructure infra, string? infraDirectory = null) { }
+        public static void InitDeployment(Azure.CloudMachine.ProjectInfrastructure infra, string? webProjectName) { }
     }
     public static partial class CloudMachineClientExtensions
     {
-        public static T AddFeature<T>(this Azure.CloudMachine.CloudMachineClient client, T feature) where T : Azure.CloudMachine.Core.CloudMachineFeature { throw null; }
+        public static T AddFeature<T>(this Azure.CloudMachine.ProjectClient client, T feature) where T : Azure.CloudMachine.Core.CloudMachineFeature { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public static Azure.CloudMachine.CloudMachineInfrastructure GetInfrastructure(this Azure.CloudMachine.CloudMachineClient client) { throw null; }
+        public static Azure.CloudMachine.ProjectInfrastructure GetInfrastructure(this Azure.CloudMachine.ProjectClient client) { throw null; }
     }
     public static partial class CloudMachineCommands
     {
-        public static bool TryExecuteCommand(this Azure.CloudMachine.CloudMachineInfrastructure cmi, string[] args) { throw null; }
+        public static bool TryExecuteCommand(this Azure.CloudMachine.ProjectInfrastructure cmi, string[] args) { throw null; }
     }
-    public partial class CloudMachineInfrastructure
+    public static partial class CloudMachineInfrastructureConfiguration
     {
-        public CloudMachineInfrastructure(string? cmId = null) { }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddCloudMachine(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder, Azure.CloudMachine.ProjectInfrastructure cm) { throw null; }
+        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineConfiguration(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, Azure.CloudMachine.ProjectInfrastructure cm) { throw null; }
+    }
+    public partial class ProjectInfrastructure
+    {
+        public ProjectInfrastructure(string? cmId = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ConnectionCollection Connections { get { throw null; } }
         public Azure.CloudMachine.Core.FeatureCollection Features { get { throw null; } }
@@ -35,16 +40,20 @@ namespace Azure.CloudMachine
         public Azure.Provisioning.ProvisioningPlan Build(Azure.Provisioning.ProvisioningBuildOptions? context = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
-        public Azure.CloudMachine.CloudMachineClient GetClient() { throw null; }
+        public Azure.CloudMachine.ProjectClient GetClient() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
-    public static partial class CloudMachineInfrastructureConfiguration
+}
+namespace Azure.CloudMachine.AIFoundry
+{
+    public partial class AIFoundryFeature : Azure.CloudMachine.Core.CloudMachineFeature
     {
-        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddCloudMachine(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder, Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
-        public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineConfiguration(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
+        public AIFoundryFeature(string connectionString) { }
+        protected internal override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure cm) { throw null; }
     }
 }
 namespace Azure.CloudMachine.AppService
@@ -53,7 +62,7 @@ namespace Azure.CloudMachine.AppService
     {
         public AppServiceFeature() { }
         public Azure.Provisioning.AppService.AppServiceSkuDescription Sku { get { throw null; } set { } }
-        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure infrastructure) { throw null; }
     }
 }
 namespace Azure.CloudMachine.Core
@@ -66,7 +75,7 @@ namespace Azure.CloudMachine.Core
         public Azure.Provisioning.Primitives.ProvisionableResource Resource { get { throw null; } }
         protected internal virtual void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
         protected internal virtual void EmitFeatures(Azure.CloudMachine.Core.FeatureCollection features, string cmId) { }
-        protected abstract Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure cm);
+        protected abstract Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure cm);
         protected static T EnsureEmits<T>(Azure.CloudMachine.Core.CloudMachineFeature feature) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
@@ -91,7 +100,7 @@ namespace Azure.CloudMachine.KeyVault
         public KeyVaultFeature(Azure.Provisioning.KeyVault.KeyVaultSku? sku = null) { }
         public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
         protected internal override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
-        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure infrastructure) { throw null; }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.ProjectInfrastructure infrastructure) { throw null; }
     }
 }
 namespace System.ClientModel.TypeSpec

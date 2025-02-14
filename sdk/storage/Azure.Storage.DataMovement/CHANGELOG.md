@@ -1,8 +1,6 @@
 # Release History
 
-## 12.0.0-beta.7 (Unreleased)
-
-### Features Added
+## 12.0.0 (2025-02-11)
 
 ### Breaking Changes
 - Removed `DataTransferProperty` and `DataTransferProperty<T>`
@@ -33,13 +31,16 @@
     - `TransferItemSkippedEventArgs.SourceResource` -> `TransferItemSkippedEventArgs.Source` and `TransferItemSkippedEventArgs.DestinationResource` -> `TransferItemSkippedEventArgs.Destination`
     - `TransferCheckpointStoreOptions.Local` -> `TransferCheckpointStoreOptions.CreateLocalStore`
     - `TransferCheckpointStoreOptions.Disabled` -> `TransferCheckpointStoreOptions.DisableCheckpoint`
+- Renamed `TransferOptions.CreationPreference` to `TransferOptions.CreateMode`
 - Removed properties from `StorageResourceItemProperties` constructor since properties are settable.
 - Changed type of `StorageResourceItemProperties.RawProperties` to `IDictionary`.
+- Changed `List<StorageResourceProvider> TransferManagerOptions.ResumeProviders` to `IList<StorageResourceProvider> TransferManagerOptions.ProvidersForResuming`
+- Changed the following `LocalFilesStorageResourceProvider` methods to `static` methods:
+    - `FromFile(string)`
+    - `FromDirectory(string)`
 
 ### Bugs Fixed
 - Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.
-
-### Other Changes
 
 ## 12.0.0-beta.6 (2024-10-14)
 

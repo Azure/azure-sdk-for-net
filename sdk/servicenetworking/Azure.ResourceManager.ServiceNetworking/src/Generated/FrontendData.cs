@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
     /// A class representing the Frontend data model.
-    /// Frontend Subresource of Traffic Controller.
+    /// Frontend Sub Resource of Traffic Controller.
     /// </summary>
     public partial class FrontendData : TrackedResourceData
     {

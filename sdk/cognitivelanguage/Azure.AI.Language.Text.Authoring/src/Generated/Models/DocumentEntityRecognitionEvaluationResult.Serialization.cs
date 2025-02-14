@@ -13,19 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
-    public partial class ChatCompletionsNamedToolChoiceFunction : IUtf8JsonSerializable, IJsonModel<ChatCompletionsNamedToolChoiceFunction>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionsNamedToolChoiceFunction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
     public partial class DocumentEntityRecognitionEvaluationResult : IUtf8JsonSerializable, IJsonModel<DocumentEntityRecognitionEvaluationResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentEntityRecognitionEvaluationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentEntityRecognitionEvaluationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -36,16 +28,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{format}' format.");
-            }
-
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-========
             var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRecognitionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -59,7 +41,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,21 +58,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
             }
         }
 
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
-        ChatCompletionsNamedToolChoiceFunction IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement, options);
-        }
-
-        internal static ChatCompletionsNamedToolChoiceFunction DeserializeChatCompletionsNamedToolChoiceFunction(JsonElement element, ModelReaderWriterOptions options = null)
-========
         DocumentEntityRecognitionEvaluationResult IJsonModel<DocumentEntityRecognitionEvaluationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRecognitionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -105,7 +71,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         internal static DocumentEntityRecognitionEvaluationResult DeserializeDocumentEntityRecognitionEvaluationResult(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -113,20 +78,11 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
-            string name = default;
-========
             IReadOnlyList<DocumentEntityRegionEvaluationResult> entities = default;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-========
                 if (property.NameEquals("entities"u8))
                 {
                     List<DocumentEntityRegionEvaluationResult> array = new List<DocumentEntityRegionEvaluationResult>();
@@ -135,7 +91,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
                         array.Add(DocumentEntityRegionEvaluationResult.DeserializeDocumentEntityRegionEvaluationResult(item, options));
                     }
                     entities = array;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,36 +99,18 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
-            return new ChatCompletionsNamedToolChoiceFunction(name, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new DocumentEntityRecognitionEvaluationResult(entities, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentEntityRecognitionEvaluationResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRecognitionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
-                    throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ChatCompletionsNamedToolChoiceFunction IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(DocumentEntityRecognitionEvaluationResult)} does not support writing '{options.Format}' format.");
             }
         }
@@ -181,30 +118,12 @@ namespace Azure.AI.Language.Text.Authoring.Models
         DocumentEntityRecognitionEvaluationResult IPersistableModel<DocumentEntityRecognitionEvaluationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentEntityRecognitionEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
-                        return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ChatCompletionsNamedToolChoiceFunction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ChatCompletionsNamedToolChoiceFunction FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChatCompletionsNamedToolChoiceFunction(document.RootElement);
-========
                         return DeserializeDocumentEntityRecognitionEvaluationResult(document.RootElement, options);
                     }
                 default:
@@ -220,7 +139,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentEntityRecognitionEvaluationResult(document.RootElement);
->>>>>>>> main:sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/src/Generated/Models/DocumentEntityRecognitionEvaluationResult.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
