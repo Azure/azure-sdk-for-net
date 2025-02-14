@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Adds security token validation parameters' configuration and SignalR connection's configuration.
         /// </summary>
-        /// <param name="services"></param>
+        /// <param name="services">The service collections to add default auth.</param>
         /// <param name="configureTokenValidationParameters">Token validation parameters to validate security token</param>
         /// <param name="configurer">SignalR connection configuration to be used in generating Azure SignalR service's access token</param>
         public static IServiceCollection AddDefaultAuth(this IServiceCollection services, Action<TokenValidationParameters> configureTokenValidationParameters, SignalRConnectionInfoConfigureFunc configurer = null)

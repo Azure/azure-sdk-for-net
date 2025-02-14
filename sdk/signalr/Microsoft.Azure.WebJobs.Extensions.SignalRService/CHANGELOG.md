@@ -5,7 +5,6 @@
 ### Features Added
 
 ### Breaking Changes
-* Remove .NET 6.0 support.
 * Modify `AddDefaultAuth` method in `SignalRFunctionsHostBuilderExtensions.cs` to use `IServiceCollection` instead of `IFunctionsHostBuilder` to remove the dependency for legacy package `Microsoft.Azure.Functions.Extensions`.
 
 ### Bugs Fixed
