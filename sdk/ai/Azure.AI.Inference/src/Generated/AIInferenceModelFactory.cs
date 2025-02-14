@@ -22,6 +22,14 @@ namespace Azure.AI.Inference
             return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestDeveloperMessage"/>. </summary>
+        /// <param name="content"> The contents of the developer message. </param>
+        /// <returns> A new <see cref="Inference.ChatRequestDeveloperMessage"/> instance for mocking. </returns>
+        public static ChatRequestDeveloperMessage ChatRequestDeveloperMessage(string content = null)
+        {
+            return new ChatRequestDeveloperMessage(ChatRole.Developer, serializedAdditionalRawData: null, content);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageTextContentItem"/>. </summary>
         /// <param name="text"> The content of the message. </param>
         /// <returns> A new <see cref="Inference.ChatMessageTextContentItem"/> instance for mocking. </returns>
@@ -67,16 +75,6 @@ namespace Azure.AI.Inference
             return new ChatCompletionsNamedToolChoice(type, function, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.CompletionsUsage"/>. </summary>
-        /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
-        /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
-        /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
-        /// <returns> A new <see cref="Inference.CompletionsUsage"/> instance for mocking. </returns>
-        public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
-        {
-            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Inference.ChatChoice"/>. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
@@ -100,6 +98,16 @@ namespace Azure.AI.Inference
             toolCalls ??= new List<ChatCompletionsToolCall>();
 
             return new ChatResponseMessage(role, content, toolCalls?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.CompletionsUsage"/>. </summary>
+        /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
+        /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
+        /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>
+        /// <returns> A new <see cref="Inference.CompletionsUsage"/> instance for mocking. </returns>
+        public static CompletionsUsage CompletionsUsage(int completionTokens = default, int promptTokens = default, int totalTokens = default)
+        {
+            return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.ModelInfo"/>. </summary>
@@ -149,6 +157,18 @@ namespace Azure.AI.Inference
             return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Inference.ImageEmbeddingInput"/>. </summary>
+        /// <param name="image"> The input image encoded in base64 string as a data URL. Example: `data:image/{format};base64,{data}`. </param>
+        /// <param name="text">
+        /// Optional. The text input to feed into the model (like DINO, CLIP).
+        /// Returns a 422 error if the model doesn't support the value or parameter.
+        /// </param>
+        /// <returns> A new <see cref="Inference.ImageEmbeddingInput"/> instance for mocking. </returns>
+        public static ImageEmbeddingInput ImageEmbeddingInput(string image = null, string text = null)
+        {
+            return new ImageEmbeddingInput(image, text, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatCompletionsUpdate"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
@@ -156,14 +176,14 @@ namespace Azure.AI.Inference
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
         /// </param>
         /// <param name="model"> The model used for the chat completion. </param>
-        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <param name="choices">
         /// An update to the collection of completion choices associated with this completions response.
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <returns> A new <see cref="Inference.StreamingChatCompletionsUpdate"/> instance for mocking. </returns>
-        public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, DateTimeOffset created = default, string model = null, CompletionsUsage usage = null, IEnumerable<StreamingChatChoiceUpdate> choices = null)
+        public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, DateTimeOffset created = default, string model = null, IEnumerable<StreamingChatChoiceUpdate> choices = null, CompletionsUsage usage = null)
         {
             choices ??= new List<StreamingChatChoiceUpdate>();
 
@@ -171,8 +191,8 @@ namespace Azure.AI.Inference
                 id,
                 created,
                 model,
-                usage,
                 choices?.ToList(),
+                usage,
                 serializedAdditionalRawData: null);
         }
 
