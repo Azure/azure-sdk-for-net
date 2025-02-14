@@ -34,6 +34,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 case OperationType.Messaging:
                     SetMessagingDependencyProperties(activity, ref activityTagsProcessor.MappedTags);
                     break;
+                default:
+                    Target = activityTagsProcessor.MappedTags.GetTargetUsingServerAttributes();
+                    break;
             }
 
             dependencyName ??= activity.DisplayName;

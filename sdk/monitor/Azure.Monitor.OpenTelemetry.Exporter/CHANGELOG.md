@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+* Always set Dependency.Target if "server.address" is set.
+  ([]())
+
 ### Other Changes
 
 ## 1.4.0-beta.2 (2024-10-11)
