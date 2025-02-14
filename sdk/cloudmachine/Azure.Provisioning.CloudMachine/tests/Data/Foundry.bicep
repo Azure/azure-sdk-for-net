@@ -238,34 +238,12 @@ resource cm_servicebus_cm0c420d2f21084cd_role 'Microsoft.Authorization/roleAssig
   scope: cm_servicebus
 }
 
-resource cm0c420d2f21084cd_foundry 'Microsoft.CognitiveServices/accounts@2021-10-01' = {
-  name: 'cm0c420d2f21084cd-foundry'
-  location: location
-  sku: {
-    name: 'S0'
-  }
-  kind: 'AIServices'
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${cm_identity.id}': { }
-    }
-  }
-  properties: {
-    customSubDomainName: 'cm0c420d2f21084cd-foundry'
-    disableLocalAuth: true
-  }
-}
-
 resource cm0c420d2f21084cd_hub 'Microsoft.MachineLearningServices/workspaces@2023-08-01-preview' = {
   name: 'cm0c420d2f21084cd_hub'
   location: location
   kind: 'hub'
   identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${cm_identity.id}': { }
-    }
+    type: 'SystemAssigned'
   }
   properties: {
     friendlyName: 'cm0c420d2f21084cd_hub'
@@ -278,10 +256,7 @@ resource cm0c420d2f21084cd_project 'Microsoft.MachineLearningServices/workspaces
   location: location
   kind: 'Project'
   identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${cm_identity.id}': { }
-    }
+    type: 'SystemAssigned'
   }
   properties: {
     friendlyName: 'cm0c420d2f21084cd_project'
