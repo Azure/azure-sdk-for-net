@@ -7,8 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Monitor
 namespace: Azure.ResourceManager.Monitor
-require: https://github.com/Azure/azure-rest-api-specs/blob/f4092c2070791b90b2871578fcb20c04f37c5f4e/specification/monitor/resource-manager/readme.md
-tag: package-track2-stable
+tag: package-2024-10-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -519,13 +518,14 @@ directive:
         };
 ```
 
-## Tag: package-track2-stable
+## Tag: package-2024-10-01-preview
 
 Creating this tag to exclude some preview operations that do not exist in our previous stable version of monitor releases.
 
-These settings apply only when `--tag=package-track2-stable` is specified on the command line.
+These settings apply only when `--tag=package-2024-10-01-preview` is specified on the command line.
 
-```yaml $(tag) == 'package-track2-stable'
+```yaml $(tag) == 'package-2024-10-01-preview'
+title: MonitorManagementClient
 input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2022-10-01/autoscale_API.json
 # - https://github.com/Azure/azure-rest-api-specs/blob/a9b9241e0d2909e29aa22efb33f55491cbd160de/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/operations_API.json # we do not need to support this
