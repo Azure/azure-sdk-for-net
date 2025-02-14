@@ -256,7 +256,7 @@ namespace Azure.Generator.Providers
                 }
                 else
                 {
-                    return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(ArmOperation<>), responseBodyType)) : new CSharpType(typeof(ArmOperation<>), responseBodyType);
+                    return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(ArmOperation<>), Type)) : new CSharpType(typeof(ArmOperation<>), Type);
                 }
             }
             return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), Type)) : new CSharpType(typeof(Response<>), Type);
@@ -265,13 +265,13 @@ namespace Azure.Generator.Providers
         private TryStatement BuildOperationMethodTryStatement(MethodProvider convenienceMethod, bool isAsync, bool isLongRunning, InputOperation operation)
         {
             var tryStatement = new TryStatement();
-            var responseDeclaration = Declare("response", GetResponseType(convenienceMethod, isAsync), ((MemberExpression)_restClientField).Invoke(convenienceMethod.Signature.Name, PopulateArguments(convenienceMethod.Signature.Parameters), null, callAsAsync: isAsync, addConfigureAwaitFalse: isAsync), out var responseVariable);
+            var responseDeclaration = Declare("response", GetResponseType(convenienceMethod, isAsync), ((MemberExpression)_restClientField).Invoke(convenienceMethod.Signature.Name, PopulateArguments(convenienceMethod.Signature.Parameters, convenienceMethod), null, callAsAsync: isAsync, addConfigureAwaitFalse: isAsync), out var responseVariable);
             tryStatement.Add(responseDeclaration);
             if (isLongRunning)
             {
                 var armOperationType = new CSharpType(AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation, AzureClientPlugin.Instance.TypeFactory.RootNamespace , [Type], null);
                 var requestMethod = GetCorrespondingRequestMethod(operation);
-                var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters)), responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out var operationVariable);
+                var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)), responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out var operationVariable);
                 tryStatement.Add(operationDeclaration);
                 tryStatement.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
                 {
@@ -294,7 +294,7 @@ namespace Azure.Generator.Providers
 
         private static CSharpType GetResponseType(MethodProvider convenienceMethod, bool isAsync) => isAsync ? convenienceMethod.Signature.ReturnType?.Arguments[0]! : convenienceMethod.Signature.ReturnType!;
 
-        private ValueExpression[] PopulateArguments(IReadOnlyList<ParameterProvider> parameters)
+        private ValueExpression[] PopulateArguments(IReadOnlyList<ParameterProvider> parameters, MethodProvider convenienceMethod)
         {
             var arguments = new List<ValueExpression>();
             foreach (var parameter in parameters)
@@ -302,22 +302,30 @@ namespace Azure.Generator.Providers
                 if (parameter.Name.Equals("subscriptionId", StringComparison.InvariantCultureIgnoreCase))
                 {
                     arguments.Add(Static(typeof(Guid)).Invoke(nameof(Guid.Parse), This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.SubscriptionId))));
-                    continue;
                 }
-                if (parameter.Name.Equals("resourceGroupName", StringComparison.InvariantCultureIgnoreCase))
+                else if (parameter.Name.Equals("resourceGroupName", StringComparison.InvariantCultureIgnoreCase))
                 {
                     arguments.Add(This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.ResourceGroupName)));
-                    continue;
                 }
-
-                // TODO: handle parent
-                if (parameter.Name.Equals(_contextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
+                // TODO: handle parents
+                else if (parameter.Name.Equals(_contextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
                 {
                     arguments.Add(This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.Name)));
-                    continue;
                 }
-
-                arguments.Add(parameter);
+                else if (parameter.Type.Equals(typeof(RequestContent)))
+                {
+                    var resource = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(_resourceData.Type));
+                    arguments.Add(resource);
+                }
+                else if (parameter.Type.Equals(typeof(RequestContext)))
+                {
+                    var cancellationToken = convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
+                    arguments.Add(New.Instance(typeof(RequestContext), new Dictionary<ValueExpression, ValueExpression> { { Identifier(nameof(RequestContext.CancellationToken)), cancellationToken } }));
+                }
+                else
+                {
+                    arguments.Add(parameter);
+                }
             }
             return arguments.ToArray();
         }

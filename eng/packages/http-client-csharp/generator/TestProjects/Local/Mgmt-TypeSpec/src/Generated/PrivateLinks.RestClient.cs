@@ -23,7 +23,7 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreateGetAllPrivateLinkResourcesRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -41,7 +41,7 @@ namespace MgmtTypeSpec
 
         internal HttpMessage CreateStartRequest(Guid subscriptionId, string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
+            HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Method = RequestMethod.Post;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

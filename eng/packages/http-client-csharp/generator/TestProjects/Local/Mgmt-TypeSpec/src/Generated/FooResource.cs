@@ -21,7 +21,7 @@ namespace MgmtTypeSpec
     {
         private FooData _data;
         private ClientDiagnostics _fooClientDiagnostics;
-        private Foos _restClient;
+        private Foos _fooRestClient;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos";
 
@@ -40,7 +40,7 @@ namespace MgmtTypeSpec
         {
             _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fooApiVersion);
-            _restClient = new Foos(Pipeline, Endpoint, fooApiVersion);
+            _fooRestClient = new Foos(Pipeline, Endpoint, fooApiVersion);
 #if DEBUG
             global::MgmtTypeSpec.FooResource.ValidateResourceId(id);
 #endif
@@ -75,11 +75,31 @@ namespace MgmtTypeSpec
         /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public virtual ArmOperation<FooData> Update(WaitUntil waitUntil, FooData resource, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<FooResource> Update(WaitUntil waitUntil, FooData resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.createOrUpdate");
+            scope.Start();
+            try
+            {
+                Response<FooData> response = _fooRestClient.CreateOrUpdate(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, cancellationToken);
+                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ), response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken0);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Update a Foo. </summary>
@@ -87,11 +107,31 @@ namespace MgmtTypeSpec
         /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resource"/> is null. </exception>
-        public virtual async Task<ArmOperation<FooData>> UpdateAsync(WaitUntil waitUntil, FooData resource, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<FooResource>> UpdateAsync(WaitUntil waitUntil, FooData resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resource, nameof(resource));
 
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.createOrUpdate");
+            scope.Start();
+            try
+            {
+                Response<FooData> response = await _fooRestClient.CreateOrUpdateAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, cancellationToken).ConfigureAwait(false);
+                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, resource, new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ), response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken0).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Get a Foo. </summary>
@@ -102,7 +142,7 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
-                Response<FooData> response = _restClient.Get(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken);
+                Response<FooData> response = _fooRestClient.Get(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -124,7 +164,7 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
-                Response<FooData> response = await _restClient.GetAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                Response<FooData> response = await _fooRestClient.GetAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -143,7 +183,27 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.delete");
+            scope.Start();
+            try
+            {
+                Response response = _fooRestClient.Delete(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken);
+                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ), response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken0);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Delete a Foo. </summary>
@@ -151,7 +211,27 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            using DiagnosticScope scope = _fooClientDiagnostics.CreateScope("MgmtTypeSpec.delete");
+            scope.Start();
+            try
+            {
+                Response response = await _fooRestClient.DeleteAsync(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(_fooClientDiagnostics, Pipeline, _fooRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ), response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken0).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
