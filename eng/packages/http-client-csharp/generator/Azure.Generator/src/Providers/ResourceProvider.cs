@@ -277,10 +277,8 @@ namespace Azure.Generator.Providers
                 var armOperationType = !isGeneric ? AzureClientPlugin.Instance.OutputLibrary.ArmOperation.Type : new CSharpType(AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation, AzureClientPlugin.Instance.TypeFactory.RootNamespace , [Type], null);
                 var requestMethod = GetCorrespondingRequestMethod(operation);
                 VariableExpression operationVariable;
-                var operationDeclaration =
-                    isGeneric
-                    ? Declare("operation", armOperationType, New.Instance(armOperationType, New.Instance(Source.Type, This.Property("Client")), _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)).Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out operationVariable)
-                    : Declare("operation", armOperationType, New.Instance(armOperationType, _clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)).Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())), out operationVariable);
+                ValueExpression[] armOperationArguments = [_clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)).Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())];
+                var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, isGeneric ? [New.Instance(Source.Type, This.Property("Client")), .. armOperationArguments] : armOperationArguments), out operationVariable);
                 tryStatement.Add(operationDeclaration);
                 tryStatement.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
                 {
