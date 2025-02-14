@@ -102,7 +102,7 @@ namespace Azure.Developer.LoadTesting.Models
             Uri url = default;
             FileType? fileType = default;
             DateTimeOffset? expireDateTime = default;
-            FileStatus? validationStatus = default;
+            FileValidationStatus? validationStatus = default;
             string validationFailureDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +146,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    validationStatus = new FileStatus(property.Value.GetString());
+                    validationStatus = new FileValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("validationFailureDetails"u8))

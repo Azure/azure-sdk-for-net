@@ -50,7 +50,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="configurationId"> ID of the configuration on which the test ran. </param>
         /// <param name="properties"> Key value pair of extra properties associated with the test run. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationId"/> or <paramref name="properties"/> is null. </exception>
-        internal TestRunDetail(Status status, string configurationId, IReadOnlyDictionary<string, string> properties)
+        internal TestRunDetail(TestRunStatus status, string configurationId, IReadOnlyDictionary<string, string> properties)
         {
             Argument.AssertNotNull(configurationId, nameof(configurationId));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -65,7 +65,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="configurationId"> ID of the configuration on which the test ran. </param>
         /// <param name="properties"> Key value pair of extra properties associated with the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunDetail(Status status, string configurationId, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestRunDetail(TestRunStatus status, string configurationId, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             ConfigurationId = configurationId;
@@ -79,7 +79,7 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> Status of the test run. </summary>
-        public Status Status { get; }
+        public TestRunStatus Status { get; }
         /// <summary> ID of the configuration on which the test ran. </summary>
         public string ConfigurationId { get; }
         /// <summary> Key value pair of extra properties associated with the test run. </summary>

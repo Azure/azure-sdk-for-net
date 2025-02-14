@@ -169,7 +169,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <returns> A new <see cref="Models.TestFileInfo"/> instance for mocking. </returns>
-        public static TestFileInfo TestFileInfo(string fileName = null, Uri url = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileStatus? validationStatus = null, string validationFailureDetails = null)
+        public static TestFileInfo TestFileInfo(string fileName = null, Uri url = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
         {
             return new TestFileInfo(
                 fileName,
@@ -360,7 +360,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestRun"/> instance for mocking. </returns>
-        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, Status? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, string portalUrl = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIPDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, string portalUrl = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIPDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             secrets ??= new Dictionary<string, Secret>();
             environmentVariables ??= new Dictionary<string, string>();
@@ -500,7 +500,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="validationStatus"> Validation status of the file. </param>
         /// <param name="validationFailureDetails"> Validation failure error details. </param>
         /// <returns> A new <see cref="Models.TestRunFileInfo"/> instance for mocking. </returns>
-        public static TestRunFileInfo TestRunFileInfo(string fileName = null, Uri url = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileStatus? validationStatus = null, string validationFailureDetails = null)
+        public static TestRunFileInfo TestRunFileInfo(string fileName = null, Uri url = null, FileType? fileType = null, DateTimeOffset? expireDateTime = null, FileValidationStatus? validationStatus = null, string validationFailureDetails = null)
         {
             return new TestRunFileInfo(
                 fileName,
@@ -752,7 +752,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="configurationId"> ID of the configuration on which the test ran. </param>
         /// <param name="properties"> Key value pair of extra properties associated with the test run. </param>
         /// <returns> A new <see cref="Models.TestRunDetail"/> instance for mocking. </returns>
-        public static TestRunDetail TestRunDetail(Status status = default, string configurationId = null, IReadOnlyDictionary<string, string> properties = null)
+        public static TestRunDetail TestRunDetail(TestRunStatus status = default, string configurationId = null, IReadOnlyDictionary<string, string> properties = null)
         {
             properties ??= new Dictionary<string, string>();
 

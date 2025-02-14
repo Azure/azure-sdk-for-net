@@ -83,7 +83,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            Status status = default;
+            TestRunStatus status = default;
             string configurationId = default;
             IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 if (property.NameEquals("status"u8))
                 {
-                    status = new Status(property.Value.GetString());
+                    status = new TestRunStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("configurationId"u8))

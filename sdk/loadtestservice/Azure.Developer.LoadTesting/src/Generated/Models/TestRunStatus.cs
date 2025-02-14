@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Test run status. </summary>
-    public readonly partial struct Status : IEquatable<Status>
+    public readonly partial struct TestRunStatus : IEquatable<TestRunStatus>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="Status"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestRunStatus"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Status(string value)
+        public TestRunStatus(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -40,49 +40,49 @@ namespace Azure.Developer.LoadTesting.Models
         private const string VALIDATIONFAILUREValue = "VALIDATION_FAILURE";
 
         /// <summary> Test run request is accepted. </summary>
-        public static Status ACCEPTED { get; } = new Status(ACCEPTEDValue);
+        public static TestRunStatus ACCEPTED { get; } = new TestRunStatus(ACCEPTEDValue);
         /// <summary> Test run is not yet started. </summary>
-        public static Status NOTSTARTED { get; } = new Status(NOTSTARTEDValue);
+        public static TestRunStatus NOTSTARTED { get; } = new TestRunStatus(NOTSTARTEDValue);
         /// <summary> Test run is provisioning. </summary>
-        public static Status PROVISIONING { get; } = new Status(PROVISIONINGValue);
+        public static TestRunStatus PROVISIONING { get; } = new TestRunStatus(PROVISIONINGValue);
         /// <summary> Test run is provisioned. </summary>
-        public static Status PROVISIONED { get; } = new Status(PROVISIONEDValue);
+        public static TestRunStatus PROVISIONED { get; } = new TestRunStatus(PROVISIONEDValue);
         /// <summary> Test run is getting configured. </summary>
-        public static Status CONFIGURING { get; } = new Status(CONFIGURINGValue);
+        public static TestRunStatus CONFIGURING { get; } = new TestRunStatus(CONFIGURINGValue);
         /// <summary> Test run configuration is done. </summary>
-        public static Status CONFIGURED { get; } = new Status(CONFIGUREDValue);
+        public static TestRunStatus CONFIGURED { get; } = new TestRunStatus(CONFIGUREDValue);
         /// <summary> Test run has started executing. </summary>
-        public static Status EXECUTING { get; } = new Status(EXECUTINGValue);
+        public static TestRunStatus EXECUTING { get; } = new TestRunStatus(EXECUTINGValue);
         /// <summary> Test run execution is completed. </summary>
-        public static Status EXECUTED { get; } = new Status(EXECUTEDValue);
+        public static TestRunStatus EXECUTED { get; } = new TestRunStatus(EXECUTEDValue);
         /// <summary> Test run is getting deprovisioned. </summary>
-        public static Status DEPROVISIONING { get; } = new Status(DEPROVISIONINGValue);
+        public static TestRunStatus DEPROVISIONING { get; } = new TestRunStatus(DEPROVISIONINGValue);
         /// <summary> Test run is deprovisioned. </summary>
-        public static Status DEPROVISIONED { get; } = new Status(DEPROVISIONEDValue);
+        public static TestRunStatus DEPROVISIONED { get; } = new TestRunStatus(DEPROVISIONEDValue);
         /// <summary> Test run is completed. </summary>
-        public static Status DONE { get; } = new Status(DONEValue);
+        public static TestRunStatus DONE { get; } = new TestRunStatus(DONEValue);
         /// <summary> Test run is being cancelled. </summary>
-        public static Status CANCELLING { get; } = new Status(CANCELLINGValue);
+        public static TestRunStatus CANCELLING { get; } = new TestRunStatus(CANCELLINGValue);
         /// <summary> Test run request is cancelled. </summary>
-        public static Status CANCELLED { get; } = new Status(CANCELLEDValue);
+        public static TestRunStatus CANCELLED { get; } = new TestRunStatus(CANCELLEDValue);
         /// <summary> Test run request is failed. </summary>
-        public static Status FAILED { get; } = new Status(FAILEDValue);
+        public static TestRunStatus FAILED { get; } = new TestRunStatus(FAILEDValue);
         /// <summary> Test run JMX file is validated. </summary>
-        public static Status VALIDATIONSUCCESS { get; } = new Status(VALIDATIONSUCCESSValue);
+        public static TestRunStatus VALIDATIONSUCCESS { get; } = new TestRunStatus(VALIDATIONSUCCESSValue);
         /// <summary> Test run JMX file validation is failed. </summary>
-        public static Status VALIDATIONFAILURE { get; } = new Status(VALIDATIONFAILUREValue);
-        /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
-        public static bool operator ==(Status left, Status right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="Status"/> values are not the same. </summary>
-        public static bool operator !=(Status left, Status right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Status"/>. </summary>
-        public static implicit operator Status(string value) => new Status(value);
+        public static TestRunStatus VALIDATIONFAILURE { get; } = new TestRunStatus(VALIDATIONFAILUREValue);
+        /// <summary> Determines if two <see cref="TestRunStatus"/> values are the same. </summary>
+        public static bool operator ==(TestRunStatus left, TestRunStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="TestRunStatus"/> values are not the same. </summary>
+        public static bool operator !=(TestRunStatus left, TestRunStatus right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TestRunStatus"/>. </summary>
+        public static implicit operator TestRunStatus(string value) => new TestRunStatus(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Status other && Equals(other);
+        public override bool Equals(object obj) => obj is TestRunStatus other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(Status other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(TestRunStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

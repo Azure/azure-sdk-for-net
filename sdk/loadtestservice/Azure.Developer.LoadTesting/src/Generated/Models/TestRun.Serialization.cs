@@ -281,7 +281,7 @@ namespace Azure.Developer.LoadTesting.Models
             string displayName = default;
             string testId = default;
             string description = default;
-            Status? status = default;
+            TestRunStatus? status = default;
             DateTimeOffset? startDateTime = default;
             DateTimeOffset? endDateTime = default;
             DateTimeOffset? executedDateTime = default;
@@ -461,7 +461,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new TestRunStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startDateTime"u8))
