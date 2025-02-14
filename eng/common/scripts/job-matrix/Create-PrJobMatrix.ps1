@@ -101,8 +101,13 @@ function GeneratePRMatrixForBatch {
     $matrixBatch = $matrixBatchesByConfig[$matrixBatchKey]
     $allPossibleMatrixConfigsForFirstPackage = $matrixBatch | Select-Object -First 1 -ExpandProperty CIMatrixConfigs
     $matrixConfig = $allPossibleMatrixConfigsForFirstPackage | Where-Object { (Get-ObjectKey $_) -eq $matrixBatchKey }
-
     $matrixResults = @()
+
+    if (!$matrixConfig) {
+      Write-Error "Unable to find matrix config for $matrixBatchKey. Check the package properties for the package $($matrixBatch[0].ArtifactName)."
+      exit 1
+    }
+
     Write-Host "Generating config for $($matrixConfig.Path)"
     $nonSparse = $matrixConfig.PSObject.Properties['NonSparseParameters'] ? $matrixConfig.NonSparseParameters : @()
 
