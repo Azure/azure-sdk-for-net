@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Nginx.Tests
                 VirtualPath = virtualPath
             };
 
-            NginxConfigurationProperties configurationProperties = new NginxConfigurationProperties
+            NginxConfigurationCreateOrUpdateProperties configurationProperties = new NginxConfigurationCreateOrUpdateProperties
             {
                 RootFile = rootConfigFile.VirtualPath
             };

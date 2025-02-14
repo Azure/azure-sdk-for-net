@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 return null;
             }
             IReadOnlyList<NginxAnalysisDiagnostic> errors = default;
-            IReadOnlyList<DiagnosticItem> diagnostics = default;
+            IReadOnlyList<NginxDiagnosticItem> diagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    List<DiagnosticItem> array = new List<DiagnosticItem>();
+                    List<NginxDiagnosticItem> array = new List<NginxDiagnosticItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticItem.DeserializeDiagnosticItem(item, options));
+                        array.Add(NginxDiagnosticItem.DeserializeNginxDiagnosticItem(item, options));
                     }
                     diagnostics = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NginxAnalysisResultDetails(errors ?? new ChangeTrackingList<NginxAnalysisDiagnostic>(), diagnostics ?? new ChangeTrackingList<DiagnosticItem>(), serializedAdditionalRawData);
+            return new NginxAnalysisResultDetails(errors ?? new ChangeTrackingList<NginxAnalysisDiagnostic>(), diagnostics ?? new ChangeTrackingList<NginxDiagnosticItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxAnalysisResultDetails>.Write(ModelReaderWriterOptions options)

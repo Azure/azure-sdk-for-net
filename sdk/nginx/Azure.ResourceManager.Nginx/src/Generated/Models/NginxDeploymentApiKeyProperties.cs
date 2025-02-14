@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentApiKeyResponseProperties. </summary>
-    public partial class NginxDeploymentApiKeyResponseProperties
+    /// <summary> The NginxDeploymentApiKeyProperties. </summary>
+    public partial class NginxDeploymentApiKeyProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyResponseProperties"/>. </summary>
-        internal NginxDeploymentApiKeyResponseProperties()
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyProperties"/>. </summary>
+        internal NginxDeploymentApiKeyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyResponseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyProperties"/>. </summary>
         /// <param name="hint"> The first three characters of the secret text to help identify it in use. This property is read-only. </param>
         /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentApiKeyResponseProperties(string hint, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentApiKeyProperties(string hint, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Hint = hint;
             EndOn = endOn;

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 VirtualPath = "/etc/nginx/app.conf"
             };
 
-            NginxConfigurationProperties configurationProperties = new NginxConfigurationProperties
+            NginxConfigurationCreateOrUpdateProperties configurationProperties = new NginxConfigurationCreateOrUpdateProperties
             {
                 RootFile = rootConfigFile.VirtualPath
             };

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Nginx
     public partial class NginxConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxConfigurationData>
     {
         internal NginxConfigurationData() { }
-        public Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties Properties { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Nginx.NginxConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Nginx
     public partial class NginxDeploymentApiKeyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentApiKeyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.NginxDeploymentApiKeyData>
     {
         internal NginxDeploymentApiKeyData() { }
-        public Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties Properties { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Nginx.NginxDeploymentApiKeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentApiKeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.NginxDeploymentApiKeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -249,63 +249,26 @@ namespace Azure.ResourceManager.Nginx.Models
 {
     public static partial class ArmNginxModelFactory
     {
-        public static Azure.ResourceManager.Nginx.Models.DiagnosticItem DiagnosticItem(string id = null, string directive = null, string description = null, string file = null, float line = 0f, string message = null, string rule = null, Azure.ResourceManager.Nginx.Models.Level level = default(Azure.ResourceManager.Nginx.Models.Level), string category = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxAnalysisDiagnostic NginxAnalysisDiagnostic(string id = null, string directive = null, string description = null, string file = null, float line = 0f, string message = null, string rule = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxAnalysisResult NginxAnalysisResult(string status = null, Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails data = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails NginxAnalysisResultDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxAnalysisDiagnostic> errors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.DiagnosticItem> diagnostics = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails NginxAnalysisResultDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxAnalysisDiagnostic> errors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem> diagnostics = null) { throw null; }
         public static Azure.ResourceManager.Nginx.NginxCertificateData NginxCertificateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxCertificateProperties properties = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxCertificateProperties NginxCertificateProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), string keyVirtualPath = null, string certificateVirtualPath = null, string keyVaultSecretId = null, string sha1Thumbprint = null, string keyVaultSecretVersion = null, System.DateTimeOffset? keyVaultSecretCreated = default(System.DateTimeOffset?), Azure.ResourceManager.Nginx.Models.NginxCertificateError certificateError = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent NginxConfigurationCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.NginxConfigurationData NginxConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties NginxConfigurationProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> files = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileContent> protectedFiles = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage package = null, string rootFile = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent NginxConfigurationCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties NginxConfigurationCreateOrUpdateProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> files = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileContent> protectedFiles = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage package = null, string rootFile = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.NginxConfigurationData NginxConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties NginxConfigurationProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> files = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileResult> protectedFiles = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage package = null, string rootFile = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileResult NginxConfigurationProtectedFileResult(string virtualPath = null, string contentHash = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties NginxConfigurationResponseProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> files = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileResult> protectedFiles = null, Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage package = null, string rootFile = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyCreateOrUpdateContent NginxDeploymentApiKeyCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.NginxDeploymentApiKeyData NginxDeploymentApiKeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties NginxDeploymentApiKeyResponseProperties(string hint = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.Nginx.NginxDeploymentApiKeyData NginxDeploymentApiKeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties NginxDeploymentApiKeyProperties(string hint = null, System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Nginx.NginxDeploymentData NginxDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties properties = null, string skuName = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties NginxDeploymentProperties(Azure.ResourceManager.Nginx.Models.NginxProvisioningState? provisioningState = default(Azure.ResourceManager.Nginx.Models.NginxProvisioningState?), string nginxVersion = null, Azure.ResourceManager.Nginx.Models.NginxNetworkProfile networkProfile = null, string ipAddress = null, bool? enableDiagnosticsSupport = default(bool?), Azure.ResourceManager.Nginx.Models.NginxStorageAccount loggingStorageAccount = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentScalingProperties scalingProperties = null, string upgradeChannel = null, string userPreferredEmail = null, Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect nginxAppProtect = null, string dataplaneApiEndpoint = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.NginxDeploymentPropertiesNginxAppProtect NginxDeploymentPropertiesNginxAppProtect(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState? webApplicationFirewallActivationState = default(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallActivationState?), Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus webApplicationFirewallStatus = null) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem NginxDiagnosticItem(string id = null, string directive = null, string description = null, string file = null, float line = 0f, string message = null, string rule = null, Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel level = default(Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel), string category = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallComponentVersions WebApplicationFirewallComponentVersions(string wafEngineVersion = null, string wafNginxVersion = null) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage WebApplicationFirewallPackage(string version = null, System.DateTimeOffset revisionDatetime = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.Nginx.Models.WebApplicationFirewallStatus WebApplicationFirewallStatus(Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage attackSignaturesPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage botSignaturesPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallPackage threatCampaignsPackage = null, Azure.ResourceManager.Nginx.Models.WebApplicationFirewallComponentVersions componentVersions = null) { throw null; }
-    }
-    public partial class DiagnosticItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.DiagnosticItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.DiagnosticItem>
-    {
-        internal DiagnosticItem() { }
-        public string Category { get { throw null; } }
-        public string Description { get { throw null; } }
-        public string Directive { get { throw null; } }
-        public string File { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.ResourceManager.Nginx.Models.Level Level { get { throw null; } }
-        public float Line { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Rule { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Nginx.Models.DiagnosticItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.DiagnosticItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.DiagnosticItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Nginx.Models.DiagnosticItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.DiagnosticItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.DiagnosticItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.DiagnosticItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Level : System.IEquatable<Azure.ResourceManager.Nginx.Models.Level>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Level(string value) { throw null; }
-        public static Azure.ResourceManager.Nginx.Models.Level Info { get { throw null; } }
-        public static Azure.ResourceManager.Nginx.Models.Level Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Nginx.Models.Level other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Nginx.Models.Level left, Azure.ResourceManager.Nginx.Models.Level right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Nginx.Models.Level (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Nginx.Models.Level left, Azure.ResourceManager.Nginx.Models.Level right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class NginxAnalysisConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxAnalysisConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxAnalysisConfig>
     {
@@ -364,7 +327,7 @@ namespace Azure.ResourceManager.Nginx.Models
     public partial class NginxAnalysisResultDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails>
     {
         internal NginxAnalysisResultDetails() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Nginx.Models.DiagnosticItem> Diagnostics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem> Diagnostics { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Nginx.Models.NginxAnalysisDiagnostic> Errors { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxAnalysisResultDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -406,13 +369,28 @@ namespace Azure.ResourceManager.Nginx.Models
     public partial class NginxConfigurationCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent>
     {
         public NginxConfigurationCreateOrUpdateContent() { }
-        public Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NginxConfigurationCreateOrUpdateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties>
+    {
+        public NginxConfigurationCreateOrUpdateProperties() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> Files { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage Package { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileContent> ProtectedFiles { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
+        public string RootFile { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationCreateOrUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NginxConfigurationFile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile>
     {
@@ -440,12 +418,12 @@ namespace Azure.ResourceManager.Nginx.Models
     }
     public partial class NginxConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties>
     {
-        public NginxConfigurationProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> Files { get { throw null; } }
-        public Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage Package { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileContent> ProtectedFiles { get { throw null; } }
+        internal NginxConfigurationProperties() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> Files { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage Package { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileResult> ProtectedFiles { get { throw null; } }
         public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
-        public string RootFile { get { throw null; } set { } }
+        public string RootFile { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -478,21 +456,6 @@ namespace Azure.ResourceManager.Nginx.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NginxConfigurationResponseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties>
-    {
-        internal NginxConfigurationResponseProperties() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Nginx.Models.NginxConfigurationFile> Files { get { throw null; } }
-        public Azure.ResourceManager.Nginx.Models.NginxConfigurationPackage Package { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Nginx.Models.NginxConfigurationProtectedFileResult> ProtectedFiles { get { throw null; } }
-        public Azure.ResourceManager.Nginx.Models.NginxProvisioningState? ProvisioningState { get { throw null; } }
-        public string RootFile { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxConfigurationResponseProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class NginxDeploymentApiKeyCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyCreateOrUpdateContent>
     {
         public NginxDeploymentApiKeyCreateOrUpdateContent() { }
@@ -503,6 +466,18 @@ namespace Azure.ResourceManager.Nginx.Models
         Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NginxDeploymentApiKeyProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties>
+    {
+        internal NginxDeploymentApiKeyProperties() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public string Hint { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NginxDeploymentApiKeyRequestProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties>
     {
@@ -515,18 +490,6 @@ namespace Azure.ResourceManager.Nginx.Models
         Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyRequestProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NginxDeploymentApiKeyResponseProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties>
-    {
-        internal NginxDeploymentApiKeyResponseProperties() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public string Hint { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentApiKeyResponseProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NginxDeploymentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentPatch>
     {
@@ -604,6 +567,43 @@ namespace Azure.ResourceManager.Nginx.Models
         Azure.ResourceManager.Nginx.Models.NginxDeploymentUpdateProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentUpdateProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDeploymentUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NginxDiagnosticItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>
+    {
+        internal NginxDiagnosticItem() { }
+        public string Category { get { throw null; } }
+        public string Description { get { throw null; } }
+        public string Directive { get { throw null; } }
+        public string File { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel Level { get { throw null; } }
+        public float Line { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Rule { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxDiagnosticItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NginxDiagnosticLevel : System.IEquatable<Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NginxDiagnosticLevel(string value) { throw null; }
+        public static Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel Info { get { throw null; } }
+        public static Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel left, Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel left, Azure.ResourceManager.Nginx.Models.NginxDiagnosticLevel right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NginxFrontendIPConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Nginx.Models.NginxFrontendIPConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Nginx.Models.NginxFrontendIPConfiguration>
     {

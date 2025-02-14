@@ -9,7 +9,7 @@ csharp: true
 library-name: Nginx
 namespace: Azure.ResourceManager.Nginx
 require: https://github.com/Azure/azure-rest-api-specs/blob/7a3f210cf6924c6139e2493f5fd0625919af1f32/specification/nginx/resource-manager/readme.md
-tag: package-2024-11-01-preview
+#tag: package-2024-11-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -32,17 +32,21 @@ rename-mapping:
   NginxCertificateErrorResponseBody: NginxCertificateError
   ActivationState : WebApplicationFirewallActivationState
   AnalysisResultData: NginxAnalysisResultDetails
+  Level: NginxDiagnosticLevel
   NginxConfigurationResponse: NginxConfiguration
+  NginxConfigurationResponseProperties: NginxConfigurationProperties
   NginxDeploymentApiKeyResponse: NginxDeploymentApiKey
-  NginxConfigurationRequestProperties: NginxConfigurationProperties
+  NginxDeploymentApiKeyResponseProperties: NginxDeploymentApiKeyProperties
+  NginxConfigurationRequestProperties: NginxConfigurationCreateOrUpdateProperties
   NginxConfigurationProtectedFileRequest: NginxConfigurationProtectedFileContent
   NginxConfigurationProtectedFileResponse: NginxConfigurationProtectedFileResult
 
 prepend-rp-prefix:
-  - ProvisioningState
-  - ResourceSku
   - AnalysisDiagnostic
   - AnalysisResult
+  - DiagnosticItem
+  - ProvisioningState
+  - ResourceSku
   - ScaleProfile
   - ScaleProfileCapacity
 

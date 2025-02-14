@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxDeploymentApiKeyResponseProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentApiKeyResponseProperties>
+    public partial class NginxDeploymentApiKeyProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentApiKeyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentApiKeyResponseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentApiKeyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NginxDeploymentApiKeyResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxDeploymentApiKeyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentApiKeyResponseProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentApiKeyProperties)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Hint))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
-        NginxDeploymentApiKeyResponseProperties IJsonModel<NginxDeploymentApiKeyResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NginxDeploymentApiKeyProperties IJsonModel<NginxDeploymentApiKeyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxDeploymentApiKeyResponseProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDeploymentApiKeyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNginxDeploymentApiKeyResponseProperties(document.RootElement, options);
+            return DeserializeNginxDeploymentApiKeyProperties(document.RootElement, options);
         }
 
-        internal static NginxDeploymentApiKeyResponseProperties DeserializeNginxDeploymentApiKeyResponseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NginxDeploymentApiKeyProperties DeserializeNginxDeploymentApiKeyProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NginxDeploymentApiKeyResponseProperties(hint, endDateTime, serializedAdditionalRawData);
+            return new NginxDeploymentApiKeyProperties(hint, endDateTime, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NginxDeploymentApiKeyResponseProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NginxDeploymentApiKeyProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentApiKeyResponseProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentApiKeyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NginxDeploymentApiKeyResponseProperties IPersistableModel<NginxDeploymentApiKeyResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NginxDeploymentApiKeyProperties IPersistableModel<NginxDeploymentApiKeyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentApiKeyProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNginxDeploymentApiKeyResponseProperties(document.RootElement, options);
+                        return DeserializeNginxDeploymentApiKeyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxDeploymentApiKeyResponseProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDeploymentApiKeyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NginxDeploymentApiKeyResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxDeploymentApiKeyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

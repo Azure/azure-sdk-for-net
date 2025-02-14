@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Nginx.NginxDeploymentApiKeyData"/> instance for mocking. </returns>
-        public static NginxDeploymentApiKeyData NginxDeploymentApiKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxDeploymentApiKeyResponseProperties properties = null)
+        public static NginxDeploymentApiKeyData NginxDeploymentApiKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxDeploymentApiKeyProperties properties = null)
         {
             return new NginxDeploymentApiKeyData(
                 id,
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NginxDeploymentApiKeyResponseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxDeploymentApiKeyProperties"/>. </summary>
         /// <param name="hint"> The first three characters of the secret text to help identify it in use. This property is read-only. </param>
         /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
-        /// <returns> A new <see cref="Models.NginxDeploymentApiKeyResponseProperties"/> instance for mocking. </returns>
-        public static NginxDeploymentApiKeyResponseProperties NginxDeploymentApiKeyResponseProperties(string hint = null, DateTimeOffset? endOn = null)
+        /// <returns> A new <see cref="Models.NginxDeploymentApiKeyProperties"/> instance for mocking. </returns>
+        public static NginxDeploymentApiKeyProperties NginxDeploymentApiKeyProperties(string hint = null, DateTimeOffset? endOn = null)
         {
-            return new NginxDeploymentApiKeyResponseProperties(hint, endOn, serializedAdditionalRawData: null);
+            return new NginxDeploymentApiKeyProperties(hint, endOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Nginx.NginxCertificateData"/>. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Nginx.NginxConfigurationData"/> instance for mocking. </returns>
-        public static NginxConfigurationData NginxConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxConfigurationResponseProperties properties = null)
+        public static NginxConfigurationData NginxConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxConfigurationProperties properties = null)
         {
             return new NginxConfigurationData(
                 id,
@@ -123,19 +123,19 @@ namespace Azure.ResourceManager.Nginx.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NginxConfigurationResponseProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxConfigurationProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
         /// <param name="package"></param>
         /// <param name="rootFile"></param>
-        /// <returns> A new <see cref="Models.NginxConfigurationResponseProperties"/> instance for mocking. </returns>
-        public static NginxConfigurationResponseProperties NginxConfigurationResponseProperties(NginxProvisioningState? provisioningState = null, IEnumerable<NginxConfigurationFile> files = null, IEnumerable<NginxConfigurationProtectedFileResult> protectedFiles = null, NginxConfigurationPackage package = null, string rootFile = null)
+        /// <returns> A new <see cref="Models.NginxConfigurationProperties"/> instance for mocking. </returns>
+        public static NginxConfigurationProperties NginxConfigurationProperties(NginxProvisioningState? provisioningState = null, IEnumerable<NginxConfigurationFile> files = null, IEnumerable<NginxConfigurationProtectedFileResult> protectedFiles = null, NginxConfigurationPackage package = null, string rootFile = null)
         {
             files ??= new List<NginxConfigurationFile>();
             protectedFiles ??= new List<NginxConfigurationProtectedFileResult>();
 
-            return new NginxConfigurationResponseProperties(
+            return new NginxConfigurationProperties(
                 provisioningState,
                 files?.ToList(),
                 protectedFiles?.ToList(),
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Models.NginxConfigurationCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static NginxConfigurationCreateOrUpdateContent NginxConfigurationCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxConfigurationProperties properties = null)
+        public static NginxConfigurationCreateOrUpdateContent NginxConfigurationCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NginxConfigurationCreateOrUpdateProperties properties = null)
         {
             return new NginxConfigurationCreateOrUpdateContent(
                 id,
@@ -171,19 +171,19 @@ namespace Azure.ResourceManager.Nginx.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NginxConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxConfigurationCreateOrUpdateProperties"/>. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
         /// <param name="package"></param>
         /// <param name="rootFile"></param>
-        /// <returns> A new <see cref="Models.NginxConfigurationProperties"/> instance for mocking. </returns>
-        public static NginxConfigurationProperties NginxConfigurationProperties(NginxProvisioningState? provisioningState = null, IEnumerable<NginxConfigurationFile> files = null, IEnumerable<NginxConfigurationProtectedFileContent> protectedFiles = null, NginxConfigurationPackage package = null, string rootFile = null)
+        /// <returns> A new <see cref="Models.NginxConfigurationCreateOrUpdateProperties"/> instance for mocking. </returns>
+        public static NginxConfigurationCreateOrUpdateProperties NginxConfigurationCreateOrUpdateProperties(NginxProvisioningState? provisioningState = null, IEnumerable<NginxConfigurationFile> files = null, IEnumerable<NginxConfigurationProtectedFileContent> protectedFiles = null, NginxConfigurationPackage package = null, string rootFile = null)
         {
             files ??= new List<NginxConfigurationFile>();
             protectedFiles ??= new List<NginxConfigurationProtectedFileContent>();
 
-            return new NginxConfigurationProperties(
+            return new NginxConfigurationCreateOrUpdateProperties(
                 provisioningState,
                 files?.ToList(),
                 protectedFiles?.ToList(),
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="errors"></param>
         /// <param name="diagnostics"></param>
         /// <returns> A new <see cref="Models.NginxAnalysisResultDetails"/> instance for mocking. </returns>
-        public static NginxAnalysisResultDetails NginxAnalysisResultDetails(IEnumerable<NginxAnalysisDiagnostic> errors = null, IEnumerable<DiagnosticItem> diagnostics = null)
+        public static NginxAnalysisResultDetails NginxAnalysisResultDetails(IEnumerable<NginxAnalysisDiagnostic> errors = null, IEnumerable<NginxDiagnosticItem> diagnostics = null)
         {
             errors ??= new List<NginxAnalysisDiagnostic>();
-            diagnostics ??= new List<DiagnosticItem>();
+            diagnostics ??= new List<NginxDiagnosticItem>();
 
             return new NginxAnalysisResultDetails(errors?.ToList(), diagnostics?.ToList(), serializedAdditionalRawData: null);
         }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DiagnosticItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NginxDiagnosticItem"/>. </summary>
         /// <param name="id"> Unique identifier for the diagnostic. </param>
         /// <param name="directive"></param>
         /// <param name="description"></param>
@@ -245,10 +245,10 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="rule"></param>
         /// <param name="level"> Warning or Info. </param>
         /// <param name="category"> Category of warning like Best-practices, Recommendation, Security etc. </param>
-        /// <returns> A new <see cref="Models.DiagnosticItem"/> instance for mocking. </returns>
-        public static DiagnosticItem DiagnosticItem(string id = null, string directive = null, string description = null, string file = null, float line = default, string message = null, string rule = null, Level level = default, string category = null)
+        /// <returns> A new <see cref="Models.NginxDiagnosticItem"/> instance for mocking. </returns>
+        public static NginxDiagnosticItem NginxDiagnosticItem(string id = null, string directive = null, string description = null, string file = null, float line = default, string message = null, string rule = null, NginxDiagnosticLevel level = default, string category = null)
         {
-            return new DiagnosticItem(
+            return new NginxDiagnosticItem(
                 id,
                 directive,
                 description,

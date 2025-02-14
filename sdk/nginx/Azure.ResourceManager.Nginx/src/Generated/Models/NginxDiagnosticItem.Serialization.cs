@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class DiagnosticItem : IUtf8JsonSerializable, IJsonModel<DiagnosticItem>
+    public partial class NginxDiagnosticItem : IUtf8JsonSerializable, IJsonModel<NginxDiagnosticItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDiagnosticItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DiagnosticItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NginxDiagnosticItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxDiagnosticItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDiagnosticItem)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Id))
@@ -75,19 +75,19 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
-        DiagnosticItem IJsonModel<DiagnosticItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NginxDiagnosticItem IJsonModel<NginxDiagnosticItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxDiagnosticItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxDiagnosticItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiagnosticItem(document.RootElement, options);
+            return DeserializeNginxDiagnosticItem(document.RootElement, options);
         }
 
-        internal static DiagnosticItem DeserializeDiagnosticItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NginxDiagnosticItem DeserializeNginxDiagnosticItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Nginx.Models
             float line = default;
             string message = default;
             string rule = default;
-            Level level = default;
+            NginxDiagnosticLevel level = default;
             string category = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
                 if (property.NameEquals("level"u8))
                 {
-                    level = new Level(property.Value.GetString());
+                    level = new NginxDiagnosticLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("category"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiagnosticItem(
+            return new NginxDiagnosticItem(
                 id,
                 directive,
                 description,
@@ -172,35 +172,35 @@ namespace Azure.ResourceManager.Nginx.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DiagnosticItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NginxDiagnosticItem>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxDiagnosticItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDiagnosticItem)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DiagnosticItem IPersistableModel<DiagnosticItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NginxDiagnosticItem IPersistableModel<NginxDiagnosticItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NginxDiagnosticItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDiagnosticItem(document.RootElement, options);
+                        return DeserializeNginxDiagnosticItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxDiagnosticItem)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DiagnosticItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NginxDiagnosticItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

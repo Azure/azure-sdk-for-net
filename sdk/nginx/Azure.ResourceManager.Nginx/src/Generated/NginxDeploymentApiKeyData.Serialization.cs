@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 return null;
             }
-            NginxDeploymentApiKeyResponseProperties properties = default;
+            NginxDeploymentApiKeyProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Nginx
                     {
                         continue;
                     }
-                    properties = NginxDeploymentApiKeyResponseProperties.DeserializeNginxDeploymentApiKeyResponseProperties(property.Value, options);
+                    properties = NginxDeploymentApiKeyProperties.DeserializeNginxDeploymentApiKeyProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

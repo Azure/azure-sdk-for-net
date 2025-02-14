@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxConfigurationCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxConfigurationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NginxConfigurationCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NginxConfigurationCreateOrUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the properties. </summary>
-        public NginxConfigurationProperties Properties { get; set; }
+        public NginxConfigurationCreateOrUpdateProperties Properties { get; set; }
     }
 }

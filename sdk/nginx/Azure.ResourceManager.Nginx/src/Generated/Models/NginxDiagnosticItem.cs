@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> A diagnostic is a message associated with an NGINX config. The Analyzer returns diagnostics with a level indicating the importance of the diagnostic with optional category. </summary>
-    public partial class DiagnosticItem
+    public partial class NginxDiagnosticItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDiagnosticItem"/>. </summary>
         /// <param name="directive"></param>
         /// <param name="description"></param>
         /// <param name="file"> The filepath of the most relevant config file. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="rule"></param>
         /// <param name="level"> Warning or Info. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="directive"/>, <paramref name="description"/>, <paramref name="file"/>, <paramref name="message"/> or <paramref name="rule"/> is null. </exception>
-        internal DiagnosticItem(string directive, string description, string file, float line, string message, string rule, Level level)
+        internal NginxDiagnosticItem(string directive, string description, string file, float line, string message, string rule, NginxDiagnosticLevel level)
         {
             Argument.AssertNotNull(directive, nameof(directive));
             Argument.AssertNotNull(description, nameof(description));
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Nginx.Models
             Level = level;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDiagnosticItem"/>. </summary>
         /// <param name="id"> Unique identifier for the diagnostic. </param>
         /// <param name="directive"></param>
         /// <param name="description"></param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="level"> Warning or Info. </param>
         /// <param name="category"> Category of warning like Best-practices, Recommendation, Security etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticItem(string id, string directive, string description, string file, float line, string message, string rule, Level level, string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDiagnosticItem(string id, string directive, string description, string file, float line, string message, string rule, NginxDiagnosticLevel level, string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Directive = directive;
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Nginx.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticItem"/> for deserialization. </summary>
-        internal DiagnosticItem()
+        /// <summary> Initializes a new instance of <see cref="NginxDiagnosticItem"/> for deserialization. </summary>
+        internal NginxDiagnosticItem()
         {
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Gets the rule. </summary>
         public string Rule { get; }
         /// <summary> Warning or Info. </summary>
-        public Level Level { get; }
+        public NginxDiagnosticLevel Level { get; }
         /// <summary> Category of warning like Best-practices, Recommendation, Security etc. </summary>
         public string Category { get; }
     }
