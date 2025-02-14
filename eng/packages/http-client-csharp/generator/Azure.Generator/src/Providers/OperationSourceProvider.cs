@@ -24,7 +24,6 @@ namespace Azure.Generator.Providers
         private CSharpType _operationSourceInterface;
 
         private FieldProvider _clientField;
-        private ParameterProvider _cancellationTokenParameter = new("cancellationToken", $"The cancellation token to use", new CSharpType(typeof(CancellationToken)));
 
         public OperationSourceProvider(string resourceName, ResourceProvider resource, ResourceDataProvider resourceData)
         {
@@ -54,11 +53,11 @@ namespace Azure.Generator.Providers
                 MethodSignatureModifiers.Async,
                 new CSharpType(typeof(ValueTask<>), _resource.Type),
                 $"",
-                [KnownAzureParameters.Response, _cancellationTokenParameter],
+                [KnownAzureParameters.Response, KnownAzureParameters.CancellationTokenWithoutDefault],
                 ExplicitInterface: _operationSourceInterface);
             var body = new MethodBodyStatement[]
             {
-                UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, _cancellationTokenParameter], true), out var documentVariable),
+                UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, KnownAzureParameters.CancellationTokenWithoutDefault], true), out var documentVariable),
                 Declare("data", _resourceData.Type, Static(_resourceData.Type).Invoke($"Deserialize{_resourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), New.Instance<ModelReaderWriterOptions>(Literal("W"))), out var dataVariable),
                 Return(New.Instance(_resource.Type, [_clientField, dataVariable])),
             };
@@ -73,7 +72,7 @@ namespace Azure.Generator.Providers
                 MethodSignatureModifiers.None,
                 _resource.Type,
                 $"",
-                [KnownAzureParameters.Response, _cancellationTokenParameter],
+                [KnownAzureParameters.Response, KnownAzureParameters.CancellationTokenWithoutDefault],
                 ExplicitInterface: _operationSourceInterface);
             var body = new MethodBodyStatement[]
             {
