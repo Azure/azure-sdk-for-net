@@ -51,8 +51,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             return Version switch
             {
+                ServiceVersion.V7_2 => "7.2",
+                ServiceVersion.V7_3 => "7.3",
+                ServiceVersion.V7_4 => "7.4",
                 ServiceVersion.V7_5 => "7.5",
-                _ => throw new ArgumentException(Version.ToString()),
+                ServiceVersion.V7_6_Preview_1 => "V7_6_Preview_1",
+                _ => throw new ArgumentException(Version.ToString())
             };
         }
     }
