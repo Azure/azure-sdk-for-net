@@ -11,15 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
-namespace Azure.AI.Projects
-{
-    public partial class AgentsApiResponseFormat : IUtf8JsonSerializable, IJsonModel<AgentsApiResponseFormat>
-    {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentsApiResponseFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<AgentsApiResponseFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-========
 namespace Azure.Communication.Messages
 {
     public partial class ButtonContent : IUtf8JsonSerializable, IJsonModel<ButtonContent>
@@ -27,7 +18,6 @@ namespace Azure.Communication.Messages
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ButtonContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ButtonContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
->>>>>>>> main:sdk/communication/Azure.Communication.Messages/src/Generated/ButtonContent.Serialization.cs
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -38,19 +28,6 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
-            var format = options.Format == "W" ? ((IPersistableModel<AgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AgentsApiResponseFormat)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
-            }
-========
             var format = options.Format == "W" ? ((IPersistableModel<ButtonContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
@@ -61,7 +38,6 @@ namespace Azure.Communication.Messages
             writer.WriteStringValue(Id);
             writer.WritePropertyName("title"u8);
             writer.WriteStringValue(Title);
->>>>>>>> main:sdk/communication/Azure.Communication.Messages/src/Generated/ButtonContent.Serialization.cs
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -79,21 +55,6 @@ namespace Azure.Communication.Messages
             }
         }
 
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
-        AgentsApiResponseFormat IJsonModel<AgentsApiResponseFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AgentsApiResponseFormat)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentsApiResponseFormat(document.RootElement, options);
-        }
-
-        internal static AgentsApiResponseFormat DeserializeAgentsApiResponseFormat(JsonElement element, ModelReaderWriterOptions options = null)
-========
         ButtonContent IJsonModel<ButtonContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ButtonContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -107,7 +68,6 @@ namespace Azure.Communication.Messages
         }
 
         internal static ButtonContent DeserializeButtonContent(JsonElement element, ModelReaderWriterOptions options = null)
->>>>>>>> main:sdk/communication/Azure.Communication.Messages/src/Generated/ButtonContent.Serialization.cs
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -115,29 +75,15 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
-            ResponseFormat? type = default;
-========
             string id = default;
             string title = default;
->>>>>>>> main:sdk/communication/Azure.Communication.Messages/src/Generated/ButtonContent.Serialization.cs
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new ResponseFormat(property.Value.GetString());
-========
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
->>>>>>>> main:sdk/communication/Azure.Communication.Messages/src/Generated/ButtonContent.Serialization.cs
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -151,36 +97,18 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
-            return new AgentsApiResponseFormat(type, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<AgentsApiResponseFormat>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
-========
             return new ButtonContent(id, title, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ButtonContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ButtonContent>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/communication/Azure.Communication.Messages/src/Generated/ButtonContent.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
-                    throw new FormatException($"The model {nameof(AgentsApiResponseFormat)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AgentsApiResponseFormat IPersistableModel<AgentsApiResponseFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgentsApiResponseFormat>)this).GetFormatFromOptions(options) : options.Format;
-========
                     throw new FormatException($"The model {nameof(ButtonContent)} does not support writing '{options.Format}' format.");
             }
         }
@@ -188,30 +116,12 @@ namespace Azure.Communication.Messages
         ButtonContent IPersistableModel<ButtonContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ButtonContent>)this).GetFormatFromOptions(options) : options.Format;
->>>>>>>> main:sdk/communication/Azure.Communication.Messages/src/Generated/ButtonContent.Serialization.cs
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-<<<<<<<< HEAD:sdk/ai/Azure.AI.Projects/src/Generated/AgentsApiResponseFormat.Serialization.cs
-                        return DeserializeAgentsApiResponseFormat(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AgentsApiResponseFormat)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AgentsApiResponseFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AgentsApiResponseFormat FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAgentsApiResponseFormat(document.RootElement);
-========
                         return DeserializeButtonContent(document.RootElement, options);
                     }
                 default:
@@ -227,7 +137,6 @@ namespace Azure.Communication.Messages
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeButtonContent(document.RootElement);
->>>>>>>> main:sdk/communication/Azure.Communication.Messages/src/Generated/ButtonContent.Serialization.cs
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
