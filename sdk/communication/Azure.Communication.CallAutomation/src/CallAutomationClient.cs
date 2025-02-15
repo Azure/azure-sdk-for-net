@@ -170,7 +170,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
@@ -217,7 +218,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 AnswerCallRequestInternal request = CreateAnswerCallRequest(options);
 
@@ -256,6 +258,9 @@ namespace Azure.Communication.CallAutomation
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.CustomCallingContext = new CustomCallingContextInternal(
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>());
 
             return request;
         }
@@ -501,7 +506,8 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                if (options == null) throw new ArgumentNullException(nameof(options));
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
@@ -713,6 +719,7 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
@@ -745,6 +752,7 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
@@ -794,7 +802,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="uri"></param>
         /// <returns></returns>
-        private static bool IsValidHttpsUri(Uri uri) {
+        private static bool IsValidHttpsUri(Uri uri)
+        {
             if (uri == null)
                 return false;
             var uriString = uri.AbsoluteUri;

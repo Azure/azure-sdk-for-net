@@ -60,5 +60,12 @@ namespace Azure.Communication.CallAutomation
         /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
         /// </summary>
         public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
+
+        /// <summary>
+        /// Overrides default client source by a MicrosoftTeamsAppIdentifier type source.
+        /// Required for creating call with Teams resource account ID.
+        /// This is per-operation setting and does not change the client's default source.
+        /// </summary>
+        public MicrosoftTeamsAppIdentifier TeamsAppSource { get; set; }
     }
 }
