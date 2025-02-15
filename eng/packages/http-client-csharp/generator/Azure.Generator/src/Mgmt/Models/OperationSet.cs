@@ -17,12 +17,12 @@ namespace Azure.Generator.Mgmt.Models
     /// </summary>
     internal class OperationSet : IReadOnlyCollection<InputOperation>, IEquatable<OperationSet>
     {
-        private readonly InputClient? _inputClient;
-
         /// <summary>
         /// The raw request path of string of the operations in this <see cref="OperationSet"/>
         /// </summary>
-        public string RequestPath { get; }
+        public RequestPath RequestPath { get; }
+
+        public InputClient InputClient { get; }
 
         /// <summary>
         /// The operation set
@@ -31,9 +31,9 @@ namespace Azure.Generator.Mgmt.Models
 
         public int Count => _operations.Count;
 
-        public OperationSet(string requestPath, InputClient? inputClient)
+        public OperationSet(RequestPath requestPath, InputClient inputClient)
         {
-            _inputClient = inputClient;
+            InputClient = inputClient;
             RequestPath = requestPath;
             _operations = new HashSet<InputOperation>();
         }
@@ -46,7 +46,7 @@ namespace Azure.Generator.Mgmt.Models
         public void Add(InputOperation operation)
         {
             var path = operation.GetHttpPath();
-            if (path != RequestPath)
+            if (!path.Equals(RequestPath))
                 throw new InvalidOperationException($"Cannot add operation with path {path} to OperationSet with path {RequestPath}");
             _operations.Add(operation);
         }

@@ -5,26 +5,56 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator
 {
     /// <inheritdoc/>
     public class AzureOutputLibrary : ScmOutputLibrary
     {
-        // TODO: categorize clients into operationSets, which contains operations sharing the same Path
-        private Dictionary<string, OperationSet> _pathToOperationSetMap;
-        private Dictionary<string, HashSet<OperationSet>> _resourceDataBySpecNameMap;
+        //TODO: Move these to InputLibrary instead
+        private Dictionary<RequestPath, OperationSet> _pathToOperationSetMap;
+        private Dictionary<string, HashSet<OperationSet>> _specNameToOperationSetsMap;
+        private Dictionary<string, InputModelType> _inputTypeMap;
 
         /// <inheritdoc/>
         public AzureOutputLibrary()
         {
             _pathToOperationSetMap = CategorizeClients();
-            _resourceDataBySpecNameMap = EnsureResourceDataMap();
+            _specNameToOperationSetsMap = EnsureOperationsetMap();
+            _inputTypeMap = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().ToDictionary(model => model.Name);
         }
 
-        private Dictionary<string, HashSet<OperationSet>> EnsureResourceDataMap()
+        private MgmtLongRunningOperationProvider? _armOperation;
+        internal MgmtLongRunningOperationProvider ArmOperation => _armOperation ??= new MgmtLongRunningOperationProvider(false);
+
+        private MgmtLongRunningOperationProvider? _genericArmOperation;
+        internal MgmtLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new MgmtLongRunningOperationProvider(true);
+
+        private IReadOnlyList<ResourceProvider> BuildResources()
+        {
+            var result = new List<ResourceProvider>();
+            foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
+            {
+                var model = _inputTypeMap[schemaName];
+                var resourceData = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
+                foreach (var operationSet in operationSets)
+                {
+                    var requestPath = operationSet.RequestPath;
+                    var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
+                    var resource = new ResourceProvider(operationSet, schemaName, resourceData, resourceType);
+                    AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
+                    result.Add(resource);
+                }
+            }
+            return result;
+        }
+
+        private Dictionary<string, HashSet<OperationSet>> EnsureOperationsetMap()
         {
             var result = new Dictionary<string, HashSet<OperationSet>>();
             foreach (var operationSet in _pathToOperationSetMap.Values)
@@ -44,16 +74,14 @@ namespace Azure.Generator
             return result;
         }
 
-        private Dictionary<string, OperationSet> CategorizeClients()
+        private Dictionary<RequestPath, OperationSet> CategorizeClients()
         {
-            var result = new Dictionary<string, OperationSet>();
+            var result = new Dictionary<RequestPath, OperationSet>();
             foreach (var inputClient in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
             {
-                var requestPathList = new HashSet<string>();
                 foreach (var operation in inputClient.Operations)
                 {
                     var path = operation.GetHttpPath();
-                    requestPathList.Add(path);
                     if (result.TryGetValue(path, out var operationSet))
                     {
                         operationSet.Add(operation);
@@ -75,22 +103,20 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        // TODO: generate resources and collections
+        // TODO: generate collections
         protected override TypeProvider[] BuildTypeProviders()
         {
+            var baseProviders = base.BuildTypeProviders();
             if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
             {
-                var armOperation = new MgmtLongRunningOperationProvider(false);
-                var genericArmOperation = new MgmtLongRunningOperationProvider(true);
-
-                // TODO: remove them once they are referenced in Resource operation implementation
-                AzureClientPlugin.Instance.AddTypeToKeep(armOperation.Name);
-                AzureClientPlugin.Instance.AddTypeToKeep(genericArmOperation.Name);
-                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), armOperation, genericArmOperation];
+                var resources = BuildResources();
+                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), ArmOperation, GenericArmOperation, .. resources, .. resources.Select(r => r.Source)];
             }
             return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
         }
 
-        internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
+        internal bool IsResource(string name) => _specNameToOperationSetsMap.ContainsKey(name);
+
+        internal Lazy<IEnumerable<OperationSet>> ResourceOperationSets => new(() => _specNameToOperationSetsMap.Values.SelectMany(x => x));
     }
 }

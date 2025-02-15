@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.ResourceManager;
 using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -30,6 +31,9 @@ public class AzureClientPlugin : ClientModelPlugin
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
     internal ResourceDetection ResourceDetection { get; } = new();
+    internal ParentDetection ParentDetection { get; } = new();
+    internal ScopeDetection ScopeDetection { get; } = new();
+    internal SingletonDetection SingletonDetection { get; } = new();
 
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
@@ -55,6 +59,8 @@ public class AzureClientPlugin : ClientModelPlugin
         AddVisitor(new NamespaceVisitor());
         if (IsAzureArm.Value)
         {
+            // Include Azure.ResourceManager
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             AddVisitor(new RestClientVisitor());
         }
     }

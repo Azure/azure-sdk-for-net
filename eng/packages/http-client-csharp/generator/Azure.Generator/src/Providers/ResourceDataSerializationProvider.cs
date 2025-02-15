@@ -8,6 +8,7 @@ using System.IO;
 
 namespace Azure.Generator.Providers
 {
+    // TODO: replace this with visitor
     internal class ResourceDataSerializationProvider : MrwSerializationTypeDefinition
     {
         public ResourceDataSerializationProvider(InputModelType inputModel, ModelProvider modelProvider) : base(inputModel, modelProvider)

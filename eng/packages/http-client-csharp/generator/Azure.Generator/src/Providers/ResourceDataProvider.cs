@@ -7,13 +7,11 @@ using System.IO;
 
 namespace Azure.Generator.Providers
 {
+    // TODO: replace this with visitor
     internal class ResourceDataProvider : ModelProvider
     {
-        private readonly InputModelType _inputModel;
-
         public ResourceDataProvider(InputModelType inputModel) : base(inputModel)
         {
-            _inputModel = inputModel;
         }
 
         protected override string BuildName() => $"{base.BuildName()}Data";
