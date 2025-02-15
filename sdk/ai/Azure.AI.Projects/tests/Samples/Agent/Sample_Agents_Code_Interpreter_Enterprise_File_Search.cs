@@ -3,11 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Agents;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -21,7 +20,8 @@ public partial class Sample_Agents_Code_Interpreter_Enterprise_File_Search: Samp
         // In future we may want to upload file to Azure here.
         var blobURI = TestEnvironment.AZURE_BLOB_URI;
         var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
-        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+        AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+        AgentsClient client = projectClient.GetAgentsClient();
 
         List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
         Response<Agent> agentResponse = await client.CreateAgentAsync(

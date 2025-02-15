@@ -81,13 +81,14 @@ Agents in the Azure AI Projects client library are designed to facilitate variou
 First, you need to create an `AgentsClient`
 ```C# Snippet:OverviewCreateAgentClient
 var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+AgentsClient client = projectClient.GetAgentsClient();
 ```
 
 With an authenticated client, an agent can be created:
 ```C# Snippet:OverviewCreateAgent
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4-1106-preview",
+    model: modelName,
     name: "Math Tutor",
     instructions: "You are a personal math tutor. Write and run code to answer math questions.",
     tools: new List<ToolDefinition> { new CodeInterpreterToolDefinition() });
@@ -201,7 +202,7 @@ fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process assistant run
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-        model: "gpt-4-1106-preview",
+        model: modelName,
         name: "SDK Test Agent - Retrieval",
         instructions: "You are a helpful agent that can help fetch data from files you know about.",
         tools: new List<ToolDefinition> { new FileSearchToolDefinition() },
@@ -269,7 +270,8 @@ To attach a file with the context to the message, use the `MessageAttachment` cl
 Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:CreateAgentWithInterpreterTool
-AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+AIProjectClient projectClient = new(connectionString, new DefaultAzureCredential());
+AgentsClient client = projectClient.GetAgentsClient();
 
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
 Response<Agent> agentResponse = await client.CreateAgentAsync(
@@ -584,7 +586,7 @@ AzureFunctionToolDefinition azureFnTool = new(
 Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
 ```C# Snippet:AzureFunctionsCreateAgentWithFunctionTools
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
+    model: modelName,
     name: "azure-function-agent-foo",
         instructions: "You are a helpful support agent. Use the provided function any "
         + "time the prompt contains the string 'What would foo say?'. When you invoke "
@@ -732,7 +734,7 @@ OpenApiToolDefinition openapiTool = new(
 );
 
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4",
+    model: modelName,
     name: "azure-function-agent-foo",
     instructions: "You are a helpful assistant.",
     tools: new List<ToolDefinition> { openapiTool }

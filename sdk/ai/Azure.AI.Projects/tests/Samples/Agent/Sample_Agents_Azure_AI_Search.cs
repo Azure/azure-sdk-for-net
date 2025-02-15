@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Azure.AI.Agents;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -18,6 +19,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
     public async Task AzureAISearchExample()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
 
         var clientOptions = new AIProjectClientOptions();
 
@@ -45,7 +47,7 @@ public partial class Sample_Agents_Azure_AI_Search : SamplesBase<AIProjectsTestE
         AgentsClient agentClient = projectClient.GetAgentsClient();
 
         Response<Agent> agentResponse = await agentClient.CreateAgentAsync(
-           model: "gpt-4-1106-preview",
+           model: modelName,
            name: "my-assistant",
            instructions: "You are a helpful assistant.",
            tools: new List<ToolDefinition> { new AzureAISearchToolDefinition() },
