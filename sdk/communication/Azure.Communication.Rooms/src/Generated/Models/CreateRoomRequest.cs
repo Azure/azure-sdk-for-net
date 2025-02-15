@@ -22,23 +22,23 @@ namespace Azure.Communication.Rooms
         /// <summary> Initializes a new instance of <see cref="CreateRoomRequest"/>. </summary>
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time. </param>
         /// <param name="validUntil"> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </param>
-        /// <param name="pstnDialOutEnabled"> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
         /// <param name="participants"> (Optional) Participants to be invited to the room. </param>
-        internal CreateRoomRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, bool? pstnDialOutEnabled, IDictionary<string, ParticipantProperties> participants)
+        /// <param name="pstnDialOutEnabled"> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </param>
+        internal CreateRoomRequest(DateTimeOffset? validFrom, DateTimeOffset? validUntil, IDictionary<string, ParticipantProperties> participants, bool? pstnDialOutEnabled)
         {
             ValidFrom = validFrom;
             ValidUntil = validUntil;
-            PstnDialOutEnabled = pstnDialOutEnabled;
             Participants = participants;
+            PstnDialOutEnabled = pstnDialOutEnabled;
         }
 
         /// <summary> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time. </summary>
         public DateTimeOffset? ValidFrom { get; set; }
         /// <summary> The timestamp from when the room can no longer be joined. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. The default value is the current date time plus 180 days. </summary>
         public DateTimeOffset? ValidUntil { get; set; }
-        /// <summary> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </summary>
-        public bool? PstnDialOutEnabled { get; set; }
         /// <summary> (Optional) Participants to be invited to the room. </summary>
         public IDictionary<string, ParticipantProperties> Participants { get; }
+        /// <summary> Set this flag to true if, at the time of the call, dial out to a PSTN number is enabled in a particular room. By default, this flag is set to false. </summary>
+        public bool? PstnDialOutEnabled { get; set; }
     }
 }
