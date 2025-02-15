@@ -58,7 +58,7 @@
     <ProjectReference Include="@(SrcProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSrc)' == 'true'" />
   </ItemGroup>
 
-  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
+  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" Condition="'$(ProjectListOverrideFile)' == '' "/>
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(RemoveTrack1Projects)' == 'true'">
@@ -97,6 +97,7 @@
     <Error Condition="'$(Scope)' == '' and '@(ProjectReference)' == ''"
         Text="No Projects found with patttern [..\sdk\$(ServiceDirectory)\$(Project)\*.csproj], please make sure you have passed in the correct ServiceDirectory." />
   </Target>
+
 
   <Target Name="GenerateCode">
     <MSBuild Projects="@(ProjectReference)"
