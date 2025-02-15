@@ -274,11 +274,10 @@ namespace Azure.Generator.Providers
             tryStatement.Add(responseDeclaration);
             if (isLongRunning)
             {
-                var armOperationType = !isGeneric ? AzureClientPlugin.Instance.OutputLibrary.ArmOperation.Type : new CSharpType(AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation, AzureClientPlugin.Instance.TypeFactory.RootNamespace , [Type], null);
+                var armOperationType = !isGeneric ? AzureClientPlugin.Instance.OutputLibrary.ArmOperation.Type : AzureClientPlugin.Instance.OutputLibrary.GenericArmOperation.Type.MakeGenericType([Type]);
                 var requestMethod = GetCorrespondingRequestMethod(operation);
-                VariableExpression operationVariable;
                 ValueExpression[] armOperationArguments = [_clientDiagonosticsField, This.Property("Pipeline"), _restClientField.Invoke(requestMethod.Signature.Name, PopulateArguments(requestMethod.Signature.Parameters, convenienceMethod)).Property("Request"), isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable, Static(typeof(OperationFinalStateVia)).Property(((OperationFinalStateVia)operation.LongRunning!.FinalStateVia).ToString())];
-                var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, isGeneric ? [New.Instance(Source.Type, This.Property("Client")), .. armOperationArguments] : armOperationArguments), out operationVariable);
+                var operationDeclaration = Declare("operation", armOperationType, New.Instance(armOperationType, isGeneric ? [New.Instance(Source.Type, This.Property("Client")), .. armOperationArguments] : armOperationArguments), out var operationVariable);
                 tryStatement.Add(operationDeclaration);
                 tryStatement.Add(new IfStatement(KnownAzureParameters.WaitUntil.Equal(Static(typeof(WaitUntil)).Property(nameof(WaitUntil.Completed))))
                 {

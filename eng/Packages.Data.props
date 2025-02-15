@@ -262,7 +262,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250213.9" />
+    <PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" Version="1.0.0-alpha.20250211.5" />
   </ItemGroup>
 
   <!--
@@ -272,6 +272,7 @@
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
     <PackageReference Update="Azure.Core" Version="1.44.1" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
     <PackageReference Update="Azure.Identity" Version="1.13.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.11.3" />
