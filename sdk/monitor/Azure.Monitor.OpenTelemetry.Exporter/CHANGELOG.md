@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+* Rpc tags linked to `OperationType.Rpc`
+  ([#44906](https://github.com/Azure/azure-sdk-for-net/pull/44906))
 
 * Fixed an issue where array attributes on metrics weren't exported correctly.
   ([#47300](https://github.com/Azure/azure-sdk-for-net/pull/47300))
