@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.Core;
+namespace Azure.Projects.Core;
 
-public class FeatureCollection : IEnumerable<CloudMachineFeature>
+public class FeatureCollection : IEnumerable<AzureProjectFeature>
 {
-    private CloudMachineFeature[] _items = new CloudMachineFeature[4];
+    private AzureProjectFeature[] _items = new AzureProjectFeature[4];
     private int _count;
 
     internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RoleAnnotations =>
@@ -22,7 +22,7 @@ public class FeatureCollection : IEnumerable<CloudMachineFeature>
 
     internal FeatureCollection() { }
 
-    public IEnumerable<T> FindAll<T>() where T : CloudMachineFeature
+    public IEnumerable<T> FindAll<T>() where T : AzureProjectFeature
     {
         for (int i = 0; i < _count; i++)
         {
@@ -33,7 +33,7 @@ public class FeatureCollection : IEnumerable<CloudMachineFeature>
         }
     }
 
-    public void Add(CloudMachineFeature item)
+    public void Add(AzureProjectFeature item)
     {
         if (_count == _items.Length)
         {
@@ -43,7 +43,7 @@ public class FeatureCollection : IEnumerable<CloudMachineFeature>
 
         void Resize()
         {
-            var newItems = new CloudMachineFeature[_items.Length * 2];
+            var newItems = new AzureProjectFeature[_items.Length * 2];
             Array.Copy(_items, newItems, _items.Length);
             _items = newItems;
         }
@@ -56,12 +56,12 @@ public class FeatureCollection : IEnumerable<CloudMachineFeature>
         {
             if (index >= _count)
                 break;
-            CloudMachineFeature feature = _items[index++];
+            AzureProjectFeature feature = _items[index++];
             feature.Emit(infrastructure);
         }
     }
 
-    public IEnumerator<CloudMachineFeature> GetEnumerator()
+    public IEnumerator<AzureProjectFeature> GetEnumerator()
     {
         for (int i=0; i < _count; i++)
         {

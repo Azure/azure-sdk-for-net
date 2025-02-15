@@ -6,23 +6,23 @@
 using System;
 using System.IO;
 using System.Linq;
-using Azure.CloudMachine.AppService;
-using Azure.CloudMachine.KeyVault;
-using Azure.CloudMachine.OpenAI;
+using Azure.Projects.AppService;
+using Azure.Projects.KeyVault;
+using Azure.Projects.OpenAI;
 using NUnit.Framework;
 
 [assembly: NonParallelizable]
 
-namespace Azure.CloudMachine.Tests;
+namespace Azure.Projects.Tests;
 
 public class BicepGenerationTests
 {
     [Test]
-    public void JustCloudMachine()
+    public void MinimalProject()
     {
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        string expectedBicep = LoadTestFile("JustCloudMachine.bicep");
+        string expectedBicep = LoadTestFile("MinimalProject.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
@@ -32,7 +32,6 @@ public class BicepGenerationTests
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new AIFoundry.AIFoundryFeature());
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        File.WriteAllText("d:\\foundry.bicep", actualBicep);
         string expectedBicep = LoadTestFile("Foundry.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }

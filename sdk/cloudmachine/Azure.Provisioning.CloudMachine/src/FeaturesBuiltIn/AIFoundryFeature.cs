@@ -3,18 +3,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Identity;
 using Azure.Provisioning.AIFoundry;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.AIFoundry
+namespace Azure.Projects.AIFoundry
 {
     /// <summary>
-    /// A CloudMachine feature that configures an AI Foundry project and optionally prepares resources for provisioning in the future.
+    /// A feature that configures an AI Foundry project and optionally prepares resources for provisioning in the future.
     /// </summary>
-    public class AIFoundryFeature : CloudMachineFeature
+    public class AIFoundryFeature : AzureProjectFeature
     {
         private string? _connectionString;
 
@@ -49,8 +49,8 @@ namespace Azure.CloudMachine.AIFoundry
         /// <summary>
         /// Emit the Foundry connection(s) into the shared <see cref="ConnectionCollection"/>.
         /// </summary>
-        /// <param name="connections">The global collection of <see cref="ClientConnection"/> objects for this CloudMachine. </param>
-        /// <param name="cmId">The unique CloudMachine ID</param>
+        /// <param name="connections">The global collection of <see cref="ClientConnection"/> objects for this project. </param>
+        /// <param name="cmId">The unique AzureProject ID</param>
         protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
         {
             if (_connectionString != null)

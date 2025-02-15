@@ -4,17 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.OpenAI;
+namespace Azure.Projects.OpenAI;
 
 /// <summary>
-/// CloudMachine feature for OpenAI models.
+/// Projects feature for OpenAI models.
 /// </summary>
-public class OpenAIModelFeature : CloudMachineFeature
+public class OpenAIModelFeature : AzureProjectFeature
 {
     /// <summary>
     /// Create a new OpenAI model feature.

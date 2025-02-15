@@ -3,12 +3,12 @@
 
 using System;
 using System.ComponentModel;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 using Azure.Core;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
-public static class CloudMachineClientExtensions
+public static class ProjectClientExtensions
 {
     private static void Configure(this ProjectClient client, Action<ProjectInfrastructure>? configure = default)
     {
@@ -24,7 +24,7 @@ public static class CloudMachineClientExtensions
         Azd.Init(cmi);
     }
 
-    public static T AddFeature<T>(this ProjectClient client, T feature) where T : CloudMachineFeature
+    public static T AddFeature<T>(this ProjectClient client, T feature) where T : AzureProjectFeature
     {
         ProjectInfrastructure infra = client.GetInfrastructure();
         infra.AddFeature(feature);

@@ -3,8 +3,8 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.CloudMachine.Tests;
-public class CloudMachineTestEnvironment : TestEnvironment
+namespace Azure.Projects.Tests;
+public class AzureProjectsTestEnvironment : TestEnvironment
 {
     public string AzureAICONNECTIONSTRING => GetRecordedVariable("PROJECT_CONNECTION_STRING");
 }
