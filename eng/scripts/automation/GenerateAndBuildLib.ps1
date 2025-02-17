@@ -559,7 +559,10 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "readmeFile:$readmeFile"
     $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
     Write-Host "service:$service, serviceType:$serviceType"
-
+    $serviceA = "service"
+    Write-Host "AAPath doesn't exist. create template."
+    Write-Error "[ERROR] AAThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+    exit 1
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
         Write-Error "[ERROR] readme file '$readmeFile' does not exist. Please provide a valid readme file path."
         exit 1
