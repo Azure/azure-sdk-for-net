@@ -32,6 +32,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override long MaxSupportedChunkSize => DataMovementShareConstants.MaxRange;
 
+        protected override int MaxSupportedChunkCount => int.MaxValue;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         internal string _destinationPermissionKey;

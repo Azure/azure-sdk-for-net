@@ -1,5 +1,10 @@
 # Release History
 
+## 12.0.1 (Unreleased)
+
+### Bugs Fixed
+- Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.
+
 ## 12.0.0 (2025-02-11)
 
 ### Breaking Changes
