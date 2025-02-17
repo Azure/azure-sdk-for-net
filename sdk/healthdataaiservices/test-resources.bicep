@@ -15,8 +15,8 @@ param baseName string
 param location string = resourceGroup().location
 
 @description('The location of the resource. By default, this is the same as the resource group.')
-param deidLocation string = 'eastus2euap'
-param deidLocationShort string = 'eup'
+param deidLocation string = 'eastus2'
+param deidLocationShort string = 'eus2'
 
 param deploymentTime string = utcNow('u')
 
