@@ -29,6 +29,10 @@ param (
 . (Join-Path $PSScriptRoot ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 . (Join-Path $PSScriptRoot automation GenerateAndBuildLib.ps1)
 
+$DotNetSupportChannelLink = "https://aka.ms/azsdk/donet-teams-channel"
+$serviceA = "service"
+Write-Error "[ERROR] AAThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+
 $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
 $swaggerDir = $inputJson.specFolder
 if($swaggerDir) {

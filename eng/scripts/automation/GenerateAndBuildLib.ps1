@@ -565,6 +565,9 @@ function Invoke-GenerateAndBuildSDK () {
         exit 1
     }
 
+    $serviceA = "service"
+    Write-Error "[ERROR] BBThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+
     $packagesToGen = @()
     $newPackageOutput = "newPackageOutput.json"
     if ( $serviceType -eq "resource-manager" ) {
