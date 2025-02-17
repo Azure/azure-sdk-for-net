@@ -97,14 +97,14 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="kind"> Type of test. </param>
         /// <param name="requestDataLevel"> Request data collection level for test run. </param>
         /// <param name="debugLogsEnabled"> Enable or disable debug level logging. True if debug logs are enabled for the test run. False otherwise. </param>
-        /// <param name="publicIPDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
+        /// <param name="publicIpDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
         /// <param name="createdByType"> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, string portalUrl, long? duration, double? virtualUserHours, string subnetId, TestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIPDisabled, CreatedByType? createdByType, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestRun(string testRunId, PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, IReadOnlyList<ErrorDetails> errorDetails, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics, LoadTestConfiguration loadTestConfiguration, TestRunArtifacts testArtifacts, PassFailTestResult? testResult, int? virtualUsers, string displayName, string testId, string description, TestRunStatus? status, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, DateTimeOffset? executedDateTime, string portalUrl, long? duration, double? virtualUserHours, string subnetId, TestKind? kind, RequestDataLevel? requestDataLevel, bool? debugLogsEnabled, bool? publicIpDisabled, CreatedByType? createdByType, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TestRunId = testRunId;
             PassFailCriteria = passFailCriteria;
@@ -133,7 +133,7 @@ namespace Azure.Developer.LoadTesting.Models
             Kind = kind;
             RequestDataLevel = requestDataLevel;
             DebugLogsEnabled = debugLogsEnabled;
-            PublicIPDisabled = publicIPDisabled;
+            PublicIpDisabled = publicIpDisabled;
             CreatedByType = createdByType;
             CreatedDateTime = createdDateTime;
             CreatedBy = createdBy;
@@ -211,7 +211,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Enable or disable debug level logging. True if debug logs are enabled for the test run. False otherwise. </summary>
         public bool? DebugLogsEnabled { get; set; }
         /// <summary> Inject load test engines without deploying public IP for outbound access. </summary>
-        public bool? PublicIPDisabled { get; }
+        public bool? PublicIpDisabled { get; }
         /// <summary> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </summary>
         public CreatedByType? CreatedByType { get; set; }
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>

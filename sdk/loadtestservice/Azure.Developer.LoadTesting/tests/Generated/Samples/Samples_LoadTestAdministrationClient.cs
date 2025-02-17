@@ -398,7 +398,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response<TestServerMetricConfig> response = client.GetServerMetricsConfig("12345678-1234-1234-1234-123456789012");
+            Response<TestServerMetricsConfiguration> response = client.GetServerMetricsConfig("12345678-1234-1234-1234-123456789012");
         }
 
         [Test]
@@ -409,7 +409,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            Response<TestServerMetricConfig> response = await client.GetServerMetricsConfigAsync("12345678-1234-1234-1234-123456789012");
+            Response<TestServerMetricsConfiguration> response = await client.GetServerMetricsConfigAsync("12345678-1234-1234-1234-123456789012");
         }
 
         [Test]

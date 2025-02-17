@@ -520,13 +520,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TestRunServerMetricConfig>> GetServerMetricsConfigAsync(string testRunId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TestRunServerMetricsConfiguration>> GetServerMetricsConfigAsync(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetServerMetricsConfigAsync(testRunId, context).ConfigureAwait(false);
-            return Response.FromValue(TestRunServerMetricConfig.FromResponse(response), response);
+            return Response.FromValue(TestRunServerMetricsConfiguration.FromResponse(response), response);
         }
 
         /// <summary> Get associated server metrics configuration for the given test run. </summary>
@@ -538,13 +538,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,CancellationToken)']/*" />
-        public virtual Response<TestRunServerMetricConfig> GetServerMetricsConfig(string testRunId, CancellationToken cancellationToken = default)
+        public virtual Response<TestRunServerMetricsConfiguration> GetServerMetricsConfig(string testRunId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetServerMetricsConfig(testRunId, context);
-            return Response.FromValue(TestRunServerMetricConfig.FromResponse(response), response);
+            return Response.FromValue(TestRunServerMetricsConfiguration.FromResponse(response), response);
         }
 
         /// <summary>

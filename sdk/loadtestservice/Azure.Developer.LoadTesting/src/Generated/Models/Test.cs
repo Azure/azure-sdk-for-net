@@ -73,7 +73,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="displayName"> Display name of a test. </param>
         /// <param name="subnetId"> Subnet ID on which the load test instances should run. </param>
         /// <param name="kind"> Kind of test. </param>
-        /// <param name="publicIPDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
+        /// <param name="publicIpDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
         /// <param name="keyvaultReferenceIdentityType"> Type of the managed identity referencing the Key vault. </param>
         /// <param name="keyvaultReferenceIdentityId"> Resource Id of the managed identity referencing the Key vault. </param>
         /// <param name="metricsReferenceIdentityType"> Type of the managed identity referencing the metrics. </param>
@@ -85,7 +85,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Test(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, TestKind? kind, bool? publicIPDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, ManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, ManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Test(PassFailCriteria passFailCriteria, AutoStopCriteria autoStopCriteria, IDictionary<string, Secret> secrets, CertificateMetadata certificate, IDictionary<string, string> environmentVariables, LoadTestConfiguration loadTestConfiguration, string baselineTestRunId, TestInputArtifacts inputArtifacts, string testId, string description, string displayName, string subnetId, TestKind? kind, bool? publicIpDisabled, string keyvaultReferenceIdentityType, string keyvaultReferenceIdentityId, ManagedIdentityType? metricsReferenceIdentityType, string metricsReferenceIdentityId, ManagedIdentityType? engineBuiltInIdentityType, IList<string> engineBuiltInIdentityIds, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PassFailCriteria = passFailCriteria;
             AutoStopCriteria = autoStopCriteria;
@@ -100,7 +100,7 @@ namespace Azure.Developer.LoadTesting.Models
             DisplayName = displayName;
             SubnetId = subnetId;
             Kind = kind;
-            PublicIPDisabled = publicIPDisabled;
+            PublicIpDisabled = publicIpDisabled;
             KeyvaultReferenceIdentityType = keyvaultReferenceIdentityType;
             KeyvaultReferenceIdentityId = keyvaultReferenceIdentityId;
             MetricsReferenceIdentityType = metricsReferenceIdentityType;
@@ -147,7 +147,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Kind of test. </summary>
         public TestKind? Kind { get; set; }
         /// <summary> Inject load test engines without deploying public IP for outbound access. </summary>
-        public bool? PublicIPDisabled { get; set; }
+        public bool? PublicIpDisabled { get; set; }
         /// <summary> Type of the managed identity referencing the Key vault. </summary>
         public string KeyvaultReferenceIdentityType { get; set; }
         /// <summary> Resource Id of the managed identity referencing the Key vault. </summary>

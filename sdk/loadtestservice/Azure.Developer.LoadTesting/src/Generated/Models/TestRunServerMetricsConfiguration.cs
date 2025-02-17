@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Test run server metrics configuration. </summary>
-    public partial class TestRunServerMetricConfig
+    public partial class TestRunServerMetricsConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TestRunServerMetricConfig"/>. </summary>
-        public TestRunServerMetricConfig()
+        /// <summary> Initializes a new instance of <see cref="TestRunServerMetricsConfiguration"/>. </summary>
+        public TestRunServerMetricsConfiguration()
         {
             Metrics = new ChangeTrackingDictionary<string, ResourceMetric>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestRunServerMetricConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestRunServerMetricsConfiguration"/>. </summary>
         /// <param name="testRunId"> Test run identifier. </param>
         /// <param name="metrics">
         /// Azure resource metrics collection {metric id : metrics object} (Refer :
@@ -63,7 +63,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunServerMetricConfig(string testRunId, IDictionary<string, ResourceMetric> metrics, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestRunServerMetricsConfiguration(string testRunId, IDictionary<string, ResourceMetric> metrics, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TestRunId = testRunId;
             Metrics = metrics;

@@ -111,10 +111,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(PublicIPDisabled))
+            if (Optional.IsDefined(PublicIpDisabled))
             {
                 writer.WritePropertyName("publicIPDisabled"u8);
-                writer.WriteBooleanValue(PublicIPDisabled.Value);
+                writer.WriteBooleanValue(PublicIpDisabled.Value);
             }
             if (Optional.IsDefined(KeyvaultReferenceIdentityType))
             {

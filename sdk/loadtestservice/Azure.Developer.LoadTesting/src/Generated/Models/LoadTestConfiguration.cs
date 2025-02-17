@@ -53,7 +53,7 @@ namespace Azure.Developer.LoadTesting.Models
 
         /// <summary> Initializes a new instance of <see cref="LoadTestConfiguration"/>. </summary>
         /// <param name="engineInstances"> The number of engine instances to execute load test. Supported values are in range of 1-400. Required for creating a new test. </param>
-        /// <param name="splitAllCSVs">
+        /// <param name="splitAllCsvs">
         /// If false, Azure Load Testing copies and processes your input files unmodified
         /// across all test engine instances. If true, Azure Load Testing splits the CSV
         /// input data evenly across all engine instances. If you provide multiple CSV
@@ -66,10 +66,10 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="optionalLoadTestConfig"> Configuration for quick load test. </param>
         /// <param name="regionalLoadTestConfig"> Region distribution configuration for the load test. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCSVs, bool? quickStartTest, OptionalLoadTestConfig optionalLoadTestConfig, IList<RegionalConfiguration> regionalLoadTestConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadTestConfiguration(int? engineInstances, bool? splitAllCsvs, bool? quickStartTest, OptionalLoadTestConfig optionalLoadTestConfig, IList<RegionalConfiguration> regionalLoadTestConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EngineInstances = engineInstances;
-            SplitAllCSVs = splitAllCSVs;
+            SplitAllCsvs = splitAllCsvs;
             QuickStartTest = quickStartTest;
             OptionalLoadTestConfig = optionalLoadTestConfig;
             RegionalLoadTestConfig = regionalLoadTestConfig;
@@ -84,7 +84,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// input data evenly across all engine instances. If you provide multiple CSV
         /// files, each file will be split evenly.
         /// </summary>
-        public bool? SplitAllCSVs { get; set; }
+        public bool? SplitAllCsvs { get; set; }
         /// <summary>
         /// If true, optionalLoadTestConfig is required and JMX script for the load test is
         /// not required to upload.

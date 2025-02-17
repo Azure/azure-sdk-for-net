@@ -54,43 +54,43 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="transaction"> Transaction name. </param>
         /// <param name="sampleCount"> Sampler count. </param>
         /// <param name="errorCount"> Error count. </param>
-        /// <param name="errorPct"> Error percentage. </param>
-        /// <param name="meanResTime"> Mean response time. </param>
-        /// <param name="medianResTime"> Median response time. </param>
-        /// <param name="maxResTime"> Max response time. </param>
-        /// <param name="minResTime"> Minimum response time. </param>
-        /// <param name="pct1ResTime"> 90 percentile response time. </param>
-        /// <param name="pct2ResTime"> 95 percentile response time. </param>
-        /// <param name="pct3ResTime"> 99 percentile response time. </param>
-        /// <param name="pct75ResTime"> 75 percentile response time. </param>
-        /// <param name="pct96ResTime"> 96 percentile response time. </param>
-        /// <param name="pct97ResTime"> 97 percentile response time. </param>
-        /// <param name="pct98ResTime"> 98 percentile response time. </param>
-        /// <param name="pct999ResTime"> 99.9 percentile response time. </param>
-        /// <param name="pct9999ResTime"> 99.99 percentile response time. </param>
+        /// <param name="errorPercentage"> Error percentage. </param>
+        /// <param name="meanResponseTime"> Mean response time. </param>
+        /// <param name="medianResponseTime"> Median response time. </param>
+        /// <param name="maxResponseTime"> Max response time. </param>
+        /// <param name="minResponseTime"> Minimum response time. </param>
+        /// <param name="percentile90ResponseTime"> 90 percentile response time. </param>
+        /// <param name="percentile95ResponseTime"> 95 percentile response time. </param>
+        /// <param name="percentile99ResponseTime"> 99 percentile response time. </param>
+        /// <param name="percentile75ResponseTime"> 75 percentile response time. </param>
+        /// <param name="percentile96ResponseTime"> 96 percentile response time. </param>
+        /// <param name="percentile97ResponseTime"> 97 percentile response time. </param>
+        /// <param name="percentile98ResponseTime"> 98 percentile response time. </param>
+        /// <param name="percentile999ResponseTime"> 99.9 percentile response time. </param>
+        /// <param name="percentile9999ResponseTime"> 99.99 percentile response time. </param>
         /// <param name="throughput"> Throughput. </param>
         /// <param name="receivedKBytesPerSec"> Received network bytes. </param>
         /// <param name="sentKBytesPerSec"> Send network bytes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestRunStatistics(string transaction, double? sampleCount, double? errorCount, double? errorPct, double? meanResTime, double? medianResTime, double? maxResTime, double? minResTime, double? pct1ResTime, double? pct2ResTime, double? pct3ResTime, double? pct75ResTime, double? pct96ResTime, double? pct97ResTime, double? pct98ResTime, double? pct999ResTime, double? pct9999ResTime, double? throughput, double? receivedKBytesPerSec, double? sentKBytesPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestRunStatistics(string transaction, double? sampleCount, double? errorCount, double? errorPercentage, double? meanResponseTime, double? medianResponseTime, double? maxResponseTime, double? minResponseTime, double? percentile90ResponseTime, double? percentile95ResponseTime, double? percentile99ResponseTime, double? percentile75ResponseTime, double? percentile96ResponseTime, double? percentile97ResponseTime, double? percentile98ResponseTime, double? percentile999ResponseTime, double? percentile9999ResponseTime, double? throughput, double? receivedKBytesPerSec, double? sentKBytesPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Transaction = transaction;
             SampleCount = sampleCount;
             ErrorCount = errorCount;
-            ErrorPct = errorPct;
-            MeanResTime = meanResTime;
-            MedianResTime = medianResTime;
-            MaxResTime = maxResTime;
-            MinResTime = minResTime;
-            Pct1ResTime = pct1ResTime;
-            Pct2ResTime = pct2ResTime;
-            Pct3ResTime = pct3ResTime;
-            Pct75ResTime = pct75ResTime;
-            Pct96ResTime = pct96ResTime;
-            Pct97ResTime = pct97ResTime;
-            Pct98ResTime = pct98ResTime;
-            Pct999ResTime = pct999ResTime;
-            Pct9999ResTime = pct9999ResTime;
+            ErrorPercentage = errorPercentage;
+            MeanResponseTime = meanResponseTime;
+            MedianResponseTime = medianResponseTime;
+            MaxResponseTime = maxResponseTime;
+            MinResponseTime = minResponseTime;
+            Percentile90ResponseTime = percentile90ResponseTime;
+            Percentile95ResponseTime = percentile95ResponseTime;
+            Percentile99ResponseTime = percentile99ResponseTime;
+            Percentile75ResponseTime = percentile75ResponseTime;
+            Percentile96ResponseTime = percentile96ResponseTime;
+            Percentile97ResponseTime = percentile97ResponseTime;
+            Percentile98ResponseTime = percentile98ResponseTime;
+            Percentile999ResponseTime = percentile999ResponseTime;
+            Percentile9999ResponseTime = percentile9999ResponseTime;
             Throughput = throughput;
             ReceivedKBytesPerSec = receivedKBytesPerSec;
             SentKBytesPerSec = sentKBytesPerSec;
@@ -104,33 +104,33 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Error count. </summary>
         public double? ErrorCount { get; }
         /// <summary> Error percentage. </summary>
-        public double? ErrorPct { get; }
+        public double? ErrorPercentage { get; }
         /// <summary> Mean response time. </summary>
-        public double? MeanResTime { get; }
+        public double? MeanResponseTime { get; }
         /// <summary> Median response time. </summary>
-        public double? MedianResTime { get; }
+        public double? MedianResponseTime { get; }
         /// <summary> Max response time. </summary>
-        public double? MaxResTime { get; }
+        public double? MaxResponseTime { get; }
         /// <summary> Minimum response time. </summary>
-        public double? MinResTime { get; }
+        public double? MinResponseTime { get; }
         /// <summary> 90 percentile response time. </summary>
-        public double? Pct1ResTime { get; }
+        public double? Percentile90ResponseTime { get; }
         /// <summary> 95 percentile response time. </summary>
-        public double? Pct2ResTime { get; }
+        public double? Percentile95ResponseTime { get; }
         /// <summary> 99 percentile response time. </summary>
-        public double? Pct3ResTime { get; }
+        public double? Percentile99ResponseTime { get; }
         /// <summary> 75 percentile response time. </summary>
-        public double? Pct75ResTime { get; }
+        public double? Percentile75ResponseTime { get; }
         /// <summary> 96 percentile response time. </summary>
-        public double? Pct96ResTime { get; }
+        public double? Percentile96ResponseTime { get; }
         /// <summary> 97 percentile response time. </summary>
-        public double? Pct97ResTime { get; }
+        public double? Percentile97ResponseTime { get; }
         /// <summary> 98 percentile response time. </summary>
-        public double? Pct98ResTime { get; }
+        public double? Percentile98ResponseTime { get; }
         /// <summary> 99.9 percentile response time. </summary>
-        public double? Pct999ResTime { get; }
+        public double? Percentile999ResponseTime { get; }
         /// <summary> 99.99 percentile response time. </summary>
-        public double? Pct9999ResTime { get; }
+        public double? Percentile9999ResponseTime { get; }
         /// <summary> Throughput. </summary>
         public double? Throughput { get; }
         /// <summary> Received network bytes. </summary>

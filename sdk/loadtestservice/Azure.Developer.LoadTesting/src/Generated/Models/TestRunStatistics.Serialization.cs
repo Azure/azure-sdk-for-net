@@ -49,75 +49,75 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("errorCount"u8);
                 writer.WriteNumberValue(ErrorCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorPct))
+            if (options.Format != "W" && Optional.IsDefined(ErrorPercentage))
             {
                 writer.WritePropertyName("errorPct"u8);
-                writer.WriteNumberValue(ErrorPct.Value);
+                writer.WriteNumberValue(ErrorPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeanResTime))
+            if (options.Format != "W" && Optional.IsDefined(MeanResponseTime))
             {
                 writer.WritePropertyName("meanResTime"u8);
-                writer.WriteNumberValue(MeanResTime.Value);
+                writer.WriteNumberValue(MeanResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MedianResTime))
+            if (options.Format != "W" && Optional.IsDefined(MedianResponseTime))
             {
                 writer.WritePropertyName("medianResTime"u8);
-                writer.WriteNumberValue(MedianResTime.Value);
+                writer.WriteNumberValue(MedianResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxResTime))
+            if (options.Format != "W" && Optional.IsDefined(MaxResponseTime))
             {
                 writer.WritePropertyName("maxResTime"u8);
-                writer.WriteNumberValue(MaxResTime.Value);
+                writer.WriteNumberValue(MaxResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinResTime))
+            if (options.Format != "W" && Optional.IsDefined(MinResponseTime))
             {
                 writer.WritePropertyName("minResTime"u8);
-                writer.WriteNumberValue(MinResTime.Value);
+                writer.WriteNumberValue(MinResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct1ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile90ResponseTime))
             {
                 writer.WritePropertyName("pct1ResTime"u8);
-                writer.WriteNumberValue(Pct1ResTime.Value);
+                writer.WriteNumberValue(Percentile90ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct2ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile95ResponseTime))
             {
                 writer.WritePropertyName("pct2ResTime"u8);
-                writer.WriteNumberValue(Pct2ResTime.Value);
+                writer.WriteNumberValue(Percentile95ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct3ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile99ResponseTime))
             {
                 writer.WritePropertyName("pct3ResTime"u8);
-                writer.WriteNumberValue(Pct3ResTime.Value);
+                writer.WriteNumberValue(Percentile99ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct75ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile75ResponseTime))
             {
                 writer.WritePropertyName("pct75ResTime"u8);
-                writer.WriteNumberValue(Pct75ResTime.Value);
+                writer.WriteNumberValue(Percentile75ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct96ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile96ResponseTime))
             {
                 writer.WritePropertyName("pct96ResTime"u8);
-                writer.WriteNumberValue(Pct96ResTime.Value);
+                writer.WriteNumberValue(Percentile96ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct97ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile97ResponseTime))
             {
                 writer.WritePropertyName("pct97ResTime"u8);
-                writer.WriteNumberValue(Pct97ResTime.Value);
+                writer.WriteNumberValue(Percentile97ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct98ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile98ResponseTime))
             {
                 writer.WritePropertyName("pct98ResTime"u8);
-                writer.WriteNumberValue(Pct98ResTime.Value);
+                writer.WriteNumberValue(Percentile98ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct999ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile999ResponseTime))
             {
                 writer.WritePropertyName("pct999ResTime"u8);
-                writer.WriteNumberValue(Pct999ResTime.Value);
+                writer.WriteNumberValue(Percentile999ResponseTime.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Pct9999ResTime))
+            if (options.Format != "W" && Optional.IsDefined(Percentile9999ResponseTime))
             {
                 writer.WritePropertyName("pct9999ResTime"u8);
-                writer.WriteNumberValue(Pct9999ResTime.Value);
+                writer.WriteNumberValue(Percentile9999ResponseTime.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Throughput))
             {

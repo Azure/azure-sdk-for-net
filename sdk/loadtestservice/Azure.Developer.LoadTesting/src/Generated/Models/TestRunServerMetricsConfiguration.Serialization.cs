@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class TestServerMetricConfig : IUtf8JsonSerializable, IJsonModel<TestServerMetricConfig>
+    public partial class TestRunServerMetricsConfiguration : IUtf8JsonSerializable, IJsonModel<TestRunServerMetricsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestServerMetricConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestRunServerMetricsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TestServerMetricConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TestRunServerMetricsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,25 +28,28 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestServerMetricConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestRunServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestServerMetricConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TestRunServerMetricsConfiguration)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(TestId))
+            if (options.Format != "W" && Optional.IsDefined(TestRunId))
             {
-                writer.WritePropertyName("testId"u8);
-                writer.WriteStringValue(TestId);
+                writer.WritePropertyName("testRunId"u8);
+                writer.WriteStringValue(TestRunId);
             }
-            writer.WritePropertyName("metrics"u8);
-            writer.WriteStartObject();
-            foreach (var item in Metrics)
+            if (Optional.IsCollectionDefined(Metrics))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value, options);
+                writer.WritePropertyName("metrics"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metrics)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
             {
                 writer.WritePropertyName("createdDateTime"u8);
@@ -84,19 +87,19 @@ namespace Azure.Developer.LoadTesting.Models
             }
         }
 
-        TestServerMetricConfig IJsonModel<TestServerMetricConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TestRunServerMetricsConfiguration IJsonModel<TestRunServerMetricsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestServerMetricConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestRunServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestServerMetricConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TestRunServerMetricsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTestServerMetricConfig(document.RootElement, options);
+            return DeserializeTestRunServerMetricsConfiguration(document.RootElement, options);
         }
 
-        internal static TestServerMetricConfig DeserializeTestServerMetricConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TestRunServerMetricsConfiguration DeserializeTestRunServerMetricsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,7 +107,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            string testId = default;
+            string testRunId = default;
             IDictionary<string, ResourceMetric> metrics = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
@@ -114,13 +117,17 @@ namespace Azure.Developer.LoadTesting.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("testId"u8))
+                if (property.NameEquals("testRunId"u8))
                 {
-                    testId = property.Value.GetString();
+                    testRunId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("metrics"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, ResourceMetric> dictionary = new Dictionary<string, ResourceMetric>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -163,9 +170,9 @@ namespace Azure.Developer.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TestServerMetricConfig(
-                testId,
-                metrics,
+            return new TestRunServerMetricsConfiguration(
+                testRunId,
+                metrics ?? new ChangeTrackingDictionary<string, ResourceMetric>(),
                 createdDateTime,
                 createdBy,
                 lastModifiedDateTime,
@@ -173,43 +180,43 @@ namespace Azure.Developer.LoadTesting.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TestServerMetricConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TestRunServerMetricsConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestServerMetricConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestRunServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TestServerMetricConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestRunServerMetricsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TestServerMetricConfig IPersistableModel<TestServerMetricConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TestRunServerMetricsConfiguration IPersistableModel<TestRunServerMetricsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TestServerMetricConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TestRunServerMetricsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTestServerMetricConfig(document.RootElement, options);
+                        return DeserializeTestRunServerMetricsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestServerMetricConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TestRunServerMetricsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TestServerMetricConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TestRunServerMetricsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static TestServerMetricConfig FromResponse(Response response)
+        internal static TestRunServerMetricsConfiguration FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeTestServerMetricConfig(document.RootElement);
+            return DeserializeTestRunServerMetricsConfiguration(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

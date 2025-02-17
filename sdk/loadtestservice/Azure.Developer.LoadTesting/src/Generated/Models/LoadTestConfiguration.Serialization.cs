@@ -39,10 +39,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("engineInstances"u8);
                 writer.WriteNumberValue(EngineInstances.Value);
             }
-            if (Optional.IsDefined(SplitAllCSVs))
+            if (Optional.IsDefined(SplitAllCsvs))
             {
                 writer.WritePropertyName("splitAllCSVs"u8);
-                writer.WriteBooleanValue(SplitAllCSVs.Value);
+                writer.WriteBooleanValue(SplitAllCsvs.Value);
             }
             if (Optional.IsDefined(QuickStartTest))
             {

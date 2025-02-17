@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Aggregation type. </summary>
-    public readonly partial struct AggregationType : IEquatable<AggregationType>
+    public readonly partial struct Aggregation : IEquatable<Aggregation>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="AggregationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Aggregation"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AggregationType(string value)
+        public Aggregation(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -37,43 +37,43 @@ namespace Azure.Developer.LoadTesting.Models
         private const string Percentile9999Value = "Percentile9999";
 
         /// <summary> Average value. </summary>
-        public static AggregationType Average { get; } = new AggregationType(AverageValue);
+        public static Aggregation Average { get; } = new Aggregation(AverageValue);
         /// <summary> Total count. </summary>
-        public static AggregationType Count { get; } = new AggregationType(CountValue);
+        public static Aggregation Count { get; } = new Aggregation(CountValue);
         /// <summary> Aggregation will be average in this case. </summary>
-        public static AggregationType None { get; } = new AggregationType(NoneValue);
+        public static Aggregation None { get; } = new Aggregation(NoneValue);
         /// <summary> Total sum. </summary>
-        public static AggregationType Total { get; } = new AggregationType(TotalValue);
+        public static Aggregation Total { get; } = new Aggregation(TotalValue);
         /// <summary> 75th percentile. </summary>
-        public static AggregationType Percentile75 { get; } = new AggregationType(Percentile75Value);
+        public static Aggregation Percentile75 { get; } = new Aggregation(Percentile75Value);
         /// <summary> 90th percentile. </summary>
-        public static AggregationType Percentile90 { get; } = new AggregationType(Percentile90Value);
+        public static Aggregation Percentile90 { get; } = new Aggregation(Percentile90Value);
         /// <summary> 95th percentile. </summary>
-        public static AggregationType Percentile95 { get; } = new AggregationType(Percentile95Value);
+        public static Aggregation Percentile95 { get; } = new Aggregation(Percentile95Value);
         /// <summary> 96th percentile. </summary>
-        public static AggregationType Percentile96 { get; } = new AggregationType(Percentile96Value);
+        public static Aggregation Percentile96 { get; } = new Aggregation(Percentile96Value);
         /// <summary> 97th percentile. </summary>
-        public static AggregationType Percentile97 { get; } = new AggregationType(Percentile97Value);
+        public static Aggregation Percentile97 { get; } = new Aggregation(Percentile97Value);
         /// <summary> 98th percentile. </summary>
-        public static AggregationType Percentile98 { get; } = new AggregationType(Percentile98Value);
+        public static Aggregation Percentile98 { get; } = new Aggregation(Percentile98Value);
         /// <summary> 99th percentile. </summary>
-        public static AggregationType Percentile99 { get; } = new AggregationType(Percentile99Value);
+        public static Aggregation Percentile99 { get; } = new Aggregation(Percentile99Value);
         /// <summary> 99.9th percentile. </summary>
-        public static AggregationType Percentile999 { get; } = new AggregationType(Percentile999Value);
+        public static Aggregation Percentile999 { get; } = new Aggregation(Percentile999Value);
         /// <summary> 99.99th percentile. </summary>
-        public static AggregationType Percentile9999 { get; } = new AggregationType(Percentile9999Value);
-        /// <summary> Determines if two <see cref="AggregationType"/> values are the same. </summary>
-        public static bool operator ==(AggregationType left, AggregationType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="AggregationType"/> values are not the same. </summary>
-        public static bool operator !=(AggregationType left, AggregationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AggregationType"/>. </summary>
-        public static implicit operator AggregationType(string value) => new AggregationType(value);
+        public static Aggregation Percentile9999 { get; } = new Aggregation(Percentile9999Value);
+        /// <summary> Determines if two <see cref="Aggregation"/> values are the same. </summary>
+        public static bool operator ==(Aggregation left, Aggregation right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="Aggregation"/> values are not the same. </summary>
+        public static bool operator !=(Aggregation left, Aggregation right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="Aggregation"/>. </summary>
+        public static implicit operator Aggregation(string value) => new Aggregation(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AggregationType other && Equals(other);
+        public override bool Equals(object obj) => obj is Aggregation other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(AggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(Aggregation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

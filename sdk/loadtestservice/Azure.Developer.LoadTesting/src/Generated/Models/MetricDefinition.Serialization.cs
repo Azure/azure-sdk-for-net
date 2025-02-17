@@ -130,7 +130,7 @@ namespace Azure.Developer.LoadTesting.Models
             string description = default;
             string name = default;
             string @namespace = default;
-            AggregationType? primaryAggregationType = default;
+            Aggregation? primaryAggregationType = default;
             IReadOnlyList<string> supportedAggregationTypes = default;
             MetricUnit? unit = default;
             IReadOnlyList<MetricAvailability> metricAvailabilities = default;
@@ -173,7 +173,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    primaryAggregationType = new AggregationType(property.Value.GetString());
+                    primaryAggregationType = new Aggregation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportedAggregationTypes"u8))

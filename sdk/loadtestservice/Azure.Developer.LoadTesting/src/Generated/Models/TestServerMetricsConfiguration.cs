@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Test server metrics configuration. </summary>
-    public partial class TestServerMetricConfig
+    public partial class TestServerMetricsConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TestServerMetricConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/>. </summary>
         /// <param name="metrics">
         /// Azure resource metrics collection {metric id : metrics object} (Refer :
         /// https://learn.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition
         /// for metric id).
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
-        public TestServerMetricConfig(IDictionary<string, ResourceMetric> metrics)
+        public TestServerMetricsConfiguration(IDictionary<string, ResourceMetric> metrics)
         {
             Argument.AssertNotNull(metrics, nameof(metrics));
 
             Metrics = metrics;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestServerMetricConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/>. </summary>
         /// <param name="testId"> Test identifier. </param>
         /// <param name="metrics">
         /// Azure resource metrics collection {metric id : metrics object} (Refer :
@@ -71,7 +71,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestServerMetricConfig(string testId, IDictionary<string, ResourceMetric> metrics, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestServerMetricsConfiguration(string testId, IDictionary<string, ResourceMetric> metrics, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TestId = testId;
             Metrics = metrics;
@@ -82,8 +82,8 @@ namespace Azure.Developer.LoadTesting.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TestServerMetricConfig"/> for deserialization. </summary>
-        internal TestServerMetricConfig()
+        /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/> for deserialization. </summary>
+        internal TestServerMetricsConfiguration()
         {
         }
 

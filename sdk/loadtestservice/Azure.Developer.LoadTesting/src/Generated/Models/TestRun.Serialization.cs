@@ -198,10 +198,10 @@ namespace Azure.Developer.LoadTesting.Models
                 writer.WritePropertyName("debugLogsEnabled"u8);
                 writer.WriteBooleanValue(DebugLogsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPDisabled))
+            if (options.Format != "W" && Optional.IsDefined(PublicIpDisabled))
             {
                 writer.WritePropertyName("publicIPDisabled"u8);
-                writer.WriteBooleanValue(PublicIPDisabled.Value);
+                writer.WriteBooleanValue(PublicIpDisabled.Value);
             }
             if (Optional.IsDefined(CreatedByType))
             {

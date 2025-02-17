@@ -66,7 +66,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// frequency).
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetricDefinition(IReadOnlyList<NameAndDescription> dimensions, string description, string name, string @namespace, AggregationType? primaryAggregationType, IReadOnlyList<string> supportedAggregationTypes, MetricUnit? unit, IReadOnlyList<MetricAvailability> metricAvailabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetricDefinition(IReadOnlyList<NameAndDescription> dimensions, string description, string name, string @namespace, Aggregation? primaryAggregationType, IReadOnlyList<string> supportedAggregationTypes, MetricUnit? unit, IReadOnlyList<MetricAvailability> metricAvailabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Dimensions = dimensions;
             Description = description;
@@ -88,7 +88,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> The namespace the metric belongs to. </summary>
         public string Namespace { get; }
         /// <summary> The primary aggregation type value defining how to use the values for display. </summary>
-        public AggregationType? PrimaryAggregationType { get; }
+        public Aggregation? PrimaryAggregationType { get; }
         /// <summary> The collection of what all aggregation types are supported. </summary>
         public IReadOnlyList<string> SupportedAggregationTypes { get; }
         /// <summary> The unit of the metric. </summary>

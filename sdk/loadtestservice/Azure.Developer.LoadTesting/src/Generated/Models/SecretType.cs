@@ -22,11 +22,11 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AKVSECRETURIValue = "AKV_SECRET_URI";
+        private const string KeyVaultSecretUriValue = "AKV_SECRET_URI";
         private const string SECRETVALUEValue = "SECRET_VALUE";
 
         /// <summary> If the secret is stored in an Azure Key Vault. </summary>
-        public static SecretType AKVSECRETURI { get; } = new SecretType(AKVSECRETURIValue);
+        public static SecretType KeyVaultSecretUri { get; } = new SecretType(KeyVaultSecretUriValue);
         /// <summary> If the secret value provided as plain text. </summary>
         public static SecretType SECRETVALUE { get; } = new SecretType(SECRETVALUEValue);
         /// <summary> Determines if two <see cref="SecretType"/> values are the same. </summary>

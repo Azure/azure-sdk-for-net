@@ -428,13 +428,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfigAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<TestServerMetricConfig>> GetServerMetricsConfigAsync(string testId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TestServerMetricsConfiguration>> GetServerMetricsConfigAsync(string testId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetServerMetricsConfigAsync(testId, context).ConfigureAwait(false);
-            return Response.FromValue(TestServerMetricConfig.FromResponse(response), response);
+            return Response.FromValue(TestServerMetricsConfiguration.FromResponse(response), response);
         }
 
         /// <summary> List server metrics configuration for the given test. </summary>
@@ -446,13 +446,13 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentNullException"> <paramref name="testId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="testId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetServerMetricsConfig(string,CancellationToken)']/*" />
-        public virtual Response<TestServerMetricConfig> GetServerMetricsConfig(string testId, CancellationToken cancellationToken = default)
+        public virtual Response<TestServerMetricsConfiguration> GetServerMetricsConfig(string testId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetServerMetricsConfig(testId, context);
-            return Response.FromValue(TestServerMetricConfig.FromResponse(response), response);
+            return Response.FromValue(TestServerMetricsConfiguration.FromResponse(response), response);
         }
 
         /// <summary>

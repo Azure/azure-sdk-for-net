@@ -35,7 +35,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="displayName"> Display name of a test. </param>
         /// <param name="subnetId"> Subnet ID on which the load test instances should run. </param>
         /// <param name="kind"> Kind of test. </param>
-        /// <param name="publicIPDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
+        /// <param name="publicIpDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
         /// <param name="keyvaultReferenceIdentityType"> Type of the managed identity referencing the Key vault. </param>
         /// <param name="keyvaultReferenceIdentityId"> Resource Id of the managed identity referencing the Key vault. </param>
         /// <param name="metricsReferenceIdentityType"> Type of the managed identity referencing the metrics. </param>
@@ -47,7 +47,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.Test"/> instance for mocking. </returns>
-        public static Test Test(PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, TestKind? kind = null, bool? publicIPDisabled = null, string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, ManagedIdentityType? metricsReferenceIdentityType = null, string metricsReferenceIdentityId = null, ManagedIdentityType? engineBuiltInIdentityType = null, IEnumerable<string> engineBuiltInIdentityIds = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static Test Test(PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, LoadTestConfiguration loadTestConfiguration = null, string baselineTestRunId = null, TestInputArtifacts inputArtifacts = null, string testId = null, string description = null, string displayName = null, string subnetId = null, TestKind? kind = null, bool? publicIpDisabled = null, string keyvaultReferenceIdentityType = null, string keyvaultReferenceIdentityId = null, ManagedIdentityType? metricsReferenceIdentityType = null, string metricsReferenceIdentityId = null, ManagedIdentityType? engineBuiltInIdentityType = null, IEnumerable<string> engineBuiltInIdentityIds = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             secrets ??= new Dictionary<string, Secret>();
             environmentVariables ??= new Dictionary<string, string>();
@@ -67,7 +67,7 @@ namespace Azure.Developer.LoadTesting.Models
                 displayName,
                 subnetId,
                 kind,
-                publicIPDisabled,
+                publicIpDisabled,
                 keyvaultReferenceIdentityType,
                 keyvaultReferenceIdentityId,
                 metricsReferenceIdentityType,
@@ -229,7 +229,7 @@ namespace Azure.Developer.LoadTesting.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TestServerMetricConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TestServerMetricsConfiguration"/>. </summary>
         /// <param name="testId"> Test identifier. </param>
         /// <param name="metrics">
         /// Azure resource metrics collection {metric id : metrics object} (Refer :
@@ -240,12 +240,12 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="Models.TestServerMetricConfig"/> instance for mocking. </returns>
-        public static TestServerMetricConfig TestServerMetricConfig(string testId = null, IDictionary<string, ResourceMetric> metrics = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        /// <returns> A new <see cref="Models.TestServerMetricsConfiguration"/> instance for mocking. </returns>
+        public static TestServerMetricsConfiguration TestServerMetricsConfiguration(string testId = null, IDictionary<string, ResourceMetric> metrics = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             metrics ??= new Dictionary<string, ResourceMetric>();
 
-            return new TestServerMetricConfig(
+            return new TestServerMetricsConfiguration(
                 testId,
                 metrics,
                 createdDateTime,
@@ -353,14 +353,14 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="kind"> Type of test. </param>
         /// <param name="requestDataLevel"> Request data collection level for test run. </param>
         /// <param name="debugLogsEnabled"> Enable or disable debug level logging. True if debug logs are enabled for the test run. False otherwise. </param>
-        /// <param name="publicIPDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
+        /// <param name="publicIpDisabled"> Inject load test engines without deploying public IP for outbound access. </param>
         /// <param name="createdByType"> The type of the entity that created the test run. (E.x. User, ScheduleTrigger, etc). </param>
         /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestRun"/> instance for mocking. </returns>
-        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, string portalUrl = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIPDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestRun TestRun(string testRunId = null, PassFailCriteria passFailCriteria = null, AutoStopCriteria autoStopCriteria = null, IDictionary<string, Secret> secrets = null, CertificateMetadata certificate = null, IDictionary<string, string> environmentVariables = null, IEnumerable<ErrorDetails> errorDetails = null, IReadOnlyDictionary<string, TestRunStatistics> testRunStatistics = null, IReadOnlyDictionary<string, TestRunStatistics> regionalStatistics = null, LoadTestConfiguration loadTestConfiguration = null, TestRunArtifacts testArtifacts = null, PassFailTestResult? testResult = null, int? virtualUsers = null, string displayName = null, string testId = null, string description = null, TestRunStatus? status = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, DateTimeOffset? executedDateTime = null, string portalUrl = null, long? duration = null, double? virtualUserHours = null, string subnetId = null, TestKind? kind = null, RequestDataLevel? requestDataLevel = null, bool? debugLogsEnabled = null, bool? publicIpDisabled = null, CreatedByType? createdByType = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             secrets ??= new Dictionary<string, Secret>();
             environmentVariables ??= new Dictionary<string, string>();
@@ -396,7 +396,7 @@ namespace Azure.Developer.LoadTesting.Models
                 kind,
                 requestDataLevel,
                 debugLogsEnabled,
-                publicIPDisabled,
+                publicIpDisabled,
                 createdByType,
                 createdDateTime,
                 createdBy,
@@ -417,44 +417,44 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="transaction"> Transaction name. </param>
         /// <param name="sampleCount"> Sampler count. </param>
         /// <param name="errorCount"> Error count. </param>
-        /// <param name="errorPct"> Error percentage. </param>
-        /// <param name="meanResTime"> Mean response time. </param>
-        /// <param name="medianResTime"> Median response time. </param>
-        /// <param name="maxResTime"> Max response time. </param>
-        /// <param name="minResTime"> Minimum response time. </param>
-        /// <param name="pct1ResTime"> 90 percentile response time. </param>
-        /// <param name="pct2ResTime"> 95 percentile response time. </param>
-        /// <param name="pct3ResTime"> 99 percentile response time. </param>
-        /// <param name="pct75ResTime"> 75 percentile response time. </param>
-        /// <param name="pct96ResTime"> 96 percentile response time. </param>
-        /// <param name="pct97ResTime"> 97 percentile response time. </param>
-        /// <param name="pct98ResTime"> 98 percentile response time. </param>
-        /// <param name="pct999ResTime"> 99.9 percentile response time. </param>
-        /// <param name="pct9999ResTime"> 99.99 percentile response time. </param>
+        /// <param name="errorPercentage"> Error percentage. </param>
+        /// <param name="meanResponseTime"> Mean response time. </param>
+        /// <param name="medianResponseTime"> Median response time. </param>
+        /// <param name="maxResponseTime"> Max response time. </param>
+        /// <param name="minResponseTime"> Minimum response time. </param>
+        /// <param name="percentile90ResponseTime"> 90 percentile response time. </param>
+        /// <param name="percentile95ResponseTime"> 95 percentile response time. </param>
+        /// <param name="percentile99ResponseTime"> 99 percentile response time. </param>
+        /// <param name="percentile75ResponseTime"> 75 percentile response time. </param>
+        /// <param name="percentile96ResponseTime"> 96 percentile response time. </param>
+        /// <param name="percentile97ResponseTime"> 97 percentile response time. </param>
+        /// <param name="percentile98ResponseTime"> 98 percentile response time. </param>
+        /// <param name="percentile999ResponseTime"> 99.9 percentile response time. </param>
+        /// <param name="percentile9999ResponseTime"> 99.99 percentile response time. </param>
         /// <param name="throughput"> Throughput. </param>
         /// <param name="receivedKBytesPerSec"> Received network bytes. </param>
         /// <param name="sentKBytesPerSec"> Send network bytes. </param>
         /// <returns> A new <see cref="Models.TestRunStatistics"/> instance for mocking. </returns>
-        public static TestRunStatistics TestRunStatistics(string transaction = null, double? sampleCount = null, double? errorCount = null, double? errorPct = null, double? meanResTime = null, double? medianResTime = null, double? maxResTime = null, double? minResTime = null, double? pct1ResTime = null, double? pct2ResTime = null, double? pct3ResTime = null, double? pct75ResTime = null, double? pct96ResTime = null, double? pct97ResTime = null, double? pct98ResTime = null, double? pct999ResTime = null, double? pct9999ResTime = null, double? throughput = null, double? receivedKBytesPerSec = null, double? sentKBytesPerSec = null)
+        public static TestRunStatistics TestRunStatistics(string transaction = null, double? sampleCount = null, double? errorCount = null, double? errorPercentage = null, double? meanResponseTime = null, double? medianResponseTime = null, double? maxResponseTime = null, double? minResponseTime = null, double? percentile90ResponseTime = null, double? percentile95ResponseTime = null, double? percentile99ResponseTime = null, double? percentile75ResponseTime = null, double? percentile96ResponseTime = null, double? percentile97ResponseTime = null, double? percentile98ResponseTime = null, double? percentile999ResponseTime = null, double? percentile9999ResponseTime = null, double? throughput = null, double? receivedKBytesPerSec = null, double? sentKBytesPerSec = null)
         {
             return new TestRunStatistics(
                 transaction,
                 sampleCount,
                 errorCount,
-                errorPct,
-                meanResTime,
-                medianResTime,
-                maxResTime,
-                minResTime,
-                pct1ResTime,
-                pct2ResTime,
-                pct3ResTime,
-                pct75ResTime,
-                pct96ResTime,
-                pct97ResTime,
-                pct98ResTime,
-                pct999ResTime,
-                pct9999ResTime,
+                errorPercentage,
+                meanResponseTime,
+                medianResponseTime,
+                maxResponseTime,
+                minResponseTime,
+                percentile90ResponseTime,
+                percentile95ResponseTime,
+                percentile99ResponseTime,
+                percentile75ResponseTime,
+                percentile96ResponseTime,
+                percentile97ResponseTime,
+                percentile98ResponseTime,
+                percentile999ResponseTime,
+                percentile9999ResponseTime,
                 throughput,
                 receivedKBytesPerSec,
                 sentKBytesPerSec,
@@ -558,7 +558,7 @@ namespace Azure.Developer.LoadTesting.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TestRunServerMetricConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TestRunServerMetricsConfiguration"/>. </summary>
         /// <param name="testRunId"> Test run identifier. </param>
         /// <param name="metrics">
         /// Azure resource metrics collection {metric id : metrics object} (Refer :
@@ -569,12 +569,12 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="createdBy"> The user that created. </param>
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
-        /// <returns> A new <see cref="Models.TestRunServerMetricConfig"/> instance for mocking. </returns>
-        public static TestRunServerMetricConfig TestRunServerMetricConfig(string testRunId = null, IDictionary<string, ResourceMetric> metrics = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        /// <returns> A new <see cref="Models.TestRunServerMetricsConfiguration"/> instance for mocking. </returns>
+        public static TestRunServerMetricsConfiguration TestRunServerMetricsConfiguration(string testRunId = null, IDictionary<string, ResourceMetric> metrics = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             metrics ??= new Dictionary<string, ResourceMetric>();
 
-            return new TestRunServerMetricConfig(
+            return new TestRunServerMetricsConfiguration(
                 testRunId,
                 metrics,
                 createdDateTime,
@@ -607,7 +607,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// frequency).
         /// </param>
         /// <returns> A new <see cref="Models.MetricDefinition"/> instance for mocking. </returns>
-        public static MetricDefinition MetricDefinition(IEnumerable<NameAndDescription> dimensions = null, string description = null, string name = null, string @namespace = null, AggregationType? primaryAggregationType = null, IEnumerable<string> supportedAggregationTypes = null, MetricUnit? unit = null, IEnumerable<MetricAvailability> metricAvailabilities = null)
+        public static MetricDefinition MetricDefinition(IEnumerable<NameAndDescription> dimensions = null, string description = null, string name = null, string @namespace = null, Aggregation? primaryAggregationType = null, IEnumerable<string> supportedAggregationTypes = null, MetricUnit? unit = null, IEnumerable<MetricAvailability> metricAvailabilities = null)
         {
             dimensions ??= new List<NameAndDescription>();
             supportedAggregationTypes ??= new List<string>();

@@ -349,7 +349,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-Response<TestRunServerMetricConfig> response = await client.GetServerMetricsConfigAsync("12345678-1234-1234-1234-123456789012");
+Response<TestRunServerMetricsConfiguration> response = await client.GetServerMetricsConfigAsync("12345678-1234-1234-1234-123456789012");
 ]]></code></example>
     </member>
     <member name="GetServerMetricsConfig(string,CancellationToken)">
@@ -360,7 +360,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-Response<TestRunServerMetricConfig> response = client.GetServerMetricsConfig("12345678-1234-1234-1234-123456789012");
+Response<TestRunServerMetricsConfiguration> response = client.GetServerMetricsConfig("12345678-1234-1234-1234-123456789012");
 ]]></code></example>
     </member>
     <member name="GetServerMetricsConfigAsync(string,RequestContext)">
