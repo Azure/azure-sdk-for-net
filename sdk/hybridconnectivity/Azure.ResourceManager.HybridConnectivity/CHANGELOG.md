@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Generated SDK using TypeSpec.
+- Release SDK for MultiCloud
 
 ## 1.0.0 (2024-11-29)
 
