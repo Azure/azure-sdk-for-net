@@ -31,8 +31,9 @@ param (
 
 $DotNetSupportChannelLink = "https://aka.ms/azsdk/donet-teams-channel"
 $serviceA = "service"
+Write-Host "AAPath doesn't exist. create template."
 Write-Error "[ERROR] AAThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
-
+exit 1
 $inputJson = Get-Content $inputJsonFile | Out-String | ConvertFrom-Json
 $swaggerDir = $inputJson.specFolder
 if($swaggerDir) {
