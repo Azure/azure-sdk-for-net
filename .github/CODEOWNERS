@@ -1021,6 +1021,12 @@
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
 
+# PRLabel: %Monitor
+/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296
+
+# ServiceLabel: %Monitor
+# ServiceOwners:                                                   @thomasp98296
+
 # PRLabel: %Neon Postgres
 /sdk/neonpostgres/Azure.ResourceManager.*/                         @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -1046,10 +1052,10 @@
 # ServiceOwners:                                                   @vipray-ms
 
 # PRLabel: %Nginx
-/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti
+/sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93
 
 # ServiceLabel: %Nginx %Mgmt
-# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti
+# ServiceOwners:                                                   @jamesfan1 @bangbingsyb @spencerofwiti @amwaleh @briantkim93
 
 # PRLabel: %Operator Nexus - Network Cloud
 /sdk/networkcloud/Azure.ResourceManager.*/                         @Azure/azure-sdk-write-networkcloud

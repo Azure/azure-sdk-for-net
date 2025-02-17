@@ -2957,7 +2957,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -3001,7 +3001,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -3038,7 +3038,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -3082,7 +3082,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -3119,7 +3119,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Defaults to the beginning of the blob.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the blob.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">

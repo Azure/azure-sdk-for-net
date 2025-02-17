@@ -16,7 +16,7 @@ using Azure.Search.Documents.Indexes;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 
-namespace Azure.CloudMachine
+namespace Azure.Projects
 {
     /// <summary>
     /// The AI Foundry client.

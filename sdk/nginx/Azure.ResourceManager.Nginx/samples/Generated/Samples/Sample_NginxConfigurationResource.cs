@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Nginx.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ConfigurationsGet()
         {
-            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Get.json
+            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-11-01-preview/examples/Configurations_Get.json
             // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Nginx.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfigurationsDelete()
         {
-            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Delete.json
+            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-11-01-preview/examples/Configurations_Delete.json
             // this example is just showing the usage of "Configurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Nginx.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ConfigurationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_CreateOrUpdate.json
+            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-11-01-preview/examples/Configurations_CreateOrUpdate.json
             // this example is just showing the usage of "Configurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Nginx.Samples
             NginxConfigurationResource nginxConfiguration = client.GetNginxConfigurationResource(nginxConfigurationResourceId);
 
             // invoke the operation
-            NginxConfigurationData data = new NginxConfigurationData();
-            ArmOperation<NginxConfigurationResource> lro = await nginxConfiguration.UpdateAsync(WaitUntil.Completed, data);
+            NginxConfigurationCreateOrUpdateContent content = new NginxConfigurationCreateOrUpdateContent();
+            ArmOperation<NginxConfigurationResource> lro = await nginxConfiguration.UpdateAsync(WaitUntil.Completed, content);
             NginxConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Nginx.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Analysis_ConfigurationsAnalysis()
         {
-            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-06-01-preview/examples/Configurations_Analysis.json
+            // Generated from example definition: specification/nginx/resource-manager/NGINX.NGINXPLUS/preview/2024-11-01-preview/examples/Configurations_Analysis.json
             // this example is just showing the usage of "Configurations_Analysis" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

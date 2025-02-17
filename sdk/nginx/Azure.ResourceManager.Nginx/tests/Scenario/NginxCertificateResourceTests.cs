@@ -56,14 +56,23 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             const string certificateVirtualPath = "/etc/nginx/nginx.cert";
             const string keyVirtualPath = "/etc/nginx/nginx.key";
             NginxCertificateResource nginxCertificate = await CreateNginxCertificate(Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
+            ResourceIdentifier nginxCertificateResourceIdentifier = NginxCertificateResource.CreateResourceIdentifier(Subscription.Data.SubscriptionId, ResGroup.Data.Name, nginxDeploymentName, nginxCertificateName);
 
             Assert.IsTrue(nginxCertificate.HasData);
             Assert.NotNull(nginxCertificate.Data);
             Assert.IsTrue(nginxCertificate.Data.Name.Equals(nginxCertificateName, StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(nginxCertificate.Data.Id.Equals(nginxCertificateResourceIdentifier));
+            Assert.IsTrue(nginxCertificate.Data.ResourceType.Equals(NginxCertificateResource.ResourceType));
+            Assert.IsNull(nginxCertificate.Data.SystemData);
+            Assert.IsNull(nginxCertificate.Data.Location);
             Assert.IsNotNull(nginxCertificate.Data.Properties.ProvisioningState);
             Assert.IsTrue(nginxCertificate.Data.Properties.CertificateVirtualPath.Equals(certificateVirtualPath));
             Assert.IsTrue(nginxCertificate.Data.Properties.KeyVirtualPath.Equals(keyVirtualPath));
             Assert.IsTrue(nginxCertificate.Data.Properties.KeyVaultSecretId.Equals(TestEnvironment.KeyVaultSecretId));
+            Assert.IsNotNull(nginxCertificate.Data.Properties.Sha1Thumbprint);
+            Assert.IsNotNull(nginxCertificate.Data.Properties.KeyVaultSecretVersion);
+            Assert.IsNotNull(nginxCertificate.Data.Properties.KeyVaultSecretCreated);
+            Assert.IsNotNull(nginxCertificate.Data.Properties.CertificateError);
         }
 
         [TestCase]
