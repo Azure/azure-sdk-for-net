@@ -36,10 +36,6 @@
   - Model LinkedService parameter PostgreSqlV2LinkedService has a new required properties authentication_type
   - Model LinkedService parameter SapOdpLinkedService update properties sncMode
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.0.0-preview.20 (2024-06-07)
 ### Features Added
 - Model Dataset has a new parameter LakeHouseLocation
