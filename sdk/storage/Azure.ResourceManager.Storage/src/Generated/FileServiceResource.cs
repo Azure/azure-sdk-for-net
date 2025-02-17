@@ -87,6 +87,13 @@ namespace Azure.ResourceManager.Storage
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets an object representing a FileServiceUsageResource along with the instance operations that can be performed on it in the FileService. </summary>
+        /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
+        public virtual FileServiceUsageResource GetFileServiceUsage()
+        {
+            return new FileServiceUsageResource(Client, Id.AppendChildResource("usages", "default"));
+        }
+
         /// <summary> Gets a collection of FileShareResources in the FileService. </summary>
         /// <returns> An object representing collection of FileShareResources and their operations over a FileShareResource. </returns>
         public virtual FileShareCollection GetFileShares()
@@ -107,7 +114,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -140,7 +147,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +220,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +260,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,7 +308,7 @@ namespace Azure.ResourceManager.Storage
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
