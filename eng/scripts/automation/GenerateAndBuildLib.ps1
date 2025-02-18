@@ -560,6 +560,10 @@ function Invoke-GenerateAndBuildSDK () {
     $service, $serviceType = Get-ResourceProviderFromReadme $readmeFile
     Write-Host "service:$service, serviceType:$serviceType"
     $serviceA = "service"
+    Write-Host "[ERROR] Failed to create sdk project folder.service:service,package:package,"
+    Write-Host "[ERROR] sdkPath:sdkRootPath,readme:readmeFile.exit code: $?."
+    Write-Host "[ERROR] Please review the detail errors for potential fixes."
+    Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at DotNetSupportChannelLink and include this spec pull request."
     Write-Host "AAPath doesn't exist. create template."
     Write-Error "[ERROR] AAThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
     exit 1
