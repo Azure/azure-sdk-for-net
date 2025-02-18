@@ -2,19 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.CloudMachine.Core;
+using System.Collections.Generic;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Provisioning.AIFoundry;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.AIFoundry
+namespace Azure.Projects.AIFoundry
 {
     /// <summary>
-    /// A CloudMachine feature that configures an AI Foundry project and optionally prepares resources for provisioning in the future.
+    /// A feature that configures an AI Foundry project and optionally prepares resources for provisioning in the future.
     /// </summary>
-    public class AIFoundryFeature : CloudMachineFeature
+    public class AIFoundryFeature : AzureProjectFeature
     {
-        private readonly string _connectionString;
+        private string? _connectionString;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AIFoundryFeature"/> class.
@@ -36,30 +38,42 @@ namespace Azure.CloudMachine.AIFoundry
         }
 
         /// <summary>
+        /// Creates a new feature for provisioning.
+        /// </summary>
+        public AIFoundryFeature()
+        {
+        }
+
+        public List<ClientConnection> Connections { get; set; } = new List<ClientConnection>();
+
+        /// <summary>
         /// Emit the Foundry connection(s) into the shared <see cref="ConnectionCollection"/>.
         /// </summary>
-        /// <param name="connections">The global collection of <see cref="ClientConnection"/> objects for this CloudMachine. </param>
-        /// <param name="cmId">The unique CloudMachine ID</param>
-        protected internal override void EmitConnections(ConnectionCollection connections, string cmId)
+        /// <param name="connections">The global collection of <see cref="ClientConnection"/> objects for this project. </param>
+        /// <param name="cmId">The unique AzureProject ID</param>
+        protected internal override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
         {
-            const string foundryId = "Azure.AI.Projects.AIProjectClient";
-            connections.Add(new ClientConnection(foundryId, _connectionString));
+            if (_connectionString != null)
+            {
+                const string foundryId = "Azure.AI.Projects.AIProjectClient";
+                connections.Add(new ClientConnection(foundryId, _connectionString));
 
-            var foundryConnections = new AIFoundryConnections(_connectionString, new DefaultAzureCredential());
+                var foundryConnections = new AIFoundryConnections(_connectionString, new DefaultAzureCredential());
 
-            // Add OpenAI connections
-            connections.Add(foundryConnections.GetConnection("Azure.AI.OpenAI.AzureOpenAIClient"));
-            connections.Add(foundryConnections.GetConnection("OpenAI.Chat.ChatClient"));
-            connections.Add(foundryConnections.GetConnection("OpenAI.Embeddings.EmbeddingClient"));
+                // Add OpenAI connections
+                connections.Add(foundryConnections.GetConnection("Azure.AI.OpenAI.AzureOpenAIClient"));
+                connections.Add(foundryConnections.GetConnection("OpenAI.Chat.ChatClient"));
+                connections.Add(foundryConnections.GetConnection("OpenAI.Embeddings.EmbeddingClient"));
 
-            // Add Inference connections
-            connections.Add(foundryConnections.GetConnection("Azure.AI.Inference.ChatCompletionsClient"));
-            connections.Add(foundryConnections.GetConnection("Azure.AI.Inference.EmbeddingsClient"));
+                // Add Inference connections
+                connections.Add(foundryConnections.GetConnection("Azure.AI.Inference.ChatCompletionsClient"));
+                connections.Add(foundryConnections.GetConnection("Azure.AI.Inference.EmbeddingsClient"));
 
-            // Add Search connections
-            connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.SearchClient"));
-            connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.Indexes.SearchIndexClient"));
-            connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.Indexes.SearchIndexerClient"));
+                // Add Search connections
+                connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.SearchClient"));
+                connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.Indexes.SearchIndexClient"));
+                connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.Indexes.SearchIndexerClient"));
+            }
         }
 
         /// <summary>
@@ -69,8 +83,21 @@ namespace Azure.CloudMachine.AIFoundry
         /// <returns>A placeholder or no-op resource, as provisioning is out-of-band for now.</returns>
         protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
         {
-            // In the future, generate real provisioning resources for Foundry
-            return new NoOpResource();
+            var cmId = cm.Id;
+            AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
+            AIFoundryProjectCdk project = new($"{cmId}_project", $"{cmId}_project", hub);
+
+            cm.AddResource(hub);
+            cm.AddResource(project);
+
+            for (int i = 0; i < Connections.Count; i++)
+            {
+                ClientConnection connection = Connections[i];
+                AIFoundryConnectionCdk connectionCdk = new($"{cmId}connection{i}", connection.Id, connection.Locator, project);
+                cm.AddResource(connectionCdk);
+            }
+
+            return project;
         }
     }
 }

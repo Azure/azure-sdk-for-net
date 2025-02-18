@@ -7,7 +7,7 @@ using System.Threading;
 using Azure.AI.Projects;
 using Azure.Core;
 
-namespace Azure.CloudMachine.AIFoundry
+namespace Azure.Projects.AIFoundry
 {
     /// <summary>
     /// Provides concurrency-safe caching of Foundry connection responses
