@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring.Models
 {
@@ -47,11 +48,8 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="AssignedDeploymentResource"/>. </summary>
         /// <param name="region"> The resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        internal AssignedDeploymentResource(string region)
+        internal AssignedDeploymentResource(AzureLocation region)
         {
-            Argument.AssertNotNull(region, nameof(region));
-
             Region = region;
         }
 
@@ -59,7 +57,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="azureResourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssignedDeploymentResource(string azureResourceId, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssignedDeploymentResource(string azureResourceId, AzureLocation region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureResourceId = azureResourceId;
             Region = region;
@@ -73,7 +71,5 @@ namespace Azure.AI.Language.Text.Authoring.Models
 
         /// <summary> The resource ID. </summary>
         public string AzureResourceId { get; }
-        /// <summary> The resource region. </summary>
-        public string Region { get; }
     }
 }

@@ -23,9 +23,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetDeployment("<projectName>", "<deploymentName>", null);
+            Response response = client.GetDeployment("<projectName>", "<deploymentName>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -44,9 +44,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", null);
+            Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<ProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
         }
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<ProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
         }
@@ -87,9 +87,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetDeployment("<projectName>", "<deploymentName>", null);
+            Response response = client.GetDeployment("<projectName>", "<deploymentName>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -108,9 +108,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", null);
+            Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -129,7 +129,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<ProjectDeployment> response = client.GetDeployment("<projectName>", "<deploymentName>");
         }
@@ -140,7 +140,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<ProjectDeployment> response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>");
         }
@@ -151,9 +151,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -168,9 +168,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -185,7 +185,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<DeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
@@ -196,7 +196,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<DeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
@@ -207,9 +207,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -241,9 +241,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -275,7 +275,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<DeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
@@ -286,7 +286,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<DeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
@@ -297,9 +297,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -314,9 +314,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -331,7 +331,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<DeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
@@ -342,7 +342,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<DeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
@@ -353,9 +353,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -387,9 +387,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -421,7 +421,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<DeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
@@ -432,7 +432,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<DeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
@@ -443,9 +443,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -460,9 +460,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -477,7 +477,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<SwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
         }
@@ -488,7 +488,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<SwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
         }
@@ -499,9 +499,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -533,9 +533,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -567,7 +567,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<SwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
         }
@@ -578,7 +578,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<SwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
         }
@@ -589,9 +589,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -606,9 +606,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -623,7 +623,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<AssignDeploymentResourcesOperationState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
@@ -634,7 +634,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<AssignDeploymentResourcesOperationState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
@@ -645,9 +645,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -679,9 +679,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -713,7 +713,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<AssignDeploymentResourcesOperationState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
@@ -724,7 +724,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<AssignDeploymentResourcesOperationState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
@@ -735,9 +735,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -752,9 +752,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -769,7 +769,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<UnassignDeploymentResourcesOperationState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
@@ -780,7 +780,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<UnassignDeploymentResourcesOperationState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
@@ -791,9 +791,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -825,9 +825,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
-            Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -859,7 +859,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<UnassignDeploymentResourcesOperationState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
@@ -870,7 +870,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Response<UnassignDeploymentResourcesOperationState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
@@ -881,7 +881,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Operation operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
         }
@@ -892,7 +892,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Operation operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
         }
@@ -903,7 +903,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Operation operation = client.DeleteDeployment(WaitUntil.Completed, "<projectName>", "<deploymentName>");
         }
@@ -914,7 +914,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             Operation operation = await client.DeleteDeploymentAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
         }
@@ -925,7 +925,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", content);
@@ -937,7 +937,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", content);
@@ -949,7 +949,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             DeleteDeploymentDetails body = new DeleteDeploymentDetails();
             Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
@@ -961,7 +961,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             DeleteDeploymentDetails body = new DeleteDeploymentDetails();
             Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
@@ -973,7 +973,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -991,7 +991,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1009,7 +1009,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             DeleteDeploymentDetails body = new DeleteDeploymentDetails
             {
@@ -1024,7 +1024,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             DeleteDeploymentDetails body = new DeleteDeploymentDetails
             {
@@ -1039,7 +1039,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1055,7 +1055,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1071,7 +1071,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
@@ -1083,7 +1083,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
@@ -1095,7 +1095,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1111,7 +1111,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1127,7 +1127,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
@@ -1139,7 +1139,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
             Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
@@ -1151,7 +1151,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1174,7 +1174,7 @@ region = "<region>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1197,7 +1197,7 @@ region = "<region>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
@@ -1212,7 +1212,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
@@ -1227,7 +1227,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1250,7 +1250,7 @@ region = "<region>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1273,7 +1273,7 @@ region = "<region>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
@@ -1288,7 +1288,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
@@ -1303,7 +1303,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1321,7 +1321,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1339,7 +1339,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
@@ -1351,7 +1351,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
@@ -1363,7 +1363,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1381,7 +1381,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1399,7 +1399,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
@@ -1411,7 +1411,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
@@ -1423,7 +1423,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1438,7 +1438,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1453,7 +1453,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
             Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
@@ -1465,7 +1465,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
             Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
@@ -1477,7 +1477,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1496,7 +1496,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1515,7 +1515,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
             {
@@ -1530,7 +1530,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringDeployments client = new AuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
+            TextAuthoringDeployments client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringDeploymentsClient();
 
             CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
             {

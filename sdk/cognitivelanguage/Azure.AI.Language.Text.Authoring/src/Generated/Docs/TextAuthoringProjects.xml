@@ -1,589 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetImportStatusAsync(string,string,CancellationToken)">
+    <member name="AuthorizeProjectCopyAsync(string,AnalyzeTextAuthoringProjectKind,string,bool?,CancellationToken)">
       <example>
-This sample shows how to call GetImportStatusAsync.
+This sample shows how to call AuthorizeProjectCopyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+Response<CopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
 ]]></code>
-This sample shows how to call GetImportStatusAsync with all parameters.
+This sample shows how to call AuthorizeProjectCopyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+Response<CopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
     </member>
-    <member name="GetImportStatus(string,string,CancellationToken)">
+    <member name="AuthorizeProjectCopy(string,AnalyzeTextAuthoringProjectKind,string,bool?,CancellationToken)">
       <example>
-This sample shows how to call GetImportStatus.
+This sample shows how to call AuthorizeProjectCopy.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
+Response<CopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
 ]]></code>
-This sample shows how to call GetImportStatus with all parameters.
+This sample shows how to call AuthorizeProjectCopy with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
+Response<CopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
     </member>
-    <member name="GetImportStatusAsync(string,string,RequestContext)">
+    <member name="AuthorizeProjectCopyAsync(string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call GetImportStatusAsync and parse the result.
+This sample shows how to call AuthorizeProjectCopyAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-This sample shows how to call GetImportStatusAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-]]></code></example>
-    </member>
-    <member name="GetImportStatus(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetImportStatus and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-This sample shows how to call GetImportStatus with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-]]></code></example>
-    </member>
-    <member name="GetExportStatusAsync(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetExportStatusAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
-]]></code>
-This sample shows how to call GetExportStatusAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
-]]></code></example>
-    </member>
-    <member name="GetExportStatus(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetExportStatus.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
-]]></code>
-This sample shows how to call GetExportStatus with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
-]]></code></example>
-    </member>
-    <member name="GetExportStatusAsync(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetExportStatusAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-This sample shows how to call GetExportStatusAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("resultUrl").ToString());
-]]></code></example>
-    </member>
-    <member name="GetExportStatus(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetExportStatus and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-This sample shows how to call GetExportStatus with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("resultUrl").ToString());
-]]></code></example>
-    </member>
-    <member name="GetProjectAsync(string,CancellationToken)">
-      <example>
-This sample shows how to call GetProjectAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<ProjectMetadata> response = await client.GetProjectAsync("<projectName>");
-]]></code>
-This sample shows how to call GetProjectAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<ProjectMetadata> response = await client.GetProjectAsync("<projectName>");
-]]></code></example>
-    </member>
-    <member name="GetProject(string,CancellationToken)">
-      <example>
-This sample shows how to call GetProject.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<ProjectMetadata> response = client.GetProject("<projectName>");
-]]></code>
-This sample shows how to call GetProject with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<ProjectMetadata> response = client.GetProject("<projectName>");
-]]></code></example>
-    </member>
-    <member name="GetProjectAsync(string,RequestContext)">
-      <example>
-This sample shows how to call GetProjectAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = await client.GetProjectAsync("<projectName>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-Console.WriteLine(result.GetProperty("projectKind").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-Console.WriteLine(result.GetProperty("projectName").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-]]></code>
-This sample shows how to call GetProjectAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = await client.GetProjectAsync("<projectName>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-Console.WriteLine(result.GetProperty("projectKind").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("amlProjectPath").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("isLabelingLocked").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("runGptPredictions").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("gptPredictiveLookahead").ToString());
-Console.WriteLine(result.GetProperty("projectName").ToString());
-Console.WriteLine(result.GetProperty("multilingual").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-]]></code></example>
-    </member>
-    <member name="GetProject(string,RequestContext)">
-      <example>
-This sample shows how to call GetProject and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = client.GetProject("<projectName>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-Console.WriteLine(result.GetProperty("projectKind").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-Console.WriteLine(result.GetProperty("projectName").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-]]></code>
-This sample shows how to call GetProject with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = client.GetProject("<projectName>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-Console.WriteLine(result.GetProperty("projectKind").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("amlProjectPath").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("isLabelingLocked").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("runGptPredictions").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("gptPredictiveLookahead").ToString());
-Console.WriteLine(result.GetProperty("projectName").ToString());
-Console.WriteLine(result.GetProperty("multilingual").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-]]></code></example>
-    </member>
-    <member name="CreateProjectAsync(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateProjectAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-using RequestContent content = RequestContent.Create(new
-{
-    projectKind = "CustomSingleLabelClassification",
-    storageInputContainerName = "<storageInputContainerName>",
-    projectName = "<projectName>",
-    language = "<language>",
-});
-Response response = await client.CreateProjectAsync("<projectName>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-Console.WriteLine(result.GetProperty("projectKind").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-Console.WriteLine(result.GetProperty("projectName").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-]]></code>
-This sample shows how to call CreateProjectAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-using RequestContent content = RequestContent.Create(new
-{
-    projectKind = "CustomSingleLabelClassification",
-    storageInputContainerName = "<storageInputContainerName>",
-    settings = new
-    {
-        confidenceThreshold = 123.45F,
-        amlProjectPath = "<amlProjectPath>",
-        isLabelingLocked = true,
-        runGptPredictions = true,
-        gptPredictiveLookahead = 1234,
-    },
-    projectName = "<projectName>",
-    multilingual = true,
-    description = "<description>",
-    language = "<language>",
-});
-Response response = await client.CreateProjectAsync("<projectName>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-Console.WriteLine(result.GetProperty("projectKind").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("amlProjectPath").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("isLabelingLocked").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("runGptPredictions").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("gptPredictiveLookahead").ToString());
-Console.WriteLine(result.GetProperty("projectName").ToString());
-Console.WriteLine(result.GetProperty("multilingual").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-]]></code></example>
-    </member>
-    <member name="CreateProject(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CreateProject and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-using RequestContent content = RequestContent.Create(new
-{
-    projectKind = "CustomSingleLabelClassification",
-    storageInputContainerName = "<storageInputContainerName>",
-    projectName = "<projectName>",
-    language = "<language>",
-});
-Response response = client.CreateProject("<projectName>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-Console.WriteLine(result.GetProperty("projectKind").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-Console.WriteLine(result.GetProperty("projectName").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-]]></code>
-This sample shows how to call CreateProject with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-using RequestContent content = RequestContent.Create(new
-{
-    projectKind = "CustomSingleLabelClassification",
-    storageInputContainerName = "<storageInputContainerName>",
-    settings = new
-    {
-        confidenceThreshold = 123.45F,
-        amlProjectPath = "<amlProjectPath>",
-        isLabelingLocked = true,
-        runGptPredictions = true,
-        gptPredictiveLookahead = 1234,
-    },
-    projectName = "<projectName>",
-    multilingual = true,
-    description = "<description>",
-    language = "<language>",
-});
-Response response = client.CreateProject("<projectName>", content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-Console.WriteLine(result.GetProperty("projectKind").ToString());
-Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("amlProjectPath").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("isLabelingLocked").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("runGptPredictions").ToString());
-Console.WriteLine(result.GetProperty("settings").GetProperty("gptPredictiveLookahead").ToString());
-Console.WriteLine(result.GetProperty("projectName").ToString());
-Console.WriteLine(result.GetProperty("multilingual").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("language").ToString());
-]]></code></example>
-    </member>
-    <member name="CopyProjectAuthorizationAsync(string,AnalyzeTextAuthoringProjectKind,string,bool?,CancellationToken)">
-      <example>
-This sample shows how to call CopyProjectAuthorizationAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
-]]></code>
-This sample shows how to call CopyProjectAuthorizationAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
-]]></code></example>
-    </member>
-    <member name="CopyProjectAuthorization(string,AnalyzeTextAuthoringProjectKind,string,bool?,CancellationToken)">
-      <example>
-This sample shows how to call CopyProjectAuthorization.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
-]]></code>
-This sample shows how to call CopyProjectAuthorization with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
-]]></code></example>
-    </member>
-    <member name="CopyProjectAuthorizationAsync(string,RequestContent,RequestContext)">
-      <example>
-This sample shows how to call CopyProjectAuthorizationAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
     projectKind = "CustomSingleLabelClassification",
 });
-Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+Response response = await client.AuthorizeProjectCopyAsync("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -593,11 +61,11 @@ Console.WriteLine(result.GetProperty("expiresAt").ToString());
 Console.WriteLine(result.GetProperty("targetResourceId").ToString());
 Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
 ]]></code>
-This sample shows how to call CopyProjectAuthorizationAsync with all parameters and request content and parse the result.
+This sample shows how to call AuthorizeProjectCopyAsync with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -605,7 +73,7 @@ using RequestContent content = RequestContent.Create(new
     storageInputContainerName = "<storageInputContainerName>",
     allowOverwrite = true,
 });
-Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+Response response = await client.AuthorizeProjectCopyAsync("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -616,19 +84,19 @@ Console.WriteLine(result.GetProperty("targetResourceId").ToString());
 Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
 ]]></code></example>
     </member>
-    <member name="CopyProjectAuthorization(string,RequestContent,RequestContext)">
+    <member name="AuthorizeProjectCopy(string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CopyProjectAuthorization and parse the result.
+This sample shows how to call AuthorizeProjectCopy and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
     projectKind = "CustomSingleLabelClassification",
 });
-Response response = client.CopyProjectAuthorization("<projectName>", content);
+Response response = client.AuthorizeProjectCopy("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -638,11 +106,11 @@ Console.WriteLine(result.GetProperty("expiresAt").ToString());
 Console.WriteLine(result.GetProperty("targetResourceId").ToString());
 Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
 ]]></code>
-This sample shows how to call CopyProjectAuthorization with all parameters and request content and parse the result.
+This sample shows how to call AuthorizeProjectCopy with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -650,7 +118,7 @@ using RequestContent content = RequestContent.Create(new
     storageInputContainerName = "<storageInputContainerName>",
     allowOverwrite = true,
 });
-Response response = client.CopyProjectAuthorization("<projectName>", content);
+Response response = client.AuthorizeProjectCopy("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -659,140 +127,6 @@ Console.WriteLine(result.GetProperty("accessToken").ToString());
 Console.WriteLine(result.GetProperty("expiresAt").ToString());
 Console.WriteLine(result.GetProperty("targetResourceId").ToString());
 Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
-]]></code></example>
-    </member>
-    <member name="GetCopyProjectStatusAsync(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetCopyProjectStatusAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
-]]></code>
-This sample shows how to call GetCopyProjectStatusAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
-]]></code></example>
-    </member>
-    <member name="GetCopyProjectStatus(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetCopyProjectStatus.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
-]]></code>
-This sample shows how to call GetCopyProjectStatus with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
-]]></code></example>
-    </member>
-    <member name="GetCopyProjectStatusAsync(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetCopyProjectStatusAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-This sample shows how to call GetCopyProjectStatusAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-]]></code></example>
-    </member>
-    <member name="GetCopyProjectStatus(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetCopyProjectStatus and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-]]></code>
-This sample shows how to call GetCopyProjectStatus with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
     <member name="GetTrainingStatusAsync(string,string,CancellationToken)">
@@ -801,17 +135,17 @@ This sample shows how to call GetTrainingStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<TrainingTrainingJobs> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+Response<TrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetTrainingStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<TrainingTrainingJobs> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+Response<TrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetTrainingStatus(string,string,CancellationToken)">
@@ -820,17 +154,17 @@ This sample shows how to call GetTrainingStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<TrainingTrainingJobs> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+Response<TrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetTrainingStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response<TrainingTrainingJobs> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+Response<TrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetTrainingStatusAsync(string,string,RequestContext)">
@@ -839,9 +173,9 @@ This sample shows how to call GetTrainingStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", null);
+Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -857,9 +191,9 @@ This sample shows how to call GetTrainingStatusAsync with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", null);
+Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -902,9 +236,9 @@ This sample shows how to call GetTrainingStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response response = client.GetTrainingStatus("<projectName>", "<jobId>", null);
+Response response = client.GetTrainingStatus("<projectName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -920,9 +254,9 @@ This sample shows how to call GetTrainingStatus with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Response response = client.GetTrainingStatus("<projectName>", "<jobId>", null);
+Response response = client.GetTrainingStatus("<projectName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -965,7 +299,7 @@ This sample shows how to call GetProjectDeletionStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Response<ProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
 ]]></code>
@@ -973,7 +307,7 @@ This sample shows how to call GetProjectDeletionStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Response<ProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
 ]]></code></example>
@@ -984,7 +318,7 @@ This sample shows how to call GetProjectDeletionStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Response<ProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
 ]]></code>
@@ -992,7 +326,7 @@ This sample shows how to call GetProjectDeletionStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Response<ProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
 ]]></code></example>
@@ -1003,7 +337,7 @@ This sample shows how to call GetProjectDeletionStatusAsync and parse the result
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
@@ -1017,7 +351,7 @@ This sample shows how to call GetProjectDeletionStatusAsync with all parameters 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
@@ -1051,7 +385,7 @@ This sample shows how to call GetProjectDeletionStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
@@ -1065,7 +399,7 @@ This sample shows how to call GetProjectDeletionStatus with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
@@ -1093,51 +427,13 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetP
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
-    <member name="DeleteProjectAsync(WaitUntil,string,RequestContext)">
-      <example>
-This sample shows how to call DeleteProjectAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-]]></code>
-This sample shows how to call DeleteProjectAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-]]></code></example>
-    </member>
-    <member name="DeleteProject(WaitUntil,string,RequestContext)">
-      <example>
-This sample shows how to call DeleteProject.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-]]></code>
-This sample shows how to call DeleteProject with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-]]></code></example>
-    </member>
     <member name="CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)">
       <example>
 This sample shows how to call CopyProjectAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 CopyProjectDetails body = new CopyProjectDetails(
 AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
@@ -1152,7 +448,7 @@ This sample shows how to call CopyProjectAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 CopyProjectDetails body = new CopyProjectDetails(
 AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
@@ -1170,7 +466,7 @@ This sample shows how to call CopyProject.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 CopyProjectDetails body = new CopyProjectDetails(
 AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
@@ -1185,7 +481,7 @@ This sample shows how to call CopyProject with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 CopyProjectDetails body = new CopyProjectDetails(
 AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
@@ -1203,7 +499,7 @@ This sample shows how to call CopyProjectAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1220,7 +516,7 @@ This sample shows how to call CopyProjectAsync with all parameters and request c
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1240,7 +536,7 @@ This sample shows how to call CopyProject.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1257,7 +553,7 @@ This sample shows how to call CopyProject with all parameters and request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1277,7 +573,7 @@ This sample shows how to call ExportAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
 ]]></code>
@@ -1285,7 +581,7 @@ This sample shows how to call ExportAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
@@ -1296,7 +592,7 @@ This sample shows how to call Export.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
 ]]></code>
@@ -1304,7 +600,7 @@ This sample shows how to call Export with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
@@ -1315,7 +611,7 @@ This sample shows how to call ExportAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
 ]]></code>
@@ -1323,7 +619,7 @@ This sample shows how to call ExportAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
@@ -1334,7 +630,7 @@ This sample shows how to call Export.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
 ]]></code>
@@ -1342,7 +638,7 @@ This sample shows how to call Export with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
@@ -1353,7 +649,7 @@ This sample shows how to call ImportAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
 Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
@@ -1362,7 +658,7 @@ This sample shows how to call ImportAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
 {
@@ -1397,7 +693,7 @@ This sample shows how to call Import.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
 Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
@@ -1406,7 +702,7 @@ This sample shows how to call Import with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
 {
@@ -1441,7 +737,7 @@ This sample shows how to call ImportAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1461,7 +757,7 @@ This sample shows how to call ImportAsync with all parameters and request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1508,7 +804,7 @@ This sample shows how to call Import.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1528,7 +824,7 @@ This sample shows how to call Import with all parameters and request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1575,7 +871,7 @@ This sample shows how to call TrainAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
 Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
@@ -1585,7 +881,7 @@ This sample shows how to call TrainAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
 {
@@ -1607,7 +903,7 @@ This sample shows how to call Train.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
 Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
@@ -1617,7 +913,7 @@ This sample shows how to call Train with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
 {
@@ -1639,7 +935,7 @@ This sample shows how to call TrainAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1659,7 +955,7 @@ This sample shows how to call TrainAsync with all parameters and request content
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1705,7 +1001,7 @@ This sample shows how to call Train and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1725,7 +1021,7 @@ This sample shows how to call Train with all parameters and request content and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1771,7 +1067,7 @@ This sample shows how to call CancelTrainingJobAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation<TrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
 TrainingJobResult responseData = operation.Value;
@@ -1780,7 +1076,7 @@ This sample shows how to call CancelTrainingJobAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation<TrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
 TrainingJobResult responseData = operation.Value;
@@ -1792,7 +1088,7 @@ This sample shows how to call CancelTrainingJob.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation<TrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
 TrainingJobResult responseData = operation.Value;
@@ -1801,7 +1097,7 @@ This sample shows how to call CancelTrainingJob with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
 Operation<TrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
 TrainingJobResult responseData = operation.Value;
@@ -1813,9 +1109,9 @@ This sample shows how to call CancelTrainingJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", null);
+Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", (RequestContext)null);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1828,9 +1124,9 @@ This sample shows how to call CancelTrainingJobAsync with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", null);
+Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", (RequestContext)null);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1853,9 +1149,9 @@ This sample shows how to call CancelTrainingJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", null);
+Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", (RequestContext)null);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1868,9 +1164,9 @@ This sample shows how to call CancelTrainingJob with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", null);
+Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", (RequestContext)null);
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

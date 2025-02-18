@@ -19,591 +19,17 @@ namespace Azure.AI.Language.Text.Authoring.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_ShortVersion()
+        public void Example_TextAuthoringProjects_AuthorizeProjectCopy_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringImportProjectJobState_GetImportStatus_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("resultUrl").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("resultUrl").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringExportProjectJobState_GetExportStatus_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringProjectMetadata_GetProject_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = client.GetProject("<projectName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProject_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = await client.GetProjectAsync("<projectName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringProjectMetadata_GetProject_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ProjectMetadata> response = client.GetProject("<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProject_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ProjectMetadata> response = await client.GetProjectAsync("<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringProjectMetadata_GetProject_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = client.GetProject("<projectName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("amlProjectPath").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("isLabelingLocked").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("runGptPredictions").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("gptPredictiveLookahead").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("multilingual").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProject_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = await client.GetProjectAsync("<projectName>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("amlProjectPath").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("isLabelingLocked").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("runGptPredictions").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("gptPredictiveLookahead").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("multilingual").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringProjectMetadata_GetProject_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ProjectMetadata> response = client.GetProject("<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringProjectMetadata_GetProject_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<ProjectMetadata> response = await client.GetProjectAsync("<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringProjectMetadata_CreateProject_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                projectKind = "CustomSingleLabelClassification",
-                storageInputContainerName = "<storageInputContainerName>",
-                projectName = "<projectName>",
-                language = "<language>",
-            });
-            Response response = client.CreateProject("<projectName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringProjectMetadata_CreateProject_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                projectKind = "CustomSingleLabelClassification",
-                storageInputContainerName = "<storageInputContainerName>",
-                projectName = "<projectName>",
-                language = "<language>",
-            });
-            Response response = await client.CreateProjectAsync("<projectName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringProjectMetadata_CreateProject_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                projectKind = "CustomSingleLabelClassification",
-                storageInputContainerName = "<storageInputContainerName>",
-                settings = new
-                {
-                    confidenceThreshold = 123.45F,
-                    amlProjectPath = "<amlProjectPath>",
-                    isLabelingLocked = true,
-                    runGptPredictions = true,
-                    gptPredictiveLookahead = 1234,
-                },
-                projectName = "<projectName>",
-                multilingual = true,
-                description = "<description>",
-                language = "<language>",
-            });
-            Response response = client.CreateProject("<projectName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("amlProjectPath").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("isLabelingLocked").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("runGptPredictions").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("gptPredictiveLookahead").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("multilingual").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringProjectMetadata_CreateProject_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                projectKind = "CustomSingleLabelClassification",
-                storageInputContainerName = "<storageInputContainerName>",
-                settings = new
-                {
-                    confidenceThreshold = 123.45F,
-                    amlProjectPath = "<amlProjectPath>",
-                    isLabelingLocked = true,
-                    runGptPredictions = true,
-                    gptPredictiveLookahead = 1234,
-                },
-                projectName = "<projectName>",
-                multilingual = true,
-                description = "<description>",
-                language = "<language>",
-            });
-            Response response = await client.CreateProjectAsync("<projectName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("amlProjectPath").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("isLabelingLocked").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("runGptPredictions").ToString());
-            Console.WriteLine(result.GetProperty("settings").GetProperty("gptPredictiveLookahead").ToString());
-            Console.WriteLine(result.GetProperty("projectName").ToString());
-            Console.WriteLine(result.GetProperty("multilingual").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("language").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAuthoringProjects_CopyProjectAuthorization_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 projectKind = "CustomSingleLabelClassification",
             });
-            Response response = client.CopyProjectAuthorization("<projectName>", content);
+            Response response = client.AuthorizeProjectCopy("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -616,17 +42,17 @@ namespace Azure.AI.Language.Text.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAuthoringProjects_CopyProjectAuthorization_ShortVersion_Async()
+        public async Task Example_TextAuthoringProjects_AuthorizeProjectCopy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
                 projectKind = "CustomSingleLabelClassification",
             });
-            Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+            Response response = await client.AuthorizeProjectCopyAsync("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -639,33 +65,33 @@ namespace Azure.AI.Language.Text.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TextAuthoringProjects_CopyProjectAuthorization_ShortVersion_Convenience()
+        public void Example_TextAuthoringProjects_AuthorizeProjectCopy_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
+            Response<CopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAuthoringProjects_CopyProjectAuthorization_ShortVersion_Convenience_Async()
+        public async Task Example_TextAuthoringProjects_AuthorizeProjectCopy_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
+            Response<CopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TextAuthoringProjects_CopyProjectAuthorization_AllParameters()
+        public void Example_TextAuthoringProjects_AuthorizeProjectCopy_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -673,7 +99,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
                 storageInputContainerName = "<storageInputContainerName>",
                 allowOverwrite = true,
             });
-            Response response = client.CopyProjectAuthorization("<projectName>", content);
+            Response response = client.AuthorizeProjectCopy("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -686,11 +112,11 @@ namespace Azure.AI.Language.Text.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAuthoringProjects_CopyProjectAuthorization_AllParameters_Async()
+        public async Task Example_TextAuthoringProjects_AuthorizeProjectCopy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -698,7 +124,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
                 storageInputContainerName = "<storageInputContainerName>",
                 allowOverwrite = true,
             });
-            Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+            Response response = await client.AuthorizeProjectCopyAsync("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -711,170 +137,24 @@ namespace Azure.AI.Language.Text.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TextAuthoringProjects_CopyProjectAuthorization_AllParameters_Convenience()
+        public void Example_TextAuthoringProjects_AuthorizeProjectCopy_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+            Response<CopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAuthoringProjects_CopyProjectAuthorization_AllParameters_Convenience_Async()
+        public async Task Example_TextAuthoringProjects_AuthorizeProjectCopy_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAnalysisAuthoringCopyProjectJobState_GetCopyProjectStatus_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+            Response<CopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
 
         [Test]
@@ -883,9 +163,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response response = client.GetTrainingStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetTrainingStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -904,9 +184,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -925,9 +205,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<TrainingTrainingJobs> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+            Response<TrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -936,9 +216,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<TrainingTrainingJobs> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+            Response<TrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -947,9 +227,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response response = client.GetTrainingStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetTrainingStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -992,9 +272,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -1037,9 +317,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<TrainingTrainingJobs> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+            Response<TrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1048,9 +328,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Response<TrainingTrainingJobs> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+            Response<TrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -1059,7 +339,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
@@ -1076,7 +356,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
@@ -1093,7 +373,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Response<ProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
         }
@@ -1104,7 +384,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Response<ProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
         }
@@ -1115,7 +395,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
@@ -1149,7 +429,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
@@ -1183,7 +463,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Response<ProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
         }
@@ -1194,53 +474,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Response<ProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAuthoringProjects_DeleteProject_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAuthoringProjects_DeleteProject_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TextAuthoringProjects_DeleteProject_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TextAuthoringProjects_DeleteProject_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
-
-            Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
         }
 
         [Test]
@@ -1249,7 +485,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1269,7 +505,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1289,7 +525,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             CopyProjectDetails body = new CopyProjectDetails(
                 AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
@@ -1307,7 +543,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             CopyProjectDetails body = new CopyProjectDetails(
                 AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
@@ -1325,7 +561,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1345,7 +581,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1365,7 +601,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             CopyProjectDetails body = new CopyProjectDetails(
                 AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
@@ -1383,7 +619,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             CopyProjectDetails body = new CopyProjectDetails(
                 AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification,
@@ -1401,7 +637,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
         }
@@ -1412,7 +648,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
         }
@@ -1423,7 +659,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
         }
@@ -1434,7 +670,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
         }
@@ -1445,7 +681,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
         }
@@ -1456,7 +692,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
         }
@@ -1467,7 +703,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
         }
@@ -1478,7 +714,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
         }
@@ -1489,7 +725,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1512,7 +748,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1535,7 +771,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
             Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
@@ -1547,7 +783,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>"));
             Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
@@ -1559,7 +795,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1606,7 +842,7 @@ dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1653,7 +889,7 @@ dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
             {
@@ -1688,7 +924,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, "<storageInputContainerName>", "<projectName>", "<language>")
             {
@@ -1723,7 +959,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1746,7 +982,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1769,7 +1005,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
             Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
@@ -1782,7 +1018,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>");
             Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
@@ -1795,7 +1031,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1841,7 +1077,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1887,7 +1123,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
             {
@@ -1909,7 +1145,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", "<trainingConfigVersion>")
             {
@@ -1931,9 +1167,9 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", null);
+            Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", (RequestContext)null);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1949,9 +1185,9 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", null);
+            Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", (RequestContext)null);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -1967,7 +1203,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation<TrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
             TrainingJobResult responseData = operation.Value;
@@ -1979,7 +1215,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation<TrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
             TrainingJobResult responseData = operation.Value;
@@ -1991,9 +1227,9 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", null);
+            Operation<BinaryData> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>", (RequestContext)null);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2016,9 +1252,9 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
-            Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", null);
+            Operation<BinaryData> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>", (RequestContext)null);
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2041,7 +1277,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation<TrainingJobResult> operation = client.CancelTrainingJob(WaitUntil.Completed, "<projectName>", "<jobId>");
             TrainingJobResult responseData = operation.Value;
@@ -2053,7 +1289,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAuthoringProjects client = new AuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
+            TextAuthoringProjects client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringProjectsClient();
 
             Operation<TrainingJobResult> operation = await client.CancelTrainingJobAsync(WaitUntil.Completed, "<projectName>", "<jobId>");
             TrainingJobResult responseData = operation.Value;

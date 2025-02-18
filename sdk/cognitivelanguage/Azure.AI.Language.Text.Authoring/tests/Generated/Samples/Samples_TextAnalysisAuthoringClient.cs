@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Text.Authoring.Samples
 {
-    public partial class Samples_AuthoringClient
+    public partial class Samples_TextAnalysisAuthoringClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetProjects(null, null, null, null))
             {
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetProjectsAsync(null, null, null, null))
             {
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (ProjectMetadata item in client.GetProjects())
             {
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (ProjectMetadata item in client.GetProjectsAsync())
             {
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetProjects(1234, 1234, 1234, null))
             {
@@ -117,7 +117,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetProjectsAsync(1234, 1234, 1234, null))
             {
@@ -146,7 +146,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (ProjectMetadata item in client.GetProjects(maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -159,7 +159,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (ProjectMetadata item in client.GetProjectsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -172,7 +172,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetDeployments("<projectName>", null, null, null, null))
             {
@@ -194,7 +194,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>", null, null, null, null))
             {
@@ -216,7 +216,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (ProjectDeployment item in client.GetDeployments("<projectName>"))
             {
@@ -229,7 +229,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (ProjectDeployment item in client.GetDeploymentsAsync("<projectName>"))
             {
@@ -242,7 +242,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetDeployments("<projectName>", 1234, 1234, 1234, null))
             {
@@ -264,7 +264,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234, null))
             {
@@ -286,7 +286,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (ProjectDeployment item in client.GetDeployments("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -299,7 +299,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (ProjectDeployment item in client.GetDeploymentsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -312,7 +312,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetExportedModels("<projectName>", null, null, null, null))
             {
@@ -332,7 +332,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", null, null, null, null))
             {
@@ -352,7 +352,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>"))
             {
@@ -365,7 +365,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
             {
@@ -378,7 +378,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetExportedModels("<projectName>", 1234, 1234, 1234, null))
             {
@@ -398,7 +398,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", 1234, 1234, 1234, null))
             {
@@ -418,7 +418,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -431,7 +431,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -444,7 +444,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetTrainedModels("<projectName>", null, null, null, null))
             {
@@ -465,7 +465,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", null, null, null, null))
             {
@@ -486,7 +486,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
             {
@@ -499,7 +499,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
             {
@@ -512,7 +512,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetTrainedModels("<projectName>", 1234, 1234, 1234, null))
             {
@@ -533,7 +533,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 1234, 1234, 1234, null))
             {
@@ -554,7 +554,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -567,7 +567,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -580,7 +580,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetDeploymentResources("<projectName>", null, null, null, null))
             {
@@ -596,7 +596,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetDeploymentResourcesAsync("<projectName>", null, null, null, null))
             {
@@ -612,7 +612,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<projectName>"))
             {
@@ -625,7 +625,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>"))
             {
@@ -638,7 +638,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetDeploymentResources("<projectName>", 1234, 1234, 1234, null))
             {
@@ -654,7 +654,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetDeploymentResourcesAsync("<projectName>", 1234, 1234, 1234, null))
             {
@@ -670,7 +670,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -683,7 +683,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -696,7 +696,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetTrainingJobs("<projectName>", null, null, null, null))
             {
@@ -718,7 +718,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetTrainingJobsAsync("<projectName>", null, null, null, null))
             {
@@ -740,9 +740,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (TrainingTrainingJobs item in client.GetTrainingJobs("<projectName>"))
+            foreach (TrainingOperationState item in client.GetTrainingJobs("<projectName>"))
             {
             }
         }
@@ -753,9 +753,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (TrainingTrainingJobs item in client.GetTrainingJobsAsync("<projectName>"))
+            await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>"))
             {
             }
         }
@@ -766,7 +766,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetTrainingJobs("<projectName>", 1234, 1234, 1234, null))
             {
@@ -812,7 +812,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetTrainingJobsAsync("<projectName>", 1234, 1234, 1234, null))
             {
@@ -858,9 +858,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (TrainingTrainingJobs item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (TrainingOperationState item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -871,9 +871,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (TrainingTrainingJobs item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -884,7 +884,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetAssignedResourceDeployments(null, null, null, null))
             {
@@ -902,7 +902,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetAssignedResourceDeploymentsAsync(null, null, null, null))
             {
@@ -920,7 +920,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments())
             {
@@ -933,7 +933,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync())
             {
@@ -946,7 +946,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetAssignedResourceDeployments(1234, 1234, 1234, null))
             {
@@ -964,7 +964,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetAssignedResourceDeploymentsAsync(1234, 1234, 1234, null))
             {
@@ -982,7 +982,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments(maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -995,7 +995,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -1008,7 +1008,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetSupportedLanguages(null, null, null, null, null))
             {
@@ -1024,7 +1024,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetSupportedLanguagesAsync(null, null, null, null, null))
             {
@@ -1040,7 +1040,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (SupportedLanguage item in client.GetSupportedLanguages())
             {
@@ -1053,7 +1053,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync())
             {
@@ -1066,7 +1066,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetSupportedLanguages("CustomSingleLabelClassification", 1234, 1234, 1234, null))
             {
@@ -1082,7 +1082,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetSupportedLanguagesAsync("CustomSingleLabelClassification", 1234, 1234, 1234, null))
             {
@@ -1098,7 +1098,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (SupportedLanguage item in client.GetSupportedLanguages(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -1111,7 +1111,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -1124,7 +1124,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetSupportedPrebuiltEntities(null))
             {
@@ -1141,7 +1141,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetSupportedPrebuiltEntitiesAsync(null))
             {
@@ -1158,7 +1158,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntities())
             {
@@ -1171,7 +1171,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
             {
@@ -1184,7 +1184,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetSupportedPrebuiltEntities(null))
             {
@@ -1201,7 +1201,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetSupportedPrebuiltEntitiesAsync(null))
             {
@@ -1218,7 +1218,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntities())
             {
@@ -1231,7 +1231,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
             {
@@ -1244,7 +1244,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetTrainingConfigVersions(null, null, null, null, null))
             {
@@ -1260,7 +1260,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync(null, null, null, null, null))
             {
@@ -1276,7 +1276,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions())
             {
@@ -1289,7 +1289,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsync())
             {
@@ -1302,7 +1302,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetTrainingConfigVersions("CustomSingleLabelClassification", 1234, 1234, 1234, null))
             {
@@ -1318,7 +1318,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync("CustomSingleLabelClassification", 1234, 1234, 1234, null))
             {
@@ -1334,7 +1334,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -1347,7 +1347,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {

@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text.Authoring
 {
-    /// <summary> Client options for AuthoringClient. </summary>
-    public partial class AuthoringClientOptions : ClientOptions
+    /// <summary> Client options for TextAnalysisAuthoringClient. </summary>
+    public partial class TextAnalysisAuthoringClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15_Preview;
 
@@ -28,8 +28,8 @@ namespace Azure.AI.Language.Text.Authoring
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of AuthoringClientOptions. </summary>
-        public AuthoringClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of TextAnalysisAuthoringClientOptions. </summary>
+        public TextAnalysisAuthoringClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

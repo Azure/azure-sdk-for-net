@@ -7,7 +7,7 @@ This sample shows how to call GetExportedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetExportedModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetExportedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetExportedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -45,9 +45,9 @@ This sample shows how to call GetExportedModelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
+Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("exportedModelName").ToString());
@@ -61,9 +61,9 @@ This sample shows how to call GetExportedModelAsync with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
+Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("exportedModelName").ToString());
@@ -80,9 +80,9 @@ This sample shows how to call GetExportedModel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
+Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("exportedModelName").ToString());
@@ -96,9 +96,9 @@ This sample shows how to call GetExportedModel with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
+Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("exportedModelName").ToString());
@@ -115,7 +115,7 @@ This sample shows how to call GetExportedModelJobStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedModelOperationState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code>
@@ -123,7 +123,7 @@ This sample shows how to call GetExportedModelJobStatusAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedModelOperationState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code></example>
@@ -134,7 +134,7 @@ This sample shows how to call GetExportedModelJobStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedModelOperationState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code>
@@ -142,7 +142,7 @@ This sample shows how to call GetExportedModelJobStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedModelOperationState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code></example>
@@ -153,9 +153,9 @@ This sample shows how to call GetExportedModelJobStatusAsync and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
+Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -167,9 +167,9 @@ This sample shows how to call GetExportedModelJobStatusAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
+Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -201,9 +201,9 @@ This sample shows how to call GetExportedModelJobStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
+Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -215,9 +215,9 @@ This sample shows how to call GetExportedModelJobStatus with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
+Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -249,7 +249,7 @@ This sample shows how to call GetExportedModelManifestAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedModelManifest> response = await client.GetExportedModelManifestAsync("<projectName>", "<exportedModelName>");
 ]]></code>
@@ -257,7 +257,7 @@ This sample shows how to call GetExportedModelManifestAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedModelManifest> response = await client.GetExportedModelManifestAsync("<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -268,7 +268,7 @@ This sample shows how to call GetExportedModelManifest.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedModelManifest> response = client.GetExportedModelManifest("<projectName>", "<exportedModelName>");
 ]]></code>
@@ -276,7 +276,7 @@ This sample shows how to call GetExportedModelManifest with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ExportedModelManifest> response = client.GetExportedModelManifest("<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -287,7 +287,7 @@ This sample shows how to call GetExportedModelManifestAsync and parse the result
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response response = await client.GetExportedModelManifestAsync("<projectName>", "<exportedModelName>", null);
 
@@ -299,7 +299,7 @@ This sample shows how to call GetExportedModelManifestAsync with all parameters 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response response = await client.GetExportedModelManifestAsync("<projectName>", "<exportedModelName>", null);
 
@@ -314,7 +314,7 @@ This sample shows how to call GetExportedModelManifest and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response response = client.GetExportedModelManifest("<projectName>", "<exportedModelName>", null);
 
@@ -326,7 +326,7 @@ This sample shows how to call GetExportedModelManifest with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response response = client.GetExportedModelManifest("<projectName>", "<exportedModelName>", null);
 
@@ -341,7 +341,7 @@ This sample shows how to call GetTrainedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -349,7 +349,7 @@ This sample shows how to call GetTrainedModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -360,7 +360,7 @@ This sample shows how to call GetTrainedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -368,7 +368,7 @@ This sample shows how to call GetTrainedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -379,9 +379,9 @@ This sample shows how to call GetTrainedModelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
+Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("label").ToString());
@@ -396,9 +396,9 @@ This sample shows how to call GetTrainedModelAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
+Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("label").ToString());
@@ -416,9 +416,9 @@ This sample shows how to call GetTrainedModel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
+Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("label").ToString());
@@ -433,9 +433,9 @@ This sample shows how to call GetTrainedModel with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
+Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("label").ToString());
@@ -453,7 +453,7 @@ This sample shows how to call DeleteTrainedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 
@@ -463,7 +463,7 @@ This sample shows how to call DeleteTrainedModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 
@@ -476,7 +476,7 @@ This sample shows how to call DeleteTrainedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
 
@@ -486,7 +486,7 @@ This sample shows how to call DeleteTrainedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
 
@@ -499,7 +499,7 @@ This sample shows how to call GetEvaluationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<EvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
@@ -507,7 +507,7 @@ This sample shows how to call GetEvaluationStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<EvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
@@ -518,7 +518,7 @@ This sample shows how to call GetEvaluationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<EvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
@@ -526,7 +526,7 @@ This sample shows how to call GetEvaluationStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<EvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
@@ -537,9 +537,9 @@ This sample shows how to call GetEvaluationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -555,9 +555,9 @@ This sample shows how to call GetEvaluationStatusAsync with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -595,9 +595,9 @@ This sample shows how to call GetEvaluationStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -613,9 +613,9 @@ This sample shows how to call GetEvaluationStatus with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -653,7 +653,7 @@ This sample shows how to call GetModelEvaluationSummaryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -661,7 +661,7 @@ This sample shows how to call GetModelEvaluationSummaryAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -672,7 +672,7 @@ This sample shows how to call GetModelEvaluationSummary.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -680,7 +680,7 @@ This sample shows how to call GetModelEvaluationSummary with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -691,9 +691,9 @@ This sample shows how to call GetModelEvaluationSummaryAsync and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
+Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -703,9 +703,9 @@ This sample shows how to call GetModelEvaluationSummaryAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
+Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -720,9 +720,9 @@ This sample shows how to call GetModelEvaluationSummary and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
+Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -732,9 +732,9 @@ This sample shows how to call GetModelEvaluationSummary with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
+Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -749,7 +749,7 @@ This sample shows how to call GetLoadSnapshotStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<LoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
@@ -757,7 +757,7 @@ This sample shows how to call GetLoadSnapshotStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<LoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
@@ -768,7 +768,7 @@ This sample shows how to call GetLoadSnapshotStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<LoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
@@ -776,7 +776,7 @@ This sample shows how to call GetLoadSnapshotStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Response<LoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
@@ -787,9 +787,9 @@ This sample shows how to call GetLoadSnapshotStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -801,9 +801,9 @@ This sample shows how to call GetLoadSnapshotStatusAsync with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -835,9 +835,9 @@ This sample shows how to call GetLoadSnapshotStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -849,9 +849,9 @@ This sample shows how to call GetLoadSnapshotStatus with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -883,7 +883,7 @@ This sample shows how to call GetModelEvaluationResultsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 await foreach (DocumentEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
 {
@@ -893,7 +893,7 @@ This sample shows how to call GetModelEvaluationResultsAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 await foreach (DocumentEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -906,7 +906,7 @@ This sample shows how to call GetModelEvaluationResults.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 foreach (DocumentEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
 {
@@ -916,7 +916,7 @@ This sample shows how to call GetModelEvaluationResults with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 foreach (DocumentEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -929,7 +929,7 @@ This sample shows how to call GetModelEvaluationResultsAsync and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
 {
@@ -943,7 +943,7 @@ This sample shows how to call GetModelEvaluationResultsAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -960,7 +960,7 @@ This sample shows how to call GetModelEvaluationResults and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
 {
@@ -974,7 +974,7 @@ This sample shows how to call GetModelEvaluationResults with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -991,7 +991,7 @@ This sample shows how to call CreateOrUpdateExportedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -1000,7 +1000,7 @@ This sample shows how to call CreateOrUpdateExportedModelAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -1012,7 +1012,7 @@ This sample shows how to call CreateOrUpdateExportedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -1021,7 +1021,7 @@ This sample shows how to call CreateOrUpdateExportedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -1033,7 +1033,7 @@ This sample shows how to call CreateOrUpdateExportedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1045,7 +1045,7 @@ This sample shows how to call CreateOrUpdateExportedModelAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1060,7 +1060,7 @@ This sample shows how to call CreateOrUpdateExportedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1072,7 +1072,7 @@ This sample shows how to call CreateOrUpdateExportedModel with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1087,7 +1087,7 @@ This sample shows how to call DeleteExportedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Operation operation = await client.DeleteExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code>
@@ -1095,7 +1095,7 @@ This sample shows how to call DeleteExportedModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Operation operation = await client.DeleteExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -1106,7 +1106,7 @@ This sample shows how to call DeleteExportedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code>
@@ -1114,7 +1114,7 @@ This sample shows how to call DeleteExportedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -1125,7 +1125,7 @@ This sample shows how to call EvaluateModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 EvaluationDetails body = new EvaluationDetails();
 Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
@@ -1135,7 +1135,7 @@ This sample shows how to call EvaluateModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 EvaluationDetails body = new EvaluationDetails
 {
@@ -1153,7 +1153,7 @@ This sample shows how to call EvaluateModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 EvaluationDetails body = new EvaluationDetails();
 Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
@@ -1163,7 +1163,7 @@ This sample shows how to call EvaluateModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 EvaluationDetails body = new EvaluationDetails
 {
@@ -1181,7 +1181,7 @@ This sample shows how to call EvaluateModelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Operation<BinaryData> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", content);
@@ -1197,7 +1197,7 @@ This sample shows how to call EvaluateModelAsync with all parameters and request
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1223,7 +1223,7 @@ This sample shows how to call EvaluateModel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Operation<BinaryData> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", content);
@@ -1239,7 +1239,7 @@ This sample shows how to call EvaluateModel with all parameters and request cont
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1265,7 +1265,7 @@ This sample shows how to call LoadSnapshotAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -1273,7 +1273,7 @@ This sample shows how to call LoadSnapshotAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -1284,7 +1284,7 @@ This sample shows how to call LoadSnapshot.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -1292,7 +1292,7 @@ This sample shows how to call LoadSnapshot with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-TextAuthoringModels client = new AuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
+TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
 Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code></example>

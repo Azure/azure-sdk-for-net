@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Language.Text.Authoring.Models;
+using Azure.Core;
 
-namespace Azure.AI.Language.Text.Authoring
+namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class TextAuthoringModelFactory
+    public static partial class TextAnalysisAuthoringModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.ProjectMetadata"/>. </summary>
         /// <param name="createdOn"> Represents the project creation datetime. </param>
@@ -124,12 +124,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="azureResourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
         /// <returns> A new <see cref="Models.AssignedDeploymentResource"/> instance for mocking. </returns>
-        public static AssignedDeploymentResource AssignedDeploymentResource(string azureResourceId = null, string region = null)
+        public static AssignedDeploymentResource AssignedDeploymentResource(string azureResourceId = null, AzureLocation region = default)
         {
             return new AssignedDeploymentResource(azureResourceId, region, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingTrainingJobs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -138,13 +138,13 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents training tasks detailed result. </param>
-        /// <returns> A new <see cref="Models.TrainingTrainingJobs"/> instance for mocking. </returns>
-        public static TrainingTrainingJobs TrainingTrainingJobs(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, TrainingJobResult result = null)
+        /// <returns> A new <see cref="Models.TrainingOperationState"/> instance for mocking. </returns>
+        public static TrainingOperationState TrainingOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, TrainingJobResult result = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new TrainingTrainingJobs(
+            return new TrainingOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,

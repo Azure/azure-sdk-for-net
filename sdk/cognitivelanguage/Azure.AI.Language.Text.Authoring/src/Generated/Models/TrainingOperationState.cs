@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the state of a training job. </summary>
-    public partial class TrainingTrainingJobs
+    public partial class TrainingOperationState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TrainingTrainingJobs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainingOperationState"/>. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
         /// <param name="result"> Represents training tasks detailed result. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
-        internal TrainingTrainingJobs(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, AnalyzeTextAuthoringOperationStatus status, TrainingJobResult result)
+        internal TrainingOperationState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, AnalyzeTextAuthoringOperationStatus status, TrainingJobResult result)
         {
             Argument.AssertNotNull(result, nameof(result));
 
@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             Result = result;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingTrainingJobs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainingOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents training tasks detailed result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingTrainingJobs(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, AnalyzeTextAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, TrainingJobResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingOperationState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, AnalyzeTextAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, TrainingJobResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedOn = createdOn;
@@ -86,8 +86,8 @@ namespace Azure.AI.Language.Text.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingTrainingJobs"/> for deserialization. </summary>
-        internal TrainingTrainingJobs()
+        /// <summary> Initializes a new instance of <see cref="TrainingOperationState"/> for deserialization. </summary>
+        internal TrainingOperationState()
         {
         }
 
