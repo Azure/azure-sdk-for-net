@@ -8,7 +8,7 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Expressions;
 using System.Linq;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 /// <summary>
 /// Azure Developer CLI helpers.
@@ -34,7 +34,7 @@ public static class Azd
         Directory.CreateDirectory(infraDirectory);
 
         infra.Build().Save(infraDirectory);
-        var cmid = ProjectClient.ReadOrCreateCloudMachineId();
+        var cmId = infra.Id;
 
         // main.bicep
         var location = new ProvisioningParameter("location", typeof(string));
@@ -42,7 +42,7 @@ public static class Azd
 
         ResourceGroup rg = new(nameof(rg), ResourceGroupVersion)
         {
-            Name = cmid,
+            Name = cmId,
             Location = location
         };
 

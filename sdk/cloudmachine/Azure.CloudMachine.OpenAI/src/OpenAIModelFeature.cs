@@ -2,18 +2,19 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.OpenAI;
+namespace Azure.Projects.OpenAI;
 
 /// <summary>
-/// CloudMachine feature for OpenAI models.
+/// Projects feature for OpenAI models.
 /// </summary>
-public class OpenAIModelFeature : CloudMachineFeature
+public class OpenAIModelFeature : AzureProjectFeature
 {
     /// <summary>
     /// Create a new OpenAI model feature.
@@ -41,6 +42,17 @@ public class OpenAIModelFeature : CloudMachineFeature
     internal OpenAIFeature Account { get; set; } = default!;
 
     /// <summary>
+    /// Creates client connection for the resource.
+    /// </summary>
+    /// <param name="cmId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public ClientConnection CreateConnection(string cmId)
+    {
+        ClientConnection connection = new("Azure.AI.OpenAI.AzureOpenAIClient", $"https://{cmId}.openai.azure.com");
+        return connection;
+    }
+    /// <summary>
     /// Emit the feature.
     /// </summary>
     /// <param name="features"></param>
@@ -64,7 +76,7 @@ public class OpenAIModelFeature : CloudMachineFeature
     /// <param name="connections"></param>
     /// <param name="cmId"></param>
     /// <exception cref="NotImplementedException"></exception>
-    protected override void EmitConnections(ConnectionCollection connections, string cmId)
+    protected override void EmitConnections(ICollection<ClientConnection> connections, string cmId)
     {
         Account.EmitConnectionsInternal(connections, cmId);
         // add connections
