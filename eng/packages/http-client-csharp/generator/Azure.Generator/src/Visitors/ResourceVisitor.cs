@@ -33,6 +33,7 @@ namespace Azure.Generator.Visitors
             {
                 type.RelativeFilePath = TransformRelativeFilePath(type);
                 type.Name = TransformName(type);
+                type.Type.Name = type.Name;
                 foreach (var serialization in type.SerializationProviders)
                 {
                     serialization.RelativeFilePath = TransformRelativeFilePathForSerialization(serialization);
@@ -44,7 +45,7 @@ namespace Azure.Generator.Visitors
         private static string TransformName(TypeProvider model) => $"{model.Name}Data";
 
         private static string TransformRelativeFilePath(TypeProvider model)
-            => Path.Combine("src", "Generated", $"{TransformName(model)}.RestClient.cs");
+            => Path.Combine("src", "Generated", $"{TransformName(model)}.cs");
 
         private static string TransformRelativeFilePathForSerialization(TypeProvider model)
             => Path.Combine("src", "Generated", $"{TransformName(model)}.Serialization.cs");
