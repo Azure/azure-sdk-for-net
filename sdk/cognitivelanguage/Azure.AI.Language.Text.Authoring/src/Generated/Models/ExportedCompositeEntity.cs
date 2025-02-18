@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="prebuilts"> The prebuilt entities components. </param>
         /// <param name="category"> The entity category. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedCompositeEntity(CompositionSetting? compositionSetting, ExportedEntityList list, IList<ExportedPrebuiltEntity> prebuilts, string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportedCompositeEntity(AnalyzeTextAuthoringCompositionMode? compositionSetting, ExportedEntityList list, IList<ExportedPrebuiltEntity> prebuilts, string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CompositionSetting = compositionSetting;
             List = list;
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> The behavior to follow when the entity's components overlap with each other. </summary>
-        public CompositionSetting? CompositionSetting { get; set; }
+        public AnalyzeTextAuthoringCompositionMode? CompositionSetting { get; set; }
         /// <summary> The list component of the entity. </summary>
         public ExportedEntityList List { get; set; }
         /// <summary> The prebuilt entities components. </summary>

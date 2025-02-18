@@ -55,7 +55,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="offset"> Start position for the sentiment text. </param>
         /// <param name="length"> Length for the sentiment text. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedDocumentSentimentLabel(TextAnalysisAuthoringSentiment? category, int? offset, int? length, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportedDocumentSentimentLabel(AnalyzeTextAuthoringSentiment? category, int? offset, int? length, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Offset = offset;
@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> The sentiment category. </summary>
-        public TextAnalysisAuthoringSentiment? Category { get; set; }
+        public AnalyzeTextAuthoringSentiment? Category { get; set; }
         /// <summary> Start position for the sentiment text. </summary>
         public int? Offset { get; set; }
         /// <summary> Length for the sentiment text. </summary>

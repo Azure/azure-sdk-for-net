@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             Argument.AssertNotNull(evaluationOptions, nameof(evaluationOptions));
             Argument.AssertNotNull(customMultiLabelClassificationEvaluation, nameof(customMultiLabelClassificationEvaluation));
 
-            ProjectKind = ProjectKind.CustomMultiLabelClassification;
+            ProjectKind = AnalyzeTextAuthoringProjectKind.CustomMultiLabelClassification;
             CustomMultiLabelClassificationEvaluation = customMultiLabelClassificationEvaluation;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customMultiLabelClassificationEvaluation"> Contains the data related to multi label classification evaluation. </param>
-        internal CustomMultiLabelClassificationEvaluationSummary(ProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
+        internal CustomMultiLabelClassificationEvaluationSummary(AnalyzeTextAuthoringProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
         {
             CustomMultiLabelClassificationEvaluation = customMultiLabelClassificationEvaluation;
         }

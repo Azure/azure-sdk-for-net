@@ -46,20 +46,20 @@ namespace Azure.AI.Language.Text.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TrainingConfigVersion"/>. </summary>
-        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
-        internal TrainingConfigVersion(DateTimeOffset modelExpirationDate)
+        /// <param name="modelExpiredOn"> Represents the training config version expiration date. </param>
+        internal TrainingConfigVersion(DateTimeOffset modelExpiredOn)
         {
-            ModelExpirationDate = modelExpirationDate;
+            ModelExpiredOn = modelExpiredOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="TrainingConfigVersion"/>. </summary>
         /// <param name="trainingConfigVersionProperty"> Represents the version of the config. </param>
-        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
+        /// <param name="modelExpiredOn"> Represents the training config version expiration date. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingConfigVersion(string trainingConfigVersionProperty, DateTimeOffset modelExpirationDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingConfigVersion(string trainingConfigVersionProperty, DateTimeOffset modelExpiredOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TrainingConfigVersionProperty = trainingConfigVersionProperty;
-            ModelExpirationDate = modelExpirationDate;
+            ModelExpiredOn = modelExpiredOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <summary> Represents the version of the config. </summary>
         public string TrainingConfigVersionProperty { get; }
         /// <summary> Represents the training config version expiration date. </summary>
-        public DateTimeOffset ModelExpirationDate { get; }
+        public DateTimeOffset ModelExpiredOn { get; }
     }
 }

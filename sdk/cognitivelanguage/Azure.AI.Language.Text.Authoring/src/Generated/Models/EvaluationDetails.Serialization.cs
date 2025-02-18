@@ -86,7 +86,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
-            EvaluationKind? kind = default;
+            AnalyzeTextAuthoringEvaluationKind? kind = default;
             int? trainingSplitPercentage = default;
             int? testingSplitPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                     {
                         continue;
                     }
-                    kind = new EvaluationKind(property.Value.GetString());
+                    kind = new AnalyzeTextAuthoringEvaluationKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trainingSplitPercentage"u8))

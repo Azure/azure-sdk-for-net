@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
-            ProjectKind projectKind = "Unknown";
+            AnalyzeTextAuthoringProjectKind projectKind = "Unknown";
             string location = default;
             string language = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectKind = new AnalyzeTextAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"u8))

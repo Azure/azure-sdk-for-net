@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             Argument.AssertNotNull(evaluationOptions, nameof(evaluationOptions));
             Argument.AssertNotNull(customEntityRecognitionEvaluation, nameof(customEntityRecognitionEvaluation));
 
-            ProjectKind = ProjectKind.CustomEntityRecognition;
+            ProjectKind = AnalyzeTextAuthoringProjectKind.CustomEntityRecognition;
             CustomEntityRecognitionEvaluation = customEntityRecognitionEvaluation;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customEntityRecognitionEvaluation"> Contains the data related to extraction evaluation. </param>
-        internal CustomEntityRecognitionEvaluationSummary(ProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, EntityRecognitionEvaluationSummary customEntityRecognitionEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
+        internal CustomEntityRecognitionEvaluationSummary(AnalyzeTextAuthoringProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, EntityRecognitionEvaluationSummary customEntityRecognitionEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
         {
             CustomEntityRecognitionEvaluation = customEntityRecognitionEvaluation;
         }

@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             string modelLabel = default;
             string trainingConfigVersion = default;
             EvaluationDetails evaluationOptions = default;
-            DataGenerationSettings dataGenerationSettings = default;
+            DataGenerationSetting dataGenerationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                     {
                         continue;
                     }
-                    dataGenerationSettings = DataGenerationSettings.DeserializeDataGenerationSettings(property.Value, options);
+                    dataGenerationSettings = DataGenerationSetting.DeserializeDataGenerationSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

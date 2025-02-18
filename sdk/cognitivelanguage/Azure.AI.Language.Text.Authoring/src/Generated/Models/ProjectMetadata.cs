@@ -46,29 +46,29 @@ namespace Azure.AI.Language.Text.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProjectMetadata"/>. </summary>
-        /// <param name="createdDateTime"> Represents the project creation datetime. </param>
-        /// <param name="lastModifiedDateTime"> Represents the project last modification datetime. </param>
+        /// <param name="createdOn"> Represents the project creation datetime. </param>
+        /// <param name="lastModifiedOn"> Represents the project last modification datetime. </param>
         /// <param name="projectKind"> The project kind. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageInputContainerName"/> or <paramref name="language"/> is null. </exception>
-        internal ProjectMetadata(DateTimeOffset createdDateTime, DateTimeOffset lastModifiedDateTime, ProjectKind projectKind, string storageInputContainerName, string language)
+        internal ProjectMetadata(DateTimeOffset createdOn, DateTimeOffset lastModifiedOn, AnalyzeTextAuthoringProjectKind projectKind, string storageInputContainerName, string language)
         {
             Argument.AssertNotNull(storageInputContainerName, nameof(storageInputContainerName));
             Argument.AssertNotNull(language, nameof(language));
 
-            CreatedDateTime = createdDateTime;
-            LastModifiedDateTime = lastModifiedDateTime;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             ProjectKind = projectKind;
             StorageInputContainerName = storageInputContainerName;
             Language = language;
         }
 
         /// <summary> Initializes a new instance of <see cref="ProjectMetadata"/>. </summary>
-        /// <param name="createdDateTime"> Represents the project creation datetime. </param>
-        /// <param name="lastModifiedDateTime"> Represents the project last modification datetime. </param>
-        /// <param name="lastTrainedDateTime"> Represents the project last training datetime. </param>
-        /// <param name="lastDeployedDateTime"> Represents the project last deployment datetime. </param>
+        /// <param name="createdOn"> Represents the project creation datetime. </param>
+        /// <param name="lastModifiedOn"> Represents the project last modification datetime. </param>
+        /// <param name="lastTrainedOn"> Represents the project last training datetime. </param>
+        /// <param name="lastDeployedOn"> Represents the project last deployment datetime. </param>
         /// <param name="projectKind"> The project kind. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
         /// <param name="settings"> The project settings. </param>
@@ -77,12 +77,12 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectMetadata(DateTimeOffset createdDateTime, DateTimeOffset lastModifiedDateTime, DateTimeOffset? lastTrainedDateTime, DateTimeOffset? lastDeployedDateTime, ProjectKind projectKind, string storageInputContainerName, ProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProjectMetadata(DateTimeOffset createdOn, DateTimeOffset lastModifiedOn, DateTimeOffset? lastTrainedOn, DateTimeOffset? lastDeployedOn, AnalyzeTextAuthoringProjectKind projectKind, string storageInputContainerName, AnalyzeTextAuthoringProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            CreatedDateTime = createdDateTime;
-            LastModifiedDateTime = lastModifiedDateTime;
-            LastTrainedDateTime = lastTrainedDateTime;
-            LastDeployedDateTime = lastDeployedDateTime;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
+            LastTrainedOn = lastTrainedOn;
+            LastDeployedOn = lastDeployedOn;
             ProjectKind = projectKind;
             StorageInputContainerName = storageInputContainerName;
             Settings = settings;
@@ -99,19 +99,19 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Represents the project creation datetime. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
         /// <summary> Represents the project last modification datetime. </summary>
-        public DateTimeOffset LastModifiedDateTime { get; }
+        public DateTimeOffset LastModifiedOn { get; }
         /// <summary> Represents the project last training datetime. </summary>
-        public DateTimeOffset? LastTrainedDateTime { get; }
+        public DateTimeOffset? LastTrainedOn { get; }
         /// <summary> Represents the project last deployment datetime. </summary>
-        public DateTimeOffset? LastDeployedDateTime { get; }
+        public DateTimeOffset? LastDeployedOn { get; }
         /// <summary> The project kind. </summary>
-        public ProjectKind ProjectKind { get; }
+        public AnalyzeTextAuthoringProjectKind ProjectKind { get; }
         /// <summary> The storage container name. </summary>
         public string StorageInputContainerName { get; }
         /// <summary> The project settings. </summary>
-        public ProjectSettings Settings { get; }
+        public AnalyzeTextAuthoringProjectSettings Settings { get; }
         /// <summary> The new project name. </summary>
         public string ProjectName { get; }
         /// <summary> Whether the project would be used for multiple languages or not. </summary>

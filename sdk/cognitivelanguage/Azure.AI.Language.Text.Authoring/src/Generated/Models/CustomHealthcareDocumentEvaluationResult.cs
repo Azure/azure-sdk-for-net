@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(customHealthcareResult, nameof(customHealthcareResult));
 
-            ProjectKind = ProjectKind.CustomHealthcare;
+            ProjectKind = AnalyzeTextAuthoringProjectKind.CustomHealthcare;
             CustomHealthcareResult = customHealthcareResult;
         }
 
@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customHealthcareResult"> Represents the evaluation prediction for entity recognition. </param>
-        internal CustomHealthcareDocumentEvaluationResult(ProjectKind projectKind, string location, string language, IDictionary<string, BinaryData> serializedAdditionalRawData, DocumentHealthcareEvaluationResult customHealthcareResult) : base(projectKind, location, language, serializedAdditionalRawData)
+        internal CustomHealthcareDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind projectKind, string location, string language, IDictionary<string, BinaryData> serializedAdditionalRawData, DocumentHealthcareEvaluationResult customHealthcareResult) : base(projectKind, location, language, serializedAdditionalRawData)
         {
             CustomHealthcareResult = customHealthcareResult;
         }

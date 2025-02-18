@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDocumentEvaluationResult(ProjectKind projectKind, string location, string language, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(projectKind, location, language, serializedAdditionalRawData)
+        internal UnknownDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind projectKind, string location, string language, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(projectKind, location, language, serializedAdditionalRawData)
         {
         }
 

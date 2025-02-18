@@ -94,9 +94,9 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
-            ProjectKind projectKind = default;
+            AnalyzeTextAuthoringProjectKind projectKind = default;
             string storageInputContainerName = default;
-            ProjectSettings settings = default;
+            AnalyzeTextAuthoringProjectSettings settings = default;
             string projectName = default;
             bool? multilingual = default;
             string description = default;
@@ -107,7 +107,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectKind = new AnalyzeTextAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageInputContainerName"u8))
@@ -121,7 +121,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                     {
                         continue;
                     }
-                    settings = ProjectSettings.DeserializeProjectSettings(property.Value, options);
+                    settings = AnalyzeTextAuthoringProjectSettings.DeserializeAnalyzeTextAuthoringProjectSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("projectName"u8))

@@ -51,7 +51,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="projectName"> The new project name. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageInputContainerName"/>, <paramref name="projectName"/> or <paramref name="language"/> is null. </exception>
-        public CreateProjectDetails(ProjectKind projectKind, string storageInputContainerName, string projectName, string language)
+        public CreateProjectDetails(AnalyzeTextAuthoringProjectKind projectKind, string storageInputContainerName, string projectName, string language)
         {
             Argument.AssertNotNull(storageInputContainerName, nameof(storageInputContainerName));
             Argument.AssertNotNull(projectName, nameof(projectName));
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateProjectDetails(ProjectKind projectKind, string storageInputContainerName, ProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateProjectDetails(AnalyzeTextAuthoringProjectKind projectKind, string storageInputContainerName, AnalyzeTextAuthoringProjectSettings settings, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             StorageInputContainerName = storageInputContainerName;
@@ -90,11 +90,11 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> The project kind. </summary>
-        public ProjectKind ProjectKind { get; }
+        public AnalyzeTextAuthoringProjectKind ProjectKind { get; }
         /// <summary> The storage container name. </summary>
         public string StorageInputContainerName { get; }
         /// <summary> The project settings. </summary>
-        public ProjectSettings Settings { get; set; }
+        public AnalyzeTextAuthoringProjectSettings Settings { get; set; }
         /// <summary> The new project name. </summary>
         public string ProjectName { get; }
         /// <summary> Whether the project would be used for multiple languages or not. </summary>

@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="category"> Represents the sentiment category. </param>
         /// <param name="offset"> Represents the sentiment offset index relative to the original text. </param>
         /// <param name="length"> Represents the sentiment length. </param>
-        internal DocumentSentimentLabelEvaluationResult(TextAnalysisAuthoringSentiment category, int offset, int length)
+        internal DocumentSentimentLabelEvaluationResult(AnalyzeTextAuthoringSentiment category, int offset, int length)
         {
             Category = category;
             Offset = offset;
@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="offset"> Represents the sentiment offset index relative to the original text. </param>
         /// <param name="length"> Represents the sentiment length. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentSentimentLabelEvaluationResult(TextAnalysisAuthoringSentiment category, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentSentimentLabelEvaluationResult(AnalyzeTextAuthoringSentiment category, int offset, int length, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Offset = offset;
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Represents the sentiment category. </summary>
-        public TextAnalysisAuthoringSentiment Category { get; }
+        public AnalyzeTextAuthoringSentiment Category { get; }
         /// <summary> Represents the sentiment offset index relative to the original text. </summary>
         public int Offset { get; }
         /// <summary> Represents the sentiment length. </summary>

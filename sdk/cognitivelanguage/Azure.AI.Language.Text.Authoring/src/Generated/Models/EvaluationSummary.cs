@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationSummary(ProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvaluationSummary(AnalyzeTextAuthoringProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             EvaluationOptions = evaluationOptions;
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Represents the project type that the evaluation ran on. </summary>
-        internal ProjectKind ProjectKind { get; set; }
+        internal AnalyzeTextAuthoringProjectKind ProjectKind { get; set; }
         /// <summary> Represents the options used running the evaluation. </summary>
         public EvaluationDetails EvaluationOptions { get; }
     }

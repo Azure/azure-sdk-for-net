@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Text.Authoring.Models
 {
     /// <summary> Represents the exported assets for a custom text sentiment project. </summary>
-    public partial class ExportedCustomTextSentimentProjectAssets : ExportedProjectAssets
+    public partial class ExportedCustomTextSentimentProjectAssets : ExportedProjectAsset
     {
         /// <summary> Initializes a new instance of <see cref="ExportedCustomTextSentimentProjectAssets"/>. </summary>
         public ExportedCustomTextSentimentProjectAssets()
         {
-            ProjectKind = ProjectKind.CustomTextSentiment;
+            ProjectKind = AnalyzeTextAuthoringProjectKind.CustomTextSentiment;
             Documents = new ChangeTrackingList<ExportedCustomTextSentimentDocument>();
         }
 
@@ -24,7 +24,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="projectKind"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="documents"> The list of documents belonging to the project. </param>
-        internal ExportedCustomTextSentimentProjectAssets(ProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ExportedCustomTextSentimentDocument> documents) : base(projectKind, serializedAdditionalRawData)
+        internal ExportedCustomTextSentimentProjectAssets(AnalyzeTextAuthoringProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ExportedCustomTextSentimentDocument> documents) : base(projectKind, serializedAdditionalRawData)
         {
             Documents = documents;
         }

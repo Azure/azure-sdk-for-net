@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 return null;
             }
             EntityRecognitionEvaluationSummary customHealthcareEvaluation = default;
-            ProjectKind projectKind = default;
+            AnalyzeTextAuthoringProjectKind projectKind = default;
             EvaluationDetails evaluationOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -73,7 +73,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectKind = new AnalyzeTextAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("evaluationOptions"u8))

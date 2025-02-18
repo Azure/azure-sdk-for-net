@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             Argument.AssertNotNull(evaluationOptions, nameof(evaluationOptions));
             Argument.AssertNotNull(customHealthcareEvaluation, nameof(customHealthcareEvaluation));
 
-            ProjectKind = ProjectKind.CustomHealthcare;
+            ProjectKind = AnalyzeTextAuthoringProjectKind.CustomHealthcare;
             CustomHealthcareEvaluation = customHealthcareEvaluation;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customHealthcareEvaluation"> Contains the data related to health care evaluation. </param>
-        internal CustomHealthcareEvaluationSummary(ProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, EntityRecognitionEvaluationSummary customHealthcareEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
+        internal CustomHealthcareEvaluationSummary(AnalyzeTextAuthoringProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, EntityRecognitionEvaluationSummary customHealthcareEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
         {
             CustomHealthcareEvaluation = customHealthcareEvaluation;
         }

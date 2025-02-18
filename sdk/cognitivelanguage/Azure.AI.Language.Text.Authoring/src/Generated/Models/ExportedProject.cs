@@ -66,11 +66,11 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="metadata"> Represents the project metadata. </param>
         /// <param name="assets">
         /// Represents the project assets.
-        /// Please note <see cref="ExportedProjectAssets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAssets"/>, <see cref="ExportedCustomEntityRecognitionProjectAssets"/>, <see cref="ExportedCustomHealthcareProjectAssets"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAssets"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAssets"/> and <see cref="ExportedCustomTextSentimentProjectAssets"/>.
+        /// Please note <see cref="ExportedProjectAsset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="ExportedCustomHealthcareProjectAsset"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/> and <see cref="ExportedCustomTextSentimentProjectAssets"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportedProject(string projectFileVersion, StringIndexType stringIndexType, CreateProjectDetails metadata, ExportedProjectAssets assets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportedProject(string projectFileVersion, StringIndexType stringIndexType, CreateProjectDetails metadata, ExportedProjectAsset assets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectFileVersion = projectFileVersion;
             StringIndexType = stringIndexType;
@@ -92,9 +92,9 @@ namespace Azure.AI.Language.Text.Authoring.Models
         public CreateProjectDetails Metadata { get; }
         /// <summary>
         /// Represents the project assets.
-        /// Please note <see cref="ExportedProjectAssets"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAssets"/>, <see cref="ExportedCustomEntityRecognitionProjectAssets"/>, <see cref="ExportedCustomHealthcareProjectAssets"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAssets"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAssets"/> and <see cref="ExportedCustomTextSentimentProjectAssets"/>.
+        /// Please note <see cref="ExportedProjectAsset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="ExportedCustomHealthcareProjectAsset"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/> and <see cref="ExportedCustomTextSentimentProjectAssets"/>.
         /// </summary>
-        public ExportedProjectAssets Assets { get; set; }
+        public ExportedProjectAsset Assets { get; set; }
     }
 }

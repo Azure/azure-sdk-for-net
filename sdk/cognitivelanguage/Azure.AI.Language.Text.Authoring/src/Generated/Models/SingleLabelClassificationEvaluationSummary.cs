@@ -55,7 +55,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="confusionMatrix"/> or <paramref name="classes"/> is null. </exception>
-        internal SingleLabelClassificationEvaluationSummary(ConfusionMatrix confusionMatrix, IReadOnlyDictionary<string, SingleLabelClassEvaluationSummary> classes, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall)
+        internal SingleLabelClassificationEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> confusionMatrix, IReadOnlyDictionary<string, SingleLabelClassEvaluationSummary> classes, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall)
         {
             Argument.AssertNotNull(confusionMatrix, nameof(confusionMatrix));
             Argument.AssertNotNull(classes, nameof(classes));
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SingleLabelClassificationEvaluationSummary(ConfusionMatrix confusionMatrix, IReadOnlyDictionary<string, SingleLabelClassEvaluationSummary> classes, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SingleLabelClassificationEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> confusionMatrix, IReadOnlyDictionary<string, SingleLabelClassEvaluationSummary> classes, float microF1, float microPrecision, float microRecall, float macroF1, float macroPrecision, float macroRecall, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConfusionMatrix = confusionMatrix;
             Classes = classes;
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         }
 
         /// <summary> Represents the confusion matrix between two classes (the two classes can be the same). The matrix is between the class that was labelled and the class that was predicted. </summary>
-        public ConfusionMatrix ConfusionMatrix { get; }
+        public IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> ConfusionMatrix { get; }
         /// <summary> Represents the classes evaluation. </summary>
         public IReadOnlyDictionary<string, SingleLabelClassEvaluationSummary> Classes { get; }
         /// <summary> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </summary>

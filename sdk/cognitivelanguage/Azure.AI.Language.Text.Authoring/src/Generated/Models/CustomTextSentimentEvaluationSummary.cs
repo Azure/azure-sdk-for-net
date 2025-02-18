@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             Argument.AssertNotNull(evaluationOptions, nameof(evaluationOptions));
             Argument.AssertNotNull(customTextSentimentEvaluation, nameof(customTextSentimentEvaluation));
 
-            ProjectKind = ProjectKind.CustomTextSentiment;
+            ProjectKind = AnalyzeTextAuthoringProjectKind.CustomTextSentiment;
             CustomTextSentimentEvaluation = customTextSentimentEvaluation;
         }
 
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customTextSentimentEvaluation"> Contains the data related to custom sentiment evaluation. </param>
-        internal CustomTextSentimentEvaluationSummary(ProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, TextSentimentEvaluationSummary customTextSentimentEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
+        internal CustomTextSentimentEvaluationSummary(AnalyzeTextAuthoringProjectKind projectKind, EvaluationDetails evaluationOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, TextSentimentEvaluationSummary customTextSentimentEvaluation) : base(projectKind, evaluationOptions, serializedAdditionalRawData)
         {
             CustomTextSentimentEvaluation = customTextSentimentEvaluation;
         }

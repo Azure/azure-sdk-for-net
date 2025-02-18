@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <param name="dataGenerationSettings"> Represents the settings for using data generation as part of training a custom model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobDetails(string modelLabel, string trainingConfigVersion, EvaluationDetails evaluationOptions, DataGenerationSettings dataGenerationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingJobDetails(string modelLabel, string trainingConfigVersion, EvaluationDetails evaluationOptions, DataGenerationSetting dataGenerationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
@@ -85,6 +85,6 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <summary> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </summary>
         public EvaluationDetails EvaluationOptions { get; set; }
         /// <summary> Represents the settings for using data generation as part of training a custom model. </summary>
-        public DataGenerationSettings DataGenerationSettings { get; set; }
+        public DataGenerationSetting DataGenerationSettings { get; set; }
     }
 }

@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 return null;
             }
             IList<ExportedCustomTextSentimentDocument> documents = default;
-            ProjectKind projectKind = default;
+            AnalyzeTextAuthoringProjectKind projectKind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectKind = new AnalyzeTextAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

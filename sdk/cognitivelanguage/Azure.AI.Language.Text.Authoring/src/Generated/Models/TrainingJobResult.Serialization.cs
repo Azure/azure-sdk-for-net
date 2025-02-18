@@ -45,10 +45,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 writer.WritePropertyName("evaluationStatus"u8);
                 writer.WriteObjectValue(EvaluationStatus, options);
             }
-            if (Optional.IsDefined(EstimatedEndDateTime))
+            if (Optional.IsDefined(EstimatedEndOn))
             {
                 writer.WritePropertyName("estimatedEndDateTime"u8);
-                writer.WriteStringValue(EstimatedEndDateTime.Value, "O");
+                writer.WriteStringValue(EstimatedEndOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,8 +89,8 @@ namespace Azure.AI.Language.Text.Authoring.Models
             }
             string modelLabel = default;
             string trainingConfigVersion = default;
-            SubTrainingJobState trainingStatus = default;
-            SubTrainingJobState evaluationStatus = default;
+            SubTrainingOperationState trainingStatus = default;
+            SubTrainingOperationState evaluationStatus = default;
             DateTimeOffset? estimatedEndDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 }
                 if (property.NameEquals("trainingStatus"u8))
                 {
-                    trainingStatus = SubTrainingJobState.DeserializeSubTrainingJobState(property.Value, options);
+                    trainingStatus = SubTrainingOperationState.DeserializeSubTrainingOperationState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("evaluationStatus"u8))
@@ -117,7 +117,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                     {
                         continue;
                     }
-                    evaluationStatus = SubTrainingJobState.DeserializeSubTrainingJobState(property.Value, options);
+                    evaluationStatus = SubTrainingOperationState.DeserializeSubTrainingOperationState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("estimatedEndDateTime"u8))

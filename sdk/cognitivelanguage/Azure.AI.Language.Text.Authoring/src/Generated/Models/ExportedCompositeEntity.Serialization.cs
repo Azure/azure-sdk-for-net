@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             {
                 return null;
             }
-            CompositionSetting? compositionSetting = default;
+            AnalyzeTextAuthoringCompositionMode? compositionSetting = default;
             ExportedEntityList list = default;
             IList<ExportedPrebuiltEntity> prebuilts = default;
             string category = default;
@@ -110,7 +110,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                     {
                         continue;
                     }
-                    compositionSetting = new CompositionSetting(property.Value.GetString());
+                    compositionSetting = new AnalyzeTextAuthoringCompositionMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("list"u8))

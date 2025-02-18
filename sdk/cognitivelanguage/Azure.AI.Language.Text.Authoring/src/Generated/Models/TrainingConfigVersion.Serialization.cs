@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 writer.WriteStringValue(TrainingConfigVersionProperty);
             }
             writer.WritePropertyName("modelExpirationDate"u8);
-            writer.WriteStringValue(ModelExpirationDate, "D");
+            writer.WriteStringValue(ModelExpiredOn, "D");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
