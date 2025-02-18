@@ -4185,8 +4185,7 @@ namespace Azure.Storage.Blobs.Specialized
         #region Delete
         /// <summary>
         /// The <see cref="Delete"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection which could take several minutes.
+        /// or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4227,8 +4226,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteAsync"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection which could take several minutes.
+        /// or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4269,8 +4267,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified blob
-        /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection which could take several minutes.
+        /// or snapshot for deletion, if the blob exists.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4312,8 +4309,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified blob
-        /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection which could take several minutes.
+        /// or snapshot for deletion, if the blob exists.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4355,8 +4351,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified blob
-        /// or snapshot for deletion, if the blob exists. The blob is later deleted
-        /// during garbage collection which could take several minutes.
+        /// or snapshot for deletion, if the blob exists.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4436,8 +4431,7 @@ namespace Azure.Storage.Blobs.Specialized
 
         /// <summary>
         /// The <see cref="DeleteInternal"/> operation marks the specified blob
-        /// or snapshot for  deletion. The blob is later deleted during
-        /// garbage collection which could take several minutes.
+        /// or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
