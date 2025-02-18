@@ -52,7 +52,7 @@ Filters = new ObjectReplicationPolicyFilter
 PrefixMatch = {"blobA", "blobB"},
 },
 }},
-                MetricsEnabled = true,
+                IsMetricsEnabled = true,
             };
             ArmOperation<ObjectReplicationPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, objectReplicationPolicyId, data);
             ObjectReplicationPolicyResource result = lro.Value;
@@ -102,7 +102,7 @@ PrefixMatch = {"blobA", "blobB"},
 MinCreationTime = "2020-02-19T16:05:00Z",
 },
 }},
-                MetricsEnabled = true,
+                IsMetricsEnabled = true,
             };
             ArmOperation<ObjectReplicationPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, objectReplicationPolicyId, data);
             ObjectReplicationPolicyResource result = lro.Value;
@@ -151,7 +151,7 @@ Filters = new ObjectReplicationPolicyFilter
 PrefixMatch = {"blobA", "blobB"},
 },
 }, new ObjectReplicationPolicyRule("scont179", "dcont179")},
-                MetricsEnabled = true,
+                IsMetricsEnabled = true,
             };
             ArmOperation<ObjectReplicationPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, objectReplicationPolicyId, data);
             ObjectReplicationPolicyResource result = lro.Value;
@@ -203,7 +203,7 @@ PrefixMatch = {"blobA", "blobB"},
 {
 RuleId = "cfbb4bc2-8b60-429f-b05a-d1e0942b33b2",
 }},
-                MetricsEnabled = true,
+                IsMetricsEnabled = true,
             };
             ArmOperation<ObjectReplicationPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, objectReplicationPolicyId, data);
             ObjectReplicationPolicyResource result = lro.Value;

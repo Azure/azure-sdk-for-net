@@ -262,6 +262,10 @@ rename-mapping:
     TriggerParameters: ExecutionTriggerParameters
     TriggerParametersUpdate: ExecutionTriggerParametersUpdate
     TriggerType: ExecutionTriggerType
+    ObjectReplicationPolicyPropertiesMetrics.enabled: IsMetricsEnabled
+    AccountLimits: FileServiceAccountLimits
+    AccountUsage: FileServiceAccountUsage
+    AccountUsageElements: FileServiceAccountUsageElements
 
 directive:
     - from: swagger-document

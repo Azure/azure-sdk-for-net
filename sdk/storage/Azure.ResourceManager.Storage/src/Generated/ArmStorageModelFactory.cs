@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="burstingConstants"> Constants used for calculating included burst IOPS and maximum burst credits for IOPS for a file share in the storage account. </param>
         /// <param name="storageAccountUsage"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares and soft-deleted shares in the account. </param>
         /// <returns> A new <see cref="Models.FileServiceUsageProperties"/> instance for mocking. </returns>
-        public static FileServiceUsageProperties FileServiceUsageProperties(AccountLimits storageAccountLimits = null, FileShareLimits fileShareLimits = null, FileShareRecommendations fileShareRecommendations = null, BurstingConstants burstingConstants = null, AccountUsage storageAccountUsage = null)
+        public static FileServiceUsageProperties FileServiceUsageProperties(FileServiceAccountLimits storageAccountLimits = null, FileShareLimits fileShareLimits = null, FileShareRecommendations fileShareRecommendations = null, BurstingConstants burstingConstants = null, FileServiceAccountUsage storageAccountUsage = null)
         {
             return new FileServiceUsageProperties(
                 storageAccountLimits,
@@ -356,15 +356,15 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccountLimits"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FileServiceAccountLimits"/>. </summary>
         /// <param name="maxFileShares"> The maximum number of file shares limit for the storage account. </param>
         /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for the storage account. </param>
         /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </param>
-        /// <returns> A new <see cref="Models.AccountLimits"/> instance for mocking. </returns>
-        public static AccountLimits AccountLimits(int? maxFileShares = null, int? maxProvisionedStorageGiB = null, int? maxProvisionedIops = null, int? maxProvisionedBandwidthMiBPerSec = null)
+        /// <returns> A new <see cref="Models.FileServiceAccountLimits"/> instance for mocking. </returns>
+        public static FileServiceAccountLimits FileServiceAccountLimits(int? maxFileShares = null, int? maxProvisionedStorageGiB = null, int? maxProvisionedIops = null, int? maxProvisionedBandwidthMiBPerSec = null)
         {
-            return new AccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIops, maxProvisionedBandwidthMiBPerSec, serializedAdditionalRawData: null);
+            return new FileServiceAccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIops, maxProvisionedBandwidthMiBPerSec, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FileShareLimits"/>. </summary>
@@ -408,24 +408,24 @@ namespace Azure.ResourceManager.Storage.Models
             return new BurstingConstants(burstFloorIops, burstIOScalar, burstTimeframeSeconds, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccountUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FileServiceAccountUsage"/>. </summary>
         /// <param name="liveShares"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </param>
         /// <param name="softDeletedShares"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </param>
-        /// <returns> A new <see cref="Models.AccountUsage"/> instance for mocking. </returns>
-        public static AccountUsage AccountUsage(AccountUsageElements liveShares = null, AccountUsageElements softDeletedShares = null)
+        /// <returns> A new <see cref="Models.FileServiceAccountUsage"/> instance for mocking. </returns>
+        public static FileServiceAccountUsage FileServiceAccountUsage(FileServiceAccountUsageElements liveShares = null, FileServiceAccountUsageElements softDeletedShares = null)
         {
-            return new AccountUsage(liveShares, softDeletedShares, serializedAdditionalRawData: null);
+            return new FileServiceAccountUsage(liveShares, softDeletedShares, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AccountUsageElements"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FileServiceAccountUsageElements"/>. </summary>
         /// <param name="fileShareCount"> The total number of file shares. </param>
         /// <param name="provisionedStorageGiB"> The total provisioned storage quota in gibibytes. </param>
         /// <param name="provisionedIops"> The total provisioned IOPS. </param>
         /// <param name="provisionedBandwidthMiBPerSec"> The total provisioned bandwidth in mebibytes per second. </param>
-        /// <returns> A new <see cref="Models.AccountUsageElements"/> instance for mocking. </returns>
-        public static AccountUsageElements AccountUsageElements(int? fileShareCount = null, int? provisionedStorageGiB = null, int? provisionedIops = null, int? provisionedBandwidthMiBPerSec = null)
+        /// <returns> A new <see cref="Models.FileServiceAccountUsageElements"/> instance for mocking. </returns>
+        public static FileServiceAccountUsageElements FileServiceAccountUsageElements(int? fileShareCount = null, int? provisionedStorageGiB = null, int? provisionedIops = null, int? provisionedBandwidthMiBPerSec = null)
         {
-            return new AccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIops, provisionedBandwidthMiBPerSec, serializedAdditionalRawData: null);
+            return new FileServiceAccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIops, provisionedBandwidthMiBPerSec, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
@@ -1230,9 +1230,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sourceAccount"> Required. Source account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="destinationAccount"> Required. Destination account name. It should be full resource id if allowCrossTenantReplication set to false. </param>
         /// <param name="rules"> The storage account object replication rules. </param>
-        /// <param name="metricsEnabled"> Optional. The object replication policy metrics feature options. </param>
+        /// <param name="isMetricsEnabled"> Optional. The object replication policy metrics feature options. </param>
         /// <returns> A new <see cref="Storage.ObjectReplicationPolicyData"/> instance for mocking. </returns>
-        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string policyId = null, DateTimeOffset? enabledOn = null, string sourceAccount = null, string destinationAccount = null, IEnumerable<ObjectReplicationPolicyRule> rules = null, bool? metricsEnabled = null)
+        public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string policyId = null, DateTimeOffset? enabledOn = null, string sourceAccount = null, string destinationAccount = null, IEnumerable<ObjectReplicationPolicyRule> rules = null, bool? isMetricsEnabled = null)
         {
             rules ??= new List<ObjectReplicationPolicyRule>();
 
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.Storage.Models
                 sourceAccount,
                 destinationAccount,
                 rules?.ToList(),
-                metricsEnabled != null ? new ObjectReplicationPolicyPropertiesMetrics(metricsEnabled, serializedAdditionalRawData: null) : null,
+                isMetricsEnabled != null ? new ObjectReplicationPolicyPropertiesMetrics(isMetricsEnabled, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ObjectReplicationPolicyData ObjectReplicationPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string policyId, DateTimeOffset? enabledOn, string sourceAccount, string destinationAccount, IEnumerable<ObjectReplicationPolicyRule> rules)
         {
-            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, metricsEnabled: default);
+            return ObjectReplicationPolicyData(id: id, name: name, resourceType: resourceType, systemData: systemData, policyId: policyId, enabledOn: enabledOn, sourceAccount: sourceAccount, destinationAccount: destinationAccount, rules: rules, isMetricsEnabled: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Storage.Models.StorageAccountCreateOrUpdateContent" />. </summary>

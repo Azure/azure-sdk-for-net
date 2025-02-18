@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </summary>
-    public partial class AccountUsageElements
+    public partial class FileServiceAccountUsageElements
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountUsageElements"/>. </summary>
-        internal AccountUsageElements()
+        /// <summary> Initializes a new instance of <see cref="FileServiceAccountUsageElements"/>. </summary>
+        internal FileServiceAccountUsageElements()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountUsageElements"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceAccountUsageElements"/>. </summary>
         /// <param name="fileShareCount"> The total number of file shares. </param>
         /// <param name="provisionedStorageGiB"> The total provisioned storage quota in gibibytes. </param>
         /// <param name="provisionedIops"> The total provisioned IOPS. </param>
         /// <param name="provisionedBandwidthMiBPerSec"> The total provisioned bandwidth in mebibytes per second. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountUsageElements(int? fileShareCount, int? provisionedStorageGiB, int? provisionedIops, int? provisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileServiceAccountUsageElements(int? fileShareCount, int? provisionedStorageGiB, int? provisionedIops, int? provisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileShareCount = fileShareCount;
             ProvisionedStorageGiB = provisionedStorageGiB;

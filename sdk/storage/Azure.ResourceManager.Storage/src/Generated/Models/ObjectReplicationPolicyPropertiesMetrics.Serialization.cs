@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(ObjectReplicationPolicyPropertiesMetrics)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsMetricsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsMetricsEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsMetricsEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  enabled: ");
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                if (Optional.IsDefined(Enabled))
+                if (Optional.IsDefined(IsMetricsEnabled))
                 {
                     builder.Append("  enabled: ");
-                    var boolValue = Enabled.Value == true ? "true" : "false";
+                    var boolValue = IsMetricsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }

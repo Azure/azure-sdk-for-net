@@ -99,14 +99,14 @@ namespace Azure.ResourceManager.Storage
         internal ObjectReplicationPolicyPropertiesMetrics Metrics { get; set; }
         /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
         [WirePath("properties.metrics.enabled")]
-        public bool? MetricsEnabled
+        public bool? IsMetricsEnabled
         {
-            get => Metrics is null ? default : Metrics.Enabled;
+            get => Metrics is null ? default : Metrics.IsMetricsEnabled;
             set
             {
                 if (Metrics is null)
                     Metrics = new ObjectReplicationPolicyPropertiesMetrics();
-                Metrics.Enabled = value;
+                Metrics.IsMetricsEnabled = value;
             }
         }
     }

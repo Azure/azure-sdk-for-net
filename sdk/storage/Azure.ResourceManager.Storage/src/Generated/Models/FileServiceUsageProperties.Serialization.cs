@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            AccountLimits storageAccountLimits = default;
+            FileServiceAccountLimits storageAccountLimits = default;
             FileShareLimits fileShareLimits = default;
             FileShareRecommendations fileShareRecommendations = default;
             BurstingConstants burstingConstants = default;
-            AccountUsage storageAccountUsage = default;
+            FileServiceAccountUsage storageAccountUsage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    storageAccountLimits = AccountLimits.DeserializeAccountLimits(property.Value, options);
+                    storageAccountLimits = FileServiceAccountLimits.DeserializeFileServiceAccountLimits(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fileShareLimits"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    storageAccountUsage = AccountUsage.DeserializeAccountUsage(property.Value, options);
+                    storageAccountUsage = FileServiceAccountUsage.DeserializeFileServiceAccountUsage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class AccountUsageElements : IUtf8JsonSerializable, IJsonModel<AccountUsageElements>
+    public partial class FileServiceAccountUsageElements : IUtf8JsonSerializable, IJsonModel<FileServiceAccountUsageElements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountUsageElements>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileServiceAccountUsageElements>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AccountUsageElements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileServiceAccountUsageElements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountUsageElements>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceAccountUsageElements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountUsageElements)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileServiceAccountUsageElements)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(FileShareCount))
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        AccountUsageElements IJsonModel<AccountUsageElements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FileServiceAccountUsageElements IJsonModel<FileServiceAccountUsageElements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountUsageElements>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceAccountUsageElements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountUsageElements)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileServiceAccountUsageElements)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccountUsageElements(document.RootElement, options);
+            return DeserializeFileServiceAccountUsageElements(document.RootElement, options);
         }
 
-        internal static AccountUsageElements DeserializeAccountUsageElements(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FileServiceAccountUsageElements DeserializeFileServiceAccountUsageElements(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIOPS, provisionedBandwidthMiBPerSec, serializedAdditionalRawData);
+            return new FileServiceAccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIOPS, provisionedBandwidthMiBPerSec, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AccountUsageElements>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FileServiceAccountUsageElements>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountUsageElements>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceAccountUsageElements>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -231,26 +231,26 @@ namespace Azure.ResourceManager.Storage.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountUsageElements)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileServiceAccountUsageElements)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccountUsageElements IPersistableModel<AccountUsageElements>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FileServiceAccountUsageElements IPersistableModel<FileServiceAccountUsageElements>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountUsageElements>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceAccountUsageElements>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccountUsageElements(document.RootElement, options);
+                        return DeserializeFileServiceAccountUsageElements(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountUsageElements)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileServiceAccountUsageElements)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccountUsageElements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileServiceAccountUsageElements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

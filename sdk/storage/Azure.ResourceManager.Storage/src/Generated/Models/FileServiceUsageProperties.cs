@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="burstingConstants"> Constants used for calculating included burst IOPS and maximum burst credits for IOPS for a file share in the storage account. </param>
         /// <param name="storageAccountUsage"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares and soft-deleted shares in the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceUsageProperties(AccountLimits storageAccountLimits, FileShareLimits fileShareLimits, FileShareRecommendations fileShareRecommendations, BurstingConstants burstingConstants, AccountUsage storageAccountUsage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileServiceUsageProperties(FileServiceAccountLimits storageAccountLimits, FileShareLimits fileShareLimits, FileShareRecommendations fileShareRecommendations, BurstingConstants burstingConstants, FileServiceAccountUsage storageAccountUsage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageAccountLimits = storageAccountLimits;
             FileShareLimits = fileShareLimits;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </summary>
         [WirePath("storageAccountLimits")]
-        public AccountLimits StorageAccountLimits { get; }
+        public FileServiceAccountLimits StorageAccountLimits { get; }
         /// <summary> Minimum and maximum provisioned storage, IOPS and bandwidth limits for a file share in the storage account. </summary>
         [WirePath("fileShareLimits")]
         public FileShareLimits FileShareLimits { get; }
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.Storage.Models
         public BurstingConstants BurstingConstants { get; }
         /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares and soft-deleted shares in the account. </summary>
         [WirePath("storageAccountUsage")]
-        public AccountUsage StorageAccountUsage { get; }
+        public FileServiceAccountUsage StorageAccountUsage { get; }
     }
 }

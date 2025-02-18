@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("MetricsEnabled", out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsMetricsEnabled", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    metrics: ");

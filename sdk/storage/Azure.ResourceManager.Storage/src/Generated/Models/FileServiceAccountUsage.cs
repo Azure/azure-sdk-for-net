@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares and soft-deleted shares in the account. </summary>
-    public partial class AccountUsage
+    public partial class FileServiceAccountUsage
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountUsage"/>. </summary>
-        internal AccountUsage()
+        /// <summary> Initializes a new instance of <see cref="FileServiceAccountUsage"/>. </summary>
+        internal FileServiceAccountUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountUsage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceAccountUsage"/>. </summary>
         /// <param name="liveShares"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </param>
         /// <param name="softDeletedShares"> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountUsage(AccountUsageElements liveShares, AccountUsageElements softDeletedShares, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileServiceAccountUsage(FileServiceAccountUsageElements liveShares, FileServiceAccountUsageElements softDeletedShares, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LiveShares = liveShares;
             SoftDeletedShares = softDeletedShares;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </summary>
         [WirePath("liveShares")]
-        public AccountUsageElements LiveShares { get; }
+        public FileServiceAccountUsageElements LiveShares { get; }
         /// <summary> Usage of provisioned storage, IOPS, bandwidth and number of file shares across all live shares or soft-deleted shares in the account. </summary>
         [WirePath("softDeletedShares")]
-        public AccountUsageElements SoftDeletedShares { get; }
+        public FileServiceAccountUsageElements SoftDeletedShares { get; }
     }
 }

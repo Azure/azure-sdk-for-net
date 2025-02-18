@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Maximum provisioned storage, IOPS, bandwidth and number of file shares limits for the storage account. </summary>
-    public partial class AccountLimits
+    public partial class FileServiceAccountLimits
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountLimits"/>. </summary>
-        internal AccountLimits()
+        /// <summary> Initializes a new instance of <see cref="FileServiceAccountLimits"/>. </summary>
+        internal FileServiceAccountLimits()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountLimits"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServiceAccountLimits"/>. </summary>
         /// <param name="maxFileShares"> The maximum number of file shares limit for the storage account. </param>
         /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for the storage account. </param>
         /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountLimits(int? maxFileShares, int? maxProvisionedStorageGiB, int? maxProvisionedIops, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileServiceAccountLimits(int? maxFileShares, int? maxProvisionedStorageGiB, int? maxProvisionedIops, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxFileShares = maxFileShares;
             MaxProvisionedStorageGiB = maxProvisionedStorageGiB;

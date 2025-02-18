@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class AccountLimits : IUtf8JsonSerializable, IJsonModel<AccountLimits>
+    public partial class FileServiceAccountLimits : IUtf8JsonSerializable, IJsonModel<FileServiceAccountLimits>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountLimits>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileServiceAccountLimits>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AccountLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FileServiceAccountLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountLimits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceAccountLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountLimits)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FileServiceAccountLimits)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(MaxFileShares))
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        AccountLimits IJsonModel<AccountLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FileServiceAccountLimits IJsonModel<FileServiceAccountLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountLimits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceAccountLimits>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountLimits)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FileServiceAccountLimits)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccountLimits(document.RootElement, options);
+            return DeserializeFileServiceAccountLimits(document.RootElement, options);
         }
 
-        internal static AccountLimits DeserializeAccountLimits(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FileServiceAccountLimits DeserializeFileServiceAccountLimits(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIOPS, maxProvisionedBandwidthMiBPerSec, serializedAdditionalRawData);
+            return new FileServiceAccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIOPS, maxProvisionedBandwidthMiBPerSec, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.Storage.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AccountLimits>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FileServiceAccountLimits>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountLimits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceAccountLimits>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -231,26 +231,26 @@ namespace Azure.ResourceManager.Storage.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountLimits)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileServiceAccountLimits)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccountLimits IPersistableModel<AccountLimits>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FileServiceAccountLimits IPersistableModel<FileServiceAccountLimits>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountLimits>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FileServiceAccountLimits>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccountLimits(document.RootElement, options);
+                        return DeserializeFileServiceAccountLimits(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountLimits)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileServiceAccountLimits)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccountLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FileServiceAccountLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
