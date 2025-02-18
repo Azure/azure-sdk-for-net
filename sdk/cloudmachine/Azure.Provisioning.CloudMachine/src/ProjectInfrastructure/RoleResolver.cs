@@ -9,7 +9,7 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Roles;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 internal class RoleResolver(string id, Dictionary<Provisionable, (string RoleName, string RoleId)[]> annotations, IEnumerable<UserAssignedIdentity> managedIdentities, IEnumerable<BicepValue<Guid>> userPrincipals) : InfrastructureResolver
 {

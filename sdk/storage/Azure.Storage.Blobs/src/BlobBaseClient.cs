@@ -1007,7 +1007,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
-                range != default,
                 conditions,
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler: default,
@@ -1241,7 +1240,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return DownloadStreamingDirect(
                 range,
-                true,
                 conditions,
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
@@ -1318,7 +1316,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return await DownloadStreamingDirect(
                 range,
-                true,
                 conditions,
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
@@ -1372,7 +1369,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return DownloadStreamingDirect(
                 options?.Range ?? default,
-                options?._isRangeSet ?? false,
                 options?.Conditions,
                 options?.TransferValidation,
                 options?.ProgressHandler,
@@ -1420,7 +1416,6 @@ namespace Azure.Storage.Blobs.Specialized
         {
             return await DownloadStreamingDirect(
                 options?.Range ?? default,
-                options?._isRangeSet ?? false,
                 options?.Conditions,
                 options?.TransferValidation,
                 options?.ProgressHandler,
@@ -1435,7 +1430,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// Implementation for public DownloadStreaming/DownloadContent methods to call into.
         /// </summary>
         /// <param name="range"></param>
-        /// <param name="isRangeSet"></param>
         /// <param name="conditions"></param>
         /// <param name="transferValidationOverride"></param>
         /// <param name="progressHandler"></param>
@@ -1445,7 +1439,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns></returns>
         private async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingDirect(
             HttpRange range,
-            bool isRangeSet,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
@@ -1462,7 +1455,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
 
-            var response = await DownloadStreamingInternal(range, isRangeSet, conditions, transferValidationOverride, progressHandler, operationName, async, cancellationToken).ConfigureAwait(false);
+            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, async, cancellationToken).ConfigureAwait(false);
 
             // if using clientside encryption, wrap the auto-retry stream in a decryptor
             // we already return a nonseekable stream; returning a crypto stream is fine
@@ -1488,9 +1481,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="range">
         /// Optionally specified range.
         /// </param>
-        /// <param name="isRangeSet">
-        /// If range has been set
-        /// </param>
         /// <param name="conditions">
         /// Access conditions.
         /// </param>
@@ -1512,7 +1502,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <returns></returns>
         internal virtual async ValueTask<Response<BlobDownloadStreamingResult>> DownloadStreamingInternal(
             HttpRange range,
-            bool isRangeSet,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
@@ -1540,7 +1529,6 @@ namespace Azure.Storage.Blobs.Specialized
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         range,
-                        isRangeSet,
                         conditions,
                         validationOptions,
                         async: async,
@@ -1564,7 +1552,6 @@ namespace Azure.Storage.Blobs.Specialized
                         startOffset =>
                             StartDownloadAsync(
                                     range,
-                                    isRangeSet,
                                     conditionsWithEtag,
                                     validationOptions,
                                     startOffset,
@@ -1575,7 +1562,6 @@ namespace Azure.Storage.Blobs.Specialized
                         async startOffset =>
                             (await StartDownloadAsync(
                                 range,
-                                isRangeSet,
                                 conditionsWithEtag,
                                 validationOptions,
                                 startOffset,
@@ -1643,9 +1629,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// If provided, only download the bytes of the blob in the specified
         /// range.  If not provided, download the entire blob.
         /// </param>
-        /// <param name="isRangeSet">
-        /// Whether range has been set.
-        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// downloading this blob.
@@ -1676,7 +1659,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         private async ValueTask<Response<BlobDownloadStreamingResult>> StartDownloadAsync(
             HttpRange range,
-            bool isRangeSet,
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
             long startOffset = 0,
@@ -1684,7 +1666,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
         {
             HttpRange? pageRange = null;
-            if (isRangeSet) // we want to check if the range has been manually set
+            if (range != default(HttpRange)) // we want to check between non-nullable ranges
             {
                 pageRange = new HttpRange(
                     range.Offset + startOffset,
@@ -1961,7 +1943,6 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler: default,
                 range: default,
-                isRangeSet: false,
                 transferValidationOverride: default,
                 false, // async
                 cancellationToken)
@@ -2018,7 +1999,6 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler: default,
                 range: default,
-                isRangeSet: false,
                 transferValidationOverride: default,
                 true, // async
                 cancellationToken)
@@ -2084,7 +2064,6 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler,
                 range,
-                true,
                 transferValidationOverride: default,
                 false, // async
                 cancellationToken)
@@ -2150,7 +2129,6 @@ namespace Azure.Storage.Blobs.Specialized
                 conditions,
                 progressHandler,
                 range,
-                true,
                 transferValidationOverride: default,
                 true, // async
                 cancellationToken)
@@ -2203,7 +2181,6 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
-                options?._isRangeSet ?? false,
                 options?.TransferValidation,
                 async: false,
                 cancellationToken).EnsureCompleted();
@@ -2255,7 +2232,6 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.Conditions,
                 options?.ProgressHandler,
                 options?.Range ?? default,
-                options?._isRangeSet ?? false,
                 options?.TransferValidation,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
@@ -2264,14 +2240,12 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             HttpRange range,
-            bool isRangeSet,
             DownloadTransferValidationOptions transferValidationOverride,
             bool async,
             CancellationToken cancellationToken)
         {
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
-                isRangeSet,
                 conditions,
                 transferValidationOverride: transferValidationOverride,
                 progressHandler,
@@ -3212,7 +3186,6 @@ namespace Azure.Storage.Blobs.Specialized
                             }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
-                                true,
                                 readConditions,
                                 transferValidationOverride: downloadValidationOptions,
                                 progressHandler: default,

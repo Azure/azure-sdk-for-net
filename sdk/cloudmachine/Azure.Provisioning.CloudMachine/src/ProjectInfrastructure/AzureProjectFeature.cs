@@ -7,14 +7,14 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.Core;
+namespace Azure.Projects.Core;
 
-public abstract class CloudMachineFeature
+public abstract class AzureProjectFeature
 {
     private ProvisionableResource? _resource;
 
     protected abstract ProvisionableResource EmitResources(ProjectInfrastructure cm);
-    protected internal virtual void EmitConnections(ConnectionCollection connections, string cmId) { }
+    protected internal virtual void EmitConnections(ICollection<ClientConnection> connections, string cmId) { }
     protected internal virtual void EmitFeatures(FeatureCollection features, string cmId)
         => features.Add(this);
 
@@ -42,7 +42,7 @@ public abstract class CloudMachineFeature
 
     protected internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get; } = [];
 
-    protected static T EnsureEmits<T>(CloudMachineFeature feature)
+    protected static T EnsureEmits<T>(AzureProjectFeature feature)
     {
         if (feature.Resource is T typed)
             return typed;
