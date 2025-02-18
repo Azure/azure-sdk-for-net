@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/81330ee21a8300ad377eacbaaf16efabb91d56c0/specification/netapp/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/dc6126aca1852126259a71852672555a6e69dbc2/specification/netapp/resource-manager/readme.md
 tag: package-2024-09-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -255,6 +255,7 @@ rename-mapping:
   BackupsMigrationRequest.backupVaultId: -|string
   ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
   QuotaReport: NetAppVolumeQuotaReport
+  GetKeyVaultStatusResponse: GetKeyVaultStatusResult
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -263,7 +264,7 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
-  # remove this operation because the Snapshots_Update defines an empty object
+  # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
 
 ```

@@ -184,9 +184,10 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // invoke the operation
-            await netAppAccount.GetChangeKeyVaultInformationAsync(WaitUntil.Completed);
+            ArmOperation<GetKeyVaultStatusResult> lro = await netAppAccount.GetChangeKeyVaultInformationAsync(WaitUntil.Completed);
+            GetKeyVaultStatusResult result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

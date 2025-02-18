@@ -277,6 +277,19 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.GetKeyVaultStatusResult"/>. </summary>
+        /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
+        /// <param name="keyName"> The name of the key that should be used for encryption. </param>
+        /// <param name="keyVaultResourceId"> Azure resource ID of the key vault/managed HSM that should be used for encryption. </param>
+        /// <param name="keyVaultPrivateEndpoints"> Pairs of virtual network ID and private endpoint ID. Every virtual network that has volumes encrypted with customer-managed keys needs its own key vault private endpoint. </param>
+        /// <returns> A new <see cref="Models.GetKeyVaultStatusResult"/> instance for mocking. </returns>
+        public static GetKeyVaultStatusResult GetKeyVaultStatusResult(Uri keyVaultUri = null, string keyName = null, ResourceIdentifier keyVaultResourceId = null, IEnumerable<NetAppKeyVaultPrivateEndpoint> keyVaultPrivateEndpoints = null)
+        {
+            keyVaultPrivateEndpoints ??= new List<NetAppKeyVaultPrivateEndpoint>();
+
+            return new GetKeyVaultStatusResult(keyVaultUri, keyName, keyVaultResourceId, keyVaultPrivateEndpoints?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.NetAppChangeKeyVault"/>. </summary>
         /// <param name="keyVaultUri"> The URI of the key vault/managed HSM that should be used for encryption. </param>
         /// <param name="keyName"> The name of the key that should be used for encryption. </param>
