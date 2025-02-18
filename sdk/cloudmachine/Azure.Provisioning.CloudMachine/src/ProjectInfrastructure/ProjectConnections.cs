@@ -3,9 +3,9 @@
 
 using Azure.Core;
 
-namespace Azure.CloudMachine.Core
+namespace Azure.Projects.Core
 {
-    internal static class CloudMachineConnections
+    internal static class ProjectConnections
     {
         public static readonly string DefaultBlobContainerName = "default";
 

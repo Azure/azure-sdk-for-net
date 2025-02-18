@@ -8,7 +8,7 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Expressions;
 using System.Linq;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 /// <summary>
 /// Azure Developer CLI helpers.

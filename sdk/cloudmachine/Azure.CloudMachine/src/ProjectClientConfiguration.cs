@@ -12,7 +12,7 @@ namespace Azure.Core;
 /// <summary>
 /// extensions.
 /// </summary>
-public static class CloudMachineClientConfiguration
+public static class ProjectClientConfiguration
 {
     /// <summary>
     /// Adds a connection to the collection.
@@ -20,7 +20,7 @@ public static class CloudMachineClientConfiguration
     /// <param name="builder"></param>
     /// <param name="connections"></param>
     /// <returns></returns>
-    public static IConfigurationBuilder AddCloudMachineConnections(this IConfigurationBuilder builder, ConnectionCollection connections)
+    public static IConfigurationBuilder AddAzureProjectConnections(this IConfigurationBuilder builder, ConnectionCollection connections)
     {
         var source = new ConnectionCollectionConfigurationSource(connections);
         builder.Add(source);
@@ -32,7 +32,7 @@ public static class CloudMachineClientConfiguration
     /// <param name="builder"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static IConfigurationBuilder AddCloudMachineId(this IConfigurationBuilder builder, string id)
+    public static IConfigurationBuilder AddProjectId(this IConfigurationBuilder builder, string id)
     {
         var source = new CmidConfigurationSource(id);
         builder.Add(source);
@@ -66,7 +66,7 @@ internal class ConnectionCollectionConfigurationProvider : IConfigurationProvide
         string[] path = key.Split(':');
 
         if (path.Length != 4 ||
-            !path[0].Equals("CloudMachine", StringComparison.InvariantCultureIgnoreCase) ||
+            !path[0].Equals("AzureProject", StringComparison.InvariantCultureIgnoreCase) ||
             !path[1].Equals("Connections", StringComparison.InvariantCultureIgnoreCase))
         {
             value = null;
@@ -114,7 +114,7 @@ internal class CmidConfigurationProvider(string cmid) : IConfigurationProvider
 {
     public IEnumerable<string> GetChildKeys(IEnumerable<string> earlierKeys, string parentPath)
     {
-        if (parentPath.Equals("CloudMachine", StringComparison.InvariantCultureIgnoreCase))
+        if (parentPath.Equals("AzureProject", StringComparison.InvariantCultureIgnoreCase))
             return earlierKeys.Append("ID"); // todo: should this check if ID is not already in earlier keys
         else
             return earlierKeys;
@@ -127,7 +127,7 @@ internal class CmidConfigurationProvider(string cmid) : IConfigurationProvider
 
     public bool TryGet(string key, out string value)
     {
-        if (!key.Equals("CloudMachine:ID", StringComparison.InvariantCultureIgnoreCase))
+        if (!key.Equals("AzureProject:ID", StringComparison.InvariantCultureIgnoreCase))
         {
             value = null;
             return false;

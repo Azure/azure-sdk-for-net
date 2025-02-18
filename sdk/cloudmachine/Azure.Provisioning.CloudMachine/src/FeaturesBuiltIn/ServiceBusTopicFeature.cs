@@ -3,14 +3,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.CloudMachine.ServiceBus;
+namespace Azure.Projects.ServiceBus;
 
-internal class ServiceBusTopicFeature : CloudMachineFeature
+internal class ServiceBusTopicFeature : AzureProjectFeature
 {
     public ServiceBusTopicFeature(string name, ServiceBusNamespaceFeature parent)
     {

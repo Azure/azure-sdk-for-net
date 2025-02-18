@@ -2,22 +2,22 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.CognitiveServices;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.CloudMachine.OpenAI;
+namespace Azure.Projects.OpenAI;
 
-internal class OpenAIFeature : CloudMachineFeature
+internal class OpenAIFeature : AzureProjectFeature
 {
     public OpenAIFeature()
     { }
 
-    protected override ProvisionableResource EmitResources(ProjectInfrastructure cloudMachine)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
-        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(cloudMachine);
-        cloudMachine.AddResource(cognitiveServices);
+        CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(infrastructure);
+        infrastructure.AddResource(cognitiveServices);
 
         RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
 

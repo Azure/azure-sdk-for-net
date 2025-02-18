@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using Azure.CloudMachine.Core;
+using Azure.Projects.Core;
 using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
-namespace Azure.CloudMachine.Storage;
+namespace Azure.Projects.Storage;
 
-internal class StorageAccountFeature : CloudMachineFeature
+internal class StorageAccountFeature : AzureProjectFeature
 {
     private readonly StorageSkuName _skuName;
     public string Name { get; }
@@ -50,14 +50,14 @@ internal class StorageAccountFeature : CloudMachineFeature
     }
 }
 
-internal class BlobContainerFeature : CloudMachineFeature
+internal class BlobContainerFeature : AzureProjectFeature
 {
     public string ContainerName { get; }
     public BlobServiceFeature Parent { get; }
 
     public BlobContainerFeature(BlobServiceFeature parent, string? containerName = default)
     {
-        if (containerName == default) containerName = CloudMachineConnections.DefaultBlobContainerName;
+        if (containerName == default) containerName = ProjectConnections.DefaultBlobContainerName;
         ContainerName = containerName;
         Parent = parent;
     }
@@ -82,7 +82,7 @@ internal class BlobContainerFeature : CloudMachineFeature
     }
 }
 
-internal class BlobServiceFeature : CloudMachineFeature
+internal class BlobServiceFeature : AzureProjectFeature
 {
     public StorageAccountFeature Account { get; }
 

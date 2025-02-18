@@ -11,16 +11,16 @@ using Azure.Core;
 using Azure.Core.Rest;
 using Azure.Identity;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
-public static class CloudMachineCommands
+public static class AzureProjectsCommands
 {
     public static bool TryExecuteCommand(this ProjectInfrastructure cmi, string[] args)
     {
         if (args.Length < 1)
             return false;
 
-        string cmid = ProjectClient.ReadOrCreateCloudMachineId();
+        string cmid = ProjectClient.ReadOrCreateProjectId();
 
         if (args[0] == "-bicep")
         {
