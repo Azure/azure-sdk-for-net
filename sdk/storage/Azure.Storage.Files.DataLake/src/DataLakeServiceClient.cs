@@ -994,9 +994,7 @@ namespace Azure.Storage.Files.DataLake
         #region Delete File System
         /// <summary>
         /// The <see cref="DeleteFileSystem"/> operation marks the
-        /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection
-        /// which could take several minutes.
+        /// specified file system for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1049,9 +1047,7 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary>
         /// The <see cref="DeleteFileSystemAsync"/> operation marks the
-        /// specified file system for deletion. The file system and any paths
-        /// contained within it are later deleted during garbage collection
-        /// which could take several minutes.
+        /// specified file system for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
