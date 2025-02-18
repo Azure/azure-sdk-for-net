@@ -35,6 +35,12 @@
 
   - Model LinkedService parameter PostgreSqlV2LinkedService has a new required properties authentication_type
   - Model LinkedService parameter SapOdpLinkedService update properties sncMode
+  - Model LinkedService parameter AzureSqlDWLinkedService update required properties
+  - Model LinkedService parameter SqlServerLinkedService update required properties
+  - Model LinkedService parameter AmazonRdsForSqlServerLinkedService update required properties
+  - Model LinkedService parameter AzureSqlDatabaseLinkedService update required properties
+  - Model LinkedService parameter AzureSqlMILinkedService update required properties
+
 
 ## 1.0.0-preview.20 (2024-06-07)
 ### Features Added
