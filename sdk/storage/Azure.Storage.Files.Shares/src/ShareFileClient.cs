@@ -988,7 +988,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
-                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             nfsFileType: posixProperties?.FileType,
                             metadata: metadata,
                             filePermission: filePermission,
@@ -1009,7 +1009,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
-                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             nfsFileType: posixProperties?.FileType,
                             metadata: metadata,
                             filePermission: filePermission,
@@ -1323,6 +1323,8 @@ namespace Azure.Storage.Files.Shares
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
                 posixProperties: options?.PosixProperties,
+                modeCopyMode: options?.ModeCopyMode,
+                ownerCopyMode: options?.OwnerCopyMode,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -1401,6 +1403,8 @@ namespace Azure.Storage.Files.Shares
                 conditions,
                 copyableFileSmbProperties: default,
                 posixProperties: default,
+                modeCopyMode: default,
+                ownerCopyMode: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1449,6 +1453,8 @@ namespace Azure.Storage.Files.Shares
                 conditions: default,
                 copyableFileSmbProperties: default,
                 posixProperties: default,
+                modeCopyMode: default,
+                ownerCopyMode: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1494,6 +1500,8 @@ namespace Azure.Storage.Files.Shares
                 conditions: options?.Conditions,
                 copyableFileSmbProperties: options?.SmbPropertiesToCopy,
                 posixProperties: options?.PosixProperties,
+                modeCopyMode: options?.ModeCopyMode,
+                ownerCopyMode: options?.OwnerCopyMode,
                 async: true,
                 cancellationToken: cancellationToken).
                 ConfigureAwait(false);
@@ -1572,6 +1580,8 @@ namespace Azure.Storage.Files.Shares
                 conditions,
                 copyableFileSmbProperties: default,
                 posixProperties: default,
+                modeCopyMode: default,
+                ownerCopyMode: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1620,6 +1630,8 @@ namespace Azure.Storage.Files.Shares
                 conditions: default,
                 copyableFileSmbProperties: default,
                 posixProperties: default,
+                modeCopyMode: default,
+                ownerCopyMode: default,
                 async: true,
                 cancellationToken).
                 ConfigureAwait(false);
@@ -1670,6 +1682,14 @@ namespace Azure.Storage.Files.Shares
         /// <param name="posixProperties">
         /// NFS files only.  NFS properties to set on the destination file.
         /// </param>
+        /// <param name="modeCopyMode">
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default File Mode.
+        /// </param>
+        /// <param name="ownerCopyMode">
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default Owner and Group.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1697,6 +1717,8 @@ namespace Azure.Storage.Files.Shares
             ShareFileRequestConditions conditions,
             CopyableFileSmbProperties? copyableFileSmbProperties,
             FilePosixProperties posixProperties,
+            ModeCopyMode? modeCopyMode,
+            OwnerCopyMode? ownerCopyMode,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1795,18 +1817,6 @@ namespace Azure.Storage.Files.Shares
                     };
 
                     ShareUriBuilder uriBuilder = new ShareUriBuilder(sourceUri);
-
-                    ModeCopyMode? modeCopyMode = null;
-                    if (posixProperties?.FileMode != null)
-                    {
-                        modeCopyMode = ModeCopyMode.Override;
-                    }
-
-                    OwnerCopyMode? ownerCopyMode = null;
-                    if (posixProperties?.Owner != null || posixProperties?.Group != null)
-                    {
-                        ownerCopyMode = OwnerCopyMode.Override;
-                    }
 
                     if (async)
                     {
@@ -2689,7 +2699,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -2739,7 +2749,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -2782,7 +2792,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -2832,7 +2842,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="cancellationToken">
@@ -2875,7 +2885,7 @@ namespace Azure.Storage.Files.Shares
         /// Defaults to the beginning of the file.
         /// </param>
         /// <param name="bufferSize">
-        /// The buffer size to use when the stream downloads parts
+        /// The buffer size (in bytes) to use when the stream downloads parts
         /// of the file.  Defaults to 1 MB.
         /// </param>
         /// <param name="conditions">
@@ -3817,7 +3827,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
-                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -3836,7 +3846,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
-                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             fileHttpHeaders: httpHeaders.ToFileHttpHeaders(),
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);

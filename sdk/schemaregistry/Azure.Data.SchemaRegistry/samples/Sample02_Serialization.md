@@ -148,7 +148,7 @@ var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(),
 
 ## Troubleshooting
 
-If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema Id (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`. 
+If you encounter errors when communicating with the Schema Registry service, these errors will be thrown as a [RequestFailedException][request_failed_exception]. The serializer will only communicate with the service the first time it encounters a schema (when serializing) or a schema Id (when deserializing). Any errors related to invalid Content-Types will be thrown as a `FormatException`.
 
 Errors related to invalid schemas will be thrown as an `Exception`, and the `InnerException` property will contain the underlying exception that was thrown from your implemented methods in the `SchemaRegistryJsonSchemaGenerator`. This type of error would typically be caught during testing and should not be handled in code.
 
@@ -164,17 +164,15 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fschemaregistry%2FMicrosoft.Azure.Data.SchemaRegistry.JsonSchema%2FREADME.png)
-
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
-[object_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
-[json_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet
-[newtonsoft_serializer]: https://docs.microsoft.com/dotnet/api/azure.core.serialization.newtonsoftjsonobjectserializer?view=azure-dotnet
+[event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-about
+[object_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet
+[json_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.jsonobjectserializer?view=azure-dotnet
+[newtonsoft_serializer]: https://learn.microsoft.com/dotnet/api/azure.core.serialization.newtonsoftjsonobjectserializer?view=azure-dotnet
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [email_opencode]: mailto:opencode@microsoft.com
 [azure_schema_registry]: https://aka.ms/schemaregistry
-[request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
+[request_failed_exception]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet

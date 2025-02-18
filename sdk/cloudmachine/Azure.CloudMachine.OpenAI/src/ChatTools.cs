@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json;
 using OpenAI.Chat;
 
-namespace Azure.CloudMachine.OpenAI;
+namespace Azure.Projects.OpenAI;
 
 /// <summary> The service client for the OpenAI Chat Completions endpoint. </summary>
 public class ChatTools
@@ -82,8 +82,8 @@ public class ChatTools
     public string Call(string name, object[] arguments)
     {
         MethodInfo method = _methods[name];
-        object result = method.Invoke(null, arguments);
-        return result.ToString();
+        object? result = method.Invoke(null, arguments);
+        return result!.ToString()!;
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public class ChatTools
     private static string MethodInfoToDescription(MethodInfo function)
     {
         var description = function.Name;
-        DescriptionAttribute attribute = function.GetCustomAttribute<DescriptionAttribute>();
+        DescriptionAttribute? attribute = function.GetCustomAttribute<DescriptionAttribute>();
         if (attribute != null)
         {
             description = attribute.Description;
@@ -154,10 +154,10 @@ public class ChatTools
         return description;
     }
 
-    private static string ParameterInfoToDescription(ParameterInfo parameter)
+    private static string? ParameterInfoToDescription(ParameterInfo parameter)
     {
-        var description = parameter.Name;
-        DescriptionAttribute attribute = parameter.GetCustomAttribute<DescriptionAttribute>();
+        string? description = parameter.Name;
+        DescriptionAttribute? attribute = parameter.GetCustomAttribute<DescriptionAttribute>();
         if (attribute != null)
         {
             description = attribute.Description;

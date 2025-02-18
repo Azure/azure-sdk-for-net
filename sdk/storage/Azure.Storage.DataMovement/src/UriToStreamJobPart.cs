@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
         private UriToStreamJobPart(
             TransferJobInternal job,
             int partNumber)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             long? length = default)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -88,11 +88,11 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus,
+            TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
-            StorageResourceCreationPreference createPreference)
-            : base(dataTransfer: job._dataTransfer,
+            StorageResourceCreationMode createPreference)
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -163,10 +163,10 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus,
+            TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
-            StorageResourceCreationPreference createPreference)
+            StorageResourceCreationMode createPreference)
         {
             return new UriToStreamJobPart(
                 job: job,
@@ -203,7 +203,7 @@ namespace Azure.Storage.DataMovement
                 {
                     return;
                 }
-                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
                 if (!_sourceResource.Length.HasValue)
                 {
                     await UnknownDownloadInternal().ConfigureAwait(false);
@@ -263,7 +263,7 @@ namespace Azure.Storage.DataMovement
                     initial: true).ConfigureAwait(false);
                 if (successfulInitialCopy)
                 {
-                    ReportBytesWritten(initialLength.Value);
+                    await ReportBytesWrittenAsync(initialLength.Value).ConfigureAwait(false);
                     if (totalLength == initialLength)
                     {
                         // Complete download since it was done in one go
@@ -316,7 +316,7 @@ namespace Azure.Storage.DataMovement
                     initial: true).ConfigureAwait(false);
                 if (successfulCopy)
                 {
-                    ReportBytesWritten(downloadLength);
+                    await ReportBytesWrittenAsync(downloadLength).ConfigureAwait(false);
                     // Queue the work to end the download
                     await QueueCompleteFileDownload().ConfigureAwait(false);
                 }
@@ -374,14 +374,14 @@ namespace Azure.Storage.DataMovement
 
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
-                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
                 await DisposeHandlersAsync().ConfigureAwait(false);
 
                 // Update the transfer status
-                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -394,7 +394,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // If the job part is not InProgress, we should just stop processing any queued chunks.
-                if (JobPartStatus.State != DataTransferState.InProgress)
+                if (JobPartStatus.State != TransferState.InProgress)
                 {
                     return;
                 }
@@ -444,7 +444,7 @@ namespace Azure.Storage.DataMovement
                 // TODO: change to custom offset based on chunk offset
                 await _destinationResource.CopyFromStreamAsync(
                     stream: source,
-                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     streamLength: sourceLength,
                     completeLength: expectedLength,
                     options: new StorageResourceWriteToOffsetOptions()
@@ -456,7 +456,7 @@ namespace Azure.Storage.DataMovement
                 return true;
             }
             catch (IOException ex)
-            when (_createMode == StorageResourceCreationPreference.SkipIfExists &&
+            when (_createMode == StorageResourceCreationMode.SkipIfExists &&
                 ex.Message.Contains("Cannot overwrite file."))
             {
                 // Skip file that already exists on the destination.
@@ -470,7 +470,7 @@ namespace Azure.Storage.DataMovement
             return new DownloadChunkHandler.Behaviors()
             {
                 CopyToDestinationFile = jobPart.CopyToStreamInternal,
-                ReportProgressInBytes = jobPart.ReportBytesWritten,
+                ReportProgressInBytes = jobPart.ReportBytesWrittenAsync,
                 InvokeFailedHandler = jobPart.InvokeFailedArgAsync,
                 QueueCompleteFileDownload = jobPart.QueueCompleteFileDownload
             };

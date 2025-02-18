@@ -4,7 +4,7 @@ Microsoft Purview Data Map provides the foundation for data discovery and data g
 
 **Please rely heavily on the [service's documentation][catalog_service_documentation] and our [protocol client docs][protocol_client_quickstart] to use this library**
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Purview.DataMap/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups?view=rest-purview-datamapdataplane-2023-09-01) | [Product documentation](https://docs.microsoft.com/azure)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Purview.DataMap/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups?view=rest-purview-datamapdataplane-2023-09-01) | [Product documentation](https://learn.microsoft.com/azure)
 
 ## Getting started
 
@@ -114,20 +114,18 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-[default_cred_ref]: https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+[default_cred_ref]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
 [catalog_service_documentation]: https://azure.microsoft.com/services/purview/
-[catalog_product_documentation]: https://docs.microsoft.com/azure/purview/
+[catalog_product_documentation]: https://learn.microsoft.com/azure/purview/
 [protocol_client_quickstart]: https://aka.ms/azsdk/net/protocol/quickstart
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
-[purview_resource]: https://docs.microsoft.com/azure/purview/create-catalog-portal
+[purview_resource]: https://learn.microsoft.com/azure/purview/create-catalog-portal
 [azure_core_diagnostics]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/purview/Azure.Analytics.Purview.DataMap/README.png)

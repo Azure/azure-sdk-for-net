@@ -9,7 +9,7 @@ using System.IO;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace Azure.CloudMachine.Tests;
+namespace Azure.Projects.Tests;
 
 public class TdkTests
 {
@@ -34,7 +34,7 @@ public class TdkTests
       title: "AssistantService",
     })
 
-    namespace Azure.CloudMachine.Tests;
+    namespace Azure.Projects.Tests;
 
     using TypeSpec.Http;
     using TypeSpec.Rest;

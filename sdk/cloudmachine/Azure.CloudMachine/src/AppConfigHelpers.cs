@@ -6,23 +6,23 @@ using System.Text.Json.Nodes;
 using System.Text.Json;
 using System;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 internal static class AppConfigHelpers
 {
-    internal static string ReadOrCreateCloudMachineId()
+    internal static string ReadOrCreateProjectId()
     {
         string appsettings = Path.Combine(".", "appsettings.json");
 
         string cmid;
         if (!File.Exists(appsettings))
         {
-            cmid = GenerateCloudMachineId();
+            cmid = GenerateProjectId();
 
             using FileStream file = File.OpenWrite(appsettings);
             Utf8JsonWriter writer = new(file);
             writer.WriteStartObject();
-            writer.WritePropertyName("CloudMachine"u8);
+            writer.WritePropertyName("AzureProject"u8);
             writer.WriteStartObject();
             writer.WriteString("ID"u8, cmid);
             writer.WriteEndObject();
@@ -33,10 +33,15 @@ internal static class AppConfigHelpers
         }
 
         using FileStream json = new FileStream(appsettings, FileMode.Open, FileAccess.Read, FileShare.Read);
-        using JsonDocument jd = JsonDocument.Parse(json);
+        JsonDocumentOptions jsonDocumentOptions = new()
+        {
+            AllowTrailingCommas = true,
+            CommentHandling = JsonCommentHandling.Skip,
+        };
+        using JsonDocument jd = JsonDocument.Parse(json, jsonDocumentOptions);
         JsonElement je = jd.RootElement;
         // attempt to read CM configuration from existing configuration file
-        if (je.TryGetProperty("CloudMachine"u8, out JsonElement cm))
+        if (je.TryGetProperty("AzureProject"u8, out JsonElement cm))
         {
             if (!cm.TryGetProperty("ID"u8, out JsonElement id))
             {
@@ -56,9 +61,9 @@ internal static class AppConfigHelpers
                 throw new InvalidOperationException("Existing appsettings.json is not a valid JSON object");
 
             var cmProperties = new JsonObject();
-            cmid = GenerateCloudMachineId();
+            cmid = GenerateProjectId();
             cmProperties.Add("ID", cmid);
-            obj.Add("CloudMachine", cmProperties);
+            obj.Add("AzureProject", cmProperties);
 
             using FileStream file = new FileStream(appsettings, FileMode.Open, FileAccess.Write, FileShare.None);
             JsonWriterOptions writerOptions = new()
@@ -77,7 +82,7 @@ internal static class AppConfigHelpers
         return cmid;
     }
 
-    private static string GenerateCloudMachineId()
+    private static string GenerateProjectId()
     {
         var guid = Guid.NewGuid();
         var guidString = guid.ToString("N");

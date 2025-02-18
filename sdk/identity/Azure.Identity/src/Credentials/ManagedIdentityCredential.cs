@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using System.Linq;
 using System.ComponentModel;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -109,8 +110,8 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> from the Managed Identity service, if available. Acquired tokens are
         /// <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential instance. Token
-        /// lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize
-        /// cache effectiveness.
+        /// lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -124,8 +125,8 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains an <see cref="AccessToken"/> from the Managed Identity service, if available. Acquired tokens are
         /// <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential instance. Token
-        /// lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize
-        /// cache effectiveness.
+        /// lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -149,6 +150,13 @@ namespace Azure.Identity
                     AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId ?? _clientId, accountDetails.TenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
                 return scope.Succeeded(result);
+            }
+            // The managed_identity_response_parse_failure error is thrown when the response from the managed identity endpoint cannot be parsed.
+            // Since for non-DAC invocations of the credential, we do not participate in parsing the raw response, we rely on this error to indicate
+            // that the response was not valid JSON.
+            catch (MsalServiceException e) when (e.ErrorCode == MsalError.ManagedIdentityResponseParseFailure)
+            {
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException(MsiUnavailableError, e), Troubleshooting);
             }
             catch (Exception e)
             {

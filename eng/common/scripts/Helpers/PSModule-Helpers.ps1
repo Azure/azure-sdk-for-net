@@ -1,7 +1,6 @@
 $global:CurrentUserModulePath = ""
 
-function Update-PSModulePathForCI()
-{
+function Update-PSModulePathForCI() {
   # Information on PSModulePath taken from docs
   # https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_psmodulepath
 
@@ -11,7 +10,8 @@ function Update-PSModulePathForCI()
   if ($IsWindows) {
     $hostedAgentModulePath = $env:SystemDrive + "\Modules"
     $moduleSeperator = ";"
-  } else {
+  }
+  else {
     $hostedAgentModulePath = "/usr/share"
     $moduleSeperator = ":"
   }
@@ -55,7 +55,8 @@ function Get-ModuleRepositories([string]$moduleName) {
 
   $repoUrls = if ($packageFeedOverrides.Contains("${moduleName}")) {
     @($packageFeedOverrides["${moduleName}"], $DefaultPSRepositoryUrl)
-  } else {
+  }
+  else {
     @($DefaultPSRepositoryUrl)
   }
 
@@ -63,12 +64,22 @@ function Get-ModuleRepositories([string]$moduleName) {
 }
 
 function moduleIsInstalled([string]$moduleName, [string]$version) {
-  $modules = (Get-Module -ListAvailable $moduleName)
+  if (-not (Test-Path variable:script:InstalledModules)) {
+    $script:InstalledModules = @{}
+  }
+
+  if ($script:InstalledModules.ContainsKey("${moduleName}")) {
+    $modules = $script:InstalledModules["${moduleName}"]
+  }
+  else {
+    $modules = (Get-Module -ListAvailable $moduleName)
+    $script:InstalledModules["${moduleName}"] = $modules
+  }
+
   if ($version -as [Version]) {
     $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
-    if ($modules.Count -gt 0)
-    {
-      Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
+    if ($modules.Count -gt 0) {
+      Write-Verbose "Using module $($modules[0].Name) with version $($modules[0].Version)."
       return $modules[0]
     }
   }
@@ -77,8 +88,7 @@ function moduleIsInstalled([string]$moduleName, [string]$version) {
 
 function installModule([string]$moduleName, [string]$version, $repoUrl) {
   $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
-  if ($repo.Count -eq 0)
-  {
+  if ($repo.Count -eq 0) {
     Register-PSRepository -Name $repoUrl -SourceLocation $repoUrl -InstallationPolicy Trusted | Out-Null
     $repo = (Get-PSRepository).Where({ $_.SourceLocation -eq $repoUrl })
     if ($repo.Count -eq 0) {
@@ -90,7 +100,7 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
     Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted" | Out-Null
   }
 
-  Write-Host "Installing module $moduleName with min version $version from $repoUrl"
+  Write-Verbose "Installing module $moduleName with min version $version from $repoUrl"
   # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
   Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force
   # Ensure module installed
@@ -102,6 +112,8 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
     throw "Failed to install module $moduleName with version $version"
   }
 
+  $script:InstalledModules["${moduleName}"] = $modules
+
   # Unregister repository as it can cause overlap issues with `dotnet tool install`
   # commands using the same devops feed
   Unregister-PSRepository -Name $repoUrl | Out-Null
@@ -109,10 +121,17 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
   return $modules[0]
 }
 
+function InstallAndImport-ModuleIfNotInstalled([string]$module, [string]$version) {
+  if ($null -eq (moduleIsInstalled $module $version)) {
+    Install-ModuleIfNotInstalled -WhatIf:$false $module $version | Import-Module
+  } elseif (!(Get-Module -Name $module)) {
+    Import-Module $module
+  }
+}
+
 # Manual test at eng/common-tests/psmodule-helpers/Install-Module-Parallel.ps1
 # If we want to use another default repository other then PSGallery we can update the default parameters
-function Install-ModuleIfNotInstalled()
-{
+function Install-ModuleIfNotInstalled() {
   [CmdletBinding(SupportsShouldProcess = $true)]
   param(
     [string]$moduleName,
@@ -137,12 +156,14 @@ function Install-ModuleIfNotInstalled()
     foreach ($url in $repoUrls) {
       try {
         $module = installModule -moduleName $moduleName -version $version -repoUrl $url
-      } catch {
+      }
+      catch {
         if ($url -ne $repoUrls[-1]) {
           Write-Warning "Failed to install powershell module from '$url'. Retrying with fallback repository"
           Write-Warning $_
           continue
-        } else {
+        }
+        else {
           Write-Warning "Failed to install powershell module from $url"
           throw
         }
@@ -150,8 +171,9 @@ function Install-ModuleIfNotInstalled()
       break
     }
 
-    Write-Host "Using module '$($module.Name)' with version '$($module.Version)'."
-  } finally {
+    Write-Verbose "Using module '$($module.Name)' with version '$($module.Version)'."
+  }
+  finally {
     $mutex.ReleaseMutex()
   }
 
@@ -159,5 +181,5 @@ function Install-ModuleIfNotInstalled()
 }
 
 if ($null -ne $env:SYSTEM_TEAMPROJECTID) {
-    Update-PSModulePathForCI
+  Update-PSModulePathForCI
 }

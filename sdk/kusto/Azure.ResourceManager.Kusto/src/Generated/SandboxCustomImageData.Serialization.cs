@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("languageVersion"u8);
                 writer.WriteStringValue(LanguageVersion);
             }
+            if (Optional.IsDefined(BaseImageName))
+            {
+                writer.WritePropertyName("baseImageName"u8);
+                writer.WriteStringValue(BaseImageName);
+            }
             if (Optional.IsDefined(RequirementsFileContent))
             {
                 writer.WritePropertyName("requirementsFileContent"u8);
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.Kusto
             SystemData systemData = default;
             SandboxCustomImageLanguage? language = default;
             string languageVersion = default;
+            string baseImageName = default;
             string requirementsFileContent = default;
             KustoProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,6 +147,11 @@ namespace Azure.ResourceManager.Kusto
                             languageVersion = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("baseImageName"u8))
+                        {
+                            baseImageName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("requirementsFileContent"u8))
                         {
                             requirementsFileContent = property0.Value.GetString();
@@ -171,6 +182,7 @@ namespace Azure.ResourceManager.Kusto
                 systemData,
                 language,
                 languageVersion,
+                baseImageName,
                 requirementsFileContent,
                 provisioningState,
                 serializedAdditionalRawData);
