@@ -1,5 +1,11 @@
 # Release History
 
+## 2.2.0-beta.2 (2025-02-18)
+
+### Bugs fixed
+
+- Addressed a problem calling the `SetNewMaxCompletionTokensPropertyEnabled()` method, needed for o1/o3 model support, on `ChatCompletionOptions` instances prior to use in a method call. Related issue: [azure-sdk-for-net#46545](https://github.com/Azure/azure-sdk-for-net/issues/46545) with thanks to the PR  [azure-sdk-for-net#48218](https://github.com/Azure/azure-sdk-for-net/pull/48218).
+
 ## 2.2.0-beta.1 (2025-02-07)
 
 This preview release aligns with the corresponding `2.2.0` beta of `OpenAI` and the `2025-01-01-Preview` Azure OpenAI Service API version.
