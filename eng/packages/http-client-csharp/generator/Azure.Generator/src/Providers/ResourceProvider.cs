@@ -28,7 +28,7 @@ namespace Azure.Generator.Providers
     internal class ResourceProvider : TypeProvider
     {
         private OperationSet _operationSet;
-        private ResourceDataProvider _resourceData;
+        private ModelProvider _resourceData;
         private ClientProvider _clientProvider;
         private string _specCleanName;
         private readonly IReadOnlyList<string> _contextualParameters;
@@ -38,7 +38,7 @@ namespace Azure.Generator.Providers
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
 
-        public ResourceProvider(OperationSet operationSet, string specCleanName, ResourceDataProvider resourceData, string resrouceType)
+        public ResourceProvider(OperationSet operationSet, string specCleanName, ModelProvider resourceData, string resrouceType)
         {
             _operationSet = operationSet;
             _specCleanName = specCleanName;

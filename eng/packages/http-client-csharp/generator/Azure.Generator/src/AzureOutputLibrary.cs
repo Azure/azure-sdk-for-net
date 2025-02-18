@@ -41,7 +41,7 @@ namespace Azure.Generator
             foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
             {
                 var model = _inputTypeMap[schemaName];
-                var resourceData = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
+                var resourceData = AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
                 foreach (var operationSet in operationSets)
                 {
                     var requestPath = operationSet.RequestPath;

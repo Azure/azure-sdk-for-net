@@ -3,6 +3,7 @@
 
 using Azure.ResourceManager;
 using Azure.Generator.Utilities;
+using Azure.Generator.Visitors;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -62,6 +63,7 @@ public class AzureClientPlugin : ClientModelPlugin
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             AddVisitor(new RestClientVisitor());
+            AddVisitor(new ResourceVisitor());
         }
     }
 

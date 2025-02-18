@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.IO;
 
-namespace Azure.Generator
+namespace Azure.Generator.Visitors
 {
     // only apply for MPG
     internal class RestClientVisitor : ScmLibraryVisitor
@@ -19,12 +19,15 @@ namespace Azure.Generator
 
             if (type is ClientProvider)
             {
-                type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
+                type.DeclarationModifiers = TransfromPublicModifiersToInternal(type);
+                type.RelativeFilePath = TransformRelativeFilePathForClient(type);
+                //type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }
 
             if (type is RestClientProvider)
             {
-                type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForRestClient(type));
+                type.DeclarationModifiers = TransfromPublicModifiersToInternal(type);
+                type.RelativeFilePath = TransformRelativeFilePathForRestClient(type);
             }
             return type;
         }
