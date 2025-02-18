@@ -1,11 +1,5 @@
 # Azure Storage Data Movement File Shares client library for .NET
 
-## Project Status: Beta
-
-This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
-
----
-
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
 includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files,
@@ -27,8 +21,8 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.DataMovement.Files.Shares` client library will be included:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement --prerelease
-dotnet add package Azure.Storage.DataMovement.Files.Shares --prerelease
+dotnet add package Azure.Storage.DataMovement
+dotnet add package Azure.Storage.DataMovement.Files.Shares
 ```
 
 ### Prerequisites
@@ -202,6 +196,8 @@ For more information regarding pause, resume, and/or checkpointing, see [Pause a
 ## Troubleshooting
 
 See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
+
+See [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
 
 ## Next steps
 

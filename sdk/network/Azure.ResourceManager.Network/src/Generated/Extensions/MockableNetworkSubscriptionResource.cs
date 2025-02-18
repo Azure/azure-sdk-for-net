@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Network.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableNetworkSubscriptionResource : ArmResource
     {
+        private ClientDiagnostics _networkSecurityPerimeterClientDiagnostics;
+        private NetworkSecurityPerimetersRestOperations _networkSecurityPerimeterRestClient;
+        private ClientDiagnostics _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics;
+        private NetworkSecurityPerimeterAssociableResourceTypesRestOperations _networkSecurityPerimeterAssociableResourceTypesRestClient;
         private ClientDiagnostics _applicationGatewayClientDiagnostics;
         private ApplicationGatewaysRestOperations _applicationGatewayRestClient;
         private ClientDiagnostics _applicationSecurityGroupClientDiagnostics;
@@ -135,6 +139,10 @@ namespace Azure.ResourceManager.Network.Mocking
         {
         }
 
+        private ClientDiagnostics NetworkSecurityPerimeterClientDiagnostics => _networkSecurityPerimeterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", NetworkSecurityPerimeterResource.ResourceType.Namespace, Diagnostics);
+        private NetworkSecurityPerimetersRestOperations NetworkSecurityPerimeterRestClient => _networkSecurityPerimeterRestClient ??= new NetworkSecurityPerimetersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkSecurityPerimeterResource.ResourceType));
+        private ClientDiagnostics NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics => _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private NetworkSecurityPerimeterAssociableResourceTypesRestOperations NetworkSecurityPerimeterAssociableResourceTypesRestClient => _networkSecurityPerimeterAssociableResourceTypesRestClient ??= new NetworkSecurityPerimeterAssociableResourceTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ApplicationGatewayClientDiagnostics => _applicationGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayResource.ResourceType.Namespace, Diagnostics);
         private ApplicationGatewaysRestOperations ApplicationGatewayRestClient => _applicationGatewayRestClient ??= new ApplicationGatewaysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApplicationGatewayResource.ResourceType));
         private ClientDiagnostics ApplicationSecurityGroupClientDiagnostics => _applicationSecurityGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationSecurityGroupResource.ResourceType.Namespace, Diagnostics);
@@ -657,6 +665,124 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Response<NetworkVirtualApplianceSkuResource> GetNetworkVirtualApplianceSku(string skuName, CancellationToken cancellationToken = default)
         {
             return GetNetworkVirtualApplianceSkus().Get(skuName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all network security perimeters in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityPerimeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPerimeterResource> GetNetworkSecurityPerimetersAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityPerimeterResource(Client, NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(e)), NetworkSecurityPerimeterClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all network security perimeters in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkSecurityPerimeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityPerimeterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
+        /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPerimeterResource> GetNetworkSecurityPerimeters(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkSecurityPerimeterResource(Client, NetworkSecurityPerimeterData.DeserializeNetworkSecurityPerimeterData(e)), NetworkSecurityPerimeterClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of resources that are onboarded with NSP. These resources can be associated with a network security perimeter
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/perimeterAssociableResourceTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterAssociableResourceTypes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of network security perimeter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkSecurityPerimeterAssociableResourceType> GetNetworkSecurityPerimeterAssociableResourceTypesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterAssociableResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterAssociableResourceTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterAssociableResourceType.DeserializeNetworkSecurityPerimeterAssociableResourceType(e), NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of resources that are onboarded with NSP. These resources can be associated with a network security perimeter
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/perimeterAssociableResourceTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkSecurityPerimeterAssociableResourceTypes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location of network security perimeter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkSecurityPerimeterAssociableResourceType> GetNetworkSecurityPerimeterAssociableResourceTypes(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkSecurityPerimeterAssociableResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkSecurityPerimeterAssociableResourceTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterAssociableResourceType.DeserializeNetworkSecurityPerimeterAssociableResourceType(e), NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, "MockableNetworkSubscriptionResource.GetNetworkSecurityPerimeterAssociableResourceTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

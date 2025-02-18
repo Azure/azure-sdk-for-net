@@ -1,5 +1,16 @@
 # Release History
 
+## 12.24.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed ContentRange is null in BlobDownloadDetails when calling DownloadStreamingAsync with HttpRange "0-" #47882
+
+### Other Changes
+
 ## 12.24.0-beta.1 (2025-02-11)
 
 ### Features Added
