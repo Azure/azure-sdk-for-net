@@ -41,12 +41,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            writer.WritePropertyName("lastTrainedOn"u8);
+            writer.WritePropertyName("lastTrainedDateTime"u8);
             writer.WriteStringValue(LastTrainedOn, "O");
-            writer.WritePropertyName("lastExportedModelOn"u8);
+            writer.WritePropertyName("lastExportedModelDateTime"u8);
             writer.WriteStringValue(LastExportedModelOn, "O");
             writer.WritePropertyName("modelExpirationDate"u8);
-            writer.WriteStringValue(ModelExpirationDate, "D");
+            writer.WriteStringValue(ModelExpiredOn, "D");
             writer.WritePropertyName("modelTrainingConfigVersion"u8);
             writer.WriteStringValue(ModelTrainingConfigVersion);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,8 +88,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             string exportedModelName = default;
             string modelId = default;
-            DateTimeOffset lastTrainedOn = default;
-            DateTimeOffset lastExportedModelOn = default;
+            DateTimeOffset lastTrainedDateTime = default;
+            DateTimeOffset lastExportedModelDateTime = default;
             DateTimeOffset modelExpirationDate = default;
             string modelTrainingConfigVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -106,14 +106,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastTrainedOn"u8))
+                if (property.NameEquals("lastTrainedDateTime"u8))
                 {
-                    lastTrainedOn = property.Value.GetDateTimeOffset("O");
+                    lastTrainedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastExportedModelOn"u8))
+                if (property.NameEquals("lastExportedModelDateTime"u8))
                 {
-                    lastExportedModelOn = property.Value.GetDateTimeOffset("O");
+                    lastExportedModelDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("modelExpirationDate"u8))
@@ -135,8 +135,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             return new ExportedTrainedModel(
                 exportedModelName,
                 modelId,
-                lastTrainedOn,
-                lastExportedModelOn,
+                lastTrainedDateTime,
+                lastExportedModelDateTime,
                 modelExpirationDate,
                 modelTrainingConfigVersion,
                 serializedAdditionalRawData);

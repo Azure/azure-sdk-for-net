@@ -9,9 +9,10 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+string projectName = "MyNewProject";
+ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -22,14 +23,15 @@ To retrieve metadata of a project, call GetProject on the AnalyzeConversationAut
 
 ```C# Snippet:Sample4_ConversationsAuthoring_GetProject
 string projectName = "MySampleProject";
+ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 
-Response<ProjectMetadata> response = authoringClient.GetProject(projectName);
+Response<ProjectMetadata> response = projectAuthoringClient.GetProject();
 ProjectMetadata projectMetadata = response.Value;
 
-Console.WriteLine($"Created DateTime: {projectMetadata.CreatedDateTime}");
-Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedDateTime}");
-Console.WriteLine($"Last Trained DateTime: {projectMetadata.LastTrainedDateTime}");
-Console.WriteLine($"Last Deployed DateTime: {projectMetadata.LastDeployedDateTime}");
+Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
+Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
+Console.WriteLine($"Last Trained DateTime: {projectMetadata.LastTrainedOn}");
+Console.WriteLine($"Last Deployed DateTime: {projectMetadata.LastDeployedOn}");
 Console.WriteLine($"Project Kind: {projectMetadata.ProjectKind}");
 Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
 Console.WriteLine($"Multilingual: {projectMetadata.Multilingual}");

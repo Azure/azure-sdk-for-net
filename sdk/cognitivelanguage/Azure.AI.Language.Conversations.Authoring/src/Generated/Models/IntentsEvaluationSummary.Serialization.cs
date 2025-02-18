@@ -39,18 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             foreach (var item in ConfusionMatrix)
             {
                 writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStartObject();
-                foreach (var item0 in item.Value)
-                {
-                    writer.WritePropertyName(item0.Key);
-                    writer.WriteObjectValue(item0.Value, options);
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("intents"u8);
@@ -110,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            IReadOnlyDictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>> confusionMatrix = default;
+            IReadOnlyDictionary<string, AnalyzeConversationConfusionMatrixRow> confusionMatrix = default;
             IReadOnlyDictionary<string, IntentEvaluationSummary> intents = default;
             float microF1 = default;
             float microPrecision = default;
@@ -124,22 +113,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 if (property.NameEquals("confusionMatrix"u8))
                 {
-                    Dictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>> dictionary = new Dictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>>();
+                    Dictionary<string, AnalyzeConversationConfusionMatrixRow> dictionary = new Dictionary<string, AnalyzeConversationConfusionMatrixRow>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            Dictionary<string, AnalyzeConversationConfusionMatrixCell> dictionary0 = new Dictionary<string, AnalyzeConversationConfusionMatrixCell>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary0.Add(property1.Name, AnalyzeConversationConfusionMatrixCell.DeserializeAnalyzeConversationConfusionMatrixCell(property1.Value, options));
-                            }
-                            dictionary.Add(property0.Name, dictionary0);
-                        }
+                        dictionary.Add(property0.Name, AnalyzeConversationConfusionMatrixRow.DeserializeAnalyzeConversationConfusionMatrixRow(property0.Value, options));
                     }
                     confusionMatrix = dictionary;
                     continue;

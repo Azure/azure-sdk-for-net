@@ -38,7 +38,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             writer.WriteStringValue(Category);
             if (Optional.IsDefined(CompositionMode))
             {
-                writer.WritePropertyName("compositionMode"u8);
+                writer.WritePropertyName("compositionSetting"u8);
                 writer.WriteStringValue(CompositionMode.Value.ToString());
             }
             if (Optional.IsDefined(Entities))
@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 return null;
             }
             string category = default;
-            AnalyzeConversationAuthoringCompositionMode? compositionMode = default;
+            AnalyzeConversationAuthoringCompositionMode? compositionSetting = default;
             ExportedEntityList entities = default;
             IList<ExportedPrebuiltEntity> prebuilts = default;
             ExportedEntityRegex regex = default;
@@ -123,13 +123,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("compositionMode"u8))
+                if (property.NameEquals("compositionSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    compositionMode = new AnalyzeConversationAuthoringCompositionMode(property.Value.GetString());
+                    compositionSetting = new AnalyzeConversationAuthoringCompositionMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("entities"u8))
@@ -186,7 +186,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ConversationExportedEntity(
                 category,
-                compositionMode,
+                compositionSetting,
                 entities,
                 prebuilts ?? new ChangeTrackingList<ExportedPrebuiltEntity>(),
                 regex,

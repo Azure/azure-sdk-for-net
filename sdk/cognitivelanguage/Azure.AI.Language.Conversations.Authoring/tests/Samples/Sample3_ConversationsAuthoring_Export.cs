@@ -20,17 +20,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample3_ConversationsAuthoring_Export
             string projectName = "MyExportedProject";
+            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 
-            Operation operation = authoringClient.Export(
+            Operation operation = projectAuthoringClient.Export(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 stringIndexType: StringIndexType.Utf16CodeUnit,
-                exportedProjectFormat: ExportedProjectFormat.Conversation
+                exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation
             );
 
              // Extract the operation-location header

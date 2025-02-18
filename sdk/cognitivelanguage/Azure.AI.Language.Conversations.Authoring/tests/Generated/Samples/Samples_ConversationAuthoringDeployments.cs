@@ -30,8 +30,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
             Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
             Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
@@ -51,8 +51,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
             Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
             Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
@@ -94,8 +94,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
             Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
             Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
@@ -115,8 +115,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
             Console.WriteLine(result.GetProperty("modelId").ToString());
-            Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-            Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+            Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
             Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
             Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
@@ -157,8 +157,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -174,8 +174,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -213,9 +213,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -247,9 +247,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -303,8 +303,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -320,8 +320,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -359,9 +359,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -393,9 +393,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -449,8 +449,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -466,8 +466,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -505,9 +505,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -539,9 +539,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -595,8 +595,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -612,8 +612,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -651,9 +651,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -685,9 +685,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -741,8 +741,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -758,8 +758,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -797,9 +797,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -831,9 +831,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -1277,7 +1277,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                metadata = new object[]
+                resourcesMetadata = new object[]
             {
 new
 {
@@ -1300,7 +1300,7 @@ region = "<region>",
 
             using RequestContent content = RequestContent.Create(new
             {
-                metadata = new object[]
+                resourcesMetadata = new object[]
             {
 new
 {
@@ -1353,7 +1353,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
             using RequestContent content = RequestContent.Create(new
             {
-                metadata = new object[]
+                resourcesMetadata = new object[]
             {
 new
 {
@@ -1376,7 +1376,7 @@ region = "<region>",
 
             using RequestContent content = RequestContent.Create(new
             {
-                metadata = new object[]
+                resourcesMetadata = new object[]
             {
 new
 {

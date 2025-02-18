@@ -20,11 +20,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="modelId"> Represents deployment modelId. </param>
         /// <param name="lastTrainedOn"> Represents deployment last trained time. </param>
         /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
-        /// <param name="deploymentExpirationDate"> Represents deployment expiration date in the runtime. </param>
+        /// <param name="deploymentExpiredOn"> Represents deployment expiration date in the runtime. </param>
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
         /// <returns> A new <see cref="Models.ProjectDeployment"/> instance for mocking. </returns>
-        public static ProjectDeployment ProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpirationDate = default, string modelTrainingConfigVersion = null, IEnumerable<DeploymentResource> assignedResources = null)
+        public static ProjectDeployment ProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = null, IEnumerable<DeploymentResource> assignedResources = null)
         {
             assignedResources ??= new List<DeploymentResource>();
 
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 modelId,
                 lastTrainedOn,
                 lastDeployedOn,
-                deploymentExpirationDate,
+                deploymentExpiredOn,
                 modelTrainingConfigVersion,
                 assignedResources?.ToList(),
                 serializedAdditionalRawData: null);
@@ -199,18 +199,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
         /// <param name="lastTrainingDurationInSeconds"> The duration of the model's last training request in seconds. </param>
-        /// <param name="modelExpirationDate"> The model expiration date. </param>
+        /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="hasSnapshot"> The flag to indicate if the trained model has a snapshot ready. </param>
         /// <returns> A new <see cref="Models.ProjectTrainedModel"/> instance for mocking. </returns>
-        public static ProjectTrainedModel ProjectTrainedModel(string label = null, string modelId = null, DateTimeOffset lastTrainedOn = default, int lastTrainingDurationInSeconds = default, DateTimeOffset modelExpirationDate = default, string modelTrainingConfigVersion = null, bool hasSnapshot = default)
+        public static ProjectTrainedModel ProjectTrainedModel(string label = null, string modelId = null, DateTimeOffset lastTrainedOn = default, int lastTrainingDurationInSeconds = default, DateTimeOffset modelExpiredOn = default, string modelTrainingConfigVersion = null, bool hasSnapshot = default)
         {
             return new ProjectTrainedModel(
                 label,
                 modelId,
                 lastTrainedOn,
                 lastTrainingDurationInSeconds,
-                modelExpirationDate,
+                modelExpiredOn,
                 modelTrainingConfigVersion,
                 hasSnapshot,
                 serializedAdditionalRawData: null);
@@ -221,17 +221,17 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
         /// <param name="lastExportedModelOn"> The last exported date time of the model. </param>
-        /// <param name="modelExpirationDate"> The model expiration date. </param>
+        /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <returns> A new <see cref="Models.ExportedTrainedModel"/> instance for mocking. </returns>
-        public static ExportedTrainedModel ExportedTrainedModel(string exportedModelName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastExportedModelOn = default, DateTimeOffset modelExpirationDate = default, string modelTrainingConfigVersion = null)
+        public static ExportedTrainedModel ExportedTrainedModel(string exportedModelName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastExportedModelOn = default, DateTimeOffset modelExpiredOn = default, string modelTrainingConfigVersion = null)
         {
             return new ExportedTrainedModel(
                 exportedModelName,
                 modelId,
                 lastTrainedOn,
                 lastExportedModelOn,
-                modelExpirationDate,
+                modelExpiredOn,
                 modelTrainingConfigVersion,
                 serializedAdditionalRawData: null);
         }
@@ -361,9 +361,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.EntitiesEvaluationSummary"/> instance for mocking. </returns>
-        public static EntitiesEvaluationSummary EntitiesEvaluationSummary(IReadOnlyDictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>> confusionMatrix = null, IReadOnlyDictionary<string, EntityEvaluationSummary> entities = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        public static EntitiesEvaluationSummary EntitiesEvaluationSummary(IReadOnlyDictionary<string, AnalyzeConversationConfusionMatrixRow> confusionMatrix = null, IReadOnlyDictionary<string, EntityEvaluationSummary> entities = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
-            confusionMatrix ??= new Dictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>>();
+            confusionMatrix ??= new Dictionary<string, AnalyzeConversationConfusionMatrixRow>();
             entities ??= new Dictionary<string, EntityEvaluationSummary>();
 
             return new EntitiesEvaluationSummary(
@@ -376,6 +376,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 macroPrecision,
                 macroRecall,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationConfusionMatrixRow"/>. </summary>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.AnalyzeConversationConfusionMatrixRow"/> instance for mocking. </returns>
+        public static AnalyzeConversationConfusionMatrixRow AnalyzeConversationConfusionMatrixRow(IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+
+            return new AnalyzeConversationConfusionMatrixRow(additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationConfusionMatrixCell"/>. </summary>
@@ -419,9 +429,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.IntentsEvaluationSummary"/> instance for mocking. </returns>
-        public static IntentsEvaluationSummary IntentsEvaluationSummary(IReadOnlyDictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>> confusionMatrix = null, IReadOnlyDictionary<string, IntentEvaluationSummary> intents = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        public static IntentsEvaluationSummary IntentsEvaluationSummary(IReadOnlyDictionary<string, AnalyzeConversationConfusionMatrixRow> confusionMatrix = null, IReadOnlyDictionary<string, IntentEvaluationSummary> intents = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
-            confusionMatrix ??= new Dictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>>();
+            confusionMatrix ??= new Dictionary<string, AnalyzeConversationConfusionMatrixRow>();
             intents ??= new Dictionary<string, IntentEvaluationSummary>();
 
             return new IntentsEvaluationSummary(

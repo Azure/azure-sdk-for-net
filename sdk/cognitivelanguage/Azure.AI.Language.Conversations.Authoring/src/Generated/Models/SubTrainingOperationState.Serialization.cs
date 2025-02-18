@@ -38,12 +38,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             writer.WriteNumberValue(PercentComplete);
             if (Optional.IsDefined(StartedOn))
             {
-                writer.WritePropertyName("startedOn"u8);
+                writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
             if (Optional.IsDefined(EndedOn))
             {
-                writer.WritePropertyName("endedOn"u8);
+                writer.WritePropertyName("endDateTime"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
             writer.WritePropertyName("status"u8);
@@ -86,8 +86,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 return null;
             }
             int percentComplete = default;
-            DateTimeOffset? startedOn = default;
-            DateTimeOffset? endedOn = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
             ConversationAuthoringOperationStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,22 +98,22 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     percentComplete = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startedOn"u8))
+                if (property.NameEquals("startDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startedOn = property.Value.GetDateTimeOffset("O");
+                    startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endedOn"u8))
+                if (property.NameEquals("endDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endedOn = property.Value.GetDateTimeOffset("O");
+                    endDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -127,7 +127,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubTrainingOperationState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData);
+            return new SubTrainingOperationState(percentComplete, startDateTime, endDateTime, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubTrainingOperationState>.Write(ModelReaderWriterOptions options)

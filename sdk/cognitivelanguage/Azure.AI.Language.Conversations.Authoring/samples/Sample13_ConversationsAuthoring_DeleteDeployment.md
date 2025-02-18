@@ -9,9 +9,10 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+string projectName = "MyNewProject";
+ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 ## Delete a Deployment
@@ -19,10 +20,8 @@ AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuth
 To delete a deployment, call DeleteDeployment on the AnalyzeConversationAuthoring client.
 
 ```C# Snippet:Sample13_ConversationsAuthoring_DeleteDeployment
-Operation operation = authoringClient.DeleteDeployment(
-    waitUntil: WaitUntil.Completed,
-    projectName: projectName,
-    deploymentName: deploymentName
+Operation operation = deploymentAuthoringClient.DeleteDeployment(
+    waitUntil: WaitUntil.Completed
 );
 
 // Extract operation-location from response headers

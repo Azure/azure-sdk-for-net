@@ -20,11 +20,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
             string projectName = "MyNewProjectAsync";
+            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
             var projectData = new
             {
                 projectName = projectName,
@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             };
 
             using RequestContent content = RequestContent.Create(projectData);
-            Response response = await authoringClient.CreateProjectAsync(projectName, content);
+            Response response = await projectAuthoringClient.CreateProjectAsync(content);
 
             Console.WriteLine($"Project created with status: {response.Status}");
             #endregion

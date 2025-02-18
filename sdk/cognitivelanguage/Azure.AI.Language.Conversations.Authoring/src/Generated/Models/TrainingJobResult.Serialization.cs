@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             if (Optional.IsDefined(EstimatedEndOn))
             {
-                writer.WritePropertyName("estimatedEndOn"u8);
+                writer.WritePropertyName("estimatedEndDateTime"u8);
                 writer.WriteStringValue(EstimatedEndOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +97,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             AnalyzeConversationAuthoringTrainingMode? trainingMode = default;
             SubTrainingOperationState trainingStatus = default;
             SubTrainingOperationState evaluationStatus = default;
-            DateTimeOffset? estimatedEndOn = default;
+            DateTimeOffset? estimatedEndDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,13 +135,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     evaluationStatus = SubTrainingOperationState.DeserializeSubTrainingOperationState(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("estimatedEndOn"u8))
+                if (property.NameEquals("estimatedEndDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedEndOn = property.Value.GetDateTimeOffset("O");
+                    estimatedEndDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 trainingMode,
                 trainingStatus,
                 evaluationStatus,
-                estimatedEndOn,
+                estimatedEndDateTime,
                 serializedAdditionalRawData);
         }
 

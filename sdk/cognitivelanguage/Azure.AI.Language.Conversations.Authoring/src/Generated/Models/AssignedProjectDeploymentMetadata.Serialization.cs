@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
             writer.WritePropertyName("deploymentName"u8);
             writer.WriteStringValue(DeploymentName);
-            writer.WritePropertyName("lastDeployedOn"u8);
+            writer.WritePropertyName("lastDeployedDateTime"u8);
             writer.WriteStringValue(LastDeployedOn, "O");
             writer.WritePropertyName("deploymentExpirationDate"u8);
             writer.WriteStringValue(DeploymentExpiresOn, "D");
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 return null;
             }
             string deploymentName = default;
-            DateTimeOffset lastDeployedOn = default;
+            DateTimeOffset lastDeployedDateTime = default;
             DateTimeOffset deploymentExpirationDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -89,9 +89,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     deploymentName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastDeployedOn"u8))
+                if (property.NameEquals("lastDeployedDateTime"u8))
                 {
-                    lastDeployedOn = property.Value.GetDateTimeOffset("O");
+                    lastDeployedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("deploymentExpirationDate"u8))
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpirationDate, serializedAdditionalRawData);
+            return new AssignedProjectDeploymentMetadata(deploymentName, lastDeployedDateTime, deploymentExpirationDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignedProjectDeploymentMetadata>.Write(ModelReaderWriterOptions options)

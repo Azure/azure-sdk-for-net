@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
             if (options.Format != "W")
             {
-                writer.WritePropertyName("resourceId"u8);
+                writer.WritePropertyName("azureResourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("region"u8);
@@ -78,15 +78,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            ResourceIdentifier resourceId = default;
+            ResourceIdentifier azureResourceId = default;
             AzureLocation region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
+                if (property.NameEquals("azureResourceId"u8))
                 {
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("region"u8))
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssignedDeploymentResource(resourceId, region, serializedAdditionalRawData);
+            return new AssignedDeploymentResource(azureResourceId, region, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignedDeploymentResource>.Write(ModelReaderWriterOptions options)

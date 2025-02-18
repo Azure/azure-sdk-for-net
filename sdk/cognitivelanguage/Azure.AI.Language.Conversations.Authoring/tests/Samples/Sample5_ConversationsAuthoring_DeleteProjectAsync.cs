@@ -20,15 +20,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
             string projectName = "MySampleProjectAsync";
+            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 
-            Operation operation = await authoringClient.DeleteProjectAsync(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName
+            Operation operation = await projectAuthoringClient.DeleteProjectAsync(
+                waitUntil: WaitUntil.Completed
             );
 
              // Extract the operation-location header

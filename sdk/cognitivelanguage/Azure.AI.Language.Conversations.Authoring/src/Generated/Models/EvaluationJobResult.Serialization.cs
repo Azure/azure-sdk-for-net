@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 throw new FormatException($"The model {nameof(EvaluationJobResult)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("evaluationDetails"u8);
+            writer.WritePropertyName("evaluationOptions"u8);
             writer.WriteObjectValue(EvaluationDetails, options);
             writer.WritePropertyName("modelLabel"u8);
             writer.WriteStringValue(ModelLabel);
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            EvaluationDetails evaluationDetails = default;
+            EvaluationDetails evaluationOptions = default;
             string modelLabel = default;
             string trainingConfigVersion = default;
             int percentComplete = default;
@@ -87,9 +87,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("evaluationDetails"u8))
+                if (property.NameEquals("evaluationOptions"u8))
                 {
-                    evaluationDetails = EvaluationDetails.DeserializeEvaluationDetails(property.Value, options);
+                    evaluationOptions = EvaluationDetails.DeserializeEvaluationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelLabel"u8))
@@ -113,7 +113,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EvaluationJobResult(evaluationDetails, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData);
+            return new EvaluationJobResult(evaluationOptions, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EvaluationJobResult>.Write(ModelReaderWriterOptions options)

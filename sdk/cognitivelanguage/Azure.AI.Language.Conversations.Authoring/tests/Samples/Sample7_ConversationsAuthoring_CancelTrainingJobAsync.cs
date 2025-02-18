@@ -21,16 +21,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
             string projectName = "MyProject";
             string jobId = "YourTrainingJobId";
+            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 
-            Operation<TrainingJobResult> cancelOperation = await authoringClient.CancelTrainingJobAsync(
+            Operation<TrainingJobResult> cancelOperation = await projectAuthoringClient.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 jobId: jobId
             );
 

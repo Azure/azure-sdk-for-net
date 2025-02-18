@@ -19,17 +19,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             string projectName = "SampleProject";
             string deploymentName = "SampleDeployment";
+            ConversationAuthoringDeployments deploymentAuthoringClient = client.GetDeployments(projectName, deploymentName);
 
             #region Snippet:Sample13_ConversationsAuthoring_DeleteDeployment
-            Operation operation = authoringClient.DeleteDeployment(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                deploymentName: deploymentName
+            Operation operation = deploymentAuthoringClient.DeleteDeployment(
+                waitUntil: WaitUntil.Completed
             );
 
             // Extract operation-location from response headers

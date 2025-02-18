@@ -20,16 +20,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             string projectName = "SampleProject";
             string trainedModelLabel = "SampleModel";
+            ConversationAuthoringModels modelAuthoringClient = client.GetModels(projectName);
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResultsAsync
-            AsyncPageable<UtteranceEvaluationResult> results = authoringClient.GetModelEvaluationResultsAsync(
-                projectName: projectName,
+            AsyncPageable<UtteranceEvaluationResult> results = modelAuthoringClient.GetModelEvaluationResultsAsync(
                 trainedModelLabel: trainedModelLabel,
                 stringIndexType: stringIndexType
             );

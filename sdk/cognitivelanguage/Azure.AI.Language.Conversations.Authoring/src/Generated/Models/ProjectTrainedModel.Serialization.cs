@@ -41,12 +41,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            writer.WritePropertyName("lastTrainedOn"u8);
+            writer.WritePropertyName("lastTrainedDateTime"u8);
             writer.WriteStringValue(LastTrainedOn, "O");
             writer.WritePropertyName("lastTrainingDurationInSeconds"u8);
             writer.WriteNumberValue(LastTrainingDurationInSeconds);
             writer.WritePropertyName("modelExpirationDate"u8);
-            writer.WriteStringValue(ModelExpirationDate, "D");
+            writer.WriteStringValue(ModelExpiredOn, "D");
             writer.WritePropertyName("modelTrainingConfigVersion"u8);
             writer.WriteStringValue(ModelTrainingConfigVersion);
             writer.WritePropertyName("hasSnapshot"u8);
@@ -90,7 +90,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             string label = default;
             string modelId = default;
-            DateTimeOffset lastTrainedOn = default;
+            DateTimeOffset lastTrainedDateTime = default;
             int lastTrainingDurationInSeconds = default;
             DateTimeOffset modelExpirationDate = default;
             string modelTrainingConfigVersion = default;
@@ -109,9 +109,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastTrainedOn"u8))
+                if (property.NameEquals("lastTrainedDateTime"u8))
                 {
-                    lastTrainedOn = property.Value.GetDateTimeOffset("O");
+                    lastTrainedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastTrainingDurationInSeconds"u8))
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             return new ProjectTrainedModel(
                 label,
                 modelId,
-                lastTrainedOn,
+                lastTrainedDateTime,
                 lastTrainingDurationInSeconds,
                 modelExpirationDate,
                 modelTrainingConfigVersion,

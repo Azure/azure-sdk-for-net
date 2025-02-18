@@ -41,12 +41,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            writer.WritePropertyName("lastTrainedOn"u8);
+            writer.WritePropertyName("lastTrainedDateTime"u8);
             writer.WriteStringValue(LastTrainedOn, "O");
-            writer.WritePropertyName("lastDeployedOn"u8);
+            writer.WritePropertyName("lastDeployedDateTime"u8);
             writer.WriteStringValue(LastDeployedOn, "O");
             writer.WritePropertyName("deploymentExpirationDate"u8);
-            writer.WriteStringValue(DeploymentExpirationDate, "D");
+            writer.WriteStringValue(DeploymentExpiredOn, "D");
             writer.WritePropertyName("modelTrainingConfigVersion"u8);
             writer.WriteStringValue(ModelTrainingConfigVersion);
             writer.WritePropertyName("assignedResources"u8);
@@ -95,8 +95,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             string deploymentName = default;
             string modelId = default;
-            DateTimeOffset lastTrainedOn = default;
-            DateTimeOffset lastDeployedOn = default;
+            DateTimeOffset lastTrainedDateTime = default;
+            DateTimeOffset lastDeployedDateTime = default;
             DateTimeOffset deploymentExpirationDate = default;
             string modelTrainingConfigVersion = default;
             IReadOnlyList<DeploymentResource> assignedResources = default;
@@ -114,14 +114,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     modelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastTrainedOn"u8))
+                if (property.NameEquals("lastTrainedDateTime"u8))
                 {
-                    lastTrainedOn = property.Value.GetDateTimeOffset("O");
+                    lastTrainedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastDeployedOn"u8))
+                if (property.NameEquals("lastDeployedDateTime"u8))
                 {
-                    lastDeployedOn = property.Value.GetDateTimeOffset("O");
+                    lastDeployedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("deploymentExpirationDate"u8))
@@ -153,8 +153,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             return new ProjectDeployment(
                 deploymentName,
                 modelId,
-                lastTrainedOn,
-                lastDeployedOn,
+                lastTrainedDateTime,
+                lastDeployedDateTime,
                 deploymentExpirationDate,
                 modelTrainingConfigVersion,
                 assignedResources,

@@ -20,18 +20,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             string projectName = "SampleProject";
+            var deploymentName1 = "deployment1";
+            var deploymentName2 = "deployment2";
+            ConversationAuthoringDeployments deploymentAuthoringClient = client.GetDeployments(projectName, deploymentName1);
 
-            var swapDetails = new SwapDeploymentsDetails("production", "staging");
+            var swapDetails = new SwapDeploymentsDetails(deploymentName1, deploymentName2);
 
             #region Snippet:Sample14_ConversationsAuthoring_SwapDeploymentsAsync
-            Operation operation = await authoringClient.SwapDeploymentsAsync(
+            Operation operation = await deploymentAuthoringClient.SwapDeploymentsAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                body: swapDetails
+                details: swapDetails
             );
 
             // Extract operation-location from response headers

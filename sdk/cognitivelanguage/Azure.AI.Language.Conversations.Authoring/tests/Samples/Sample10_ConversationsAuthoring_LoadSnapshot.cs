@@ -18,16 +18,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             string projectName = "SampleProject";
             string trainedModelLabel = "SampleModel";
+            ConversationAuthoringModels modelAuthoringClient = client.GetModels(projectName);
 
             #region Snippet:Sample10_ConversationsAuthoring_LoadSnapshot
-            Operation operation = authoringClient.LoadSnapshot(
+            Operation operation = modelAuthoringClient.LoadSnapshot(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
                 trainedModelLabel: trainedModelLabel
             );
 

@@ -51,8 +51,8 @@ Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetProjectDeletionStatusAsync with all parameters and parse the result.
@@ -65,9 +65,9 @@ Response response = await client.GetProjectDeletionStatusAsync("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -99,8 +99,8 @@ Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetProjectDeletionStatus with all parameters and parse the result.
@@ -113,9 +113,9 @@ Response response = client.GetProjectDeletionStatus("<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -313,8 +313,8 @@ Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -331,9 +331,9 @@ Response response = await client.GetTrainingStatusAsync("<projectName>", "<jobId
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -355,14 +355,14 @@ Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToStrin
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndOn").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
 ]]></code></example>
     </member>
     <member name="GetTrainingStatus(string,string,RequestContext)">
@@ -377,8 +377,8 @@ Response response = client.GetTrainingStatus("<projectName>", "<jobId>", (Reques
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -395,9 +395,9 @@ Response response = client.GetTrainingStatus("<projectName>", "<jobId>", (Reques
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -419,14 +419,14 @@ Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToStrin
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndOn").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
 ]]></code></example>
     </member>
     <member name="ExportAsync(WaitUntil,string,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)">
@@ -695,7 +695,7 @@ using RequestContent content = RequestContent.Create(new
             new
             {
                 category = "<category>",
-                compositionMode = "returnLongestOverlap",
+                compositionSetting = "returnLongestOverlap",
                 entities = new
                 {
                     sublists = new object[]
@@ -825,7 +825,7 @@ using RequestContent content = RequestContent.Create(new
             new
             {
                 category = "<category>",
-                compositionMode = "returnLongestOverlap",
+                compositionSetting = "returnLongestOverlap",
                 entities = new
                 {
                     sublists = new object[]
@@ -1149,14 +1149,14 @@ Console.WriteLine(result.GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("trainingMode").ToString());
 Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("estimatedEndOn").ToString());
+Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
 ]]></code></example>
     </member>
     <member name="Train(WaitUntil,string,RequestContent,RequestContext)">
@@ -1207,14 +1207,14 @@ Console.WriteLine(result.GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("trainingMode").ToString());
 Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("estimatedEndOn").ToString());
+Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
 ]]></code></example>
     </member>
     <member name="CancelTrainingJobAsync(WaitUntil,string,string,CancellationToken)">
@@ -1290,14 +1290,14 @@ Console.WriteLine(result.GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("trainingMode").ToString());
 Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("estimatedEndOn").ToString());
+Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
 ]]></code></example>
     </member>
     <member name="CancelTrainingJob(WaitUntil,string,string,RequestContext)">
@@ -1331,14 +1331,14 @@ Console.WriteLine(result.GetProperty("modelLabel").ToString());
 Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("trainingMode").ToString());
 Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
 Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("estimatedEndOn").ToString());
+Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
 ]]></code></example>
     </member>
   </members>

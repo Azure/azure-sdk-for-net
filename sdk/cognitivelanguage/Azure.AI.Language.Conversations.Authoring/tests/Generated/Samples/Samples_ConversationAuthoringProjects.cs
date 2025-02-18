@@ -29,8 +29,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -46,8 +46,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
         }
 
@@ -85,9 +85,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -119,9 +119,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -315,8 +315,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -336,8 +336,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
@@ -379,9 +379,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -403,14 +403,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndOn").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         }
 
         [Test]
@@ -425,9 +425,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("createdOn").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -449,14 +449,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingMode").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("trainingStatus").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndOn").ToString());
+            Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndDateTime").ToString());
         }
 
         [Test]
@@ -676,7 +676,7 @@ category = "<category>",
 new
 {
 category = "<category>",
-compositionMode = "returnLongestOverlap",
+compositionSetting = "returnLongestOverlap",
 entities = new
 {
 sublists = new object[]
@@ -787,7 +787,7 @@ category = "<category>",
 new
 {
 category = "<category>",
-compositionMode = "returnLongestOverlap",
+compositionSetting = "returnLongestOverlap",
 entities = new
 {
 sublists = new object[]
@@ -1225,14 +1225,14 @@ Dataset = DatasetType.Train,
             Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("trainingMode").ToString());
             Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("estimatedEndOn").ToString());
+            Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
         }
 
         [Test]
@@ -1263,14 +1263,14 @@ Dataset = DatasetType.Train,
             Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("trainingMode").ToString());
             Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("estimatedEndOn").ToString());
+            Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
         }
 
         [Test]
@@ -1393,14 +1393,14 @@ Dataset = DatasetType.Train,
             Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("trainingMode").ToString());
             Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("estimatedEndOn").ToString());
+            Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
         }
 
         [Test]
@@ -1419,14 +1419,14 @@ Dataset = DatasetType.Train,
             Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
             Console.WriteLine(result.GetProperty("trainingMode").ToString());
             Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("trainingStatus").GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("percentComplete").ToString());
-            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startedOn").ToString());
-            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
+            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("startDateTime").ToString());
+            Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("endDateTime").ToString());
             Console.WriteLine(result.GetProperty("evaluationStatus").GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("estimatedEndOn").ToString());
+            Console.WriteLine(result.GetProperty("estimatedEndDateTime").ToString());
         }
 
         [Test]

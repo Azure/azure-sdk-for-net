@@ -39,13 +39,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            writer.WritePropertyName("createdOn"u8);
+            writer.WritePropertyName("createdDateTime"u8);
             writer.WriteStringValue(CreatedOn, "O");
-            writer.WritePropertyName("lastUpdatedOn"u8);
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
             writer.WriteStringValue(LastUpdatedOn, "O");
             if (Optional.IsDefined(ExpiresOn))
             {
-                writer.WritePropertyName("expiresOn"u8);
+                writer.WritePropertyName("expirationDateTime"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WritePropertyName("status"u8);
@@ -108,9 +108,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 return null;
             }
             string jobId = default;
-            DateTimeOffset createdOn = default;
-            DateTimeOffset lastUpdatedOn = default;
-            DateTimeOffset? expiresOn = default;
+            DateTimeOffset createdDateTime = default;
+            DateTimeOffset lastUpdatedDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             ConversationAuthoringOperationStatus status = default;
             IReadOnlyList<ResponseError> warnings = default;
             IReadOnlyList<ResponseError> errors = default;
@@ -123,23 +123,23 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     jobId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdOn"u8))
+                if (property.NameEquals("createdDateTime"u8))
                 {
-                    createdOn = property.Value.GetDateTimeOffset("O");
+                    createdDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdatedOn"u8))
+                if (property.NameEquals("lastUpdatedDateTime"u8))
                 {
-                    lastUpdatedOn = property.Value.GetDateTimeOffset("O");
+                    lastUpdatedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expiresOn"u8))
+                if (property.NameEquals("expirationDateTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiresOn = property.Value.GetDateTimeOffset("O");
+                    expirationDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -183,9 +183,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new SwapDeploymentsOperationState(
                 jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
+                createdDateTime,
+                lastUpdatedDateTime,
+                expirationDateTime,
                 status,
                 warnings ?? new ChangeTrackingList<ResponseError>(),
                 errors ?? new ChangeTrackingList<ResponseError>(),

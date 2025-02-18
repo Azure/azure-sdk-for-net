@@ -21,19 +21,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample4_ConversationsAuthoring_GetProjectAsync
             string projectName = "MySampleProjectAsync";
+            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 
-            Response<ProjectMetadata> response = await authoringClient.GetProjectAsync(projectName);
+            Response<ProjectMetadata> response = await projectAuthoringClient.GetProjectAsync();
             ProjectMetadata projectMetadata = response.Value;
 
-            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedDateTime}");
-            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedDateTime}");
-            Console.WriteLine($"Last Trained DateTime: {projectMetadata.LastTrainedDateTime}");
-            Console.WriteLine($"Last Deployed DateTime: {projectMetadata.LastDeployedDateTime}");
+            Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
+            Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
+            Console.WriteLine($"Last Trained DateTime: {projectMetadata.LastTrainedOn}");
+            Console.WriteLine($"Last Deployed DateTime: {projectMetadata.LastDeployedOn}");
             Console.WriteLine($"Project Kind: {projectMetadata.ProjectKind}");
             Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
             Console.WriteLine($"Multilingual: {projectMetadata.Multilingual}");

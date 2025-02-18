@@ -34,7 +34,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 throw new FormatException($"The model {nameof(AssignDeploymentResourcesDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("metadata"u8);
+            writer.WritePropertyName("resourcesMetadata"u8);
             writer.WriteStartArray();
             foreach (var item in Metadata)
             {
@@ -78,19 +78,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            IList<ResourceMetadata> metadata = default;
+            IList<ResourceMetadata> resourcesMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metadata"u8))
+                if (property.NameEquals("resourcesMetadata"u8))
                 {
                     List<ResourceMetadata> array = new List<ResourceMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ResourceMetadata.DeserializeResourceMetadata(item, options));
                     }
-                    metadata = array;
+                    resourcesMetadata = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssignDeploymentResourcesDetails(metadata, serializedAdditionalRawData);
+            return new AssignDeploymentResourcesDetails(resourcesMetadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignDeploymentResourcesDetails>.Write(ModelReaderWriterOptions options)

@@ -52,8 +52,8 @@ Response response = await client.GetDeploymentAsync("<projectName>", "<deploymen
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
 Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
@@ -70,8 +70,8 @@ Response response = await client.GetDeploymentAsync("<projectName>", "<deploymen
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
 Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
@@ -91,8 +91,8 @@ Response response = client.GetDeployment("<projectName>", "<deploymentName>", (R
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
 Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
@@ -109,8 +109,8 @@ Response response = client.GetDeployment("<projectName>", "<deploymentName>", (R
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("deploymentName").ToString());
 Console.WriteLine(result.GetProperty("modelId").ToString());
-Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
-Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+Console.WriteLine(result.GetProperty("lastTrainedDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
 Console.WriteLine(result.GetProperty("deploymentExpirationDate").ToString());
 Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
 Console.WriteLine(result.GetProperty("assignedResources")[0].GetProperty("resourceId").ToString());
@@ -167,8 +167,8 @@ Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<p
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with all parameters and parse the result.
@@ -181,9 +181,9 @@ Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<p
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -215,8 +215,8 @@ Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus with all parameters and parse the result.
@@ -229,9 +229,9 @@ Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -301,8 +301,8 @@ Response response = await client.GetDeploymentStatusAsync("<projectName>", "<dep
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentStatusAsync with all parameters and parse the result.
@@ -315,9 +315,9 @@ Response response = await client.GetDeploymentStatusAsync("<projectName>", "<dep
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -349,8 +349,8 @@ Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetDeploymentStatus with all parameters and parse the result.
@@ -363,9 +363,9 @@ Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -435,8 +435,8 @@ Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", 
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatusAsync with all parameters and parse the result.
@@ -449,9 +449,9 @@ Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", 
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -483,8 +483,8 @@ Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", 
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatus with all parameters and parse the result.
@@ -497,9 +497,9 @@ Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", 
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -569,8 +569,8 @@ Response response = await client.GetAssignDeploymentResourcesStatusAsync("<proje
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatusAsync with all parameters and parse the result.
@@ -583,9 +583,9 @@ Response response = await client.GetAssignDeploymentResourcesStatusAsync("<proje
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -617,8 +617,8 @@ Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetAssignDeploymentResourcesStatus with all parameters and parse the result.
@@ -631,9 +631,9 @@ Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -703,8 +703,8 @@ Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<pro
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with all parameters and parse the result.
@@ -717,9 +717,9 @@ Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<pro
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -751,8 +751,8 @@ Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>",
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
 This sample shows how to call GetUnassignDeploymentResourcesStatus with all parameters and parse the result.
@@ -765,9 +765,9 @@ Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>",
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
-Console.WriteLine(result.GetProperty("createdOn").ToString());
-Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
-Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
@@ -1201,7 +1201,7 @@ ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClien
 
 using RequestContent content = RequestContent.Create(new
 {
-    metadata = new object[]
+    resourcesMetadata = new object[]
     {
         new
         {
@@ -1221,7 +1221,7 @@ ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClien
 
 using RequestContent content = RequestContent.Create(new
 {
-    metadata = new object[]
+    resourcesMetadata = new object[]
     {
         new
         {
@@ -1244,7 +1244,7 @@ ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClien
 
 using RequestContent content = RequestContent.Create(new
 {
-    metadata = new object[]
+    resourcesMetadata = new object[]
     {
         new
         {
@@ -1264,7 +1264,7 @@ ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClien
 
 using RequestContent content = RequestContent.Create(new
 {
-    metadata = new object[]
+    resourcesMetadata = new object[]
     {
         new
         {

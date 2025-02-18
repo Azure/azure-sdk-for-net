@@ -22,11 +22,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample2_ConversationsAuthoring_Import
             string projectName = "MyImportedProject";
+            ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 
             var projectMetadata = new CreateProjectDetails(
                 projectKind: "Conversation",
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Description = "Trying out CLU with assets"
             };
 
-            var projectAssets = new ConversationExportedProjectAssets();
+            var projectAssets = new ConversationExportedProjectAsset();
 
             projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
             projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
@@ -79,11 +79,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Assets = projectAssets
             };
 
-            Operation operation = authoringClient.Import(
+            Operation operation = projectAuthoringClient.Import(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                body: exportedProject,
-                exportedProjectFormat: ExportedProjectFormat.Conversation
+                exportedProject: exportedProject,
+                exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation
             );
 
              // Extract the operation-location header

@@ -88,8 +88,9 @@ Then you can create an instance of `DefaultAzureCredential` and pass it to a new
 ```C# Snippet:AnalyzeConversationAuthoring_CreateWithDefaultAzureCredential
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
-AuthoringClient client = new AuthoringClient(endpoint, credential);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+string projectName = "MyNewProject";
+ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 Note that regional endpoints do not support AAD authentication. Instead, create a [custom domain][custom_domain] name for your resource to use AAD authentication.
@@ -107,9 +108,10 @@ For example,
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
+string projectName = "MyNewProject";
+ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 ```
 
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
@@ -182,17 +184,16 @@ For example, if you attempt to create a project with an invalid configuration, a
 try
 {
     string invalidProjectName = "InvalidProject";
-
+    ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(invalidProjectName);
     var projectData = new
     {
-        projectName = invalidProjectName,
         language = "invalid-lang", // Invalid language code
         projectKind = "Conversation",
         description = "This is a test for invalid configuration."
     };
 
     using RequestContent content = RequestContent.Create(projectData);
-    Response response = authoringClient.CreateProject(invalidProjectName, content);
+    Response response = projectAuthoringClient.CreateProject(content);
 }
 catch (RequestFailedException ex)
 {

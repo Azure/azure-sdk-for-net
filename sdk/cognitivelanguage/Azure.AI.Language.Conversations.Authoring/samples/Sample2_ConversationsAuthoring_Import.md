@@ -22,6 +22,7 @@ To import a project synchronously, call Import on the AnalyzeConversationAuthori
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
 string projectName = "MyImportedProject";
+ConversationAuthoringProjects projectAuthoringClient = client.GetProjects(projectName);
 
 var projectMetadata = new CreateProjectDetails(
     projectKind: "Conversation",
@@ -34,7 +35,7 @@ var projectMetadata = new CreateProjectDetails(
     Description = "Trying out CLU with assets"
 };
 
-var projectAssets = new ConversationExportedProjectAssets();
+var projectAssets = new ConversationExportedProjectAsset();
 
 projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent1" ));
 projectAssets.Intents.Add(new ConversationExportedIntent ( category : "intent2" ));
@@ -74,11 +75,10 @@ var exportedProject = new ExportedProject(
     Assets = projectAssets
 };
 
-Operation operation = authoringClient.Import(
+Operation operation = projectAuthoringClient.Import(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
-    body: exportedProject,
-    exportedProjectFormat: ExportedProjectFormat.Conversation
+    exportedProject: exportedProject,
+    exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation
 );
 
  // Extract the operation-location header
