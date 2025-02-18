@@ -620,6 +620,7 @@ namespace Azure.AI.Projects.Tests
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
         }
 
+        [Ignore("Marking this test as ignored, because Enterprise file serach is not working right now 2025-02-18.")]
         [RecordedTest]
         [TestCase(VecrorStoreTestType.JustVectorStore, true, false)]
         [TestCase(VecrorStoreTestType.Batch, true, false)]
