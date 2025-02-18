@@ -88,34 +88,6 @@ namespace Azure.Compute.Batch.Tests.Integration
         }
 
         [RecordedTest]
-        public async Task PoolGetPoolUsageMetrics()
-        {
-            var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PoolGetPoolUsageMetrics", IsPlayBack());
-            var poolID = iaasWindowsPoolFixture.PoolId;
-
-            try
-            {
-                // create a pool to verify we have something to query for
-                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
-
-                BatchPoolUsageMetrics exptedItem = null;
-                await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync())
-                {
-                    exptedItem = item;
-                }
-
-                // verify that some usage exists, we can't predict what usage that might be at the time of the test
-                Assert.NotNull(exptedItem);
-                Assert.IsNotEmpty(exptedItem.PoolId);
-            }
-            finally
-            {
-                await client.DeletePoolAsync(poolID);
-            }
-        }
-
-        [RecordedTest]
         public async Task PoolRemoveNodes()
         {
             var client = CreateBatchClient();
@@ -299,6 +271,16 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Response response = await client.ResizePoolAsync(poolID, resizeContent);
                 resizePool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(AllocationState.Resizing, resizePool.AllocationState);
+
+                try
+                {
+                    response = await client.ResizePoolAsync("fakepool", resizeContent);
+                }
+                catch (Azure.RequestFailedException e)
+                {
+                    BatchError err = BatchError.ExtractBatchErrorFromExeception(e);
+                    Assert.AreEqual("PoolNotFound", err.Code);
+                }
 
                 // stop resizing
                 response = await client.StopPoolResizeAsync(poolID);

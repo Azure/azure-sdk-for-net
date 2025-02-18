@@ -22,5 +22,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="xunit" />
   </ItemGroup>
 </Project>

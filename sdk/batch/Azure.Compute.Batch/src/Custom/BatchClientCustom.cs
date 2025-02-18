@@ -10,23 +10,13 @@ using Azure.Compute.Batch.Custom;
 using System.Threading.Tasks;
 using static Azure.Core.HttpPipelineExtensions;
 using System.Threading;
-using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace Azure.Compute.Batch
 {
     public partial class BatchClient
     {
         private readonly AzureNamedKeyCredential _namedKeyCredential;
-
-        private BatchTaskUtilities _taskUtilities;
-
-        /// <summary>
-        /// Helper utilities for working with tasks in the Azure Batch service.
-        /// </summary>
-        public BatchTaskUtilities TaskUtilities { get {
-                return _taskUtilities ??= new BatchTaskUtilities(this);
-            }
-        }
 
         /// <summary> Initializes a new instance of BatchClient. </summary>
         /// <param name="endpoint"> Batch account endpoint (for example: https://batchaccount.eastus2.batch.azure.com). </param>
@@ -614,5 +604,84 @@ namespace Azure.Compute.Batch
             Response response = UpdateJobSchedule(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
+
+        /// <summary> Utility method that can take in a large number of tasks to Creates to the specified Job. </summary>
+        /// <param name="jobId"> The ID of the Job to which the Task is to be created. </param>
+        /// <param name="tasksToAdd"> A collection of Tasks to be created. </param>
+        /// <param name="parallelOptions">The parallel options associated with this operation.  If this is null, the default is used.</param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasksToAdd"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// The maximum lifetime of a Task from addition to completion is 180 days. If a
+        /// Task has not completed within 180 days of being added it will be terminated by
+        /// the Batch service and left in whatever state it was in at that time.
+        /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<CreateTasksResult> CreateTasksAsync(string jobId, IEnumerable<BatchTaskCreateContent> tasksToAdd, BatchClientParallelOptions parallelOptions = null, TimeSpan? timeOutInSeconds = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(tasksToAdd, nameof(tasksToAdd));
+            CreateTasksResult response = null;
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.CreateTasks");
+            scope.Start();
+            try
+            {
+                TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(this, jobId, parallelOptions);
+                response = await addTasksWorkflowManager.AddTasksAsync(tasksToAdd,jobId, timeOutInSeconds).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+            return response;
+        }
+
+        /// <summary> Utility method that can take in a large number of tasks to Creates to the specified Job. </summary>
+        /// <param name="jobId"> The ID of the Job to which the Task is to be created. </param>
+        /// <param name="tasksToAdd"> A collection of Tasks to be created </param>
+        /// <param name="parallelOptions">The parallel options associated with this operation.  If this is null, the default is used.</param>
+        /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="tasksToAdd"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks>
+        /// The maximum lifetime of a Task from addition to completion is 180 days. If a
+        /// Task has not completed within 180 days of being added it will be terminated by
+        /// the Batch service and left in whatever state it was in at that time.
+        /// </remarks>
+        public virtual CreateTasksResult CreateTasks(string jobId, IEnumerable<BatchTaskCreateContent> tasksToAdd, BatchClientParallelOptions parallelOptions = null, TimeSpan? timeOutInSeconds = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            Argument.AssertNotNull(tasksToAdd, nameof(tasksToAdd));
+
+            CreateTasksResult response = null;
+
+            using var scope = ClientDiagnostics.CreateScope("BatchClient.CreateTasks");
+            scope.Start();
+            try
+            {
+                TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(this, jobId, parallelOptions);
+                response = addTasksWorkflowManager.AddTasks(tasksToAdd, jobId, timeOutInSeconds);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+
+            return response;
+        }
+        #pragma warning restore AZC0015
     }
 }
