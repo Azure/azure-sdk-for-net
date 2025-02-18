@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
+            Response<AnalyzeTextAuthoringExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
+            Response<AnalyzeTextAuthoringExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
+            Response<AnalyzeTextAuthoringExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
+            Response<AnalyzeTextAuthoringExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -179,7 +179,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedModelOperationState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
+            Response<AnalyzeTextAuthoringExportedModelOperationState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
         }
 
         [Test]
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedModelOperationState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
+            Response<AnalyzeTextAuthoringExportedModelOperationState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
         }
 
         [Test]
@@ -269,7 +269,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedModelOperationState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
+            Response<AnalyzeTextAuthoringExportedModelOperationState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
         }
 
         [Test]
@@ -280,7 +280,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedModelOperationState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
+            Response<AnalyzeTextAuthoringExportedModelOperationState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
         }
 
         [Test]
@@ -321,7 +321,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedModelManifest> response = client.GetExportedModelManifest("<projectName>", "<exportedModelName>");
+            Response<AnalyzeTextAuthoringExportedModelManifest> response = client.GetExportedModelManifest("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -332,7 +332,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedModelManifest> response = await client.GetExportedModelManifestAsync("<projectName>", "<exportedModelName>");
+            Response<AnalyzeTextAuthoringExportedModelManifest> response = await client.GetExportedModelManifestAsync("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedModelManifest> response = client.GetExportedModelManifest("<projectName>", "<exportedModelName>");
+            Response<AnalyzeTextAuthoringExportedModelManifest> response = client.GetExportedModelManifest("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -384,7 +384,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ExportedModelManifest> response = await client.GetExportedModelManifestAsync("<projectName>", "<exportedModelName>");
+            Response<AnalyzeTextAuthoringExportedModelManifest> response = await client.GetExportedModelManifestAsync("<projectName>", "<exportedModelName>");
         }
 
         [Test]
@@ -435,7 +435,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+            Response<AnalyzeTextAuthoringProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -446,7 +446,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+            Response<AnalyzeTextAuthoringProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -497,7 +497,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+            Response<AnalyzeTextAuthoringProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -508,7 +508,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+            Response<AnalyzeTextAuthoringProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -613,7 +613,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<EvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<AnalyzeTextAuthoringEvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -624,7 +624,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<EvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<AnalyzeTextAuthoringEvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -715,7 +715,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<EvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<AnalyzeTextAuthoringEvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -726,7 +726,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<EvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<AnalyzeTextAuthoringEvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -767,7 +767,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
+            Response<AnalyzeTextAuthoringEvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -778,7 +778,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
+            Response<AnalyzeTextAuthoringEvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -823,7 +823,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
+            Response<AnalyzeTextAuthoringEvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -834,7 +834,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
+            Response<AnalyzeTextAuthoringEvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
         }
 
         [Test]
@@ -879,7 +879,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<LoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<AnalyzeTextAuthoringLoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -890,7 +890,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<LoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<AnalyzeTextAuthoringLoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -969,7 +969,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<LoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<AnalyzeTextAuthoringLoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -980,7 +980,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            Response<LoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<AnalyzeTextAuthoringLoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -1025,7 +1025,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            foreach (DocumentEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
+            foreach (AnalyzeTextAuthoringDocumentEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
             {
             }
         }
@@ -1038,7 +1038,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            await foreach (DocumentEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
+            await foreach (AnalyzeTextAuthoringDocumentEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
             {
             }
         }
@@ -1085,7 +1085,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            foreach (DocumentEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringDocumentEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -1098,7 +1098,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            await foreach (DocumentEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringDocumentEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -1141,7 +1141,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
+            AnalyzeTextAuthoringExportedModelDetails body = new AnalyzeTextAuthoringExportedModelDetails("<trainedModelLabel>");
             Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
         }
 
@@ -1153,7 +1153,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
+            AnalyzeTextAuthoringExportedModelDetails body = new AnalyzeTextAuthoringExportedModelDetails("<trainedModelLabel>");
             Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
         }
 
@@ -1195,7 +1195,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
+            AnalyzeTextAuthoringExportedModelDetails body = new AnalyzeTextAuthoringExportedModelDetails("<trainedModelLabel>");
             Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
         }
 
@@ -1207,7 +1207,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
+            AnalyzeTextAuthoringExportedModelDetails body = new AnalyzeTextAuthoringExportedModelDetails("<trainedModelLabel>");
             Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
         }
 
@@ -1301,9 +1301,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            EvaluationDetails body = new EvaluationDetails();
-            Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
-            EvaluationJobResult responseData = operation.Value;
+            AnalyzeTextAuthoringEvaluationDetails body = new AnalyzeTextAuthoringEvaluationDetails();
+            Operation<AnalyzeTextAuthoringEvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+            AnalyzeTextAuthoringEvaluationJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1314,9 +1314,9 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            EvaluationDetails body = new EvaluationDetails();
-            Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
-            EvaluationJobResult responseData = operation.Value;
+            AnalyzeTextAuthoringEvaluationDetails body = new AnalyzeTextAuthoringEvaluationDetails();
+            Operation<AnalyzeTextAuthoringEvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+            AnalyzeTextAuthoringEvaluationJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1379,14 +1379,14 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            EvaluationDetails body = new EvaluationDetails
+            AnalyzeTextAuthoringEvaluationDetails body = new AnalyzeTextAuthoringEvaluationDetails
             {
                 Kind = AnalyzeTextAuthoringEvaluationKind.Percentage,
                 TrainingSplitPercentage = 1234,
                 TestingSplitPercentage = 1234,
             };
-            Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
-            EvaluationJobResult responseData = operation.Value;
+            Operation<AnalyzeTextAuthoringEvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+            AnalyzeTextAuthoringEvaluationJobResult responseData = operation.Value;
         }
 
         [Test]
@@ -1397,14 +1397,14 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAuthoringModels client = new TextAnalysisAuthoringClient(endpoint, credential).GetTextAuthoringModelsClient();
 
-            EvaluationDetails body = new EvaluationDetails
+            AnalyzeTextAuthoringEvaluationDetails body = new AnalyzeTextAuthoringEvaluationDetails
             {
                 Kind = AnalyzeTextAuthoringEvaluationKind.Percentage,
                 TrainingSplitPercentage = 1234,
                 TestingSplitPercentage = 1234,
             };
-            Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
-            EvaluationJobResult responseData = operation.Value;
+            Operation<AnalyzeTextAuthoringEvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+            AnalyzeTextAuthoringEvaluationJobResult responseData = operation.Value;
         }
 
         [Test]

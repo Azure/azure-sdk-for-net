@@ -64,7 +64,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (ProjectMetadata item in client.GetProjects())
+            foreach (AnalyzeTextAuthoringProjectMetadata item in client.GetProjects())
             {
             }
         }
@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (ProjectMetadata item in client.GetProjectsAsync())
+            await foreach (AnalyzeTextAuthoringProjectMetadata item in client.GetProjectsAsync())
             {
             }
         }
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (ProjectMetadata item in client.GetProjects(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringProjectMetadata item in client.GetProjects(maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (ProjectMetadata item in client.GetProjectsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringProjectMetadata item in client.GetProjectsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -218,7 +218,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (ProjectDeployment item in client.GetDeployments("<projectName>"))
+            foreach (AnalyzeTextAuthoringProjectDeployment item in client.GetDeployments("<projectName>"))
             {
             }
         }
@@ -231,7 +231,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (ProjectDeployment item in client.GetDeploymentsAsync("<projectName>"))
+            await foreach (AnalyzeTextAuthoringProjectDeployment item in client.GetDeploymentsAsync("<projectName>"))
             {
             }
         }
@@ -288,7 +288,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (ProjectDeployment item in client.GetDeployments("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringProjectDeployment item in client.GetDeployments("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -301,7 +301,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (ProjectDeployment item in client.GetDeploymentsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringProjectDeployment item in client.GetDeploymentsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -354,7 +354,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>"))
+            foreach (AnalyzeTextAuthoringExportedTrainedModel item in client.GetExportedModels("<projectName>"))
             {
             }
         }
@@ -367,7 +367,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
+            await foreach (AnalyzeTextAuthoringExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
             {
             }
         }
@@ -420,7 +420,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -433,7 +433,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -488,7 +488,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
+            foreach (AnalyzeTextAuthoringProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
             {
             }
         }
@@ -501,7 +501,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
+            await foreach (AnalyzeTextAuthoringProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
             {
             }
         }
@@ -556,7 +556,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -569,7 +569,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -614,7 +614,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<projectName>"))
+            foreach (AnalyzeTextAuthoringAssignedDeploymentResource item in client.GetDeploymentResources("<projectName>"))
             {
             }
         }
@@ -627,7 +627,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>"))
+            await foreach (AnalyzeTextAuthoringAssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>"))
             {
             }
         }
@@ -672,7 +672,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringAssignedDeploymentResource item in client.GetDeploymentResources("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -685,7 +685,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringAssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -742,7 +742,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (TrainingOperationState item in client.GetTrainingJobs("<projectName>"))
+            foreach (AnalyzeTextAuthoringTrainingOperationState item in client.GetTrainingJobs("<projectName>"))
             {
             }
         }
@@ -755,7 +755,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>"))
+            await foreach (AnalyzeTextAuthoringTrainingOperationState item in client.GetTrainingJobsAsync("<projectName>"))
             {
             }
         }
@@ -860,7 +860,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (TrainingOperationState item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringTrainingOperationState item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -873,7 +873,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringTrainingOperationState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -922,7 +922,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments())
+            foreach (AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments())
             {
             }
         }
@@ -935,7 +935,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync())
+            await foreach (AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync())
             {
             }
         }
@@ -984,7 +984,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeployments(maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -997,7 +997,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (AssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata item in client.GetAssignedResourceDeploymentsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -1042,7 +1042,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (SupportedLanguage item in client.GetSupportedLanguages())
+            foreach (AnalyzeTextAuthoringSupportedLanguage item in client.GetSupportedLanguages())
             {
             }
         }
@@ -1055,7 +1055,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync())
+            await foreach (AnalyzeTextAuthoringSupportedLanguage item in client.GetSupportedLanguagesAsync())
             {
             }
         }
@@ -1100,7 +1100,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (SupportedLanguage item in client.GetSupportedLanguages(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringSupportedLanguage item in client.GetSupportedLanguages(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -1113,7 +1113,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringSupportedLanguage item in client.GetSupportedLanguagesAsync(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -1160,7 +1160,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntities())
+            foreach (AnalyzeTextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntities())
             {
             }
         }
@@ -1173,7 +1173,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
+            await foreach (AnalyzeTextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
             {
             }
         }
@@ -1220,7 +1220,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntities())
+            foreach (AnalyzeTextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntities())
             {
             }
         }
@@ -1233,7 +1233,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
+            await foreach (AnalyzeTextAuthoringPrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
             {
             }
         }
@@ -1278,7 +1278,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions())
+            foreach (AnalyzeTextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersions())
             {
             }
         }
@@ -1291,7 +1291,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsync())
+            await foreach (AnalyzeTextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersionsAsync())
             {
             }
         }
@@ -1336,7 +1336,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (AnalyzeTextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersions(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -1349,7 +1349,7 @@ namespace Azure.AI.Language.Text.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
-            await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (AnalyzeTextAuthoringTrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(projectKind: AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }

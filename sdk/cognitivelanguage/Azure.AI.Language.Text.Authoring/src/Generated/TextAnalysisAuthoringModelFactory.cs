@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
     /// <summary> Model factory for models. </summary>
     public static partial class TextAnalysisAuthoringModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringProjectMetadata"/>. </summary>
         /// <param name="createdOn"> Represents the project creation datetime. </param>
         /// <param name="lastModifiedOn"> Represents the project last modification datetime. </param>
         /// <param name="lastTrainedOn"> Represents the project last training datetime. </param>
@@ -27,10 +27,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Models.ProjectMetadata"/> instance for mocking. </returns>
-        public static ProjectMetadata ProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = null, DateTimeOffset? lastDeployedOn = null, AnalyzeTextAuthoringProjectKind projectKind = default, string storageInputContainerName = null, AnalyzeTextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringProjectMetadata"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringProjectMetadata AnalyzeTextAuthoringProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = null, DateTimeOffset? lastDeployedOn = null, AnalyzeTextAuthoringProjectKind projectKind = default, string storageInputContainerName = null, AnalyzeTextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
         {
-            return new ProjectMetadata(
+            return new AnalyzeTextAuthoringProjectMetadata(
                 createdOn,
                 lastModifiedOn,
                 lastTrainedOn,
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectDeployment"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringProjectDeployment"/>. </summary>
         /// <param name="deploymentName"> Represents deployment name. </param>
         /// <param name="modelId"> Represents deployment modelId. </param>
         /// <param name="lastTrainedOn"> Represents deployment last trained time. </param>
@@ -53,12 +53,12 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="deploymentExpiredOn"> Represents deployment expiration date in the runtime. </param>
         /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
         /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
-        /// <returns> A new <see cref="Models.ProjectDeployment"/> instance for mocking. </returns>
-        public static ProjectDeployment ProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = null, IEnumerable<DeploymentResource> assignedResources = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringProjectDeployment"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringProjectDeployment AnalyzeTextAuthoringProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiredOn = default, string modelTrainingConfigVersion = null, IEnumerable<AnalyzeTextAuthoringDeploymentResource> assignedResources = null)
         {
-            assignedResources ??= new List<DeploymentResource>();
+            assignedResources ??= new List<AnalyzeTextAuthoringDeploymentResource>();
 
-            return new ProjectDeployment(
+            return new AnalyzeTextAuthoringProjectDeployment(
                 deploymentName,
                 modelId,
                 lastTrainedOn,
@@ -69,26 +69,26 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDeploymentResource"/>. </summary>
         /// <param name="resourceId"> Represents the Azure resource Id. </param>
         /// <param name="region"> Represents the resource region. </param>
-        /// <returns> A new <see cref="Models.DeploymentResource"/> instance for mocking. </returns>
-        public static DeploymentResource DeploymentResource(string resourceId = null, string region = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDeploymentResource"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDeploymentResource AnalyzeTextAuthoringDeploymentResource(string resourceId = null, string region = null)
         {
-            return new DeploymentResource(resourceId, region, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedTrainedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringExportedTrainedModel"/>. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
         /// <param name="lastExportedModelOn"> The last exported date time of the model. </param>
         /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
-        /// <returns> A new <see cref="Models.ExportedTrainedModel"/> instance for mocking. </returns>
-        public static ExportedTrainedModel ExportedTrainedModel(string exportedModelName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastExportedModelOn = default, DateTimeOffset modelExpiredOn = default, string modelTrainingConfigVersion = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringExportedTrainedModel"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringExportedTrainedModel AnalyzeTextAuthoringExportedTrainedModel(string exportedModelName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastExportedModelOn = default, DateTimeOffset modelExpiredOn = default, string modelTrainingConfigVersion = null)
         {
-            return new ExportedTrainedModel(
+            return new AnalyzeTextAuthoringExportedTrainedModel(
                 exportedModelName,
                 modelId,
                 lastTrainedOn,
@@ -98,7 +98,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectTrainedModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringProjectTrainedModel"/>. </summary>
         /// <param name="label"> The trained model label. </param>
         /// <param name="modelId"> The model ID. </param>
         /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
@@ -106,10 +106,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="modelExpiredOn"> The model expiration date. </param>
         /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
         /// <param name="hasSnapshot"> The flag to indicate if the trained model has a snapshot ready. </param>
-        /// <returns> A new <see cref="Models.ProjectTrainedModel"/> instance for mocking. </returns>
-        public static ProjectTrainedModel ProjectTrainedModel(string label = null, string modelId = null, DateTimeOffset lastTrainedOn = default, int lastTrainingDurationInSeconds = default, DateTimeOffset modelExpiredOn = default, string modelTrainingConfigVersion = null, bool hasSnapshot = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringProjectTrainedModel"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringProjectTrainedModel AnalyzeTextAuthoringProjectTrainedModel(string label = null, string modelId = null, DateTimeOffset lastTrainedOn = default, int lastTrainingDurationInSeconds = default, DateTimeOffset modelExpiredOn = default, string modelTrainingConfigVersion = null, bool hasSnapshot = default)
         {
-            return new ProjectTrainedModel(
+            return new AnalyzeTextAuthoringProjectTrainedModel(
                 label,
                 modelId,
                 lastTrainedOn,
@@ -120,16 +120,16 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AssignedDeploymentResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringAssignedDeploymentResource"/>. </summary>
         /// <param name="azureResourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
-        /// <returns> A new <see cref="Models.AssignedDeploymentResource"/> instance for mocking. </returns>
-        public static AssignedDeploymentResource AssignedDeploymentResource(string azureResourceId = null, AzureLocation region = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringAssignedDeploymentResource"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringAssignedDeploymentResource AnalyzeTextAuthoringAssignedDeploymentResource(string azureResourceId = null, AzureLocation region = default)
         {
-            return new AssignedDeploymentResource(azureResourceId, region, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringAssignedDeploymentResource(azureResourceId, region, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringTrainingOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -138,13 +138,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents training tasks detailed result. </param>
-        /// <returns> A new <see cref="Models.TrainingOperationState"/> instance for mocking. </returns>
-        public static TrainingOperationState TrainingOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, TrainingJobResult result = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringTrainingOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringTrainingOperationState AnalyzeTextAuthoringTrainingOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, AnalyzeTextAuthoringTrainingJobResult result = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new TrainingOperationState(
+            return new AnalyzeTextAuthoringTrainingOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -156,16 +156,16 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringTrainingJobResult"/>. </summary>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingStatus"> Represents model train status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimate end date time for training and evaluation. </param>
-        /// <returns> A new <see cref="Models.TrainingJobResult"/> instance for mocking. </returns>
-        public static TrainingJobResult TrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, SubTrainingOperationState trainingStatus = null, SubTrainingOperationState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringTrainingJobResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringTrainingJobResult AnalyzeTextAuthoringTrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, AnalyzeTextAuthoringSubTrainingOperationState trainingStatus = null, AnalyzeTextAuthoringSubTrainingOperationState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
         {
-            return new TrainingJobResult(
+            return new AnalyzeTextAuthoringTrainingJobResult(
                 modelLabel,
                 trainingConfigVersion,
                 trainingStatus,
@@ -174,67 +174,67 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubTrainingOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringSubTrainingOperationState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="startedOn"> Represents the start date time. </param>
         /// <param name="endedOn"> Represents the end date time. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
-        /// <returns> A new <see cref="Models.SubTrainingOperationState"/> instance for mocking. </returns>
-        public static SubTrainingOperationState SubTrainingOperationState(int percentComplete = default, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, AnalyzeTextAuthoringOperationStatus status = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringSubTrainingOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringSubTrainingOperationState AnalyzeTextAuthoringSubTrainingOperationState(int percentComplete = default, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, AnalyzeTextAuthoringOperationStatus status = default)
         {
-            return new SubTrainingOperationState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringSubTrainingOperationState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AssignedProjectDeploymentsMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata"/>. </summary>
         /// <param name="projectName"> Represents the project name. </param>
         /// <param name="deploymentsMetadata"> Represents the resource region. </param>
-        /// <returns> A new <see cref="Models.AssignedProjectDeploymentsMetadata"/> instance for mocking. </returns>
-        public static AssignedProjectDeploymentsMetadata AssignedProjectDeploymentsMetadata(string projectName = null, IEnumerable<AssignedProjectDeploymentMetadata> deploymentsMetadata = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata(string projectName = null, IEnumerable<AnalyzeTextAuthoringAssignedProjectDeploymentMetadata> deploymentsMetadata = null)
         {
-            deploymentsMetadata ??= new List<AssignedProjectDeploymentMetadata>();
+            deploymentsMetadata ??= new List<AnalyzeTextAuthoringAssignedProjectDeploymentMetadata>();
 
-            return new AssignedProjectDeploymentsMetadata(projectName, deploymentsMetadata?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata(projectName, deploymentsMetadata?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AssignedProjectDeploymentMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringAssignedProjectDeploymentMetadata"/>. </summary>
         /// <param name="deploymentName"> Represents the deployment name. </param>
         /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
         /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
-        /// <returns> A new <see cref="Models.AssignedProjectDeploymentMetadata"/> instance for mocking. </returns>
-        public static AssignedProjectDeploymentMetadata AssignedProjectDeploymentMetadata(string deploymentName = null, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiresOn = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringAssignedProjectDeploymentMetadata"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringAssignedProjectDeploymentMetadata AnalyzeTextAuthoringAssignedProjectDeploymentMetadata(string deploymentName = null, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiresOn = default)
         {
-            return new AssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpiresOn, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringAssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpiresOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SupportedLanguage"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringSupportedLanguage"/>. </summary>
         /// <param name="languageName"> The language name. </param>
         /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Models.SupportedLanguage"/> instance for mocking. </returns>
-        public static SupportedLanguage SupportedLanguage(string languageName = null, string languageCode = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringSupportedLanguage"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringSupportedLanguage AnalyzeTextAuthoringSupportedLanguage(string languageName = null, string languageCode = null)
         {
-            return new SupportedLanguage(languageName, languageCode, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringSupportedLanguage(languageName, languageCode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PrebuiltEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringPrebuiltEntity"/>. </summary>
         /// <param name="category"> The prebuilt entity category. </param>
         /// <param name="description"> The description. </param>
         /// <param name="examples"> English examples for the entity. </param>
-        /// <returns> A new <see cref="Models.PrebuiltEntity"/> instance for mocking. </returns>
-        public static PrebuiltEntity PrebuiltEntity(string category = null, string description = null, string examples = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringPrebuiltEntity"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringPrebuiltEntity AnalyzeTextAuthoringPrebuiltEntity(string category = null, string description = null, string examples = null)
         {
-            return new PrebuiltEntity(category, description, examples, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringPrebuiltEntity(category, description, examples, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingConfigVersion"/>. </summary>
-        /// <param name="trainingConfigVersionProperty"> Represents the version of the config. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringTrainingConfigVersion"/>. </summary>
+        /// <param name="trainingConfigVersion"> Represents the version of the config. </param>
         /// <param name="modelExpiredOn"> Represents the training config version expiration date. </param>
-        /// <returns> A new <see cref="Models.TrainingConfigVersion"/> instance for mocking. </returns>
-        public static TrainingConfigVersion TrainingConfigVersion(string trainingConfigVersionProperty = null, DateTimeOffset modelExpiredOn = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringTrainingConfigVersion"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringTrainingConfigVersion AnalyzeTextAuthoringTrainingConfigVersion(string trainingConfigVersion = null, DateTimeOffset modelExpiredOn = default)
         {
-            return new TrainingConfigVersion(trainingConfigVersionProperty, modelExpiredOn, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpiredOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedModelOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringExportedModelOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -242,13 +242,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ExportedModelOperationState"/> instance for mocking. </returns>
-        public static ExportedModelOperationState ExportedModelOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringExportedModelOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringExportedModelOperationState AnalyzeTextAuthoringExportedModelOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ExportedModelOperationState(
+            return new AnalyzeTextAuthoringExportedModelOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -259,37 +259,37 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedModelManifest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringExportedModelManifest"/>. </summary>
         /// <param name="modelFiles"> The model files belonging to this model. </param>
-        /// <returns> A new <see cref="Models.ExportedModelManifest"/> instance for mocking. </returns>
-        public static ExportedModelManifest ExportedModelManifest(IEnumerable<ModelFile> modelFiles = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringExportedModelManifest"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringExportedModelManifest AnalyzeTextAuthoringExportedModelManifest(IEnumerable<AnalyzeTextAuthoringModelFile> modelFiles = null)
         {
-            modelFiles ??= new List<ModelFile>();
+            modelFiles ??= new List<AnalyzeTextAuthoringModelFile>();
 
-            return new ExportedModelManifest(modelFiles?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringExportedModelManifest(modelFiles?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ModelFile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringModelFile"/>. </summary>
         /// <param name="name"> The name of the file. </param>
         /// <param name="contentUri"> The URI to retrieve the content of the file. </param>
-        /// <returns> A new <see cref="Models.ModelFile"/> instance for mocking. </returns>
-        public static ModelFile ModelFile(string name = null, Uri contentUri = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringModelFile"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringModelFile AnalyzeTextAuthoringModelFile(string name = null, Uri contentUri = null)
         {
-            return new ModelFile(name, contentUri, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringModelFile(name, contentUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EvaluationJobResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringEvaluationJobResult"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="modelLabel"> Represents trained model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="percentComplete"> Represents progress percentage. </param>
-        /// <returns> A new <see cref="Models.EvaluationJobResult"/> instance for mocking. </returns>
-        public static EvaluationJobResult EvaluationJobResult(EvaluationDetails evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringEvaluationJobResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringEvaluationJobResult AnalyzeTextAuthoringEvaluationJobResult(AnalyzeTextAuthoringEvaluationDetails evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = default)
         {
-            return new EvaluationJobResult(evaluationOptions, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringEvaluationJobResult(evaluationOptions, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EvaluationOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringEvaluationOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -298,13 +298,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents evaluation task detailed result. </param>
-        /// <returns> A new <see cref="Models.EvaluationOperationState"/> instance for mocking. </returns>
-        public static EvaluationOperationState EvaluationOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, EvaluationJobResult result = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringEvaluationOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringEvaluationOperationState AnalyzeTextAuthoringEvaluationOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, AnalyzeTextAuthoringEvaluationJobResult result = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new EvaluationOperationState(
+            return new AnalyzeTextAuthoringEvaluationOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -316,7 +316,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LoadSnapshotOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringLoadSnapshotOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -324,13 +324,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.LoadSnapshotOperationState"/> instance for mocking. </returns>
-        public static LoadSnapshotOperationState LoadSnapshotOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringLoadSnapshotOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringLoadSnapshotOperationState AnalyzeTextAuthoringLoadSnapshotOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new LoadSnapshotOperationState(
+            return new AnalyzeTextAuthoringLoadSnapshotOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -341,172 +341,172 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentEvaluationResult"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Models.DocumentEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentEvaluationResult DocumentEvaluationResult(string projectKind = null, string location = null, string language = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentEvaluationResult AnalyzeTextAuthoringDocumentEvaluationResult(string projectKind = null, string location = null, string language = null)
         {
-            return new UnknownDocumentEvaluationResult(projectKind == null ? default : new AnalyzeTextAuthoringProjectKind(projectKind), location, language, serializedAdditionalRawData: null);
+            return new UnknownAnalyzeTextAuthoringDocumentEvaluationResult(projectKind == null ? default : new AnalyzeTextAuthoringProjectKind(projectKind), location, language, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomEntityRecognitionDocumentEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomEntityRecognitionDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customEntityRecognitionResult"> Represents the evaluation prediction for entity recognition. </param>
-        /// <returns> A new <see cref="Models.CustomEntityRecognitionDocumentEvaluationResult"/> instance for mocking. </returns>
-        public static CustomEntityRecognitionDocumentEvaluationResult CustomEntityRecognitionDocumentEvaluationResult(string location = null, string language = null, DocumentEntityRecognitionEvaluationResult customEntityRecognitionResult = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomEntityRecognitionDocumentEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomEntityRecognitionDocumentEvaluationResult AnalyzeTextAuthoringCustomEntityRecognitionDocumentEvaluationResult(string location = null, string language = null, AnalyzeTextAuthoringDocumentEntityRecognitionEvaluationResult customEntityRecognitionResult = null)
         {
-            return new CustomEntityRecognitionDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomEntityRecognition, location, language, serializedAdditionalRawData: null, customEntityRecognitionResult);
+            return new AnalyzeTextAuthoringCustomEntityRecognitionDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomEntityRecognition, location, language, serializedAdditionalRawData: null, customEntityRecognitionResult);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentEntityRecognitionEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentEntityRecognitionEvaluationResult"/>. </summary>
         /// <param name="entities"> Represents the document labelled entities. </param>
-        /// <returns> A new <see cref="Models.DocumentEntityRecognitionEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentEntityRecognitionEvaluationResult DocumentEntityRecognitionEvaluationResult(IEnumerable<DocumentEntityRegionEvaluationResult> entities = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentEntityRecognitionEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentEntityRecognitionEvaluationResult AnalyzeTextAuthoringDocumentEntityRecognitionEvaluationResult(IEnumerable<AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult> entities = null)
         {
-            entities ??= new List<DocumentEntityRegionEvaluationResult>();
+            entities ??= new List<AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult>();
 
-            return new DocumentEntityRecognitionEvaluationResult(entities?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDocumentEntityRecognitionEvaluationResult(entities?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentEntityRegionEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult"/>. </summary>
         /// <param name="expectedEntities"> Represents the region's expected entity labels. </param>
         /// <param name="predictedEntities"> Represents the region's predicted entity labels. </param>
         /// <param name="regionOffset"> Represents the region offset. </param>
         /// <param name="regionLength"> Represents the region length. </param>
-        /// <returns> A new <see cref="Models.DocumentEntityRegionEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentEntityRegionEvaluationResult DocumentEntityRegionEvaluationResult(IEnumerable<DocumentEntityLabelEvaluationResult> expectedEntities = null, IEnumerable<DocumentEntityLabelEvaluationResult> predictedEntities = null, int regionOffset = default, int regionLength = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult(IEnumerable<AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult> expectedEntities = null, IEnumerable<AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult> predictedEntities = null, int regionOffset = default, int regionLength = default)
         {
-            expectedEntities ??= new List<DocumentEntityLabelEvaluationResult>();
-            predictedEntities ??= new List<DocumentEntityLabelEvaluationResult>();
+            expectedEntities ??= new List<AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult>();
+            predictedEntities ??= new List<AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult>();
 
-            return new DocumentEntityRegionEvaluationResult(expectedEntities?.ToList(), predictedEntities?.ToList(), regionOffset, regionLength, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult(expectedEntities?.ToList(), predictedEntities?.ToList(), regionOffset, regionLength, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentEntityLabelEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult"/>. </summary>
         /// <param name="category"> Represents the entity category. </param>
         /// <param name="offset"> Represents the entity offset index relative to the original text. </param>
         /// <param name="length"> Represents the entity length. </param>
-        /// <returns> A new <see cref="Models.DocumentEntityLabelEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentEntityLabelEvaluationResult DocumentEntityLabelEvaluationResult(string category = null, int offset = default, int length = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult(string category = null, int offset = default, int length = default)
         {
-            return new DocumentEntityLabelEvaluationResult(category, offset, length, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDocumentEntityLabelEvaluationResult(category, offset, length, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomHealthcareDocumentEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomHealthcareDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customHealthcareResult"> Represents the evaluation prediction for entity recognition. </param>
-        /// <returns> A new <see cref="Models.CustomHealthcareDocumentEvaluationResult"/> instance for mocking. </returns>
-        public static CustomHealthcareDocumentEvaluationResult CustomHealthcareDocumentEvaluationResult(string location = null, string language = null, DocumentHealthcareEvaluationResult customHealthcareResult = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomHealthcareDocumentEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomHealthcareDocumentEvaluationResult AnalyzeTextAuthoringCustomHealthcareDocumentEvaluationResult(string location = null, string language = null, AnalyzeTextAuthoringDocumentHealthcareEvaluationResult customHealthcareResult = null)
         {
-            return new CustomHealthcareDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomHealthcare, location, language, serializedAdditionalRawData: null, customHealthcareResult);
+            return new AnalyzeTextAuthoringCustomHealthcareDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomHealthcare, location, language, serializedAdditionalRawData: null, customHealthcareResult);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentHealthcareEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentHealthcareEvaluationResult"/>. </summary>
         /// <param name="entities"> Represents the document labelled entities. </param>
-        /// <returns> A new <see cref="Models.DocumentHealthcareEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentHealthcareEvaluationResult DocumentHealthcareEvaluationResult(IEnumerable<DocumentEntityRegionEvaluationResult> entities = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentHealthcareEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentHealthcareEvaluationResult AnalyzeTextAuthoringDocumentHealthcareEvaluationResult(IEnumerable<AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult> entities = null)
         {
-            entities ??= new List<DocumentEntityRegionEvaluationResult>();
+            entities ??= new List<AnalyzeTextAuthoringDocumentEntityRegionEvaluationResult>();
 
-            return new DocumentHealthcareEvaluationResult(entities?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDocumentHealthcareEvaluationResult(entities?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomMultiLabelClassificationDocumentEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomMultiLabelClassificationDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customMultiLabelClassificationResult"> Represents the evaluation prediction for multi label classification. </param>
-        /// <returns> A new <see cref="Models.CustomMultiLabelClassificationDocumentEvaluationResult"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationDocumentEvaluationResult CustomMultiLabelClassificationDocumentEvaluationResult(string location = null, string language = null, DocumentMultiLabelClassificationEvaluationResult customMultiLabelClassificationResult = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomMultiLabelClassificationDocumentEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomMultiLabelClassificationDocumentEvaluationResult AnalyzeTextAuthoringCustomMultiLabelClassificationDocumentEvaluationResult(string location = null, string language = null, AnalyzeTextAuthoringDocumentMultiLabelClassificationEvaluationResult customMultiLabelClassificationResult = null)
         {
-            return new CustomMultiLabelClassificationDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomMultiLabelClassification, location, language, serializedAdditionalRawData: null, customMultiLabelClassificationResult);
+            return new AnalyzeTextAuthoringCustomMultiLabelClassificationDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomMultiLabelClassification, location, language, serializedAdditionalRawData: null, customMultiLabelClassificationResult);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentMultiLabelClassificationEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentMultiLabelClassificationEvaluationResult"/>. </summary>
         /// <param name="expectedClasses"> Represents the document's expected classes. </param>
         /// <param name="predictedClasses"> Represents the document's predicted classes. </param>
-        /// <returns> A new <see cref="Models.DocumentMultiLabelClassificationEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentMultiLabelClassificationEvaluationResult DocumentMultiLabelClassificationEvaluationResult(IEnumerable<string> expectedClasses = null, IEnumerable<string> predictedClasses = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentMultiLabelClassificationEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentMultiLabelClassificationEvaluationResult AnalyzeTextAuthoringDocumentMultiLabelClassificationEvaluationResult(IEnumerable<string> expectedClasses = null, IEnumerable<string> predictedClasses = null)
         {
             expectedClasses ??= new List<string>();
             predictedClasses ??= new List<string>();
 
-            return new DocumentMultiLabelClassificationEvaluationResult(expectedClasses?.ToList(), predictedClasses?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDocumentMultiLabelClassificationEvaluationResult(expectedClasses?.ToList(), predictedClasses?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomSingleLabelClassificationDocumentEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomSingleLabelClassificationDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customSingleLabelClassificationResult"> Represents the evaluation prediction for single label classification. </param>
-        /// <returns> A new <see cref="Models.CustomSingleLabelClassificationDocumentEvaluationResult"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationDocumentEvaluationResult CustomSingleLabelClassificationDocumentEvaluationResult(string location = null, string language = null, DocumentSingleLabelClassificationEvaluationResult customSingleLabelClassificationResult = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomSingleLabelClassificationDocumentEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomSingleLabelClassificationDocumentEvaluationResult AnalyzeTextAuthoringCustomSingleLabelClassificationDocumentEvaluationResult(string location = null, string language = null, AnalyzeTextAuthoringDocumentSingleLabelClassificationEvaluationResult customSingleLabelClassificationResult = null)
         {
-            return new CustomSingleLabelClassificationDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, location, language, serializedAdditionalRawData: null, customSingleLabelClassificationResult);
+            return new AnalyzeTextAuthoringCustomSingleLabelClassificationDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, location, language, serializedAdditionalRawData: null, customSingleLabelClassificationResult);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentSingleLabelClassificationEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentSingleLabelClassificationEvaluationResult"/>. </summary>
         /// <param name="expectedClass"> Represents the document's expected class. </param>
         /// <param name="predictedClass"> Represents the document's predicted class. </param>
-        /// <returns> A new <see cref="Models.DocumentSingleLabelClassificationEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentSingleLabelClassificationEvaluationResult DocumentSingleLabelClassificationEvaluationResult(string expectedClass = null, string predictedClass = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentSingleLabelClassificationEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentSingleLabelClassificationEvaluationResult AnalyzeTextAuthoringDocumentSingleLabelClassificationEvaluationResult(string expectedClass = null, string predictedClass = null)
         {
-            return new DocumentSingleLabelClassificationEvaluationResult(expectedClass, predictedClass, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDocumentSingleLabelClassificationEvaluationResult(expectedClass, predictedClass, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomTextSentimentDocumentEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomTextSentimentDocumentEvaluationResult"/>. </summary>
         /// <param name="location"> Represents the document path. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="customTextSentimentResult"> Represents the evaluation prediction for text sentiment. </param>
-        /// <returns> A new <see cref="Models.CustomTextSentimentDocumentEvaluationResult"/> instance for mocking. </returns>
-        public static CustomTextSentimentDocumentEvaluationResult CustomTextSentimentDocumentEvaluationResult(string location = null, string language = null, DocumentTextSentimentEvaluationResult customTextSentimentResult = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomTextSentimentDocumentEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomTextSentimentDocumentEvaluationResult AnalyzeTextAuthoringCustomTextSentimentDocumentEvaluationResult(string location = null, string language = null, AnalyzeTextAuthoringDocumentTextSentimentEvaluationResult customTextSentimentResult = null)
         {
-            return new CustomTextSentimentDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomTextSentiment, location, language, serializedAdditionalRawData: null, customTextSentimentResult);
+            return new AnalyzeTextAuthoringCustomTextSentimentDocumentEvaluationResult(AnalyzeTextAuthoringProjectKind.CustomTextSentiment, location, language, serializedAdditionalRawData: null, customTextSentimentResult);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentTextSentimentEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentTextSentimentEvaluationResult"/>. </summary>
         /// <param name="expectedSentimentSpans"> Represents the document's expected sentiment labels. </param>
         /// <param name="predictedSentimentSpans"> Represents the document's predicted sentiment labels. </param>
-        /// <returns> A new <see cref="Models.DocumentTextSentimentEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentTextSentimentEvaluationResult DocumentTextSentimentEvaluationResult(IEnumerable<DocumentSentimentLabelEvaluationResult> expectedSentimentSpans = null, IEnumerable<DocumentSentimentLabelEvaluationResult> predictedSentimentSpans = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentTextSentimentEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentTextSentimentEvaluationResult AnalyzeTextAuthoringDocumentTextSentimentEvaluationResult(IEnumerable<AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult> expectedSentimentSpans = null, IEnumerable<AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult> predictedSentimentSpans = null)
         {
-            expectedSentimentSpans ??= new List<DocumentSentimentLabelEvaluationResult>();
-            predictedSentimentSpans ??= new List<DocumentSentimentLabelEvaluationResult>();
+            expectedSentimentSpans ??= new List<AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult>();
+            predictedSentimentSpans ??= new List<AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult>();
 
-            return new DocumentTextSentimentEvaluationResult(expectedSentimentSpans?.ToList(), predictedSentimentSpans?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDocumentTextSentimentEvaluationResult(expectedSentimentSpans?.ToList(), predictedSentimentSpans?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentSentimentLabelEvaluationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult"/>. </summary>
         /// <param name="category"> Represents the sentiment category. </param>
         /// <param name="offset"> Represents the sentiment offset index relative to the original text. </param>
         /// <param name="length"> Represents the sentiment length. </param>
-        /// <returns> A new <see cref="Models.DocumentSentimentLabelEvaluationResult"/> instance for mocking. </returns>
-        public static DocumentSentimentLabelEvaluationResult DocumentSentimentLabelEvaluationResult(AnalyzeTextAuthoringSentiment category = default, int offset = default, int length = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult(AnalyzeTextAuthoringSentiment category = default, int offset = default, int length = default)
         {
-            return new DocumentSentimentLabelEvaluationResult(category, offset, length, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDocumentSentimentLabelEvaluationResult(category, offset, length, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringEvaluationSummary"/>. </summary>
         /// <param name="projectKind"> Represents the project type that the evaluation ran on. </param>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
-        /// <returns> A new <see cref="Models.EvaluationSummary"/> instance for mocking. </returns>
-        public static EvaluationSummary EvaluationSummary(string projectKind = null, EvaluationDetails evaluationOptions = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringEvaluationSummary AnalyzeTextAuthoringEvaluationSummary(string projectKind = null, AnalyzeTextAuthoringEvaluationDetails evaluationOptions = null)
         {
-            return new UnknownEvaluationSummary(projectKind == null ? default : new AnalyzeTextAuthoringProjectKind(projectKind), evaluationOptions, serializedAdditionalRawData: null);
+            return new UnknownAnalyzeTextAuthoringEvaluationSummary(projectKind == null ? default : new AnalyzeTextAuthoringProjectKind(projectKind), evaluationOptions, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomEntityRecognitionEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomEntityRecognitionEvaluationSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customEntityRecognitionEvaluation"> Contains the data related to extraction evaluation. </param>
-        /// <returns> A new <see cref="Models.CustomEntityRecognitionEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomEntityRecognitionEvaluationSummary CustomEntityRecognitionEvaluationSummary(EvaluationDetails evaluationOptions = null, EntityRecognitionEvaluationSummary customEntityRecognitionEvaluation = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomEntityRecognitionEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomEntityRecognitionEvaluationSummary AnalyzeTextAuthoringCustomEntityRecognitionEvaluationSummary(AnalyzeTextAuthoringEvaluationDetails evaluationOptions = null, AnalyzeTextAuthoringEntityRecognitionEvaluationSummary customEntityRecognitionEvaluation = null)
         {
-            return new CustomEntityRecognitionEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomEntityRecognition, evaluationOptions, serializedAdditionalRawData: null, customEntityRecognitionEvaluation);
+            return new AnalyzeTextAuthoringCustomEntityRecognitionEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomEntityRecognition, evaluationOptions, serializedAdditionalRawData: null, customEntityRecognitionEvaluation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EntityRecognitionEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringEntityRecognitionEvaluationSummary"/>. </summary>
         /// <param name="confusionMatrix"> Represents the confusion matrix between two entities (the two entities can be the same). The matrix is between the entity that was labelled and the entity that was predicted. </param>
         /// <param name="entities"> Represents the entities evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
@@ -515,13 +515,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Models.EntityRecognitionEvaluationSummary"/> instance for mocking. </returns>
-        public static EntityRecognitionEvaluationSummary EntityRecognitionEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> confusionMatrix = null, IReadOnlyDictionary<string, EntityEvaluationSummary> entities = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringEntityRecognitionEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringEntityRecognitionEvaluationSummary AnalyzeTextAuthoringEntityRecognitionEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> confusionMatrix = null, IReadOnlyDictionary<string, AnalyzeTextAuthoringEntityEvaluationSummary> entities = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
             confusionMatrix ??= new Dictionary<string, AnalyzeTextAuthoringConfusionMatrixRow>();
-            entities ??= new Dictionary<string, EntityEvaluationSummary>();
+            entities ??= new Dictionary<string, AnalyzeTextAuthoringEntityEvaluationSummary>();
 
-            return new EntityRecognitionEvaluationSummary(
+            return new AnalyzeTextAuthoringEntityRecognitionEvaluationSummary(
                 confusionMatrix,
                 entities,
                 microF1,
@@ -552,7 +552,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
             return new AnalyzeTextAuthoringConfusionMatrixCell(normalizedValue, rawValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EntityEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringEntityEvaluationSummary"/>. </summary>
         /// <param name="f1"> Represents the model precision. </param>
         /// <param name="precision"> Represents the model recall. </param>
         /// <param name="recall"> Represents the model F1 score. </param>
@@ -560,10 +560,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
-        /// <returns> A new <see cref="Models.EntityEvaluationSummary"/> instance for mocking. </returns>
-        public static EntityEvaluationSummary EntityEvaluationSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringEntityEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringEntityEvaluationSummary AnalyzeTextAuthoringEntityEvaluationSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
         {
-            return new EntityEvaluationSummary(
+            return new AnalyzeTextAuthoringEntityEvaluationSummary(
                 f1,
                 precision,
                 recall,
@@ -574,25 +574,25 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomHealthcareEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomHealthcareEvaluationSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customHealthcareEvaluation"> Contains the data related to health care evaluation. </param>
-        /// <returns> A new <see cref="Models.CustomHealthcareEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomHealthcareEvaluationSummary CustomHealthcareEvaluationSummary(EvaluationDetails evaluationOptions = null, EntityRecognitionEvaluationSummary customHealthcareEvaluation = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomHealthcareEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomHealthcareEvaluationSummary AnalyzeTextAuthoringCustomHealthcareEvaluationSummary(AnalyzeTextAuthoringEvaluationDetails evaluationOptions = null, AnalyzeTextAuthoringEntityRecognitionEvaluationSummary customHealthcareEvaluation = null)
         {
-            return new CustomHealthcareEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomHealthcare, evaluationOptions, serializedAdditionalRawData: null, customHealthcareEvaluation);
+            return new AnalyzeTextAuthoringCustomHealthcareEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomHealthcare, evaluationOptions, serializedAdditionalRawData: null, customHealthcareEvaluation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomMultiLabelClassificationEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomMultiLabelClassificationEvaluationSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customMultiLabelClassificationEvaluation"> Contains the data related to multi label classification evaluation. </param>
-        /// <returns> A new <see cref="Models.CustomMultiLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationEvaluationSummary CustomMultiLabelClassificationEvaluationSummary(EvaluationDetails evaluationOptions = null, MultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomMultiLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomMultiLabelClassificationEvaluationSummary AnalyzeTextAuthoringCustomMultiLabelClassificationEvaluationSummary(AnalyzeTextAuthoringEvaluationDetails evaluationOptions = null, AnalyzeTextAuthoringMultiLabelClassificationEvaluationSummary customMultiLabelClassificationEvaluation = null)
         {
-            return new CustomMultiLabelClassificationEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomMultiLabelClassification, evaluationOptions, serializedAdditionalRawData: null, customMultiLabelClassificationEvaluation);
+            return new AnalyzeTextAuthoringCustomMultiLabelClassificationEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomMultiLabelClassification, evaluationOptions, serializedAdditionalRawData: null, customMultiLabelClassificationEvaluation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MultiLabelClassificationEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringMultiLabelClassificationEvaluationSummary"/>. </summary>
         /// <param name="classes"> Represents the classes evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
@@ -600,12 +600,12 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Models.MultiLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
-        public static MultiLabelClassificationEvaluationSummary MultiLabelClassificationEvaluationSummary(IReadOnlyDictionary<string, MultiLabelClassEvaluationSummary> classes = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringMultiLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringMultiLabelClassificationEvaluationSummary AnalyzeTextAuthoringMultiLabelClassificationEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringMultiLabelClassEvaluationSummary> classes = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
-            classes ??= new Dictionary<string, MultiLabelClassEvaluationSummary>();
+            classes ??= new Dictionary<string, AnalyzeTextAuthoringMultiLabelClassEvaluationSummary>();
 
-            return new MultiLabelClassificationEvaluationSummary(
+            return new AnalyzeTextAuthoringMultiLabelClassificationEvaluationSummary(
                 classes,
                 microF1,
                 microPrecision,
@@ -616,7 +616,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MultiLabelClassEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringMultiLabelClassEvaluationSummary"/>. </summary>
         /// <param name="f1"> Represents the model precision. </param>
         /// <param name="precision"> Represents the model recall. </param>
         /// <param name="recall"> Represents the model F1 score. </param>
@@ -624,10 +624,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
-        /// <returns> A new <see cref="Models.MultiLabelClassEvaluationSummary"/> instance for mocking. </returns>
-        public static MultiLabelClassEvaluationSummary MultiLabelClassEvaluationSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringMultiLabelClassEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringMultiLabelClassEvaluationSummary AnalyzeTextAuthoringMultiLabelClassEvaluationSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
         {
-            return new MultiLabelClassEvaluationSummary(
+            return new AnalyzeTextAuthoringMultiLabelClassEvaluationSummary(
                 f1,
                 precision,
                 recall,
@@ -638,16 +638,16 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomSingleLabelClassificationEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomSingleLabelClassificationEvaluationSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customSingleLabelClassificationEvaluation"> Contains the data related to single label classification evaluation. </param>
-        /// <returns> A new <see cref="Models.CustomSingleLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationEvaluationSummary CustomSingleLabelClassificationEvaluationSummary(EvaluationDetails evaluationOptions = null, SingleLabelClassificationEvaluationSummary customSingleLabelClassificationEvaluation = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomSingleLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomSingleLabelClassificationEvaluationSummary AnalyzeTextAuthoringCustomSingleLabelClassificationEvaluationSummary(AnalyzeTextAuthoringEvaluationDetails evaluationOptions = null, AnalyzeTextAuthoringSingleLabelClassificationEvaluationSummary customSingleLabelClassificationEvaluation = null)
         {
-            return new CustomSingleLabelClassificationEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, evaluationOptions, serializedAdditionalRawData: null, customSingleLabelClassificationEvaluation);
+            return new AnalyzeTextAuthoringCustomSingleLabelClassificationEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomSingleLabelClassification, evaluationOptions, serializedAdditionalRawData: null, customSingleLabelClassificationEvaluation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SingleLabelClassificationEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringSingleLabelClassificationEvaluationSummary"/>. </summary>
         /// <param name="confusionMatrix"> Represents the confusion matrix between two classes (the two classes can be the same). The matrix is between the class that was labelled and the class that was predicted. </param>
         /// <param name="classes"> Represents the classes evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
@@ -656,13 +656,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Models.SingleLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
-        public static SingleLabelClassificationEvaluationSummary SingleLabelClassificationEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> confusionMatrix = null, IReadOnlyDictionary<string, SingleLabelClassEvaluationSummary> classes = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringSingleLabelClassificationEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringSingleLabelClassificationEvaluationSummary AnalyzeTextAuthoringSingleLabelClassificationEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> confusionMatrix = null, IReadOnlyDictionary<string, AnalyzeTextAuthoringSingleLabelClassEvaluationSummary> classes = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
             confusionMatrix ??= new Dictionary<string, AnalyzeTextAuthoringConfusionMatrixRow>();
-            classes ??= new Dictionary<string, SingleLabelClassEvaluationSummary>();
+            classes ??= new Dictionary<string, AnalyzeTextAuthoringSingleLabelClassEvaluationSummary>();
 
-            return new SingleLabelClassificationEvaluationSummary(
+            return new AnalyzeTextAuthoringSingleLabelClassificationEvaluationSummary(
                 confusionMatrix,
                 classes,
                 microF1,
@@ -674,7 +674,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SingleLabelClassEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringSingleLabelClassEvaluationSummary"/>. </summary>
         /// <param name="f1"> Represents the model precision. </param>
         /// <param name="precision"> Represents the model recall. </param>
         /// <param name="recall"> Represents the model F1 score. </param>
@@ -682,10 +682,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
-        /// <returns> A new <see cref="Models.SingleLabelClassEvaluationSummary"/> instance for mocking. </returns>
-        public static SingleLabelClassEvaluationSummary SingleLabelClassEvaluationSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringSingleLabelClassEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringSingleLabelClassEvaluationSummary AnalyzeTextAuthoringSingleLabelClassEvaluationSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
         {
-            return new SingleLabelClassEvaluationSummary(
+            return new AnalyzeTextAuthoringSingleLabelClassEvaluationSummary(
                 f1,
                 precision,
                 recall,
@@ -696,16 +696,16 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomTextSentimentEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCustomTextSentimentEvaluationSummary"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="customTextSentimentEvaluation"> Contains the data related to custom sentiment evaluation. </param>
-        /// <returns> A new <see cref="Models.CustomTextSentimentEvaluationSummary"/> instance for mocking. </returns>
-        public static CustomTextSentimentEvaluationSummary CustomTextSentimentEvaluationSummary(EvaluationDetails evaluationOptions = null, TextSentimentEvaluationSummary customTextSentimentEvaluation = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCustomTextSentimentEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCustomTextSentimentEvaluationSummary AnalyzeTextAuthoringCustomTextSentimentEvaluationSummary(AnalyzeTextAuthoringEvaluationDetails evaluationOptions = null, AnalyzeTextAuthoringTextSentimentEvaluationSummary customTextSentimentEvaluation = null)
         {
-            return new CustomTextSentimentEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomTextSentiment, evaluationOptions, serializedAdditionalRawData: null, customTextSentimentEvaluation);
+            return new AnalyzeTextAuthoringCustomTextSentimentEvaluationSummary(AnalyzeTextAuthoringProjectKind.CustomTextSentiment, evaluationOptions, serializedAdditionalRawData: null, customTextSentimentEvaluation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TextSentimentEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringTextSentimentEvaluationSummary"/>. </summary>
         /// <param name="spanSentimentsEvaluation"> Represents evaluation of span level sentiments. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="microPrecision"> Represents the micro precision. Expected value is a float between 0 and 1 inclusive. </param>
@@ -713,10 +713,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Models.TextSentimentEvaluationSummary"/> instance for mocking. </returns>
-        public static TextSentimentEvaluationSummary TextSentimentEvaluationSummary(SpanSentimentEvaluationSummary spanSentimentsEvaluation = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringTextSentimentEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringTextSentimentEvaluationSummary AnalyzeTextAuthoringTextSentimentEvaluationSummary(AnalyzeTextAuthoringSpanSentimentEvaluationSummary spanSentimentsEvaluation = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
-            return new TextSentimentEvaluationSummary(
+            return new AnalyzeTextAuthoringTextSentimentEvaluationSummary(
                 spanSentimentsEvaluation,
                 microF1,
                 microPrecision,
@@ -727,7 +727,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SpanSentimentEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringSpanSentimentEvaluationSummary"/>. </summary>
         /// <param name="confusionMatrix"> Represents the confusion matrix between two sentiments (the two sentiments can be the same). The matrix is between the sentiment that was labelled and the sentiment that was predicted. </param>
         /// <param name="sentiments"> Represents the sentiment evaluation. </param>
         /// <param name="microF1"> Represents the micro F1. Expected value is a float between 0 and 1 inclusive. </param>
@@ -736,13 +736,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="macroF1"> Represents the macro F1. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
-        /// <returns> A new <see cref="Models.SpanSentimentEvaluationSummary"/> instance for mocking. </returns>
-        public static SpanSentimentEvaluationSummary SpanSentimentEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> confusionMatrix = null, IReadOnlyDictionary<string, SentimentEvaluationSummary> sentiments = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringSpanSentimentEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringSpanSentimentEvaluationSummary AnalyzeTextAuthoringSpanSentimentEvaluationSummary(IReadOnlyDictionary<string, AnalyzeTextAuthoringConfusionMatrixRow> confusionMatrix = null, IReadOnlyDictionary<string, AnalyzeTextAuthoringSentimentEvaluationSummary> sentiments = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
             confusionMatrix ??= new Dictionary<string, AnalyzeTextAuthoringConfusionMatrixRow>();
-            sentiments ??= new Dictionary<string, SentimentEvaluationSummary>();
+            sentiments ??= new Dictionary<string, AnalyzeTextAuthoringSentimentEvaluationSummary>();
 
-            return new SpanSentimentEvaluationSummary(
+            return new AnalyzeTextAuthoringSpanSentimentEvaluationSummary(
                 confusionMatrix,
                 sentiments,
                 microF1,
@@ -754,7 +754,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SentimentEvaluationSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringSentimentEvaluationSummary"/>. </summary>
         /// <param name="f1"> Represents the model precision. </param>
         /// <param name="precision"> Represents the model recall. </param>
         /// <param name="recall"> Represents the model F1 score. </param>
@@ -762,10 +762,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="trueNegativeCount"> Represents the count of true negative. </param>
         /// <param name="falsePositiveCount"> Represents the count of false positive. </param>
         /// <param name="falseNegativeCount"> Represents the count of false negative. </param>
-        /// <returns> A new <see cref="Models.SentimentEvaluationSummary"/> instance for mocking. </returns>
-        public static SentimentEvaluationSummary SentimentEvaluationSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringSentimentEvaluationSummary"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringSentimentEvaluationSummary AnalyzeTextAuthoringSentimentEvaluationSummary(double f1 = default, double precision = default, double recall = default, int truePositiveCount = default, int trueNegativeCount = default, int falsePositiveCount = default, int falseNegativeCount = default)
         {
-            return new SentimentEvaluationSummary(
+            return new AnalyzeTextAuthoringSentimentEvaluationSummary(
                 f1,
                 precision,
                 recall,
@@ -776,7 +776,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDeploymentOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -784,13 +784,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.DeploymentOperationState"/> instance for mocking. </returns>
-        public static DeploymentOperationState DeploymentOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDeploymentOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDeploymentOperationState AnalyzeTextAuthoringDeploymentOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new DeploymentOperationState(
+            return new AnalyzeTextAuthoringDeploymentOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -801,7 +801,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentDeleteFromResourcesOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -809,13 +809,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.DeploymentDeleteFromResourcesOperationState"/> instance for mocking. </returns>
-        public static DeploymentDeleteFromResourcesOperationState DeploymentDeleteFromResourcesOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new DeploymentDeleteFromResourcesOperationState(
+            return new AnalyzeTextAuthoringDeploymentDeleteFromResourcesOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -826,7 +826,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SwapDeploymentsOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringSwapDeploymentsOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -834,13 +834,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.SwapDeploymentsOperationState"/> instance for mocking. </returns>
-        public static SwapDeploymentsOperationState SwapDeploymentsOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringSwapDeploymentsOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringSwapDeploymentsOperationState AnalyzeTextAuthoringSwapDeploymentsOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new SwapDeploymentsOperationState(
+            return new AnalyzeTextAuthoringSwapDeploymentsOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -851,7 +851,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AssignDeploymentResourcesOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringAssignDeploymentResourcesOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -859,13 +859,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.AssignDeploymentResourcesOperationState"/> instance for mocking. </returns>
-        public static AssignDeploymentResourcesOperationState AssignDeploymentResourcesOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringAssignDeploymentResourcesOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringAssignDeploymentResourcesOperationState AnalyzeTextAuthoringAssignDeploymentResourcesOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new AssignDeploymentResourcesOperationState(
+            return new AnalyzeTextAuthoringAssignDeploymentResourcesOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -876,7 +876,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UnassignDeploymentResourcesOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -884,13 +884,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.UnassignDeploymentResourcesOperationState"/> instance for mocking. </returns>
-        public static UnassignDeploymentResourcesOperationState UnassignDeploymentResourcesOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new UnassignDeploymentResourcesOperationState(
+            return new AnalyzeTextAuthoringUnassignDeploymentResourcesOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -901,18 +901,18 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CreateDeploymentDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
         /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
-        /// <returns> A new <see cref="Models.CreateDeploymentDetails"/> instance for mocking. </returns>
-        public static CreateDeploymentDetails CreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCreateDeploymentDetails AnalyzeTextAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
         {
             assignedResourceIds ??= new List<string>();
 
-            return new CreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImportProjectOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringImportProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -920,13 +920,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ImportProjectOperationState"/> instance for mocking. </returns>
-        public static ImportProjectOperationState ImportProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringImportProjectOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringImportProjectOperationState AnalyzeTextAuthoringImportProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ImportProjectOperationState(
+            return new AnalyzeTextAuthoringImportProjectOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -937,7 +937,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportProjectOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringExportProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -946,13 +946,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUrl"> The URL to use in order to download the exported project. </param>
-        /// <returns> A new <see cref="Models.ExportProjectOperationState"/> instance for mocking. </returns>
-        public static ExportProjectOperationState ExportProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, string resultUrl = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringExportProjectOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringExportProjectOperationState AnalyzeTextAuthoringExportProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, string resultUrl = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ExportProjectOperationState(
+            return new AnalyzeTextAuthoringExportProjectOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -964,7 +964,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CreateProjectDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> The project kind. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
         /// <param name="settings"> The project settings. </param>
@@ -972,10 +972,10 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Models.CreateProjectDetails"/> instance for mocking. </returns>
-        public static CreateProjectDetails CreateProjectDetails(AnalyzeTextAuthoringProjectKind projectKind = default, string storageInputContainerName = null, AnalyzeTextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCreateProjectDetails"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCreateProjectDetails AnalyzeTextAuthoringCreateProjectDetails(AnalyzeTextAuthoringProjectKind projectKind = default, string storageInputContainerName = null, AnalyzeTextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
         {
-            return new CreateProjectDetails(
+            return new AnalyzeTextAuthoringCreateProjectDetails(
                 projectKind,
                 storageInputContainerName,
                 settings,
@@ -986,7 +986,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectDeletionOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringProjectDeletionOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -994,13 +994,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ProjectDeletionOperationState"/> instance for mocking. </returns>
-        public static ProjectDeletionOperationState ProjectDeletionOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringProjectDeletionOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringProjectDeletionOperationState AnalyzeTextAuthoringProjectDeletionOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ProjectDeletionOperationState(
+            return new AnalyzeTextAuthoringProjectDeletionOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -1011,7 +1011,7 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CopyProjectOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringCopyProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -1019,13 +1019,13 @@ namespace Azure.AI.Language.Text.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.CopyProjectOperationState"/> instance for mocking. </returns>
-        public static CopyProjectOperationState CopyProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringCopyProjectOperationState"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringCopyProjectOperationState AnalyzeTextAuthoringCopyProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeTextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new CopyProjectOperationState(
+            return new AnalyzeTextAuthoringCopyProjectOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -1036,51 +1036,51 @@ namespace Azure.AI.Language.Text.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedProject"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
         /// <param name="metadata"> Represents the project metadata. </param>
         /// <param name="assets">
         /// Represents the project assets.
-        /// Please note <see cref="ExportedProjectAsset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="ExportedCustomHealthcareProjectAsset"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/> and <see cref="ExportedCustomTextSentimentProjectAssets"/>.
+        /// Please note <see cref="AnalyzeTextAuthoringExportedProjectAsset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="AnalyzeTextAuthoringExportedCustomEntityRecognitionProjectAsset"/>, <see cref="AnalyzeTextAuthoringExportedCustomHealthcareProjectAsset"/>, <see cref="AnalyzeTextAuthoringExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="AnalyzeTextAuthoringExportedCustomSingleLabelClassificationProjectAsset"/> and <see cref="AnalyzeTextAuthoringExportedCustomTextSentimentProjectAssets"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.ExportedProject"/> instance for mocking. </returns>
-        public static ExportedProject ExportedProject(string projectFileVersion = null, StringIndexType stringIndexType = default, CreateProjectDetails metadata = null, ExportedProjectAsset assets = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringExportedProject"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringExportedProject AnalyzeTextAuthoringExportedProject(string projectFileVersion = null, StringIndexType stringIndexType = default, AnalyzeTextAuthoringCreateProjectDetails metadata = null, AnalyzeTextAuthoringExportedProjectAsset assets = null)
         {
-            return new ExportedProject(projectFileVersion, stringIndexType, metadata, assets, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringExportedProject(projectFileVersion, stringIndexType, metadata, assets, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument"/>. </summary>
         /// <param name="summaryLocation"> Represents the summary file location in the blob store container associated with the project. </param>
         /// <param name="location"> The location of the document in the storage. </param>
         /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
-        /// <returns> A new <see cref="Models.ExportedCustomAbstractiveSummarizationDocument"/> instance for mocking. </returns>
-        public static ExportedCustomAbstractiveSummarizationDocument ExportedCustomAbstractiveSummarizationDocument(string summaryLocation = null, string location = null, string language = null, string dataset = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument(string summaryLocation = null, string location = null, string language = null, string dataset = null)
         {
-            return new ExportedCustomAbstractiveSummarizationDocument(summaryLocation, location, language, dataset, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringExportedCustomAbstractiveSummarizationDocument(summaryLocation, location, language, dataset, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringTrainingJobDetails"/>. </summary>
         /// <param name="modelLabel"> Represents the output model label. </param>
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
         /// <param name="dataGenerationSettings"> Represents the settings for using data generation as part of training a custom model. </param>
-        /// <returns> A new <see cref="Models.TrainingJobDetails"/> instance for mocking. </returns>
-        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, EvaluationDetails evaluationOptions = null, DataGenerationSetting dataGenerationSettings = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringTrainingJobDetails"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringTrainingJobDetails AnalyzeTextAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, AnalyzeTextAuthoringEvaluationDetails evaluationOptions = null, AnalyzeTextAuthoringDataGenerationSetting dataGenerationSettings = null)
         {
-            return new TrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringTrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataGenerationConnectionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeTextAuthoringDataGenerationConnectionInfo"/>. </summary>
         /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure Open AI. </param>
         /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
         /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
-        /// <returns> A new <see cref="Models.DataGenerationConnectionInfo"/> instance for mocking. </returns>
-        public static DataGenerationConnectionInfo DataGenerationConnectionInfo(DataGenerationConnectionInfoKind kind = default, string resourceId = null, string deploymentName = null)
+        /// <returns> A new <see cref="Models.AnalyzeTextAuthoringDataGenerationConnectionInfo"/> instance for mocking. </returns>
+        public static AnalyzeTextAuthoringDataGenerationConnectionInfo AnalyzeTextAuthoringDataGenerationConnectionInfo(AnalyzeTextAuthoringDataGenerationConnectionInfoKind kind = default, string resourceId = null, string deploymentName = null)
         {
-            return new DataGenerationConnectionInfo(kind, resourceId, deploymentName, serializedAdditionalRawData: null);
+            return new AnalyzeTextAuthoringDataGenerationConnectionInfo(kind, resourceId, deploymentName, serializedAdditionalRawData: null);
         }
     }
 }

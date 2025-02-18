@@ -76,12 +76,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetProjectsAsync(int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<ProjectMetadata> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringProjectMetadata> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetProjects", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringProjectMetadata.DeserializeAnalyzeTextAuthoringProjectMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetProjects", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the existing projects. </summary>
@@ -90,12 +90,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetProjects(int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<ProjectMetadata> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringProjectMetadata> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetProjects", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringProjectMetadata.DeserializeAnalyzeTextAuthoringProjectMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetProjects", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -165,14 +165,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<ProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectDeployment.DeserializeProjectDeployment(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringProjectDeployment.DeserializeAnalyzeTextAuthoringProjectDeployment(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the deployments belonging to a project. </summary>
@@ -184,14 +184,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetDeployments(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<ProjectDeployment> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringProjectDeployment> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectDeployment.DeserializeProjectDeployment(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringProjectDeployment.DeserializeAnalyzeTextAuthoringProjectDeployment(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -271,14 +271,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetExportedModelsAsync(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<ExportedTrainedModel> GetExportedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringExportedTrainedModel> GetExportedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExportedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExportedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExportedTrainedModel.DeserializeExportedTrainedModel(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetExportedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringExportedTrainedModel.DeserializeAnalyzeTextAuthoringExportedTrainedModel(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the exported models belonging to a project. </summary>
@@ -290,14 +290,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetExportedModels(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<ExportedTrainedModel> GetExportedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringExportedTrainedModel> GetExportedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExportedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExportedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExportedTrainedModel.DeserializeExportedTrainedModel(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetExportedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringExportedTrainedModel.DeserializeAnalyzeTextAuthoringExportedTrainedModel(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -377,14 +377,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<ProjectTrainedModel> GetTrainedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringProjectTrainedModel> GetTrainedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectTrainedModel.DeserializeProjectTrainedModel(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringProjectTrainedModel.DeserializeAnalyzeTextAuthoringProjectTrainedModel(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the trained models belonging to a project. </summary>
@@ -396,14 +396,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetTrainedModels(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<ProjectTrainedModel> GetTrainedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringProjectTrainedModel> GetTrainedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectTrainedModel.DeserializeProjectTrainedModel(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringProjectTrainedModel.DeserializeAnalyzeTextAuthoringProjectTrainedModel(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -483,14 +483,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentResourcesAsync(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<AssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringAssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssignedDeploymentResource.DeserializeAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringAssignedDeploymentResource.DeserializeAnalyzeTextAuthoringAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the deployments resources assigned to the project. </summary>
@@ -502,14 +502,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetDeploymentResources(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<AssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringAssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssignedDeploymentResource.DeserializeAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringAssignedDeploymentResource.DeserializeAnalyzeTextAuthoringAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -589,14 +589,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobsAsync(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<TrainingOperationState> GetTrainingJobsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringTrainingOperationState> GetTrainingJobsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingJobsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingJobsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TrainingOperationState.DeserializeTrainingOperationState(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainingJobs", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringTrainingOperationState.DeserializeAnalyzeTextAuthoringTrainingOperationState(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainingJobs", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the non-expired training jobs created for a project. </summary>
@@ -608,14 +608,14 @@ namespace Azure.AI.Language.Text.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetTrainingJobs(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<TrainingOperationState> GetTrainingJobs(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringTrainingOperationState> GetTrainingJobs(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingJobsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingJobsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TrainingOperationState.DeserializeTrainingOperationState(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainingJobs", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringTrainingOperationState.DeserializeAnalyzeTextAuthoringTrainingOperationState(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainingJobs", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -692,12 +692,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<AssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssignedProjectDeploymentsMetadata.DeserializeAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata.DeserializeAnalyzeTextAuthoringAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
@@ -706,12 +706,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<AssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssignedProjectDeploymentsMetadata.DeserializeAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringAssignedProjectDeploymentsMetadata.DeserializeAnalyzeTextAuthoringAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -779,12 +779,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(AnalyzeTextAuthoringProjectKind?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<SupportedLanguage> GetSupportedLanguagesAsync(AnalyzeTextAuthoringProjectKind? projectKind = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringSupportedLanguage> GetSupportedLanguagesAsync(AnalyzeTextAuthoringProjectKind? projectKind = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind?.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind?.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SupportedLanguage.DeserializeSupportedLanguage(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringSupportedLanguage.DeserializeAnalyzeTextAuthoringSupportedLanguage(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the supported languages. </summary>
@@ -794,12 +794,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetSupportedLanguages(AnalyzeTextAuthoringProjectKind?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<SupportedLanguage> GetSupportedLanguages(AnalyzeTextAuthoringProjectKind? projectKind = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringSupportedLanguage> GetSupportedLanguages(AnalyzeTextAuthoringProjectKind? projectKind = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind?.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind?.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SupportedLanguage.DeserializeSupportedLanguage(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringSupportedLanguage.DeserializeAnalyzeTextAuthoringSupportedLanguage(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -865,23 +865,23 @@ namespace Azure.AI.Language.Text.Authoring
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(CancellationToken)']/*" />
-        public virtual AsyncPageable<PrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PrebuiltEntity.DeserializePrebuiltEntity(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringPrebuiltEntity.DeserializeAnalyzeTextAuthoringPrebuiltEntity(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(CancellationToken)']/*" />
-        public virtual Pageable<PrebuiltEntity> GetSupportedPrebuiltEntities(CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringPrebuiltEntity> GetSupportedPrebuiltEntities(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PrebuiltEntity.DeserializePrebuiltEntity(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringPrebuiltEntity.DeserializeAnalyzeTextAuthoringPrebuiltEntity(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetSupportedPrebuiltEntities", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -943,12 +943,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersionsAsync(AnalyzeTextAuthoringProjectKind?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<TrainingConfigVersion> GetTrainingConfigVersionsAsync(AnalyzeTextAuthoringProjectKind? projectKind = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeTextAuthoringTrainingConfigVersion> GetTrainingConfigVersionsAsync(AnalyzeTextAuthoringProjectKind? projectKind = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind?.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind?.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TrainingConfigVersion.DeserializeTrainingConfigVersion(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringTrainingConfigVersion.DeserializeAnalyzeTextAuthoringTrainingConfigVersion(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
@@ -958,12 +958,12 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/TextAnalysisAuthoringClient.xml" path="doc/members/member[@name='GetTrainingConfigVersions(AnalyzeTextAuthoringProjectKind?,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<TrainingConfigVersion> GetTrainingConfigVersions(AnalyzeTextAuthoringProjectKind? projectKind = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeTextAuthoringTrainingConfigVersion> GetTrainingConfigVersions(AnalyzeTextAuthoringProjectKind? projectKind = null, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind?.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind?.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TrainingConfigVersion.DeserializeTrainingConfigVersion(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeTextAuthoringTrainingConfigVersion.DeserializeAnalyzeTextAuthoringTrainingConfigVersion(e), ClientDiagnostics, _pipeline, "TextAnalysisAuthoringClient.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
