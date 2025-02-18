@@ -645,6 +645,7 @@ internal static partial class MockExtensions
         items.Destination.SetupGet(r => r.TransferType).Returns(default(TransferOrder));
         items.Destination.SetupGet(r => r.MaxSupportedSingleTransferSize).Returns(Constants.GB);
         items.Destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
+        items.Destination.SetupGet(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
 
         items.Source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
             .Returns((CancellationToken cancellationToken) =>
