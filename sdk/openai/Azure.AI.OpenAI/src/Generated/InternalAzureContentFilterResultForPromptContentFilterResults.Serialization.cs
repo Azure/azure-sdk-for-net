@@ -14,13 +14,21 @@ namespace Azure.AI.OpenAI
     {
         void IJsonModel<InternalAzureContentFilterResultForPromptContentFilterResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             var format = options.Format == "W" ? ((IPersistableModel<InternalAzureContentFilterResultForPromptContentFilterResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InternalAzureContentFilterResultForPromptContentFilterResults)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (SerializedAdditionalRawData?.ContainsKey("sexual") != true && Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
@@ -85,7 +93,6 @@ namespace Azure.AI.OpenAI
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InternalAzureContentFilterResultForPromptContentFilterResults IJsonModel<InternalAzureContentFilterResultForPromptContentFilterResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -114,7 +121,7 @@ namespace Azure.AI.OpenAI
             ContentFilterSeverityResult selfHarm = default;
             ContentFilterDetectionResult profanity = default;
             ContentFilterBlocklistResult customBlocklists = default;
-            InternalAzureContentFilterResultForPromptContentFilterResultsError error = default;
+            InternalAzureContentFilterResultForChoiceError error = default;
             ContentFilterDetectionResult jailbreak = default;
             ContentFilterDetectionResult indirectAttack = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -181,7 +188,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    error = InternalAzureContentFilterResultForPromptContentFilterResultsError.DeserializeInternalAzureContentFilterResultForPromptContentFilterResultsError(property.Value, options);
+                    error = InternalAzureContentFilterResultForChoiceError.DeserializeInternalAzureContentFilterResultForChoiceError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jailbreak"u8))

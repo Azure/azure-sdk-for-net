@@ -90,6 +90,25 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="ApplicationGatewayForContainersSecurityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayForContainersSecurityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayForContainersSecurityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetApplicationGatewayForContainersSecurityPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> object. </returns>
+        public static ApplicationGatewayForContainersSecurityPolicyResource GetApplicationGatewayForContainersSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceNetworkingArmClient(client).GetApplicationGatewayForContainersSecurityPolicyResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of TrafficControllerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -119,7 +138,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +176,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,7 +214,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -231,7 +250,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

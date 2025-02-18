@@ -3396,10 +3396,17 @@ namespace Azure.Messaging.EventGrid
         /// <param name="to"> The identity of SMS message receiver. </param>
         /// <param name="message"> The SMS content. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
+        /// <param name="segmentCount"> Number of segments in the message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsSmsReceivedEventData"/> instance for mocking. </returns>
-        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = null, string @from = null, string to = null, string message = null, DateTimeOffset? receivedTimestamp = null)
+        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = null, string @from = null, string to = null, string message = null, DateTimeOffset? receivedTimestamp = null, int segmentCount = default)
         {
-            return new AcsSmsReceivedEventData(messageId, @from, to, message, receivedTimestamp);
+            return new AcsSmsReceivedEventData(
+                messageId,
+                @from,
+                to,
+                message,
+                receivedTimestamp,
+                segmentCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRecordingFileStatusUpdatedEventData"/>. </summary>
@@ -3455,16 +3462,18 @@ namespace Azure.Messaging.EventGrid
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The recipient Email Address. </param>
+        /// <param name="internetMessageId"> The Internet Message Id of the email been sent. </param>
         /// <param name="messageId"> The Id of the email been sent. </param>
         /// <param name="status"> The status of the email. Any value other than Delivered is considered failed. </param>
         /// <param name="deliveryStatusDetails"> Detailed information about the status if any. </param>
         /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
         /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/> instance for mocking. </returns>
-        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = null, DateTimeOffset? deliveryAttemptTimestamp = null)
+        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string internetMessageId = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails = null, DateTimeOffset? deliveryAttemptTimestamp = null)
         {
             return new AcsEmailDeliveryReportReceivedEventData(
                 sender,
                 recipient,
+                internetMessageId,
                 messageId,
                 status,
                 deliveryStatusDetails,
@@ -3472,11 +3481,12 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/>. </summary>
+        /// <param name="recipientMailServerHostName"> Recipient Mail Server Host Name. </param>
         /// <param name="statusMessage"> Detailed status message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/> instance for mocking. </returns>
-        public static AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage = null)
+        public static AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string recipientMailServerHostName = null, string statusMessage = null)
         {
-            return new AcsEmailDeliveryReportStatusDetails(statusMessage);
+            return new AcsEmailDeliveryReportStatusDetails(recipientMailServerHostName, statusMessage);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/>. </summary>
@@ -3505,10 +3515,20 @@ namespace Azure.Messaging.EventGrid
         /// <param name="mediaId"> The media identifier. </param>
         /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
         /// <param name="caption"> The caption for the media object, if supported and provided. </param>
+        /// <param name="animated"> Set to true if the sticker is animated; false otherwise. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
-        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
+        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null, bool? animated = null)
         {
-            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption);
+            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption, animated);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageReactionContent"/>. </summary>
+        /// <param name="messageId"> WhatsApp message ID of message you want to apply the emoji to. </param>
+        /// <param name="emoji"> Unicode escape sequence of the emoji. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsMessageReactionContent"/> instance for mocking. </returns>
+        public static AcsMessageReactionContent AcsMessageReactionContent(string messageId = null, string emoji = null)
+        {
+            return new AcsMessageReactionContent(messageId, emoji);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageContext"/>. </summary>
