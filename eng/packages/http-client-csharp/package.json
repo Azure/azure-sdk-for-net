@@ -23,7 +23,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "0.1.9-alpha.20250210.4"
+    "@typespec/http-client-csharp": "0.1.9-alpha.20250218.2"
   },
   "devDependencies": {
     "@typespec/http-specs": "0.1.0-alpha.7",
