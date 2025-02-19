@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- An event is now logged when the `ManagedIdentityCredential` is used directly or indirectly via a credential chain indicating which managed identity source was selected and which `ManagedIdentityId` was specified.
 
 ## 1.14.0-beta.1 (2025-02-11)
 
