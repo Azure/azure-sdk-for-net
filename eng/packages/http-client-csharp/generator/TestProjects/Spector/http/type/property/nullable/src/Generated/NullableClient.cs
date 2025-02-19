@@ -7,15 +7,14 @@
 
 using System;
 using Azure.Core.Pipeline;
-using _Type.Property.Nullable;
 
-namespace Type.Property.Nullable
+namespace _Type.Property.Nullable
 {
     public partial class NullableClient
     {
-        public NullableClient() : this(new Uri("http://localhost:3000"), new _Type.Property.Nullable.NullableClientOptions()) => throw null;
+        public NullableClient() : this(new Uri("http://localhost:3000"), new NullableClientOptions()) => throw null;
 
-        public NullableClient(Uri endpoint, _Type.Property.Nullable.NullableClientOptions options) => throw null;
+        public NullableClient(Uri endpoint, NullableClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 

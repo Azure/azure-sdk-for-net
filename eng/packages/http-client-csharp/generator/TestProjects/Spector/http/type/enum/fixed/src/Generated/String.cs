@@ -12,7 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using _Type._Enum.Fixed.Models;
 
-namespace Type.Enum.Fixed
+namespace _Type._Enum.Fixed
 {
     public partial class String
     {

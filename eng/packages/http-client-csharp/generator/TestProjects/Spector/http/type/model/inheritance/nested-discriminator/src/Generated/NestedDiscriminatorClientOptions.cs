@@ -7,9 +7,9 @@
 
 using Azure.Core;
 
-namespace Response.StatusCodeRange
+namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    public partial class StatusCodeRangeClientOptions : ClientOptions
+    public partial class NestedDiscriminatorClientOptions : ClientOptions
     {
     }
 }

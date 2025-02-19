@@ -47,7 +47,7 @@ namespace Azure.Generator.Visitors
             }
             else
             {
-                type.Type.Namespace = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Name;
+                type.Type.Namespace = AzureClientPlugin.Instance.TypeFactory.GetCleanNameSpace(AzureClientPlugin.Instance.InputLibrary.InputNamespace.Name);
             }
             return type;
         }

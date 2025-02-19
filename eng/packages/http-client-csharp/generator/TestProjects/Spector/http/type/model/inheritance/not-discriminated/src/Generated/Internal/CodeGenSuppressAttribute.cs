@@ -12,7 +12,7 @@ namespace _Type.Model.Inheritance.NotDiscriminated
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct), AllowMultiple = true)]
     internal partial class CodeGenSuppressAttribute : Attribute
     {
-        public CodeGenSuppressAttribute(string member, params System.Type[] parameters)
+        public CodeGenSuppressAttribute(string member, params Type[] parameters)
         {
             Member = member;
             Parameters = parameters;
@@ -22,6 +22,6 @@ namespace _Type.Model.Inheritance.NotDiscriminated
         public string Member { get; }
 
         /// <summary> Gets the Parameters. </summary>
-        public System.Type[] Parameters { get; }
+        public Type[] Parameters { get; }
     }
 }

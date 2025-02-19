@@ -11,16 +11,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type.Model.Usage;
 using _Type.Model.Usage.Models;
 
-namespace Type.Model.Usage
+namespace _Type.Model.Usage
 {
     public partial class UsageClient
     {
-        public UsageClient() : this(new Uri("http://localhost:3000"), new _Type.Model.Usage.UsageClientOptions()) => throw null;
+        public UsageClient() : this(new Uri("http://localhost:3000"), new UsageClientOptions()) => throw null;
 
-        public UsageClient(Uri endpoint, _Type.Model.Usage.UsageClientOptions options) => throw null;
+        public UsageClient(Uri endpoint, UsageClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 

@@ -11,16 +11,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type.Model.Inheritance.NotDiscriminated;
 using _Type.Model.Inheritance.NotDiscriminated.Models;
 
-namespace Type.Model.Inheritance.NotDiscriminated
+namespace _Type.Model.Inheritance.NotDiscriminated
 {
     public partial class NotDiscriminatedClient
     {
-        public NotDiscriminatedClient() : this(new Uri("http://localhost:3000"), new _Type.Model.Inheritance.NotDiscriminated.NotDiscriminatedClientOptions()) => throw null;
+        public NotDiscriminatedClient() : this(new Uri("http://localhost:3000"), new NotDiscriminatedClientOptions()) => throw null;
 
-        public NotDiscriminatedClient(Uri endpoint, _Type.Model.Inheritance.NotDiscriminated.NotDiscriminatedClientOptions options) => throw null;
+        public NotDiscriminatedClient(Uri endpoint, NotDiscriminatedClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 

@@ -11,16 +11,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type.Model.Inheritance.NestedDiscriminator;
 using _Type.Model.Inheritance.NestedDiscriminator.Models;
 
-namespace Type.Model.Inheritance.NestedDiscriminator
+namespace _Type.Model.Inheritance.NestedDiscriminator
 {
     public partial class NestedDiscriminatorClient
     {
-        public NestedDiscriminatorClient() : this(new Uri("http://localhost:3000"), new _Type.Model.Inheritance.NestedDiscriminator.NestedDiscriminatorClientOptions()) => throw null;
+        public NestedDiscriminatorClient() : this(new Uri("http://localhost:3000"), new NestedDiscriminatorClientOptions()) => throw null;
 
-        public NestedDiscriminatorClient(Uri endpoint, _Type.Model.Inheritance.NestedDiscriminator.NestedDiscriminatorClientOptions options) => throw null;
+        public NestedDiscriminatorClient(Uri endpoint, NestedDiscriminatorClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 

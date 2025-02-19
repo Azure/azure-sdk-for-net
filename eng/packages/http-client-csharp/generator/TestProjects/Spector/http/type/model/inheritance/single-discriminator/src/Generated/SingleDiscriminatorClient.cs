@@ -11,16 +11,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using _Type.Model.Inheritance.SingleDiscriminator;
 using _Type.Model.Inheritance.SingleDiscriminator.Models;
 
-namespace Type.Model.Inheritance.SingleDiscriminator
+namespace _Type.Model.Inheritance.SingleDiscriminator
 {
     public partial class SingleDiscriminatorClient
     {
-        public SingleDiscriminatorClient() : this(new Uri("http://localhost:3000"), new _Type.Model.Inheritance.SingleDiscriminator.SingleDiscriminatorClientOptions()) => throw null;
+        public SingleDiscriminatorClient() : this(new Uri("http://localhost:3000"), new SingleDiscriminatorClientOptions()) => throw null;
 
-        public SingleDiscriminatorClient(Uri endpoint, _Type.Model.Inheritance.SingleDiscriminator.SingleDiscriminatorClientOptions options) => throw null;
+        public SingleDiscriminatorClient(Uri endpoint, SingleDiscriminatorClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 

@@ -12,7 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using _Type.Property.Nullable.Models;
 
-namespace Type.Property.Nullable
+namespace _Type.Property.Nullable
 {
     public partial class String
     {
