@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> Options regarding follow up recommendation inferences and finding inferences. </summary>
-    public partial class RadiologyInsightsInferenceOptions
+    /// <summary> Quality Measure Options. </summary>
+    public partial class QualityMeasureOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +46,31 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
-        public RadiologyInsightsInferenceOptions()
+        /// <summary> Initializes a new instance of <see cref="QualityMeasureOptions"/>. </summary>
+        /// <param name="measureTypes"> Id(s) of the MIPS measures that need to be evaluated in the document. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="measureTypes"/> is null. </exception>
+        public QualityMeasureOptions(IEnumerable<QualityMeasureType> measureTypes)
         {
+            Argument.AssertNotNull(measureTypes, nameof(measureTypes));
+
+            MeasureTypes = measureTypes.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
-        /// <param name="followupRecommendationOptions"> Follow-up recommendation options. </param>
-        /// <param name="findingOptions"> Finding options. </param>
-        /// <param name="guidanceOptions"> Guidance options. </param>
-        /// <param name="qualityMeasureOptions"> QualityMeasureOptions. </param>
+        /// <summary> Initializes a new instance of <see cref="QualityMeasureOptions"/>. </summary>
+        /// <param name="measureTypes"> Id(s) of the MIPS measures that need to be evaluated in the document. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiologyInsightsInferenceOptions(FollowupRecommendationOptions followupRecommendationOptions, FindingOptions findingOptions, GuidanceOptions guidanceOptions, QualityMeasureOptions qualityMeasureOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal QualityMeasureOptions(IList<QualityMeasureType> measureTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FollowupRecommendationOptions = followupRecommendationOptions;
-            FindingOptions = findingOptions;
-            GuidanceOptions = guidanceOptions;
-            QualityMeasureOptions = qualityMeasureOptions;
+            MeasureTypes = measureTypes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Follow-up recommendation options. </summary>
-        public FollowupRecommendationOptions FollowupRecommendationOptions { get; set; }
-        /// <summary> Finding options. </summary>
-        public FindingOptions FindingOptions { get; set; }
-        /// <summary> Guidance options. </summary>
-        public GuidanceOptions GuidanceOptions { get; set; }
-        /// <summary> QualityMeasureOptions. </summary>
-        public QualityMeasureOptions QualityMeasureOptions { get; set; }
+        /// <summary> Initializes a new instance of <see cref="QualityMeasureOptions"/> for deserialization. </summary>
+        internal QualityMeasureOptions()
+        {
+        }
+
+        /// <summary> Id(s) of the MIPS measures that need to be evaluated in the document. </summary>
+        public IList<QualityMeasureType> MeasureTypes { get; }
     }
 }
