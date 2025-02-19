@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
 using System.IO;
 using System.Linq;
-using System.Net.Security;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -620,7 +617,6 @@ namespace Azure.AI.Projects.Tests
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
         }
 
-        [Ignore("Marking this test as ignored, because Enterprise file serach is not working right now 2025-02-18.")]
         [RecordedTest]
         [TestCase(VecrorStoreTestType.JustVectorStore, true, false)]
         [TestCase(VecrorStoreTestType.Batch, true, false)]
@@ -718,6 +714,7 @@ namespace Azure.AI.Projects.Tests
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
                 }
+                Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status, fileSearchRun.LastError?.ToString());
             }
             else
             {
@@ -1259,7 +1256,7 @@ namespace Azure.AI.Projects.Tests
             while (run.Status == RunStatus.Queued
                 || run.Status == RunStatus.InProgress
                 || run.Status == RunStatus.RequiresAction);
-            Assert.AreEqual(RunStatus.Completed, run.Status);
+            Assert.AreEqual(RunStatus.Completed, run.Status, message: run.LastError?.ToString());
             return run;
         }
 
