@@ -13,7 +13,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Billing.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Billing
 {
