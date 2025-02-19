@@ -210,6 +210,13 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
         $lookup[$lookupKey] = $pkg
 
+        # resolve the trigger paths for the package, either from individual artifact config OR by falling back to associated ci.yml file trigger paths
+        $triggerPaths = $pkg.CIParameters["CITriggerPaths"]
+        if ($pkg.ArtifactDetails -and $pkg.ArtifactDetails["TriggerPaths"]) {
+            $triggerPaths = $pkg.ArtifactDetails["TriggerPaths"]
+        }
+        $triggerPaths = $triggerPaths | ForEach-Object { $_.TrimEnd("/") + "/" }
+
         foreach ($file in $targetedFiles) {
             $shouldExclude = $false
             foreach ($exclude in $excludePaths) {
@@ -222,6 +229,11 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                 continue
             }
             $filePath = (Join-Path $RepoRoot $file)
+
+            foreach($triggerPath in $triggerPaths) {
+                # utilize the various trigger paths against the targeted file here
+            }
+
             $shouldInclude = $filePath -like (Join-Path "$pkgDirectory" "*")
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
