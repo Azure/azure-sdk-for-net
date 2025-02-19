@@ -126,6 +126,14 @@ class PackageProps {
 
             if ($ciArtifactResult) {
                 $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
+                $this.CIParameters["CITriggerPaths"] = @()
+                $this.CIParameters["CIMatrixConfigs"] = @()
+
+                $triggers = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("trigger", "paths", "include")
+
+                if ($triggers) {
+                    $this.CIParameters["CITriggerPaths"] += $triggers
+                }
 
                 # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
                 $matrixConfigList = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("extends", "parameters", "MatrixConfigs")
@@ -196,6 +204,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $additionalValidationPackages = @()
     $lookup = @{}
 
+    # this is the primary loop that identifies the packages that have changes
     foreach ($pkg in $allPackageProperties) {
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
         $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
@@ -227,6 +236,9 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
     }
 
+    # add all of the packages that were added purely for validation purposes
+    # this is executed seperately because we need to identify packages added this way as only included for validation
+    # we don't actually need to build or analyze them. only test them.
     $existingPackageNames = @($packagesWithChanges | ForEach-Object { $_.Name })
     foreach ($addition in $additionalValidationPackages) {
         $key = $addition.Replace($RepoRoot, "").TrimStart('\/')
@@ -241,8 +253,16 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
     }
 
+    # now pass along the set of packages we've identified, the diff itself, and the full set of package properties
+    # to locate any additional packages that should be included for validation
     if ($AdditionalValidationPackagesFromPackageSetFn -and (Test-Path "Function:$AdditionalValidationPackagesFromPackageSetFn")) {
         $packagesWithChanges += &$AdditionalValidationPackagesFromPackageSetFn $packagesWithChanges $diff $allPackageProperties
+    }
+
+    # finally, if we have gotten all the way here and we still don't have any packages, we should include the template service
+    # packages. We should never return NO validation.
+    if ($packagesWithChanges.Count -eq 0) {
+        $packagesWithChanges += ($allPackageProperties | Where-Object { $_.ServiceDirectory -eq "template" })
     }
 
     return $packagesWithChanges
