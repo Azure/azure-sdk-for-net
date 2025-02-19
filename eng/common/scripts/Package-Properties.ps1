@@ -237,7 +237,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     }
 
     # add all of the packages that were added purely for validation purposes
-    # this is executed seperately because we need to identify packages added this way as only included for validation
+    # this is executed separately because we need to identify packages added this way as only included for validation
     # we don't actually need to build or analyze them. only test them.
     $existingPackageNames = @($packagesWithChanges | ForEach-Object { $_.Name })
     foreach ($addition in $additionalValidationPackages) {
