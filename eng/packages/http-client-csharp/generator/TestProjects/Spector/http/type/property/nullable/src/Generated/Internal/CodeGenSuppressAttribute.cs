@@ -12,7 +12,7 @@ namespace _Type.Property.Nullable
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct), AllowMultiple = true)]
     internal partial class CodeGenSuppressAttribute : Attribute
     {
-        public CodeGenSuppressAttribute(string member, params Type[] parameters)
+        public CodeGenSuppressAttribute(string member, params System.Type[] parameters)
         {
             Member = member;
             Parameters = parameters;
@@ -22,6 +22,6 @@ namespace _Type.Property.Nullable
         public string Member { get; }
 
         /// <summary> Gets the Parameters. </summary>
-        public Type[] Parameters { get; }
+        public System.Type[] Parameters { get; }
     }
 }

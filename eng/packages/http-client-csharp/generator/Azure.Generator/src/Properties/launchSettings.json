@@ -65,6 +65,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-response-status-code-range": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/Spector/http/response/status-code-range -p AzureStubPlugin",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-serialization-encoded-name-json": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/Spector/http/serialization/encoded-name/json -p AzureStubPlugin",
       "commandName": "Executable",

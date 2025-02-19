@@ -11,15 +11,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using _Type.Model.Empty;
 using _Type.Model.Empty.Models;
 
-namespace _Type.Model.Empty
+namespace Type.Model.Empty
 {
     public partial class EmptyClient
     {
-        public EmptyClient() : this(new Uri("http://localhost:3000"), new EmptyClientOptions()) => throw null;
+        public EmptyClient() : this(new Uri("http://localhost:3000"), new _Type.Model.Empty.EmptyClientOptions()) => throw null;
 
-        public EmptyClient(Uri endpoint, EmptyClientOptions options) => throw null;
+        public EmptyClient(Uri endpoint, _Type.Model.Empty.EmptyClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 

@@ -11,15 +11,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using _Type.Model.Visibility;
 using _Type.Model.Visibility.Models;
 
-namespace _Type.Model.Visibility
+namespace Type.Model.Visibility
 {
     public partial class VisibilityClient
     {
-        public VisibilityClient() : this(new Uri("http://localhost:3000"), new VisibilityClientOptions()) => throw null;
+        public VisibilityClient() : this(new Uri("http://localhost:3000"), new _Type.Model.Visibility.VisibilityClientOptions()) => throw null;
 
-        public VisibilityClient(Uri endpoint, VisibilityClientOptions options) => throw null;
+        public VisibilityClient(Uri endpoint, _Type.Model.Visibility.VisibilityClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 

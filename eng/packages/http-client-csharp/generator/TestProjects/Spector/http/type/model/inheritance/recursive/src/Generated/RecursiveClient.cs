@@ -11,15 +11,16 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using _Type.Model.Inheritance.Recursive;
 using _Type.Model.Inheritance.Recursive.Models;
 
-namespace _Type.Model.Inheritance.Recursive
+namespace Type.Model.Inheritance.Recursive
 {
     public partial class RecursiveClient
     {
-        public RecursiveClient() : this(new Uri("http://localhost:3000"), new RecursiveClientOptions()) => throw null;
+        public RecursiveClient() : this(new Uri("http://localhost:3000"), new _Type.Model.Inheritance.Recursive.RecursiveClientOptions()) => throw null;
 
-        public RecursiveClient(Uri endpoint, RecursiveClientOptions options) => throw null;
+        public RecursiveClient(Uri endpoint, _Type.Model.Inheritance.Recursive.RecursiveClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 

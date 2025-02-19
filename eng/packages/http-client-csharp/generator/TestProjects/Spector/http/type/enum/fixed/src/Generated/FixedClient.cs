@@ -7,14 +7,15 @@
 
 using System;
 using Azure.Core.Pipeline;
+using _Type._Enum.Fixed;
 
-namespace _Type._Enum.Fixed
+namespace Type.Enum.Fixed
 {
     public partial class FixedClient
     {
-        public FixedClient() : this(new Uri("http://localhost:3000"), new FixedClientOptions()) => throw null;
+        public FixedClient() : this(new Uri("http://localhost:3000"), new _Type._Enum.Fixed.FixedClientOptions()) => throw null;
 
-        public FixedClient(Uri endpoint, FixedClientOptions options) => throw null;
+        public FixedClient(Uri endpoint, _Type._Enum.Fixed.FixedClientOptions options) => throw null;
 
         public HttpPipeline Pipeline => throw null;
 
