@@ -41,11 +41,11 @@ public static class AzureProjectsCommands
             return true;
         }
 
-        if (args[0] == "-tsp")
-        {
-            GenerateTsp(cmi.Endpoints);
-            return true;
-        }
+        //if (args[0] == "-tsp")
+        //{
+        //    GenerateTsp(cmi.Endpoints);
+        //    return true;
+        //}
 
         if (args[0] == "-ai")
         {

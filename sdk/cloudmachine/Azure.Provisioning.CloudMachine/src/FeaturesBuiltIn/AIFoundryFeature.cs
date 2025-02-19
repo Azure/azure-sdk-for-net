@@ -83,7 +83,7 @@ namespace Azure.Projects.AIFoundry
         /// <returns>A placeholder or no-op resource, as provisioning is out-of-band for now.</returns>
         protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
         {
-            var cmId = cm.Id;
+            var cmId = cm.ProjectId;
             AIFoundryHubCdk hub = new($"{cmId}_hub", $"{cmId}_hub");
             AIFoundryProjectCdk project = new($"{cmId}_project", $"{cmId}_project", hub);
 

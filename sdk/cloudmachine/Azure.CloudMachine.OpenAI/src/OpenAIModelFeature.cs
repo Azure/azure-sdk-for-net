@@ -107,8 +107,8 @@ public class OpenAIModelFeature : AzureProjectFeature
 
         string name = Kind switch
         {
-            AIModelKind.Chat => $"{cm.Id}_chat",
-            AIModelKind.Embedding => $"{cm.Id}_embedding",
+            AIModelKind.Chat => $"{cm.ProjectId}_chat",
+            AIModelKind.Embedding => $"{cm.ProjectId}_embedding",
             _ => throw new NotImplementedException()
         };
 

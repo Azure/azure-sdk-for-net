@@ -30,7 +30,7 @@ public class KeyVaultFeature : AzureProjectFeature
         // Add a KeyVault to the infrastructure.
         KeyVaultService keyVaultResource = new("cm_kv")
         {
-            Name = infrastructure.Id,
+            Name = infrastructure.ProjectId,
             Properties =
                 new KeyVaultProperties
                 {
@@ -49,7 +49,9 @@ public class KeyVaultFeature : AzureProjectFeature
                 },
         };
         infrastructure.AddResource(keyVaultResource);
-        RequiredSystemRoles.Add(keyVaultResource, [(KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator), KeyVaultBuiltInRole.KeyVaultAdministrator.ToString())]);
+
+        FeatureRole kvAdmin = new(KeyVaultBuiltInRole.GetBuiltInRoleName(KeyVaultBuiltInRole.KeyVaultAdministrator), KeyVaultBuiltInRole.KeyVaultAdministrator.ToString());
+        RequiredSystemRoles.Add(keyVaultResource, [kvAdmin]);
 
         return keyVaultResource;
     }

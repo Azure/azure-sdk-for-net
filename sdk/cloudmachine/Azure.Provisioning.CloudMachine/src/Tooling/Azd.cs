@@ -34,7 +34,7 @@ public static class Azd
         Directory.CreateDirectory(infraDirectory);
 
         infra.Build().Save(infraDirectory);
-        var cmId = infra.Id;
+        var cmId = infra.ProjectId;
 
         // main.bicep
         var location = new ProvisioningParameter("location", typeof(string));
@@ -85,7 +85,7 @@ public static class Azd
         {
             webProjDirectory = Path.GetDirectoryName(webProjDirectory)?.Replace(Directory.GetCurrentDirectory(), ".");
         }
-        WriteAzureYamlFile(webProjDirectory ?? "./", infra.Id);
+        WriteAzureYamlFile(webProjDirectory ?? "./", infra.ProjectId);
     }
 
     private static void WriteMainParametersFile(string infraDirectory)

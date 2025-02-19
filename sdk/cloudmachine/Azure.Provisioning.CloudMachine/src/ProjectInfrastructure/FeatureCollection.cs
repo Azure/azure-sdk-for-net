@@ -14,10 +14,10 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
     private AzureProjectFeature[] _items = new AzureProjectFeature[4];
     private int _count;
 
-    internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RoleAnnotations =>
+    internal Dictionary<Provisionable, FeatureRole[]> RoleAnnotations =>
         _items.Take(_count)
-        .Select(f => f.RequiredSystemRoles)
-        .SelectMany(d => d)
+        .Select(feature => feature.RequiredSystemRoles)
+        .SelectMany(role => role)
         .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
     internal FeatureCollection() { }
@@ -31,6 +31,20 @@ public class FeatureCollection : IEnumerable<AzureProjectFeature>
                 yield return item;
             }
         }
+    }
+
+    public bool TryGet<T>(out T? item) where T : AzureProjectFeature
+    {
+        for (int i = 0; i < _count; i++)
+        {
+            if (_items[i] is T typed)
+            {
+                item = typed;
+                return true;
+            }
+        }
+        item = default;
+        return false;
     }
 
     public void Add(AzureProjectFeature item)

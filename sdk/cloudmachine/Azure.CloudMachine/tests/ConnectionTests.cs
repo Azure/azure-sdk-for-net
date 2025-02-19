@@ -22,6 +22,7 @@ public class ConnectionTests
     public void TwoClients(string[] args)
     {
         ProjectInfrastructure infra = new();
+        infra.AddOfx();
         if (args.Contains("-azd")) Azd.Init(infra);
 
         ProjectClient client = infra.GetClient();
@@ -36,6 +37,7 @@ public class ConnectionTests
     {
         // app 1 (with a dependency on the CDK)
         ProjectInfrastructure infra = new();
+        infra.AddOfx();
         //if (args.Contains("-azd")) Azd.Init(infra);
         BinaryData serializedConnections = BinaryData.FromObjectAsJson(infra.Connections);
 

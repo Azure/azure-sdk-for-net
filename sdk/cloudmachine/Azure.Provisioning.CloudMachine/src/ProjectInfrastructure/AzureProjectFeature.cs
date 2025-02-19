@@ -40,7 +40,7 @@ public abstract class AzureProjectFeature
         }
     }
 
-    protected internal Dictionary<Provisionable, (string RoleName, string RoleId)[]> RequiredSystemRoles { get; } = [];
+    protected internal Dictionary<Provisionable, FeatureRole[]> RequiredSystemRoles { get; } = [];
 
     protected static T EnsureEmits<T>(AzureProjectFeature feature)
     {

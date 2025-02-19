@@ -11,7 +11,7 @@ using Azure.Provisioning.Storage;
 
 namespace Azure.Projects.Storage;
 
-internal class StorageAccountFeature : AzureProjectFeature
+public class StorageAccountFeature : AzureProjectFeature
 {
     private readonly StorageSkuName _skuName;
     public string Name { get; }
@@ -40,12 +40,14 @@ internal class StorageAccountFeature : AzureProjectFeature
         };
         infrastructure.AddResource(storage);
 
-        RequiredSystemRoles.Add(storage,
-            [
-                (StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageBlobDataContributor),StorageBuiltInRole.StorageBlobDataContributor.ToString()),
-                (StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageTableDataContributor), StorageBuiltInRole.StorageTableDataContributor.ToString())
-            ]
+        FeatureRole blobContributor = new(
+            StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageBlobDataContributor), StorageBuiltInRole.StorageBlobDataContributor.ToString()
         );
+        FeatureRole tableContributor = new(
+            StorageBuiltInRole.GetBuiltInRoleName(StorageBuiltInRole.StorageTableDataContributor), StorageBuiltInRole.StorageTableDataContributor.ToString()
+        );
+
+        RequiredSystemRoles.Add(storage, [blobContributor, tableContributor]);
         return storage;
     }
 }

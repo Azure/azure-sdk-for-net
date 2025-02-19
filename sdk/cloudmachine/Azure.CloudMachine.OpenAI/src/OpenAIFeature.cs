@@ -19,7 +19,11 @@ internal class OpenAIFeature : AzureProjectFeature
         CognitiveServicesAccount cognitiveServices = CreateOpenAIAccount(infrastructure);
         infrastructure.AddResource(cognitiveServices);
 
-        RequiredSystemRoles.Add(cognitiveServices, [(CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor) ,CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString())]);
+        FeatureRole openAIContributor =  new(
+            CognitiveServicesBuiltInRole.GetBuiltInRoleName(CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor),
+            CognitiveServicesBuiltInRole.CognitiveServicesOpenAIContributor.ToString()
+        );
+        RequiredSystemRoles.Add(cognitiveServices, [openAIContributor]);
 
         return cognitiveServices;
     }
@@ -40,13 +44,13 @@ internal class OpenAIFeature : AzureProjectFeature
     {
         return new("openai")
         {
-            Name = cm.Id,
+            Name = cm.ProjectId,
             Kind = "OpenAI",
             Sku = new CognitiveServicesSku { Name = "S0" },
             Properties = new CognitiveServicesAccountProperties()
             {
                 PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Enabled,
-                CustomSubDomainName = cm.Id
+                CustomSubDomainName = cm.ProjectId
             },
         };
     }

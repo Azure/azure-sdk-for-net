@@ -22,12 +22,22 @@ public class BicepGenerationTests
     {
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        string expectedBicep = LoadTestFile("MinimalProject.bicep");
+        string expectedBicep = LoadTestFile("minimal.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
-    public void Foundry()
+    public void OfxProject()
+    {
+        ProjectInfrastructure infra = new("cm0c420d2f21084cd");
+        infra.AddOfx();
+        string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
+        string expectedBicep = LoadTestFile("ofx.bicep");
+        Assert.AreEqual(expectedBicep, actualBicep);
+    }
+
+    [Test]
+    public void AIFoundry()
     {
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new AIFoundry.AIFoundryFeature());
@@ -49,7 +59,7 @@ public class BicepGenerationTests
     }
 
     [Test]
-    public void GenerateBicep()
+    public void AppService()
     {
         ProjectInfrastructure infra = new("cm0c420d2f21084cd");
         infra.AddFeature(new KeyVaultFeature());
@@ -58,7 +68,7 @@ public class BicepGenerationTests
         infra.AddFeature(new AppServiceFeature());
 
         string actualBicep = infra.Build().Compile().FirstOrDefault().Value;
-        string expectedBicep = LoadTestFile("GenerateBicep.bicep");
+        string expectedBicep = LoadTestFile("app.bicep");
         Assert.AreEqual(expectedBicep, actualBicep);
     }
 

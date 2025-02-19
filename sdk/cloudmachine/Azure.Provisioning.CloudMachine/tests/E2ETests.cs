@@ -20,7 +20,7 @@ public class E2ETests
         var openAI = infra.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
         var foundry = infra.AddFeature(new AIFoundryFeature()
         {
-            Connections = [ openAI.CreateConnection(infra.Id) ]
+            Connections = [ openAI.CreateConnection(infra.ProjectId) ]
         });
 
         infra.TryExecuteCommand([arg]);
@@ -28,6 +28,6 @@ public class E2ETests
         ProjectClient project = new(infra.Connections);
         ChatClient chat = project.GetOpenAIChatClient();
 
-        Assert.AreEqual(8, project.Connections.Count);
+        Assert.AreEqual(2, project.Connections.Count);
     }
 }

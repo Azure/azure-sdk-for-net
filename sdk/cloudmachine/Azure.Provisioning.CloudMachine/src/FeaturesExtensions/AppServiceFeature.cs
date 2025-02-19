@@ -23,7 +23,7 @@ public class AppServiceFeature : AzureProjectFeature
         //Add a App Service to the infrastructure.
         AppServicePlan hostingPlan = new("cm_hosting_plan")
         {
-            Name = infrastructure.Id,
+            Name = infrastructure.ProjectId,
             Sku = Sku,
             Kind = "app"
         };
@@ -31,9 +31,9 @@ public class AppServiceFeature : AzureProjectFeature
 
         WebSite appService = new("cm_website")
         {
-            Name = infrastructure.Id,
+            Name = infrastructure.ProjectId,
             Kind = "app",
-            Tags = { { "azd-service-name", infrastructure.Id } },
+            Tags = { { "azd-service-name", infrastructure.ProjectId } },
             Identity = new()
             {
                 ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,

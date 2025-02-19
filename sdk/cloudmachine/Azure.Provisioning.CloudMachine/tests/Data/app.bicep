@@ -9,6 +9,51 @@ resource project_identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023
   location: location
 }
 
+resource cm_kv 'Microsoft.KeyVault/vaults@2023-07-01' = {
+  name: 'cm0c420d2f21084cd'
+  location: location
+  properties: {
+    tenantId: subscription().tenantId
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    accessPolicies: [
+      {
+        tenantId: project_identity.properties.tenantId
+        objectId: principalId
+        permissions: {
+          secrets: [
+            'get'
+            'set'
+          ]
+        }
+      }
+    ]
+    enabledForDeployment: true
+  }
+}
+
+resource cm_kv_1_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_kv', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
+  properties: {
+    principalId: principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
+    principalType: 'User'
+  }
+  scope: cm_kv
+}
+
+resource cm_kv_project_identity_KeyVaultAdministrator 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_kv', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483'))
+  properties: {
+    principalId: project_identity.properties.principalId
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '00482a5a-887f-4fb3-b363-3b7fe8e74483')
+    principalType: 'ServicePrincipal'
+  }
+  scope: cm_kv
+}
+
 resource openai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: 'cm0c420d2f21084cd'
   location: location
@@ -79,6 +124,47 @@ resource openai_cm0c420d2f21084cd_embedding 'Microsoft.CognitiveServices/account
   dependsOn: [
     openai_cm0c420d2f21084cd_chat
   ]
+}
+
+resource cm_hosting_plan 'Microsoft.Web/serverfarms@2024-04-01' = {
+  name: 'cm0c420d2f21084cd'
+  location: location
+  kind: 'app'
+  sku: {
+    name: 'F1'
+    tier: 'Free'
+  }
+}
+
+resource cm_website 'Microsoft.Web/sites@2024-04-01' = {
+  name: 'cm0c420d2f21084cd'
+  location: location
+  properties: {
+    serverFarmId: cm_hosting_plan.id
+    enabled: true
+    httpsOnly: true
+    siteConfig: {
+      appSettings: [
+        {
+          name: 'CLOUDMACHINE_MANAGED_IDENTITY_CLIENT_ID'
+          value: project_identity.properties.clientId
+        }
+      ]
+      webSocketsEnabled: true
+      http20Enabled: true
+      minTlsVersion: '1.2'
+    }
+  }
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${project_identity.id}': { }
+    }
+  }
+  kind: 'app'
+  tags: {
+    'azd-service-name': 'cm0c420d2f21084cd'
+  }
 }
 
 output project_identity_id string = project_identity.id

@@ -9,7 +9,7 @@ using Azure.Provisioning.ServiceBus;
 
 namespace Azure.Projects.ServiceBus;
 
-internal class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : AzureProjectFeature
+public class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = ServiceBusSkuName.Standard, ServiceBusSkuTier tier = ServiceBusSkuTier.Standard) : AzureProjectFeature
 {
     protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
@@ -31,11 +31,11 @@ internal class ServiceBusNamespaceFeature(string name, ServiceBusSkuName sku = S
             }
         );
 
-        RequiredSystemRoles.Add(
-            _serviceBusNamespace,
-            [
-                (ServiceBusBuiltInRole.GetBuiltInRoleName(ServiceBusBuiltInRole.AzureServiceBusDataOwner), ServiceBusBuiltInRole.AzureServiceBusDataOwner.ToString()),
-            ]);
+        FeatureRole dataOwner = new(
+            ServiceBusBuiltInRole.GetBuiltInRoleName(ServiceBusBuiltInRole.AzureServiceBusDataOwner),
+            ServiceBusBuiltInRole.AzureServiceBusDataOwner.ToString()
+        );
+        RequiredSystemRoles.Add(_serviceBusNamespace, [dataOwner]);
 
         return _serviceBusNamespace;
     }

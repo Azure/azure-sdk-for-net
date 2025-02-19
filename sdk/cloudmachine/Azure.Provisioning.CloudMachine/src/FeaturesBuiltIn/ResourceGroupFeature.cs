@@ -22,7 +22,7 @@ internal sealed class ResourceGroupFeature : AzureProjectFeature
 
     protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
     {
-        string name = (Name == null) ? cm.Id : Name;
+        string name = (Name == null) ? cm.ProjectId : Name;
         var rg = new ResourceGroup(name);
         cm.AddResource(rg);
         return rg;
