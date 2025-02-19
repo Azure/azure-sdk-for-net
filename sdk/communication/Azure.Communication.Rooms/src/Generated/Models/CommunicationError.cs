@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Rooms
 {
-    /// <summary> The CommunicationError. </summary>
+    /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationError
     {
         /// <summary> Initializes a new instance of <see cref="CommunicationError"/>. </summary>
@@ -30,27 +30,27 @@ namespace Azure.Communication.Rooms
         /// <summary> Initializes a new instance of <see cref="CommunicationError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
-        /// <param name="target"> If applicable, would be used to indicate the property causing the error. </param>
+        /// <param name="target"> The error target. </param>
         /// <param name="details"> Further details about specific errors that led to this error. </param>
-        /// <param name="innererror"></param>
-        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innererror)
+        /// <param name="innerError"> The inner error if any. </param>
+        internal CommunicationError(string code, string message, string target, IReadOnlyList<CommunicationError> details, CommunicationError innerError)
         {
             Code = code;
             Message = message;
             Target = target;
             Details = details;
-            Innererror = innererror;
+            InnerError = innerError;
         }
 
         /// <summary> The error code. </summary>
         public string Code { get; }
         /// <summary> The error message. </summary>
         public string Message { get; }
-        /// <summary> If applicable, would be used to indicate the property causing the error. </summary>
+        /// <summary> The error target. </summary>
         public string Target { get; }
         /// <summary> Further details about specific errors that led to this error. </summary>
         public IReadOnlyList<CommunicationError> Details { get; }
-        /// <summary> Gets the innererror. </summary>
-        public CommunicationError Innererror { get; }
+        /// <summary> The inner error if any. </summary>
+        public CommunicationError InnerError { get; }
     }
 }
