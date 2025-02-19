@@ -244,6 +244,9 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
                 if ($resolvedRelativePath) {
                     $shouldInclude = $shouldInclude -or ($filePath -like (Join-Path "$resolvedRelativePath" "*"))
+                    # if we reached here, this package wasn't directly changed, but instead
+                    # should be validated because it was indirectly changed
+                    $pkg.IncludedForValidation = $true
                 }
             }
 
