@@ -565,7 +565,7 @@ function Invoke-GenerateAndBuildSDK () {
     Write-Host "[ERROR] Please review the detail errors for potential fixes."
     Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at DotNetSupportChannelLink and include this spec pull request."
     Write-Host "AAPath doesn't exist. create template."
-    Write-Error "[ERROR] AAThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+    Write-Error "[ERROR] AAThe service $serviceA is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request." -ErrorAction Stop
     exit 1
     if (!$readmeFile.StartsWith("http") -And !(Test-Path -Path $readmeFile)) {
         Write-Error "[ERROR] readme file '$readmeFile' does not exist. Please provide a valid readme file path."
