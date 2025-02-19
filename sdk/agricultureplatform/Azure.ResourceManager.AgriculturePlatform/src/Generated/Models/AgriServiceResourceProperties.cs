@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         }
 
         /// <summary> Data connector credentials of AgriService instance. </summary>
-        public IList<DataConnectorCredentialMap> DataConnectorCredentials { get; }
+        public IList<DataConnectorCredentialMap> DataConnectorCredentials { get; set; }
         /// <summary> AgriService installed solutions. </summary>
-        public IList<InstalledSolutionMap> InstalledSolutions { get; }
+        public IList<InstalledSolutionMap> InstalledSolutions { get; set; }
     }
 }

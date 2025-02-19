@@ -25,7 +25,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Tests
         {
         }
 
-        [SetUp]
         public async Task CreateCommonClient()
         {
             Client = GetArmClient();
