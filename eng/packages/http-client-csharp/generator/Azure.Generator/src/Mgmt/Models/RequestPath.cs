@@ -38,7 +38,7 @@ namespace Azure.Generator.Mgmt.Models
         public RequestPath(IEnumerable<string> segments)
         {
             _segments = segments.ToArray();
-            _path = string.Join("", _segments);
+            _path = string.Join("/", _segments);
         }
 
         public int Count => _segments.Count;
