@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         /// Defines the maximum supported chunk count for the storage resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected internal abstract int MaxSupportedChunkCount { get; }
+        protected internal virtual int MaxSupportedChunkCount { get; } = int.MaxValue;
 
         /// <summary>
         /// Storage Resource is a container.
