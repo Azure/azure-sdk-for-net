@@ -47,7 +47,7 @@ namespace Azure.Generator
             }
             else
             {
-                type.Type.Namespace = AzureClientPlugin.Instance.TypeFactory.RootNamespace;
+                type.Type.Namespace = AzureClientPlugin.Instance.TypeFactory.GetCleanNameSpace(AzureClientPlugin.Instance.TypeFactory.RootNamespace);
             }
             return type;
         }
