@@ -230,6 +230,11 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             }
             $filePath = (Join-Path $RepoRoot $file)
 
+            # but I believe that we have to include the exclude paths as well
+            # otherwise we will not handle when the trigger path has exclude. like for java/core/ci.yml
+            # in that instance, the trigger path is sdk/core but we want to exclude sdk/core/azure-core-v2
+            # so we need to ensure that we are including the exclude paths when we evaluate the additional trigger paths
+            # this is still todo though, a follow-up commit will add this
             foreach($triggerPath in $triggerPaths) {
                 # utilize the various trigger paths against the targeted file here
             }
