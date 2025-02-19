@@ -210,12 +210,14 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
         $lookup[$lookupKey] = $pkg
 
-        # resolve the trigger paths for the package, either from individual artifact config OR by falling back to associated ci.yml file trigger paths
-        $triggerPaths = $pkg.CIParameters["CITriggerPaths"]
-        if ($pkg.ArtifactDetails -and $pkg.ArtifactDetails["TriggerPaths"]) {
-            $triggerPaths = $pkg.ArtifactDetails["TriggerPaths"]
+        # we only honor the individual artifact triggers
+        # if we were to honor the ci-level triggers, we would simply
+        # end up in a situation where any change to a service would
+        # still trigger every package in that service. individual package triggers
+        # must be added to handle this.
+        if ($pkg.ArtifactDetails -and $pkg.ArtifactDetails["triggeringPaths"]) {
+            $triggeringPaths = $pkg.ArtifactDetails["triggeringPaths"]
         }
-        $triggerPaths = $triggerPaths | ForEach-Object { $_.TrimEnd("/") + "/" }
 
         foreach ($file in $targetedFiles) {
             $shouldExclude = $false
@@ -230,16 +232,21 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
             }
             $filePath = (Join-Path $RepoRoot $file)
 
-            # but I believe that we have to include the exclude paths as well
-            # otherwise we will not handle when the trigger path has exclude. like for java/core/ci.yml
-            # in that instance, the trigger path is sdk/core but we want to exclude sdk/core/azure-core-v2
-            # so we need to ensure that we are including the exclude paths when we evaluate the additional trigger paths
-            # this is still todo though, a follow-up commit will add this
-            foreach($triggerPath in $triggerPaths) {
+            $shouldInclude = $filePath -like (Join-Path "$pkgDirectory" "*")
+
+            # this implementation guesses the working directory of the ci.yml
+            foreach($triggerPath in $triggeringPaths) {
+                $resolvedRelativePath = (Join-Path $RepoRoot $triggerPath)
                 # utilize the various trigger paths against the targeted file here
+                if (!$triggerPath.StartsWith("/")){
+                    $resolvedRelativePath = (Join-Path $RepoRoot "sdk" "$($pkg.ServiceDirectory)" $triggerPath)
+                }
+
+                if ($resolvedRelativePath) {
+                    $shouldInclude = $shouldInclude -or ($filePath -like (Join-Path "$resolvedRelativePath" "*"))
+                }
             }
 
-            $shouldInclude = $filePath -like (Join-Path "$pkgDirectory" "*")
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
 
