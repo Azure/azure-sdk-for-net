@@ -250,7 +250,7 @@ namespace Azure.Generator.Tests.Common
                 ["application/json"]);
         }
 
-        public static InputClient Client(string name, string clientNamespace = "Sample", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null)
+        public static InputClient Client(string name, string clientNamespace = "Samples", string? doc = null, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null)
         {
             var client = new InputClient(
                 name,
