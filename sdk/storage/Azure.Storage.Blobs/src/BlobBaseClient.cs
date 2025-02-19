@@ -3986,6 +3986,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
                 legalHold: options?.LegalHold,
                 sourceAuthentication: options?.SourceAuthentication,
+                sourceShareTokenIntent: options?.SourceShareTokenIntent,
                 copySourceTags: options?.CopySourceTagsMode,
                 async: false,
                 cancellationToken: cancellationToken)
@@ -4039,6 +4040,7 @@ namespace Azure.Storage.Blobs.Specialized
                 destinationImmutabilityPolicy: options?.DestinationImmutabilityPolicy,
                 legalHold: options?.LegalHold,
                 sourceAuthentication: options?.SourceAuthentication,
+                sourceShareTokenIntent: options?.SourceShareTokenIntent,
                 copySourceTags: options?.CopySourceTagsMode,
                 async: true,
                 cancellationToken: cancellationToken)
@@ -4094,6 +4096,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="sourceAuthentication">
         /// Optional. Source authentication used to access the source blob.
         /// </param>
+        /// <param name="sourceShareTokenIntent">
+        /// Optional, only applicable (but required) when the source is Azure Storage Files and using token authentication.
+        /// Used to indicate the intent of the request.
+        /// </param>
         /// <param name="copySourceTags">
         /// Optional.  Indicates if the source blob's tags should be copied to the destination blob,
         /// or replaced on the destination blob with the tags specified by <see cref="Tags"/>.
@@ -4124,6 +4130,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobImmutabilityPolicy destinationImmutabilityPolicy,
             bool? legalHold,
             HttpAuthorization sourceAuthentication,
+            FileShareTokenIntent? sourceShareTokenIntent,
             BlobCopySourceTagsMode? copySourceTags,
             bool async,
             CancellationToken cancellationToken)
@@ -4180,6 +4187,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             copySourceTags: copySourceTags,
+                            fileRequestIntent: sourceShareTokenIntent,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4206,6 +4214,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             copySourceTags: copySourceTags,
+                            fileRequestIntent: sourceShareTokenIntent,
                             cancellationToken: cancellationToken);
                     }
 
