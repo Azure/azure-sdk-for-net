@@ -1,6 +1,16 @@
 # Release History
 
-## 12.0.0-preview.53 (Unreleased)
+## 12.0.0-preview.54 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0-preview.53 (2025-02-11)
 
 ### Features Added
 - Added support for service version 2025-05-05.

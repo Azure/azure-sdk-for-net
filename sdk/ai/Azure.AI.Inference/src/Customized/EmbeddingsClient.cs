@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Inference
 {
@@ -15,8 +16,10 @@ namespace Azure.AI.Inference
     //   Modified code for the ChatCompletionsClient
 
     /// <summary> The Embeddings service client. </summary>
-    [CodeGenSuppress("Embed", typeof(EmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
-    [CodeGenSuppress("EmbedAsync", typeof(EmbeddingsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
+
+    [SuppressMessage("Azure Analysis", "AZC0007", Justification = "Analyzer is incorrectly flagging valid overloads.")]
+    [CodeGenSuppress("Embed", typeof(IEnumerable<string>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
+    [CodeGenSuppress("EmbedAsync", typeof(IEnumerable<string>), typeof(int?), typeof(EmbeddingEncodingFormat?), typeof(EmbeddingInputType?), typeof(string), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class EmbeddingsClient
     {
         /// <summary> Initializes a new instance of EmbeddingsClient. </summary>

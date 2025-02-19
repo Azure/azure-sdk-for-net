@@ -41,15 +41,15 @@ constructors that take a job output container URL, and call the SaveAsync method
     var linkedStorageAccount = new CloudStorageAccount(/* credentials */);
     var jobId = Environment.GetEnvironmentVariable("AZ_BATCH_JOB_ID");
     var taskId = Environment.GetEnvironmentVariable("AZ_BATCH_TASK_ID");
-    
+
     var taskOutputStorage = new TaskOutputStorage(linkedStorageAccount, jobId, taskId);
-    
+
     await taskOutputStorage.SaveAsync(TaskOutputKind.TaskOutput, "frame_full_res.jpg");
     await taskOutputStorage.SaveAsync(TaskOutputKind.TaskPreview, "frame_low_res.jpg");
-    
+
 Note that all output files from a job, including task outputs, are stored in the same container. This means that
 [storage throttling limits](https://azure.microsoft.com/documentation/articles/storage-performance-checklist/#blobs)
-may be enforced if a large number of tasks try to persist files at the same time. 
+may be enforced if a large number of tasks try to persist files at the same time.
 
 ### Listing and Retrieving Files in Client Code
 
@@ -89,7 +89,7 @@ The job output container name is formed according to the following rules:
 * Otherwise:
   * Calculate the SHA1 hash of the normalized ID, and express it
     as a 40-character hex string.
-  * Replace all underscores, colons, and sequences of one or more hyphens in 
+  * Replace all underscores, colons, and sequences of one or more hyphens in
     the normalized ID by single hyphens, then remove any leading or trailing
     hyphens.
   * If the resulting string is empty, use the string "job" instead.
@@ -134,6 +134,3 @@ then its path within the container is "analysis-309/$TaskLog/analytics.log".
 The purpose behind this structure is to enable clients to readily locate
 outputs based on their kind - for example, "list the main outputs of the job"
 or "list the log files for task analysis-309".
-
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fbatch%2FMicrosoft.Azure.Batch.Conventions.Files%2FREADME.png)

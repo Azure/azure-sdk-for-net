@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace Azure.CloudMachine.OpenAI;
+namespace Azure.Projects.OpenAI;
 
 /// <summary>
 /// The base class for a vectorbase store.

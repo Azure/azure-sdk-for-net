@@ -35,5 +35,3 @@ To quickly create the needed IoT Hub resource in Azure and to receive a connecti
 - [What is Azure IoT Hub?](https://docs.microsoft.com/azure/iot-hub/about-iot-hub)
 - [IoT Hub - Endpoints documentation](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-endpoints)
 - [IoT Hub - Read device-to-cloud messages from the built-in endpoint](https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messages-read-builtin)
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsamples%2F%2Fiothub-connect-to-eventhubs%2FREADME.png)

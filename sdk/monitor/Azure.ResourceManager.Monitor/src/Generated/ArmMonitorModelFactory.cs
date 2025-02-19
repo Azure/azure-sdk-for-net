@@ -321,8 +321,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="Monitor.ActionGroupData"/> instance for mocking. </returns>
-        public static ActionGroupData ActionGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupShortName = null, bool? isEnabled = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null)
+        public static ActionGroupData ActionGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string groupShortName = null, bool? isEnabled = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null, IEnumerable<IncidentReceiver> incidentReceivers = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
             emailReceivers ??= new List<MonitorEmailReceiver>();
@@ -336,6 +338,7 @@ namespace Azure.ResourceManager.Monitor.Models
             azureFunctionReceivers ??= new List<MonitorAzureFunctionReceiver>();
             armRoleReceivers ??= new List<MonitorArmRoleReceiver>();
             eventHubReceivers ??= new List<MonitorEventHubReceiver>();
+            incidentReceivers ??= new List<IncidentReceiver>();
 
             return new ActionGroupData(
                 id,
@@ -357,6 +360,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 azureFunctionReceivers?.ToList(),
                 armRoleReceivers?.ToList(),
                 eventHubReceivers?.ToList(),
+                incidentReceivers?.ToList(),
+                identity,
                 serializedAdditionalRawData: null);
         }
 
@@ -395,8 +400,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
         /// <returns> A new <see cref="Models.NotificationContent"/> instance for mocking. </returns>
-        public static NotificationContent NotificationContent(string alertType = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null)
+        public static NotificationContent NotificationContent(string alertType = null, IEnumerable<MonitorEmailReceiver> emailReceivers = null, IEnumerable<MonitorSmsReceiver> smsReceivers = null, IEnumerable<MonitorWebhookReceiver> webhookReceivers = null, IEnumerable<MonitorItsmReceiver> itsmReceivers = null, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers = null, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers = null, IEnumerable<MonitorVoiceReceiver> voiceReceivers = null, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers = null, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers = null, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers = null, IEnumerable<MonitorEventHubReceiver> eventHubReceivers = null, IEnumerable<IncidentReceiver> incidentReceivers = null)
         {
             emailReceivers ??= new List<MonitorEmailReceiver>();
             smsReceivers ??= new List<MonitorSmsReceiver>();
@@ -409,6 +415,7 @@ namespace Azure.ResourceManager.Monitor.Models
             azureFunctionReceivers ??= new List<MonitorAzureFunctionReceiver>();
             armRoleReceivers ??= new List<MonitorArmRoleReceiver>();
             eventHubReceivers ??= new List<MonitorEventHubReceiver>();
+            incidentReceivers ??= new List<IncidentReceiver>();
 
             return new NotificationContent(
                 alertType,
@@ -423,6 +430,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 azureFunctionReceivers?.ToList(),
                 armRoleReceivers?.ToList(),
                 eventHubReceivers?.ToList(),
+                incidentReceivers?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -1616,6 +1624,53 @@ namespace Azure.ResourceManager.Monitor.Models
                 networkingConfigurations?.ToList(),
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.ActionGroupData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
+        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
+        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
+        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
+        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Monitor.ActionGroupData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ActionGroupData ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers)
+        {
+            return ActionGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, groupShortName: groupShortName, isEnabled: isEnabled, emailReceivers: emailReceivers, smsReceivers: smsReceivers, webhookReceivers: webhookReceivers, itsmReceivers: itsmReceivers, azureAppPushReceivers: azureAppPushReceivers, automationRunbookReceivers: automationRunbookReceivers, voiceReceivers: voiceReceivers, logicAppReceivers: logicAppReceivers, azureFunctionReceivers: azureFunctionReceivers, armRoleReceivers: armRoleReceivers, eventHubReceivers: eventHubReceivers, incidentReceivers: default, identity: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.Models.NotificationContent" />. </summary>
+        /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
+        /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
+        /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
+        /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
+        /// <param name="itsmReceivers"> The list of ITSM receivers that are part of this action group. </param>
+        /// <param name="azureAppPushReceivers"> The list of AzureAppPush receivers that are part of this action group. </param>
+        /// <param name="automationRunbookReceivers"> The list of AutomationRunbook receivers that are part of this action group. </param>
+        /// <param name="voiceReceivers"> The list of voice receivers that are part of this action group. </param>
+        /// <param name="logicAppReceivers"> The list of logic app receivers that are part of this action group. </param>
+        /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
+        /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
+        /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Monitor.Models.NotificationContent" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NotificationContent NotificationContent(string alertType, IEnumerable<MonitorEmailReceiver> emailReceivers, IEnumerable<MonitorSmsReceiver> smsReceivers, IEnumerable<MonitorWebhookReceiver> webhookReceivers, IEnumerable<MonitorItsmReceiver> itsmReceivers, IEnumerable<MonitorAzureAppPushReceiver> azureAppPushReceivers, IEnumerable<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IEnumerable<MonitorVoiceReceiver> voiceReceivers, IEnumerable<MonitorLogicAppReceiver> logicAppReceivers, IEnumerable<MonitorAzureFunctionReceiver> azureFunctionReceivers, IEnumerable<MonitorArmRoleReceiver> armRoleReceivers, IEnumerable<MonitorEventHubReceiver> eventHubReceivers)
+        {
+            return NotificationContent(alertType: alertType, emailReceivers: emailReceivers, smsReceivers: smsReceivers, webhookReceivers: webhookReceivers, itsmReceivers: itsmReceivers, azureAppPushReceivers: azureAppPushReceivers, automationRunbookReceivers: automationRunbookReceivers, voiceReceivers: voiceReceivers, logicAppReceivers: logicAppReceivers, azureFunctionReceivers: azureFunctionReceivers, armRoleReceivers: armRoleReceivers, eventHubReceivers: eventHubReceivers, incidentReceivers: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData" />. </summary>

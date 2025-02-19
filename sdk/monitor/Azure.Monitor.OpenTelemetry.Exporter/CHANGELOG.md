@@ -8,6 +8,12 @@
 
 ### Bugs Fixed
 
+* Fixed an issue where array attributes on metrics weren't exported correctly.
+  ([#47300](https://github.com/Azure/azure-sdk-for-net/pull/47300))
+
+* Always set Dependency.Target to "server.address" and "server.port" if present.
+  ([#48317](https://github.com/Azure/azure-sdk-for-net/pull/48317))
+
 ### Other Changes
 
 ## 1.4.0-beta.2 (2024-10-11)

@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// **Lists the metric values for a resource**.
+        /// **Lists the metric values for a resource**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// **Lists the metric values for a resource**.
+        /// **Lists the metric values for a resource**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

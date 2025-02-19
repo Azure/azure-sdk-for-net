@@ -535,5 +535,31 @@ namespace Azure.ResourceManager.StorageCache.Models
                 location,
                 serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.StorageCache.AmlFileSystemData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> The managed identity used by the AML file system, if configured. Current supported identity types: None, UserAssigned. </param>
+        /// <param name="skuName"> SKU for the resource. </param>
+        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
+        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
+        /// <param name="health"> Health of the AML file system. </param>
+        /// <param name="provisioningState"> ARM provisioning state. </param>
+        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
+        /// <param name="clientInfo"> Client information for the AML file system. </param>
+        /// <param name="throughputProvisionedMBps"> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </param>
+        /// <param name="keyEncryptionKey"> Specifies encryption settings of the AML file system. </param>
+        /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
+        /// <param name="hsm"> Hydration and archive settings and status. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.StorageCache.AmlFileSystemData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string skuName, IEnumerable<string> zones, float? storageCapacityTiB, AmlFileSystemHealth health, AmlFileSystemProvisioningStateType? provisioningState, string filesystemSubnet, AmlFileSystemClientInfo clientInfo, int? throughputProvisionedMBps, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow, AmlFileSystemPropertiesHsm hsm)
+        {
+            return AmlFileSystemData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, skuName: skuName, zones: zones, storageCapacityTiB: storageCapacityTiB, health: health, provisioningState: provisioningState, filesystemSubnet: filesystemSubnet, clientInfo: clientInfo, throughputProvisionedMBps: throughputProvisionedMBps, keyEncryptionKey: keyEncryptionKey, maintenanceWindow: maintenanceWindow, hsm: hsm, rootSquashSettings: default);
+        }
     }
 }

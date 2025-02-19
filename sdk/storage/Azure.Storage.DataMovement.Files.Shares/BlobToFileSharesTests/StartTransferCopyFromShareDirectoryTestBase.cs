@@ -249,11 +249,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             => new BlobStorageResourceOptions
             {
                 AccessTier = _defaultAccessTier,
-                ContentDisposition = new(_defaultContentDisposition),
-                ContentLanguage = new(_defaultContentLanguageBlob),
-                CacheControl = new(_defaultCacheControl),
-                ContentType = new(_defaultContentType),
-                Metadata = new(_defaultMetadata),
+                ContentDisposition = _defaultContentDisposition,
+                ContentLanguage = _defaultContentLanguageBlob,
+                CacheControl = _defaultCacheControl,
+                ContentType = _defaultContentType,
+                Metadata = _defaultMetadata,
             };
 
         [Test]

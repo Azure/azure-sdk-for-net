@@ -11,7 +11,7 @@ import {
 import { azureSDKContextOptions } from "./sdk-context-options.js";
 
 export async function $onEmit(context: EmitContext<NetEmitterOptions>) {
-  context.options["plugin-name"] = "AzureClientPlugin";
+  context.options["plugin-name"] ??= "AzureClientPlugin";
   context.options["emitter-extension-path"] = import.meta.url;
   setSDKContextOptions(azureSDKContextOptions);
   await $OnMGCEmit(context);

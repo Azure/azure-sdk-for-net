@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.SkipIfExists
+                CreationMode = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -451,7 +451,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.SkipIfExists
+                CreationMode = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 

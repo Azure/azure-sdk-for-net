@@ -23,7 +23,6 @@ namespace Azure.Generator.Tests.Common
             [CallerMemberName] string method = "",
             [CallerFilePath] string filePath = "")
         {
-
             var callingClass = Path.GetFileName(filePath).Split('.').First();
             var paramString = parameters is null ? string.Empty : $"({parameters})";
             var extName = isFile ? ".cs" : string.Empty;

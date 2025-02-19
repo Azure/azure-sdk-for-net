@@ -54,6 +54,9 @@ parameters:
 - name: PRMatrixIndirectFilters
   type: object
   default: []
+- name: PRMatrixSparseIndirect
+  type: boolean
+  default: true
 # Mappings to OS name required at template compile time by 1es pipeline templates
 - name: Pools
   type: object
@@ -142,7 +145,8 @@ jobs:
               -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}' `
               -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `
               -Replace '${{ join(''',''', parameters.MatrixReplace) }}' `
-              -PackagesPerPRJob ${{ parameters.PRJobBatchSize }}
+              -PackagesPerPRJob ${{ parameters.PRJobBatchSize }} `
+              -SparseIndirect $${{ parameters.PRMatrixSparseIndirect }}
           displayName: Create ${{ pool.name }} PR Matrix
           name: vm_job_matrix_pr_${{ pool.name }}
 

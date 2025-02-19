@@ -41,6 +41,8 @@ namespace Azure.Core
             }
             else
             {
+                // These values are similar to the default values in System.ClientModel.Primitives.ClientLoggingOptions and both
+                // should be kept in sync. When updating, update the default values in both classes.
                 LoggedHeaderNames = new List<string>()
                 {
                     "x-ms-request-id",

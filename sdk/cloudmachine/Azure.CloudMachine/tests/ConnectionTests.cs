@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 [assembly: NonParallelizable]
 
-namespace Azure.CloudMachine.Tests;
+namespace Azure.Projects.Tests;
 
 public class ConnectionTests
 {
@@ -21,10 +21,10 @@ public class ConnectionTests
     [TestCase([new string[0]])]
     public void TwoClients(string[] args)
     {
-        CloudMachineInfrastructure infra = new();
+        ProjectInfrastructure infra = new();
         if (args.Contains("-azd")) Azd.Init(infra);
 
-        CloudMachineClient client = infra.GetClient();
+        ProjectClient client = infra.GetClient();
 
         ValidateClient(client);
     }
@@ -35,13 +35,13 @@ public class ConnectionTests
     public void TwoApps()
     {
         // app 1 (with a dependency on the CDK)
-        CloudMachineInfrastructure infra = new();
+        ProjectInfrastructure infra = new();
         //if (args.Contains("-azd")) Azd.Init(infra);
         BinaryData serializedConnections = BinaryData.FromObjectAsJson(infra.Connections);
 
         // app 2 (no dependency on the CDK)
         ConnectionCollection deserializedConnections = JsonSerializer.Deserialize<ConnectionCollection>(serializedConnections)!;
-        CloudMachineClient client = new(deserializedConnections);
+        ProjectClient client = new(deserializedConnections);
 
         ValidateClient(client);
     }
@@ -51,7 +51,7 @@ public class ConnectionTests
     [TestCase([new string[0]])]
     public void SingleClientAdd(string[] args)
     {
-        CloudMachineClient client = new();
+        ProjectClient client = new();
 
         if (args.Contains("-azd")) Azd.Init(client);
     }
@@ -59,13 +59,13 @@ public class ConnectionTests
     [Test]
     public void ConfigurationDemo()
     {
-        CloudMachineInfrastructure infra = new();
+        ProjectInfrastructure infra = new();
 
         IConfiguration configuration = new ConfigurationBuilder()
-            .AddCloudMachineConfiguration(infra)
+            .AddProjectClientConfiguration(infra)
             .Build();
 
-        CloudMachineClient client = new(configuration);
+        ProjectClient client = new(configuration);
     }
 
     [Test]
@@ -78,16 +78,16 @@ public class ConnectionTests
             auth: ClientAuthenticationMethod.EntraId));
 
         IConfiguration configuration = new ConfigurationBuilder()
-            .AddCloudMachineConnections(connections)
-            .AddCloudMachineId("aaaa-bbbb-cccc-dddd")
+            .AddAzureProjectConnections(connections)
+            .AddProjectId("aaaa-bbbb-cccc-dddd")
             .Build();
 
-        var locator = configuration["CloudMachine:Connections:Azure.AI.OpenAI.AzureOpenAIClient:Locator"];
+        var locator = configuration["AzureProject:Connections:Azure.AI.OpenAI.AzureOpenAIClient:Locator"];
         Assert.AreEqual("https://cm2c54b6e4637f4b1.openai.azure.com", locator);
-        var id = configuration["CloudMachine:Id"];
+        var id = configuration["AzureProject:Id"];
         Assert.AreEqual("aaaa-bbbb-cccc-dddd", id);
 
-        CloudMachineClient client = new(configuration);
+        ProjectClient client = new(configuration);
         Assert.AreEqual("aaaa-bbbb-cccc-dddd", client.Id);
 
         ClientConnection connection = client.Connections["Azure.AI.OpenAI.AzureOpenAIClient"];
@@ -95,7 +95,7 @@ public class ConnectionTests
         Assert.AreEqual("aaaa-bbbb-cccc-dddd", client.Id);
     }
 
-    private static void ValidateClient(CloudMachineClient client)
+    private static void ValidateClient(ProjectClient client)
     {
         StorageServices storage = client.Storage;
         BlobContainerClient container = storage.GetContainer(default);

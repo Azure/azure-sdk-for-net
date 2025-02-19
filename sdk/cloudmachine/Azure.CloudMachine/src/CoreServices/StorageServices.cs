@@ -14,16 +14,16 @@ using Azure.Messaging.ServiceBus;
 using ContentType = Azure.Core.ContentType;
 using System.ComponentModel;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 /// <summary>
 /// The storage services for the cloud machine.
 /// </summary>
 public readonly struct StorageServices
 {
-    private readonly CloudMachineClient _cm;
+    private readonly ProjectClient _cm;
 
-    internal StorageServices(CloudMachineClient cm) => _cm = cm;
+    internal StorageServices(ProjectClient cm) => _cm = cm;
 
     // TODO: do we want Azure.Storage.Blobs in the public API? This would prevent us from using a custom implementation.
     /// <summary>
@@ -36,7 +36,7 @@ public readonly struct StorageServices
     {
         if (containerName == default) containerName = "default";
         string blobContainerClientId = $"{typeof(BlobContainerClient).FullName}@{containerName}";
-        CloudMachineClient cm = _cm;
+        ProjectClient cm = _cm;
         BlobContainerClient container = cm.Subclients.Get(() =>
         {
             ClientConnection connection = cm.GetConnectionOptions(blobContainerClientId);
@@ -237,7 +237,7 @@ public readonly struct StorageServices
     /// <param name="function"></param>
     public void WhenUploaded(Action<StorageFile> function)
     {
-        CloudMachineClient cm = _cm;
+        ProjectClient cm = _cm;
         // TODO (Pri 0): once the cache gets GCed, we will stop receiving events
         ServiceBusProcessor processor = cm.Messaging.GetServiceBusProcessor("cm_servicebus_subscription_private");
         // TODO: How to unsubscribe?

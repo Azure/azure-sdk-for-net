@@ -16,6 +16,7 @@ namespace Azure.AI.OpenAI.Tests;
 
 [Parallelizable(ParallelScope.All)]
 [Category("Conversation")]
+[Category("Live")]
 public class ConversationTestFixtureBase
 {
     internal TestConfig TestConfig { get; } = new(() => RecordedTestMode.Live);
@@ -39,17 +40,24 @@ public class ConversationTestFixtureBase
         }
     }
 
-    public RealtimeConversationClient GetTestClient() => GetTestClient(DefaultConfiguration);
-    public RealtimeConversationClient GetTestClient(string configurationName) => GetTestClient(TestConfig.GetConfig(configurationName));
-    public RealtimeConversationClient GetTestClient(IConfiguration testConfig)
+    public TestClientOptions GetTestClientOptions(AzureOpenAIClientOptions.ServiceVersion? version)
     {
+        return version is null ? new TestClientOptions() : new TestClientOptions(version.Value);
+    }
+
+    public RealtimeConversationClient GetTestClient(TestClientOptions clientOptions = null) => GetTestClient(DefaultConfiguration, clientOptions);
+    public RealtimeConversationClient GetTestClient(string configurationName, TestClientOptions clientOptions = null) => GetTestClient(TestConfig.GetConfig(configurationName), clientOptions);
+    public RealtimeConversationClient GetTestClient(IConfiguration testConfig, TestClientOptions clientOptions = null)
+    {
+        clientOptions ??= new();
+
         Uri endpoint = testConfig.Endpoint;
         ApiKeyCredential key = new(testConfig.Key);
         string deployment = testConfig.Deployment;
 
         Console.WriteLine($"--- Connecting to endpoint: {endpoint.AbsoluteUri}");
 
-        AzureOpenAIClient topLevelClient = new(endpoint, key);
+        AzureOpenAIClient topLevelClient = new(endpoint, key, clientOptions);
         RealtimeConversationClient client = topLevelClient.GetRealtimeConversationClient(testConfig.Deployment);
 
         client.OnSendingCommand += (_, data) => PrintMessageData(data, "> ");

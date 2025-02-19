@@ -3,11 +3,11 @@ using Azure.CloudMachine.OpenAI;
 using Azure.CloudMachine;
 using OpenAI.Chat;
 
-CloudMachineInfrastructure infrastructure = new();
+ProjectInfrastructure infrastructure = new();
 infrastructure.AddFeature(new OpenAIModelFeature("gpt-35-turbo", "0125"));
 infrastructure.AddFeature(new OpenAIModelFeature("text-embedding-ada-002", "2", AIModelKind.Embedding));
 infrastructure.AddFeature(new AppServiceFeature());
-CloudMachineClient client = infrastructure.GetClient();
+ProjectClient client = infrastructure.GetClient();
 
 // the app can be called with -init switch to generate bicep and prepare for azd deployment.
 if (infrastructure.TryExecuteCommand(args)) return;

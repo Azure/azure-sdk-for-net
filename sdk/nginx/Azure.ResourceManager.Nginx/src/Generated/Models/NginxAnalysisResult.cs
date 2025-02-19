@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="status"> The status of the analysis. </param>
         /// <param name="data"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxAnalysisResult(string status, AnalysisResultData data, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxAnalysisResult(string status, NginxAnalysisResultDetails data, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Data = data;
@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> The status of the analysis. </summary>
         public string Status { get; }
         /// <summary> Gets the data. </summary>
-        internal AnalysisResultData Data { get; }
-        /// <summary> Gets the data errors. </summary>
-        public IReadOnlyList<NginxAnalysisDiagnostic> DataErrors
-        {
-            get => Data?.Errors;
-        }
+        public NginxAnalysisResultDetails Data { get; }
     }
 }

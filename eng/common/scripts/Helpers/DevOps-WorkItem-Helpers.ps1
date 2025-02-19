@@ -55,7 +55,7 @@ function Invoke-Query($fields, $wiql, $output = $true)
   }
 
   $response = Invoke-RestMethod -Method POST `
-    -Uri "https://dev.azure.com/azure-sdk/Release/_apis/wit/wiql/?`$top=10000&api-version=6.0" `
+    -Uri "https://dev.azure.com/azure-sdk/Release/_apis/wit/wiql/?`$top=100000&api-version=6.0" `
     -Headers (Get-DevOpsRestHeaders) -Body $body -ContentType "application/json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
 
   if ($response -isnot [HashTable] -or !$response.ContainsKey("workItems") -or $response.workItems.Count -eq 0) {

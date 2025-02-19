@@ -8,7 +8,7 @@ using Azure.Provisioning.Resources;
 using Azure.Provisioning.Expressions;
 using System.Linq;
 
-namespace Azure.CloudMachine;
+namespace Azure.Projects;
 
 /// <summary>
 /// Azure Developer CLI helpers.
@@ -20,13 +20,13 @@ public static class Azd
     private const string MainBicepName = "main";
     private const string ResourceGroupVersion = "2024-03-01";
 
-    public static void Init(CloudMachineClient client, string? infraDirectory = default)
+    public static void Init(ProjectClient client, string? infraDirectory = default)
     {
-        CloudMachineInfrastructure infra = client.GetInfrastructure();
+        ProjectInfrastructure infra = client.GetInfrastructure();
         Init(infra, infraDirectory);
     }
 
-    public static void Init(CloudMachineInfrastructure infra, string? infraDirectory = default)
+    public static void Init(ProjectInfrastructure infra, string? infraDirectory = default)
     {
         if (infraDirectory == default)
             infraDirectory = Path.Combine(".", "infra");
@@ -34,7 +34,7 @@ public static class Azd
         Directory.CreateDirectory(infraDirectory);
 
         infra.Build().Save(infraDirectory);
-        var cmid = CloudMachineClient.ReadOrCreateCloudMachineId();
+        var cmId = infra.Id;
 
         // main.bicep
         var location = new ProvisioningParameter("location", typeof(string));
@@ -42,7 +42,7 @@ public static class Azd
 
         ResourceGroup rg = new(nameof(rg), ResourceGroupVersion)
         {
-            Name = cmid,
+            Name = cmId,
             Location = location
         };
 
@@ -67,7 +67,7 @@ public static class Azd
         WriteMainParametersFile(infraDirectory);
     }
 
-    public static void InitDeployment(CloudMachineInfrastructure infra, string? webProjectName)
+    public static void InitDeployment(ProjectInfrastructure infra, string? webProjectName)
     {
         var webCsproj = webProjectName switch
         {

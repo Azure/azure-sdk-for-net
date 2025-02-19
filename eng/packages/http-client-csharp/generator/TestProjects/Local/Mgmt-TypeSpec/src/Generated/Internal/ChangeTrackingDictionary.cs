@@ -42,16 +42,22 @@ namespace MgmtTypeSpec
             }
         }
 
+        /// <summary> Gets the IsUndefined. </summary>
         public bool IsUndefined => _innerDictionary == null;
 
+        /// <summary> Gets the Count. </summary>
         public int Count => IsUndefined ? 0 : EnsureDictionary().Count;
 
+        /// <summary> Gets the IsReadOnly. </summary>
         public bool IsReadOnly => IsUndefined ? false : EnsureDictionary().IsReadOnly;
 
+        /// <summary> Gets the Keys. </summary>
         public ICollection<TKey> Keys => IsUndefined ? Array.Empty<TKey>() : EnsureDictionary().Keys;
 
+        /// <summary> Gets the Values. </summary>
         public ICollection<TValue> Values => IsUndefined ? Array.Empty<TValue>() : EnsureDictionary().Values;
 
+        /// <summary> Gets or sets the value associated with the specified key. </summary>
         public TValue this[TKey key]
         {
             get
@@ -68,8 +74,10 @@ namespace MgmtTypeSpec
             }
         }
 
+        /// <summary> Gets the Keys. </summary>
         IEnumerable<TKey> IReadOnlyDictionary<TKey, TValue>.Keys => Keys;
 
+        /// <summary> Gets the Values. </summary>
         IEnumerable<TValue> IReadOnlyDictionary<TKey, TValue>.Values => Values;
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()

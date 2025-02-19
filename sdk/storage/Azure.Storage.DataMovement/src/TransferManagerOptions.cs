@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement
         /// More information is available about instantiating these and other
         /// <see cref="StorageResourceProvider"/> implementations.
         /// </summary>
-        public List<StorageResourceProvider> ResumeProviders { get; set; }
+        public IList<StorageResourceProvider> ProvidersForResuming { get; set; }
 
         /// <summary>
         /// Optional. Sets the way errors during a transfer will be handled.

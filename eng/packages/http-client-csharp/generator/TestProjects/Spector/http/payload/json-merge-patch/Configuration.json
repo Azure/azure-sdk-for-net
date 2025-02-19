@@ -1,0 +1,5 @@
+{
+  "output-folder": ".",
+  "namespace": "Payload.JsonMergePatch",
+  "library-name": "Payload.JsonMergePatch"
+}

@@ -19,6 +19,13 @@
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+
+    <!--
+        Adding as a local override, as packages should not generally take this dependency.  It is
+        needed here due to a transitive version conflict due to the Microsoft.Azure.Functions.Extensions
+        reference.
+    -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride ="8.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

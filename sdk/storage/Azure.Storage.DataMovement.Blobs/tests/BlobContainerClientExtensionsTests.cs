@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 await client.UploadDirectoryAsync(WaitUntil.Started, directoryPath, new BlobContainerClientTransferOptions
                 {
-                    BlobContainerOptions = new() { BlobDirectoryPrefix = blobDirectoryPrefix },
+                    BlobContainerOptions = new() { BlobPrefix = blobDirectoryPrefix },
                     TransferOptions = options
                 });
             }
@@ -115,7 +115,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 await client.DownloadToDirectoryAsync(WaitUntil.Started, directoryPath, new BlobContainerClientTransferOptions
                 {
-                    BlobContainerOptions = new() { BlobDirectoryPrefix = blobDirectoryPrefix },
+                    BlobContainerOptions = new() { BlobPrefix = blobDirectoryPrefix },
                     TransferOptions = options
                 });
             }

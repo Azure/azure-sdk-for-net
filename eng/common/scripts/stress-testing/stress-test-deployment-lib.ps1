@@ -43,12 +43,12 @@ function RunOrExitOnFailure()
     }
 }
 
-function Login([string]$subscription, [string]$clusterGroup, [switch]$skipPushImages)
+function Login([string]$subscription, [string]$tenant, [string]$clusterGroup, [switch]$skipPushImages)
 {
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show -s "$subscription" *> $null
     if ($LASTEXITCODE) {
-        RunOrExitOnFailure az login --allow-no-subscriptions
+        RunOrExitOnFailure az login --allow-no-subscriptions --tenant $tenant
     }
 
     # Discover cluster name, only one cluster per group is expected
@@ -116,24 +116,27 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-pg'
         $subscription = 'Azure SDK Developer Playground'
+        $tenant = '72f988bf-86f1-41af-91ab-2d7cd011db47'
     } elseif ($environment -eq 'prod') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'prod' environment."
         }
         $clusterGroup = 'rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '70a036f6-8e4d-4615-bad6-149c02e7720d'
     } elseif ($environment -eq 'storage') {
         if ($clusterGroup -or $subscription) {
             Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
         }
         $clusterGroup = 'rg-stress-cluster-storage'
-        $subscription = 'XClient'
-    } elseif (!$clusterGroup -or !$subscription) {
-        throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
+        $subscription = 'Azure SDK Test Resources - TME'
+        $tenant = '72f988bf-86f1-41af-91ab-2d7cd011db47'
+    } elseif (!$clusterGroup -or !$subscription -or $tenant) {
+        throw "-ClusterGroup, -Subscription and -Tenant parameters must be specified when deploying to an environment that is not pg or prod."
     }
 
     if (!$skipLogin) {
-        Login -subscription $subscription -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
+        Login -subscription $subscription -tenant $tenant -clusterGroup $clusterGroup -skipPushImages:$skipPushImages
     }
 
     $chartRepoName = 'stress-test-charts'

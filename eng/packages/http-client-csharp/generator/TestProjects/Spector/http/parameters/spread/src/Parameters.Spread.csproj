@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Parameters.Spread client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Parameters.Spread</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Parameters.Spread</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+</Project>

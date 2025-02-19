@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -53,14 +54,29 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrafficControllerPatch(IDictionary<string, string> tags, SecurityPolicyConfigurationsUpdate securityPolicyConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
+            SecurityPolicyConfigurations = securityPolicyConfigurations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Security Policy Configuration. </summary>
+        internal SecurityPolicyConfigurationsUpdate SecurityPolicyConfigurations { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier WafSecurityPolicyId
+        {
+            get => SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
+            set
+            {
+                if (SecurityPolicyConfigurations is null)
+                    SecurityPolicyConfigurations = new SecurityPolicyConfigurationsUpdate();
+                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
+            }
+        }
     }
 }

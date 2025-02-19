@@ -78,6 +78,7 @@ namespace Azure.AI.Inference
                 switch (discriminator.GetString())
                 {
                     case "assistant": return ChatRequestAssistantMessage.DeserializeChatRequestAssistantMessage(element, options);
+                    case "developer": return ChatRequestDeveloperMessage.DeserializeChatRequestDeveloperMessage(element, options);
                     case "system": return ChatRequestSystemMessage.DeserializeChatRequestSystemMessage(element, options);
                     case "tool": return ChatRequestToolMessage.DeserializeChatRequestToolMessage(element, options);
                     case "user": return ChatRequestUserMessage.DeserializeChatRequestUserMessage(element, options);

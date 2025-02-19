@@ -4456,6 +4456,66 @@ namespace Azure.ResourceManager.Compute.Models
             return new OSVersionPropertiesBase(version, label, isDefault, isActive, serializedAdditionalRawData: null);
         }
 
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, IEnumerable<string> zones, ManagedServiceIdentity identity, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated)
+        {
+            return VirtualMachineScaleSetVmData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, instanceId: instanceId, sku: sku, plan: plan, resources: resources, zones: zones, identity: identity, etag: default, latestModelApplied: latestModelApplied, vmId: vmId, instanceView: instanceView, hardwareProfile: hardwareProfile, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, securityProfile: securityProfile, networkProfile: networkProfile, networkInterfaceConfigurations: networkInterfaceConfigurations, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, provisioningState: provisioningState, licenseType: licenseType, modelDefinitionApplied: modelDefinitionApplied, protectionPolicy: protectionPolicy, userData: userData, timeCreated: timeCreated);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineData VirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, ManagedServiceIdentity identity, IEnumerable<string> zones, ExtendedLocation extendedLocation, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, VirtualMachineNetworkProfile networkProfile, SecurityProfile securityProfile, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, ResourceIdentifier virtualMachineScaleSetId, ResourceIdentifier proximityPlacementGroupId, VirtualMachinePriorityType? priority, VirtualMachineEvictionPolicyType? evictionPolicy, double? billingMaxPrice, ResourceIdentifier hostId, ResourceIdentifier hostGroupId, string provisioningState, VirtualMachineInstanceView instanceView, string licenseType, string vmId, string extensionsTimeBudget, int? platformFaultDomain, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, ResourceIdentifier capacityReservationGroupId, IEnumerable<VirtualMachineGalleryApplication> galleryApplications, DateTimeOffset? timeCreated)
+        {
+            return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: default, etag: default, hardwareProfile: hardwareProfile, scheduledEventsPolicy: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IEnumerable<DiskInstanceView> disks, IEnumerable<VirtualMachineExtensionInstanceView> extensions, InstanceViewStatus vmHealthStatus, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IEnumerable<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus)
+        {
+            return VirtualMachineInstanceView(platformUpdateDomain: platformUpdateDomain, platformFaultDomain: platformFaultDomain, computerName: computerName, osName: osName, osVersion: osVersion, hyperVGeneration: hyperVGeneration, rdpThumbPrint: rdpThumbPrint, vmAgent: vmAgent, maintenanceRedeployStatus: maintenanceRedeployStatus, disks: disks, extensions: extensions, vmHealthStatus: vmHealthStatus, bootDiagnostics: bootDiagnostics, assignedHost: assignedHost, statuses: statuses, patchStatus: patchStatus, isVmInStandbyPool: default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus)
+        {
+            return GalleryImageVersionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, publishingProfile: publishingProfile, provisioningState: provisioningState, storageProfile: storageProfile, safetyProfile: safetyProfile, replicationStatus: replicationStatus, securityUefiSettings: default, isRestoreEnabled: default, validationsProfile: default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryData SharedGalleryData(string name, AzureLocation? location, string uniqueId)
+        {
+            return SharedGalleryData(name: name, location: location, uniqueId: uniqueId, artifactTags: default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryImageData SharedGalleryImageData(string name, AzureLocation? location, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
+        {
+            return SharedGalleryImageData(name: name, location: location, uniqueId: uniqueId, osType: osType, osState: osState, endOfLifeOn: endOfLifeOn, identifier: identifier, recommended: recommended, disallowedDiskTypes: disallowedDiskTypes, hyperVGeneration: hyperVGeneration, features: features, purchasePlan: purchasePlan, architecture: architecture, privacyStatementUri: privacyStatementUri, eula: eula, artifactTags: default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
+        {
+            return SharedGalleryImageVersionData(name: name, location: location, uniqueId: uniqueId, publishedOn: publishedOn, endOfLifeOn: endOfLifeOn, isExcludedFromLatest: isExcludedFromLatest, storageProfile: storageProfile, artifactTags: default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryData CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
+        {
+            return CommunityGalleryData(name: name, location: location, resourceType: resourceType, uniqueId: uniqueId, disclaimer: default, artifactTags: default, communityMetadata: default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
+        {
+            return CommunityGalleryImageData(name: name, location: location, resourceType: resourceType, uniqueId: uniqueId, osType: osType, osState: osState, endOfLifeOn: endOfLifeOn, imageIdentifier: imageIdentifier, recommended: recommended, disallowedDiskTypes: disallowedDiskTypes, hyperVGeneration: hyperVGeneration, features: features, purchasePlan: purchasePlan, architecture: architecture, privacyStatementUri: privacyStatementUri, eula: eula, disclaimer: default, artifactTags: default);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
+        {
+            return CommunityGalleryImageVersionData(name: name, location: location, resourceType: resourceType, uniqueId: uniqueId, publishedOn: publishedOn, endOfLifeOn: endOfLifeOn, isExcludedFromLatest: isExcludedFromLatest, storageProfile: storageProfile, disclaimer: default, artifactTags: default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.GalleryData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

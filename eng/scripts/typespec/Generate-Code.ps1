@@ -21,6 +21,7 @@ function Get-TspCommand {
     }
     $command += " --option @azure-typespec/http-client-csharp.emitter-output-dir=$generationDir"
     $command += " --option @azure-typespec/http-client-csharp.save-inputs=true"
+    $command += " --option @azure-typespec/http-client-csharp.new-project=true"
     return $command
 }
 

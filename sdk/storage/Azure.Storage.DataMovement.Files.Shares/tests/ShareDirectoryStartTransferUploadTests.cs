@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Storage.DataMovement.Tests;
 using BaseShares::Azure.Storage.Files.Shares;
 using Azure.Storage.Test.Shared;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -80,7 +82,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             if (Mode == Core.TestFramework.RecordedTestMode.Record ||
                 Mode == Core.TestFramework.RecordedTestMode.Playback)
             {
-                options.FileLastWrittenOn = new(_defaultFileLastWrittenOn);
+                options.FileLastWrittenOn = _defaultFileLastWrittenOn;
             }
             return new ShareDirectoryStorageResourceContainer(containerClient, options);
         }

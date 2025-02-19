@@ -131,7 +131,7 @@ function MergeHashes([hashtable] $source, [psvariable] $dest) {
 
 function BuildBicepFile([System.IO.FileSystemInfo] $file) {
     if (!(Get-Command bicep -ErrorAction Ignore)) {
-        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See aka.ms/bicep-install"
+        Write-Error "A bicep file was found at '$($file.FullName)' but the Azure Bicep CLI is not installed. See https://aka.ms/bicep-install"
         throw
     }
 

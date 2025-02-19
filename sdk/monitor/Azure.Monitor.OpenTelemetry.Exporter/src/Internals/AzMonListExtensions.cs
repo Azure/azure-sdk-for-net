@@ -261,6 +261,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return target;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string? GetTargetUsingServerAddressAndPort(this AzMonList tagObjects)
+        {
+            var serverAttributes = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerPort);
+
+            var serverAddress = serverAttributes[0]?.ToString();
+            if (!string.IsNullOrEmpty(serverAddress))
+            {
+                var serverPort = serverAttributes[1]?.ToString();
+
+                return string.IsNullOrEmpty(serverPort)
+                    ? serverAddress
+                    : serverAddress + ":" + serverPort;
+            }
+
+            return null;
+        }
+
         ///<summary>
         /// Gets Http dependency target from activity tag objects.
         ///</summary>

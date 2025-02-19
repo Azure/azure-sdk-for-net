@@ -93,6 +93,7 @@ namespace Azure.AI.Inference.Tests.Utilities
             ValidateTag(activity, GenAiResponseFinishReasonsKey, response.FinishReasons);
             ValidateIntTag(activity, GenAiUsageOutputTokensKey, response.CompletionTokens);
             ValidateIntTag(activity, GenAiUsageInputTokensKey, response.PromptTokens);
+            ValidateTag(activity, AzNamespaceKey, AzureRpNamespaceValue);
 
             HashSet<string> expectedChoices = new HashSet<string>(response.Choices.Select(c => JsonSerializer.Serialize(c, options: s_jsonOptions)));
             for (int i = 0; i < actualChoices.Count; i++)

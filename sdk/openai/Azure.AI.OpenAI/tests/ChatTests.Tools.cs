@@ -60,7 +60,7 @@ namespace Azure.AI.OpenAI.Tests
         [TestCase(ToolChoiceTestType.None)]
         [TestCase(ToolChoiceTestType.Auto)]
         [TestCase(ToolChoiceTestType.Tool)]
-        [TestCase(ToolChoiceTestType.Required, Ignore = "This seems to be considered invalid")]
+        [TestCase(ToolChoiceTestType.Required)]
         public async Task SimpleToolWorks(ToolChoiceTestType toolChoice)
         {
             ChatClient client = GetTestClient();

@@ -778,7 +778,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps?.FileChangedOn.ToFileDateTimeString(),
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
-                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -795,7 +795,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps?.FileChangedOn.ToFileDateTimeString(),
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
-                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             cancellationToken: cancellationToken);
                     }
 
@@ -1778,7 +1778,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
-                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1794,7 +1794,7 @@ namespace Azure.Storage.Files.Shares
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             owner: posixProperties?.Owner,
                             group: posixProperties?.Group,
-                            fileMode: posixProperties?.FileMode.ToOctalFileMode(),
+                            fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             cancellationToken: cancellationToken);
                     }
 

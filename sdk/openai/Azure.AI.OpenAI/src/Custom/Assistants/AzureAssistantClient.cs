@@ -26,7 +26,7 @@ internal partial class AzureAssistantClient : AssistantClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureAssistantClient()

@@ -15,7 +15,6 @@ using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
@@ -569,6 +568,39 @@ public class TransferManagerTests
             Task<TransferOperation> task = transferManager.StartTransferAsync(srcResource, dstResource);
         });
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
+    }
+
+    [Test]
+    public async Task BasicTransfer_NoOptions()
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            default);
+
+        int numFiles = 3;
+        Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
+        (srcResource, dstResource).BasicSetup(srcUri, dstUri, numFiles);
+
+        // Don't pass options to test default options
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+
+        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(1), "Failed to step through jobs queue.");
+        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numFiles), "Failed to step through parts queue.");
+        await ProcessChunksAssert(chunksProcessor, 1, numFiles, numFiles);
+
+        Assert.That(transfer.Status.HasCompletedSuccessfully);
     }
 
     /// <summary>

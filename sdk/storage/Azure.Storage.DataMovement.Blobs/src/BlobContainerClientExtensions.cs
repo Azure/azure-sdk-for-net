@@ -15,8 +15,6 @@ namespace Azure.Storage.Blobs
     public static class BlobContainerClientExtensions
     {
         private static Lazy<TransferManager> s_defaultTransferManager = new Lazy<TransferManager>(() => new TransferManager(default));
-        private static Lazy<LocalFilesStorageResourceProvider> s_filesProvider = new();
-        private static Lazy<BlobsStorageResourceProvider> s_blobsProvider = new();
 
         /// <summary>
         /// Uploads the entire contents of local directory to the blob container.
@@ -54,7 +52,7 @@ namespace Azure.Storage.Blobs
                 {
                     BlobContainerOptions = new()
                     {
-                        BlobDirectoryPrefix = blobDirectoryPrefix,
+                        BlobPrefix = blobDirectoryPrefix,
                     }
                 },
                 cancellationToken);
@@ -88,8 +86,8 @@ namespace Azure.Storage.Blobs
             BlobContainerClientTransferOptions options,
             CancellationToken cancellationToken = default)
         {
-            StorageResource localDirectory = s_filesProvider.Value.FromDirectory(localDirectoryPath);
-            StorageResource blobDirectory = s_blobsProvider.Value.FromClient(client, options?.BlobContainerOptions);
+            StorageResource localDirectory = LocalFilesStorageResourceProvider.FromDirectory(localDirectoryPath);
+            StorageResource blobDirectory = BlobsStorageResourceProvider.FromClient(client, options?.BlobContainerOptions);
 
             TransferOperation transfer = await s_defaultTransferManager.Value.StartTransferAsync(
                 localDirectory,
@@ -141,7 +139,7 @@ namespace Azure.Storage.Blobs
                 {
                     BlobContainerOptions = new()
                     {
-                        BlobDirectoryPrefix = blobDirectoryPrefix
+                        BlobPrefix = blobDirectoryPrefix
                     },
                 },
                 cancellationToken);
@@ -175,8 +173,8 @@ namespace Azure.Storage.Blobs
             BlobContainerClientTransferOptions options,
             CancellationToken cancellationToken = default)
         {
-            StorageResource localDirectory = s_filesProvider.Value.FromDirectory(localDirectoryPath);
-            StorageResource blobDirectory = s_blobsProvider.Value.FromClient(client, options?.BlobContainerOptions);
+            StorageResource localDirectory = LocalFilesStorageResourceProvider.FromDirectory(localDirectoryPath);
+            StorageResource blobDirectory = BlobsStorageResourceProvider.FromClient(client, options?.BlobContainerOptions);
 
             TransferOperation transfer = await s_defaultTransferManager.Value.StartTransferAsync(
                 blobDirectory,

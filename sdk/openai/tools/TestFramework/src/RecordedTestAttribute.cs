@@ -121,7 +121,8 @@ public class RecordedTestAttribute : TestAttribute, IRepeatTest
 
             // 2. Check if the failure message indicates a recording playback exception. This sadly requires us to check test failure
             //    messages which can be a little fragile but there does not seem to be a way to get the exception directly
-            if (result.Message?.Contains(exceptionName) == true)
+            if (result.Message?.Contains(exceptionName) == true
+                || result.Message?.Contains("ClientResultException : NotFound: Recording file path") == true)
             {
                 return true;
             }

@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline
         public override bool TryParse(Response response, out ResponseError? error, out IDictionary<string, string>? data)
         {
             data = default;
-            if (response.ContentStream is { CanSeek: true })
+            if (response.ContentStream is { CanSeek: true, Length: > 0})
             {
                 var position = response.ContentStream.Position;
                 try

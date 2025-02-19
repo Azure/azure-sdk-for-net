@@ -50,7 +50,7 @@ namespace Azure.AI.OpenAI.Chat
         }
 
         /// <summary> Initializes a new instance of <see cref="DataSourceAuthentication"/>. </summary>
-        /// <param name="type"> Discriminator. </param>
+        /// <param name="type"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataSourceAuthentication(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -58,7 +58,7 @@ namespace Azure.AI.OpenAI.Chat
             SerializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Discriminator. </summary>
+        /// <summary> Gets or sets the type. </summary>
         internal string Type { get; set; }
     }
 }

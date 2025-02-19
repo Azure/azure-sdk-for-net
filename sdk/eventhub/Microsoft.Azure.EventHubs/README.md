@@ -2,18 +2,18 @@
 
 > Please note, a newer package [Azure.Messaging.EventHubs](https://www.nuget.org/packages/Azure.Messaging.EventHubs) for [Azure Event Hubs](https://azure.microsoft.com/services/event-hubs/) is available as of February 2020. While this package will continue to receive critical bug fixes, we strongly encourage you to upgrade. Read the [migration guide](https://aka.ms/azsdk/net/migrate/eh) for more details.
 
-Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them into multiple applications. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters. 
+Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them into multiple applications. This lets you process and analyze the massive amounts of data produced by your connected devices and applications. Once Event Hubs has collected the data, you can retrieve, transform and store it by using any real-time analytics provider or with batching/storage adapters.
 
-The Azure Events Hubs client library for .NET allows for both sending and receiving of events.  Most common scenarios call for an application to act as either an event publisher or an event consumer, but rarely both. 
+The Azure Events Hubs client library for .NET allows for both sending and receiving of events.  Most common scenarios call for an application to act as either an event publisher or an event consumer, but rarely both.
 
-An **event publisher** is a source of telemetry data, diagnostics information, usage logs, or other log data, as 
-part of an embedded device solution, a mobile device application, a game title running on a console or other device, 
-some client or server based business solution, or a web site.  
+An **event publisher** is a source of telemetry data, diagnostics information, usage logs, or other log data, as
+part of an embedded device solution, a mobile device application, a game title running on a console or other device,
+some client or server based business solution, or a web site.
 
-An **event consumer** picks up such information from the Event Hub and processes it. Processing may involve aggregation, complex 
+An **event consumer** picks up such information from the Event Hub and processes it. Processing may involve aggregation, complex
 computation and filtering. Processing may also involve distribution or storage of the information in a raw or transformed fashion.
-Event Hub consumers are often robust and high-scale platform infrastructure parts with built-in analytics capabilities, like Azure 
-Stream Analytics, Apache Spark, or Apache Storm.  
+Event Hub consumers are often robust and high-scale platform infrastructure parts with built-in analytics capabilities, like Azure
+Stream Analytics, Apache Spark, or Apache Storm.
 
 This directory contains the open source subset of the .NET SDK. For documentation of the complete Azure SDK, please see the [Microsoft Azure .NET Developer Center](https://azure.microsoft.com/develop/net/).
 
@@ -65,9 +65,9 @@ Tests in the Event Hubs client library are split into two categories:
 
 - **Unit tests** have no special considerations; these are self-contained and execute locally without any reliance on external resources.  Unit tests are considered the default test type in the Event Hubs client library and, thus, have no explicit category trait attached to them.
 
-- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "LiveTest".  
+- **Integration tests** have dependencies on live Azure resources and require setting up your development environment prior to running.  Known in the Azure SDK project commonly as "Live" tests, these tests are decorated with a category trait of "LiveTest".
 
-The required Azure resources are defined in the [test resources ARM template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/test-resources.json).  In addition to these resources, a Azure Active Directory service principal is needed.  The recommended approach is to use the Azure SDK [Test Resources](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/TestResources/README.md) tooling. 
+The required Azure resources are defined in the [test resources ARM template](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/test-resources.json).  In addition to these resources, a Azure Active Directory service principal is needed.  The recommended approach is to use the Azure SDK [Test Resources](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/TestResources/README.md) tooling.
 
 The following PowerShell commands will make use of `New-TestResources.ps1` to create the Event Hubs test resources, including the Azure Active Directory service principal.  The script uses the `BaseName` as a prefix when naming the service principal and other resources.  The full set of options for `New-TestResources.ps1` can be found in the [New-TestResources.ps1 documentation](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/TestResources/New-TestResources.ps1.md).
 
@@ -84,19 +84,19 @@ Connect-AzAccount -Subscription '<< AZURE SUBSCRIPTION ID >>'
 
 The Live tests read information from the following environment variables:
 
-`EVENTHUB_RESOURCE_GROUP`  
+`EVENTHUB_RESOURCE_GROUP`
  The name of the Azure resource group that contains the Event Hubs namespace
-   
-`EVENTHUB_SUBSCRIPTION_ID`  
+
+`EVENTHUB_SUBSCRIPTION_ID`
  The identifier (GUID) of the Azure subscription to which the service principal belongs
-    
-`EVENTHUB_TENANT_ID`  
+
+`EVENTHUB_TENANT_ID`
  The identifier (GUID) of the Azure Active Directory tenant that contains the service principal
 
-`EVENTHUB_CLIENT_ID`  
+`EVENTHUB_CLIENT_ID`
  The identifier (GUID) of the Azure Active Directory application that is associated with the service principal
-   
-`EVENTHUB_CLIENT_SECRET`  
+
+`EVENTHUB_CLIENT_SECRET`
  The client secret (password) of the Azure Active Directory application that is associated with the service principal
 
 ## Development history
@@ -109,7 +109,7 @@ The Azure Event Hubs client library uses [the semantic versioning scheme.](https
 
 ## Target frameworks
 
-For information about the target frameworks of the Azure Event Hubs client library, please refer to the [Target Frameworks](https://github.com/azure/azure-sdk-for-net#target-frameworks) of the Microsoft Azure SDK for .NET.  
+For information about the target frameworks of the Azure Event Hubs client library, please refer to the [Target Frameworks](https://github.com/azure/azure-sdk-for-net#target-frameworks) of the Microsoft Azure SDK for .NET.
 
 ## Contributing
 
@@ -120,5 +120,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 - [Azure Event Hubs General Documentation](https://learn.microsoft.com/azure/event-hubs/)
 - [Azure Event Hubs REST API Reference](https://learn.microsoft.com/rest/api/eventhub/)
 - [Azure Event Hubs SDK for .NET Documentation](https://learn.microsoft.com/dotnet/api/overview/azure/event-hubs?view=azure-dotnet)
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FMicrosoft.Azure.EventHubs%2FREADME.png)

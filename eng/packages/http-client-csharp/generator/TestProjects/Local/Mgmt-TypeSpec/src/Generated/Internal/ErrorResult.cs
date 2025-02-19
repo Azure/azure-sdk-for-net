@@ -20,6 +20,7 @@ namespace MgmtTypeSpec
             _exception = exception;
         }
 
+        /// <summary> Gets the Value. </summary>
         public override T Value => throw _exception;
 
         public override Response GetRawResponse()

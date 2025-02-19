@@ -1,16 +1,26 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2025-01-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2023-08' to 'package-2024-05-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b72e0199fa3242d64b0b49f38e71586066a8c048/specification/appconfiguration/resource-manager/readme.md.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.39.0 to 1.44.1
+- Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
 
 ## 1.3.2 (2024-05-07)
 
@@ -112,6 +122,7 @@ Polishing since last public beta release:
 ## 1.0.0-beta.3 (2022-03-31)
 
 ### Breaking Changes
+
 - Now all the resource classes would have a `Resource` suffix (if it previously does not have one).
 - Renamed some models to more comprehensive names.
 - `bool waitForCompletion` parameter in all long running operations were changed to `WaitUntil waitUntil`.
@@ -119,6 +130,7 @@ Polishing since last public beta release:
 - Removed `GetIfExists` methods from all the resource classes.
 
 ### Other Changes
+
 - Refresh reference
 
 ## 1.0.0-beta.2 (2022-01-06)

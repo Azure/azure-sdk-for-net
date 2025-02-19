@@ -26,6 +26,7 @@ namespace Azure.AI.Inference
         private const string UserValue = "user";
         private const string AssistantValue = "assistant";
         private const string ToolValue = "tool";
+        private const string DeveloperValue = "developer";
 
         /// <summary> The role that instructs or sets the behavior of the assistant. </summary>
         public static ChatRole System { get; } = new ChatRole(SystemValue);
@@ -35,6 +36,8 @@ namespace Azure.AI.Inference
         public static ChatRole Assistant { get; } = new ChatRole(AssistantValue);
         /// <summary> The role that represents extension tool activity within a chat completions operation. </summary>
         public static ChatRole Tool { get; } = new ChatRole(ToolValue);
+        /// <summary> The role that instructs or sets the behavior of the assistant. Some AI models support this role instead of the 'system' role. </summary>
+        public static ChatRole Developer { get; } = new ChatRole(DeveloperValue);
         /// <summary> Determines if two <see cref="ChatRole"/> values are the same. </summary>
         public static bool operator ==(ChatRole left, ChatRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatRole"/> values are not the same. </summary>

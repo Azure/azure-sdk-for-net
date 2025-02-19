@@ -447,3 +447,14 @@ extends:
             parameters:
               artifactName: test_artifacts_$(System.JobName)
               artifactPath: $(Build.ArtifactStagingDirectory)
+
+          - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest')) }}:
+              - task: AzureCLI@2
+                displayName: "Upload Spector Standard Coverage Report"
+                condition: and(ne(variables['SpectorName'], ''), succeeded())
+                inputs:
+                  azureSubscription: "TypeSpec Storage"
+                  scriptType: "bash"
+                  scriptLocation: "inlineScript"
+                  inlineScript: npx tsp-spector upload-coverage --coverageFile $(Build.ArtifactStagingDirectory)/tsp-spector-coverage-azure.json --generatorName @azure-typespec/$(SpectorName) --storageAccountName typespec --containerName coverages --generatorVersion $(node -p -e "require('./package.json').version") --generatorMode azure
+                  workingDirectory: $(Build.SourcesDirectory)/eng/packages/$(SpectorName)

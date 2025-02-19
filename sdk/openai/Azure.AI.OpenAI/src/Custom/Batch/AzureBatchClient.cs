@@ -27,7 +27,7 @@ internal partial class AzureBatchClient : BatchClient
         options ??= new();
 
         _endpoint = endpoint;
-        _apiVersion = options.Version;
+        _apiVersion = options.GetRawServiceApiValueForClient(this);
     }
 
     protected AzureBatchClient()

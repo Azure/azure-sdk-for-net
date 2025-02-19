@@ -5,7 +5,7 @@ using System;
 using Azure.Core;
 using Azure.Security.KeyVault.Secrets;
 
-namespace Azure.CloudMachine.KeyVault;
+namespace Azure.Projects.KeyVault;
 
 /// <summary>
 /// The key vault extensions.

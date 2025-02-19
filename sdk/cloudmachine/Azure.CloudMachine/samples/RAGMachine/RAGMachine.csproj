@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- Signal that samples are building in the repo as opposed to a standalone download from Samples Browser -->
     <IsClientLibrary>true</IsClientLibrary>
-    <IsPackable>true</IsPackable>
+    <IsPackable>false</IsPackable>
     <IsSample>true</IsSample>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <IsShippingLibrary>false</IsShippingLibrary>
@@ -15,6 +15,6 @@
     </NoWarn>
   </PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Azure.CloudMachine.All" Version="1.0.0-alpha.20241213.1" />
+		<PackageReference Include="Azure.CloudMachine.All" Version="1.0.0-alpha.20250205.1" />
 	</ItemGroup>
 </Project>

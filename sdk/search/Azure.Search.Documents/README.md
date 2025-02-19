@@ -20,7 +20,7 @@ The Azure AI Search service is well suited for the following application scenari
 Use the Azure.Search.Documents client library to:
 
 * Submit queries using vector, keyword, and hybrid query forms.
-* Implement filtered queries for metadata, geospatial search, faceted navigation, 
+* Implement filtered queries for metadata, geospatial search, faceted navigation,
   or to narrow results based on filter criteria.
 * Create and manage search indexes.
 * Upload and update documents in the search index.
@@ -553,8 +553,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FAzure.Search.Documents%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Azure.Search.Documents/src

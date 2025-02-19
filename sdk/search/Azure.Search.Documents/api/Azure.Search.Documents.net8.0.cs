@@ -370,6 +370,28 @@ namespace Azure.Search.Documents.Indexes
 }
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AIFoundryModelCatalogName : System.IEquatable<Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AIFoundryModelCatalogName(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName CohereEmbedV3English { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName CohereEmbedV3Multilingual { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName FacebookDinoV2ImageEmbeddingsViTBase { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName FacebookDinoV2ImageEmbeddingsViTGiant { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName OpenAIClipImageTextEmbeddingsVitBasePatch32 { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName OpenAIClipImageTextEmbeddingsViTLargePatch14336 { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AIServicesAccountIdentity : Azure.Search.Documents.Indexes.Models.CognitiveServicesAccount
     {
         public AIServicesAccountIdentity(Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity identity, string subdomainUrl) { }
@@ -394,28 +416,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public AIServicesVisionVectorizer(string vectorizerName) : base (default(string)) { }
         public Azure.Search.Documents.Indexes.Models.AIServicesVisionParameters AIServicesVisionParameters { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AIStudioModelCatalogName : System.IEquatable<Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AIStudioModelCatalogName(string value) { throw null; }
-        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName CohereEmbedV3English { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName CohereEmbedV3Multilingual { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName FacebookDinoV2ImageEmbeddingsViTBase { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName FacebookDinoV2ImageEmbeddingsViTGiant { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName OpenAIClipImageTextEmbeddingsVitBasePatch32 { get { throw null; } }
-        public static Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName OpenAIClipImageTextEmbeddingsViTLargePatch14336 { get { throw null; } }
-        public bool Equals(Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName right) { throw null; }
-        public static implicit operator Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName (string value) { throw null; }
-        public static bool operator !=(Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class AnalyzedTokenInfo
     {
@@ -447,7 +447,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public AzureMachineLearningParameters(System.Uri scoringUri) { }
         public string AuthenticationKey { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.AIStudioModelCatalogName? ModelName { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName? ModelName { get { throw null; } set { } }
         public string Region { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
         public System.Uri ScoringUri { get { throw null; } set { } }
