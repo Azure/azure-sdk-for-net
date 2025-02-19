@@ -61,8 +61,8 @@
   <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
-  <!-- Remove all track1 SDKs from Regen -->
-  <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' ">
+  <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(RemoveTrack1Projects)' == 'true'">
+    <!-- Remove all track1 SDKs from Regen -->
     <Track1ProjectsToRemove Include="$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.*.Management.*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*mgmt*\**\*.csproj;$(MSBuildThisFileDirectory)..\sdk\*\Microsoft.Azure.*\**\*.csproj" />
     <ProjectReference Remove="@(Track1ProjectsToRemove)" />
   </ItemGroup>

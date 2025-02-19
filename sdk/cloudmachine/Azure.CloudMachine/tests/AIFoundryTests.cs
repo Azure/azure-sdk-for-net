@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Inference;
 using Azure.AI.Projects;
-using Azure.CloudMachine.OpenAI;
+using Azure.Projects.AIFoundry;
+using Azure.Projects.OpenAI;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
@@ -16,9 +17,9 @@ using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
 
-namespace Azure.CloudMachine.Tests;
+namespace Azure.Projects.Tests;
 
-public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
+public partial class AIFoundryTests : SamplesBase<AzureProjectsTestEnvironment>
 {
     [Test]
     public void AIFoundryScenariosTests()
@@ -136,5 +137,33 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
             ]);
 
         Console.WriteLine($"{completion.Role}: {completion.Content[0].Text}");
+    }
+
+    [Test]
+    public void AIFoundryScenariosTestsUsingCMClient()
+    {
+        ProjectInfrastructure infra = new();
+
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        infra.AddFeature(new AIFoundryFeature(connectionString));
+
+        ProjectClient client = infra.GetClient();
+
+        // Azure AI Project clients
+        AgentsClient agents = client.GetAgentsClient();
+        EvaluationsClient evaluations = client.GetEvaluationsClient();
+
+        // Azure Inference Clients using connections API
+        ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+        EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
+
+        // Azure OpenAI Clients using connections API
+        ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
+        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingsClient("text-embedding-ada-002");
+
+        // Azure AI Search Clients using connections API
+        SearchClient searchClient = client.GetSearchClient("index");
+        SearchIndexClient indexClient = client.GetSearchIndexClient();
+        SearchIndexerClient indexerClient = client.GetSearchIndexerClient();
     }
 }
