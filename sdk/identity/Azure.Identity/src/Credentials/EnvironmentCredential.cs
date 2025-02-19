@@ -114,7 +114,9 @@ namespace Azure.Identity
                 }
                 else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, envCredOptions, _pipeline, envCredOptions.MsalPublicClient);
+#pragma warning restore CS0618 // Type or member is obsolete
                 }
             }
         }
