@@ -25,7 +25,7 @@ namespace Azure.Communication.Rooms
         {
             ApiVersion = version switch
             {
-                ServiceVersion.V2025_02_28 => "2025-03-07",
+                ServiceVersion.V2025_03_07 => "2025-03-07",
                 ServiceVersion.V2023_06_14 => "2023-06-14",
                 ServiceVersion.V2024_04_15 => "2024-04-15",
                 _ => throw new ArgumentOutOfRangeException(nameof(version)),
