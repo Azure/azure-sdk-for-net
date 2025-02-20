@@ -7,5 +7,5 @@
     "tsBuildInfoFile": "temp/tsconfig.tsbuildinfo"
   },
   "references": [],
-  "include": ["src/"]
+  "include": ["src/", "test/"]
 }
