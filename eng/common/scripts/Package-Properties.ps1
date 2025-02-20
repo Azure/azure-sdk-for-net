@@ -243,11 +243,14 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
                     $resolvedRelativePath = (Join-Path $RepoRoot "sdk" "$($pkg.ServiceDirectory)" $triggerPath)
                 }
 
+                # if we are including this package due to one of its additional trigger paths, we need
+                # to ensure we're counting it as included for validation, not as an actual package change
                 if ($resolvedRelativePath) {
-                    $shouldInclude = $shouldInclude -or ($filePath -like (Join-Path "$resolvedRelativePath" "*"))
-                    # if we reached here, this package wasn't directly changed, but instead
-                    # should be validated because it was indirectly changed
-                    $pkg.IncludedForValidation = $true
+                    $includedForValidation = $filePath -like (Join-Path "$resolvedRelativePath" "*")
+                    $shouldInclude = $shouldInclude -or $includedForValidation
+                    if ($includedForValidation) {
+                        $pkg.IncludedForValidation = $true
+                    }
                 }
             }
 
