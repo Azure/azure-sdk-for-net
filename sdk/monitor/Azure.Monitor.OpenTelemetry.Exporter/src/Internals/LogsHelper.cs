@@ -60,7 +60,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     var properties = new ChangeTrackingDictionary<string, string>();
                     ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName);
 
-                    if (eventName is not null)
+                    if (message is not null && logRecord.Exception is not null)
+                    {
+                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey)
+                        {
+                            Data = new MonitorBase
+                            {
+                                BaseType = "ExceptionData",
+                                BaseData = new TelemetryExceptionData(Version, logRecord, message, properties),
+                            }
+                        };
+                    }
+                    else if (eventName is not null)
                     {
                         telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey)
                         {
@@ -73,28 +84,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else if (message is not null)
                     {
-                        if (logRecord.Exception != null)
+                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey)
                         {
-                            telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey)
+                            Data = new MonitorBase
                             {
-                                Data = new MonitorBase
-                                {
-                                    BaseType = "ExceptionData",
-                                    BaseData = new TelemetryExceptionData(Version, logRecord, message, properties),
-                                }
-                            };
-                        }
-                        else
-                        {
-                            telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey)
-                            {
-                                Data = new MonitorBase
-                                {
-                                    BaseType = "MessageData",
-                                    BaseData = new MessageData(Version, logRecord, message, properties),
-                                }
-                            };
-                        }
+                                BaseType = "MessageData",
+                                BaseData = new MessageData(Version, logRecord, message, properties),
+                            }
+                        };
                     }
                     else
                     {
