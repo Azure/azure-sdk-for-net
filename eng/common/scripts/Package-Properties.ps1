@@ -215,6 +215,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         # end up in a situation where any change to a service would
         # still trigger every package in that service. individual package triggers
         # must be added to handle this.
+        $triggeringPaths = @()
         if ($pkg.ArtifactDetails -and $pkg.ArtifactDetails["triggeringPaths"]) {
             $triggeringPaths = $pkg.ArtifactDetails["triggeringPaths"]
         }
