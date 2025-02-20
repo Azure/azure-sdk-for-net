@@ -274,7 +274,7 @@ if ($useSecureString) {{
 }} else {{
     $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
 }}
-$customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.ToUnixTimeSeconds()
+$customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.UtcDateTime.Ticks
 
 $x = $customToken | ConvertTo-Xml
 return $x.Objects.FirstChild.OuterXml
@@ -314,7 +314,7 @@ return $x.Objects.FirstChild.OuterXml
                         break;
 
                     case "ExpiresOn":
-                        expiresOn = DateTimeOffset.FromUnixTimeSeconds(long.Parse(e.Value));
+                        expiresOn = new DateTimeOffset(long.Parse(e.Value), TimeSpan.Zero);
                         break;
                 }
 

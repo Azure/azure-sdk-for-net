@@ -1,5 +1,26 @@
 # Release History
 
+## 2.2.0-beta.2 (2025-02-18)
+
+### Bugs fixed
+
+- Addressed a problem calling the `SetNewMaxCompletionTokensPropertyEnabled()` method, needed for o1/o3 model support, on `ChatCompletionOptions` instances prior to use in a method call. Related issue: [azure-sdk-for-net#46545](https://github.com/Azure/azure-sdk-for-net/issues/46545) with thanks to the PR  [azure-sdk-for-net#48218](https://github.com/Azure/azure-sdk-for-net/pull/48218).
+
+## 2.2.0-beta.1 (2025-02-07)
+
+This preview release aligns with the corresponding `2.2.0` beta of `OpenAI` and the `2025-01-01-Preview` Azure OpenAI Service API version.
+
+New features include since 2.1.0-beta.2 include:
+
+- Audio input for Chat Completions using `gpt-4o-audio-preview` or other compatible models: provide input audio via `ChatMessageContentPart.CreateInputAudioPart()`, set `AudioOptions` and `ResponseModalities` on `ChatCompletionOptions`, retrieve response audio via `OutputAudio` on `ChatCompletion`, and reference audio history from the assistant by using the `AssistantChatMessage(ChatCompletion)` constructor or using `ChatMessageContentPart.CreateAudioPart(string)`. For more information, refer to the examples in [the OpenAI README](https://github.com/openai/openai-dotnet/blob/main/README.md). 
+- Predicted outputs in Chat Completions: `ChatCompletionOptions` accepts an `OutputPrediction` property that can be used via `ChatOutputPrediction.CreateStaticContentPrediction()` with text content to optimize operation efficiency for scenarios like code completion. For more information, see [OpenAI's predicted outputs announcement](https://community.openai.com/t/introducing-predicted-outputs/1004502).
+- Chat Completions `o`-series model feature support: the new `developer` message role via `DeveloperChatMessage` (used just like `SystemChatMessage`), `ReasoningEffortLevel` on Chat Completion options
+- [AOAI exclusive] `UserSecurityContext` integration with [Defender for Cloud](https://learn.microsoft.com/azure/defender-for-cloud/gain-end-user-context-ai); add a `UserSecurityContext` instance to `ChatCompletionOptions` with `SetUserSecurityContext()`
+
+### Breaking Changes
+
+- **Batch**: files uploaded for batch operations (`UploadFile` with `FileUploadPurpose.Batch`) will now report a `status` of `processed`, matching expected behavior against OpenAI's `/v1` endpoint. This is a change from past behavior where such files would initially report `pending` and a later `processed`, `error`, or other status depending on operation progress. Batch input validation is instead consistently performed from the batch client.
+
 ## 2.1.0 (2024-12-05)
 
 This GA library release aligns functionality with the latest `2024-10-21` stable service API label.

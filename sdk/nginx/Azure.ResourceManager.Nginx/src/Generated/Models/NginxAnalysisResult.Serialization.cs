@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 return null;
             }
             string status = default;
-            AnalysisResultData data = default;
+            NginxAnalysisResultDetails data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    data = AnalysisResultData.DeserializeAnalysisResultData(property.Value, options);
+                    data = NginxAnalysisResultDetails.DeserializeNginxAnalysisResultDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

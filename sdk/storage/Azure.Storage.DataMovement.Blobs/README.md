@@ -1,11 +1,5 @@
 # Azure Storage Data Movement Blobs client library for .NET
 
-## Project Status: Beta
-
-This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
-
----
-
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant.
 
@@ -21,12 +15,10 @@ Azure Storage client libraries.
 
 ### Install the package
 
-Install the Azure Storage client library for .NET you'd like to use with
-[NuGet][nuget] and the `Azure.Storage.DataMovement.Blobs` client library will be included:
+Install the Azure Storage Data Movement Blobs client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement --prerelease
-dotnet add package Azure.Storage.DataMovement.Blobs --prerelease
+dotnet add package Azure.Storage.DataMovement.Blobs
 ```
 
 ### Prerequisites
@@ -95,17 +87,17 @@ BlobsStorageResourceProvider blobs = new(tokenCredential);
 To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer`.
 
 ```C# Snippet:ResourceConstruction_Blobs
-StorageResource container = blobs.FromContainer(
+StorageResource container = await blobs.FromContainerAsync(
     new Uri("https://myaccount.blob.core.windows.net/container"));
 
 // Block blobs are the default if no options are specified
-StorageResource blockBlob = blobs.FromBlob(
+StorageResource blockBlob = await blobs.FromBlobAsync(
     new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-block"),
     new BlockBlobStorageResourceOptions());
-StorageResource pageBlob = blobs.FromBlob(
+StorageResource pageBlob = await blobs.FromBlobAsync(
     new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-page"),
     new PageBlobStorageResourceOptions());
-StorageResource appendBlob = blobs.FromBlob(
+StorageResource appendBlob = await blobs.FromBlobAsync(
     new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-append"),
     new AppendBlobStorageResourceOptions());
 ```
@@ -154,7 +146,7 @@ Upload a block blob.
 ```C# Snippet:SimpleBlobUpload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalPath),
-    destinationResource: blobs.FromBlob(destinationBlobUri));
+    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
 await transferOperation.WaitForCompletionAsync();
 ```
 
@@ -163,7 +155,7 @@ Upload a directory as a specific blob type.
 ```C# Snippet:SimpleDirectoryUpload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromDirectory(sourcePath),
-    destinationResource: blobs.FromContainer(
+    destinationResource: await blobs.FromContainerAsync(
         blobContainerUri,
         new BlobStorageResourceContainerOptions()
         {
@@ -181,7 +173,7 @@ Download a blob.
 
 ```C# Snippet:SimpleBlockBlobDownload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromBlob(sourceBlobUri),
+    sourceResource: await blobs.FromBlobAsync(sourceBlobUri),
     destinationResource: LocalFilesStorageResourceProvider.FromFile(downloadPath));
 await transferOperation.WaitForCompletionAsync();
 ```
@@ -190,7 +182,7 @@ Download a container which may contain a mix of blob types.
 
 ```C# Snippet:SimpleDirectoryDownload_Blob
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromContainer(
+    sourceResource: await blobs.FromContainerAsync(
         blobContainerUri,
         new BlobStorageResourceContainerOptions()
         {
@@ -208,8 +200,8 @@ Copy a single blob. Note the destination blob is an append blob, regardless of t
 
 ```C# Snippet:s2sCopyBlob
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromBlob(sourceBlobUri),
-    destinationResource: blobs.FromBlob(destinationBlobUri, new AppendBlobStorageResourceOptions()));
+    sourceResource: await blobs.FromBlobAsync(sourceBlobUri),
+    destinationResource: await blobs.FromBlobAsync(destinationBlobUri, new AppendBlobStorageResourceOptions()));
 await transferOperation.WaitForCompletionAsync();
 ```
 
@@ -217,13 +209,13 @@ Copy a blob container.
 
 ```C# Snippet:s2sCopyBlobContainer
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-sourceResource: blobs.FromContainer(
+sourceResource: await blobs.FromContainerAsync(
     sourceContainerUri,
     new BlobStorageResourceContainerOptions()
     {
         BlobPrefix = sourceDirectoryName
     }),
-destinationResource: blobs.FromContainer(
+destinationResource: await blobs.FromContainerAsync(
     destinationContainerUri,
     new BlobStorageResourceContainerOptions()
     {
@@ -234,6 +226,30 @@ destinationResource: blobs.FromContainer(
     }));
 await transferOperation.WaitForCompletionAsync();
 ```
+
+### Resume using ShareFilesStorageResourceProvider
+
+To resume a transfer with Blob(s), valid credentials must be provided. See the sample below.
+
+```C# Snippet:TransferManagerResumeTransfers
+TokenCredential tokenCredential = new DefaultAzureCredential();
+BlobsStorageResourceProvider blobs = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+{
+    ProvidersForResuming = new List<StorageResourceProvider>() { blobs }
+});
+// Get resumable transfers from transfer manager
+await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+{
+    // Resume the transfer
+    if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+    {
+        await transferManager.ResumeTransferAsync(properties.TransferId);
+    }
+}
+```
+
+For more information regarding pause, resume, and/or checkpointing, see [Pause and Resume Checkpointing](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/samples/PauseResumeCheckpointing.md).
 
 ### Extensions on `BlobContainerClient`
 
@@ -270,7 +286,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
@@ -303,7 +319,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
@@ -315,6 +331,8 @@ await transfer.WaitForCompletionAsync();
 ## Troubleshooting
 
 See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
+
+See [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
 
 ## Next steps
 
@@ -336,8 +354,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src

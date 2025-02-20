@@ -3515,10 +3515,20 @@ namespace Azure.Messaging.EventGrid
         /// <param name="mediaId"> The media identifier. </param>
         /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
         /// <param name="caption"> The caption for the media object, if supported and provided. </param>
+        /// <param name="animated"> Set to true if the sticker is animated; false otherwise. </param>
         /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
-        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
+        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null, bool? animated = null)
         {
-            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption);
+            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption, animated);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageReactionContent"/>. </summary>
+        /// <param name="messageId"> WhatsApp message ID of message you want to apply the emoji to. </param>
+        /// <param name="emoji"> Unicode escape sequence of the emoji. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsMessageReactionContent"/> instance for mocking. </returns>
+        public static AcsMessageReactionContent AcsMessageReactionContent(string messageId = null, string emoji = null)
+        {
+            return new AcsMessageReactionContent(messageId, emoji);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageContext"/>. </summary>

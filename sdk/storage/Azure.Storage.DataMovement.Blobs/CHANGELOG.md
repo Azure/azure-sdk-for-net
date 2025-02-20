@@ -1,8 +1,16 @@
 # Release History
 
-## 12.0.0-beta.7 (Unreleased)
+## 12.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0 (2025-02-11)
 
 ### Breaking Changes
 - Changed `BlobStorageResourceContainerOptions.BlobType` type from `DataTransferProperty<BlobType>` to `BlobType`
@@ -16,12 +24,13 @@
 - Renamed `BlobStorageResourceContainerOptions.BlobDirectoryPrefix` to `BlobPrefix`
 - Changed `BlobContainerClient.StartUploadDirectoryAsync` to `BlobContainerClient.UploadDirectoryAsync` and added a required `waitUntil` parameter.
 - Changed `BlobContainerClient.StartDownloadToDirectoryAsync` to `BlobContainerClient.DownloadToDirectoryAsync` and added a required `waitUntil` parameter.
-- Removed `BlobsStorageResourceProvider()` empty default constructor
-- Changed `BlobsStorageResourceProvider.FromClient` methods to `static` method
-
-### Bugs Fixed
-
-### Other Changes
+- Several refactors to `BlobsStorageResourceProvider`:
+  - Removed nested delegates `GetStorageSharedKeyCredential`, `GetTokenCredential`, and `GetAzureSasCredential`.
+  - Removed default constructor.
+  - Removed constructor overload for `GetTokenCredential` entirely.
+  - Changed constructor overloads for `GetStorageSharedKeyCredential` and `GetAzureSasCredential` to use `Func`. These callbacks are also now async, returning a `ValueTask`, and the `readOnly` parameter was removed.
+  - Changed `FromBlob` and `FromContainer` to async, returning a `ValueTask`, and renamed to `FromBlobAsync` and `FromContainerAsync` respectively.
+  - Changed `FromClient` methods to `static` methods.
 
 ## 12.0.0-beta.6 (2024-10-14)
 

@@ -49,18 +49,24 @@ namespace Azure.ResourceManager.Resources.Models
         internal WhatIfOperationResult()
         {
             Changes = new ChangeTrackingList<WhatIfChange>();
+            PotentialChanges = new ChangeTrackingList<WhatIfChange>();
+            Diagnostics = new ChangeTrackingList<DeploymentDiagnosticsDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatIfOperationResult"/>. </summary>
         /// <param name="status"> Status of the What-If operation. </param>
         /// <param name="error"> Error when What-If operation fails. </param>
         /// <param name="changes"> List of resource changes predicted by What-If operation. </param>
+        /// <param name="potentialChanges"> List of resource changes predicted by What-If operation. </param>
+        /// <param name="diagnostics"> List of resource diagnostics detected by What-If operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WhatIfOperationResult(string status, ResponseError error, IReadOnlyList<WhatIfChange> changes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WhatIfOperationResult(string status, ResponseError error, IReadOnlyList<WhatIfChange> changes, IReadOnlyList<WhatIfChange> potentialChanges, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Error = error;
             Changes = changes;
+            PotentialChanges = potentialChanges;
+            Diagnostics = diagnostics;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +79,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> List of resource changes predicted by What-If operation. </summary>
         [WirePath("properties.changes")]
         public IReadOnlyList<WhatIfChange> Changes { get; }
+        /// <summary> List of resource changes predicted by What-If operation. </summary>
+        [WirePath("properties.potentialChanges")]
+        public IReadOnlyList<WhatIfChange> PotentialChanges { get; }
+        /// <summary> List of resource diagnostics detected by What-If operation. </summary>
+        [WirePath("properties.diagnostics")]
+        public IReadOnlyList<DeploymentDiagnosticsDefinition> Diagnostics { get; }
     }
 }
