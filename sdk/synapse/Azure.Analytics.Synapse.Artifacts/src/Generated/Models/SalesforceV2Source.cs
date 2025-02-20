@@ -26,18 +26,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="queryTimeout"> Query timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
-        /// <param name="soqlQuery"> Database query. Type: string (or Expression with resultType string). </param>
+        /// <param name="soqlQuery"> Deprecating, please use 'query' property instead. Type: string (or Expression with resultType string). </param>
+        /// <param name="query"> You can only use Salesforce Object Query Language (SOQL) query with limitations. For SOQL limitations, see this article: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/queries.htm#SOQL%20Considerations. If query is not specified, all the data of the Salesforce object specified in ObjectApiName/reportId in dataset will be retrieved. Type: string (or Expression with resultType string). </param>
         /// <param name="includeDeletedObjects"> This property control whether query result contains Deleted objects. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        internal SalesforceV2Source(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object soqlQuery, object includeDeletedObjects) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        /// <param name="pageSize"> Page size for each http request, too large pageSize will caused timeout, default 300,000. Type: integer (or Expression with resultType integer). </param>
+        internal SalesforceV2Source(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object soqlQuery, object query, object includeDeletedObjects, object pageSize) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             SoqlQuery = soqlQuery;
+            Query = query;
             IncludeDeletedObjects = includeDeletedObjects;
+            PageSize = pageSize;
             Type = type ?? "SalesforceV2Source";
         }
 
-        /// <summary> Database query. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Deprecating, please use 'query' property instead. Type: string (or Expression with resultType string). </summary>
         public object SoqlQuery { get; set; }
+        /// <summary> You can only use Salesforce Object Query Language (SOQL) query with limitations. For SOQL limitations, see this article: https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/queries.htm#SOQL%20Considerations. If query is not specified, all the data of the Salesforce object specified in ObjectApiName/reportId in dataset will be retrieved. Type: string (or Expression with resultType string). </summary>
+        public object Query { get; set; }
         /// <summary> This property control whether query result contains Deleted objects. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public object IncludeDeletedObjects { get; set; }
+        /// <summary> Page size for each http request, too large pageSize will caused timeout, default 300,000. Type: integer (or Expression with resultType integer). </summary>
+        public object PageSize { get; set; }
     }
 }
