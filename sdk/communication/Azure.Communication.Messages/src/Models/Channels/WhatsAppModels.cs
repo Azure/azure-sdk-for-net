@@ -25,5 +25,8 @@ namespace Azure.Communication.Messages.Models.Channels
 
     [CodeGenModel("WhatsAppMessageTemplateItem")]
     public partial class WhatsAppMessageTemplateItem { }
+
+    [CodeGenModel("WhatsAppContact")]
+    public partial class WhatsAppContact { }
 }
 #pragma warning restore SA1402 // File may only contain a single type
