@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         StorageTestEnvironment>
     {
         internal readonly AccessTier _defaultAccessTier = AccessTier.Cold;
-        internal const string _defaultContentType = "text/plain";
+        internal const string _defaultContentType = "image/jpeg";
         internal const string _defaultContentLanguageBlob = "en-US";
         internal readonly string[] _defaultContentLanguageShare = new[] { "en-US", "en-CA" };
         internal const string _defaultContentDisposition = "inline";
@@ -184,8 +184,9 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return oauthService.GetBlobContainerClient(containerName);
         }
 
+        // Blob to File always needs OAuth source container
         protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(BlobServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
-            => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
+            => await SourceClientBuilder.GetOAuthTestContainerAsync(containerName, TestEnvironment.Credential);
 
         protected override async Task VerifyEmptyDestinationContainerAsync(ShareClient destinationContainer, string destinationPrefix, CancellationToken cancellationToken = default)
         {
