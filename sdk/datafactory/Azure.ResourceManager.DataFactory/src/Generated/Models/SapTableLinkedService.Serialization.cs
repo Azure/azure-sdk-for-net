@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret password = default;
             DataFactoryElement<string> messageServer = default;
             DataFactoryElement<string> messageServerService = default;
-            DataFactoryElement<string> sncMode = default;
+            DataFactoryElement<bool> sncMode = default;
             DataFactoryElement<string> sncMyName = default;
             DataFactoryElement<string> sncPartnerName = default;
             DataFactoryElement<string> sncLibraryPath = default;
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncMyName"u8))

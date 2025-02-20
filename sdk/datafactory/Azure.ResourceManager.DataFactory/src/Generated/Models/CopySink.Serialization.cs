@@ -148,6 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element, options);
                     case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element, options);
                     case "SqlSink": return SqlSink.DeserializeSqlSink(element, options);
+                    case "TeradataSink": return TeradataSink.DeserializeTeradataSink(element, options);
                     case "WarehouseSink": return WarehouseSink.DeserializeWarehouseSink(element, options);
                 }
             }

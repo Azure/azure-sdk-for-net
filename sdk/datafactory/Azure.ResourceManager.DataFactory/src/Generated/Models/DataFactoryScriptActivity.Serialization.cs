@@ -58,6 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("logSettings"u8);
                 writer.WriteObjectValue(LogSettings, options);
             }
+            if (Optional.IsDefined(ReturnMultistatementResult))
+            {
+                writer.WritePropertyName("returnMultistatementResult"u8);
+                JsonSerializer.Serialize(writer, ReturnMultistatementResult);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -105,6 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> scriptBlockExecutionTimeout = default;
             IList<ScriptActivityScriptBlock> scripts = default;
             ScriptActivityTypeLogSettings logSettings = default;
+            DataFactoryElement<bool> returnMultistatementResult = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,6 +235,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             logSettings = ScriptActivityTypeLogSettings.DeserializeScriptActivityTypeLogSettings(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("returnMultistatementResult"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            returnMultistatementResult = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -248,7 +263,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 policy,
                 scriptBlockExecutionTimeout,
                 scripts ?? new ChangeTrackingList<ScriptActivityScriptBlock>(),
-                logSettings);
+                logSettings,
+                returnMultistatementResult);
         }
 
         BinaryData IPersistableModel<DataFactoryScriptActivity>.Write(ModelReaderWriterOptions options)

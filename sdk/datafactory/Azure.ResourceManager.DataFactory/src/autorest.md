@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/e6892bbc13d89929cdbe3b39385628543263f80b/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/39ae07005dcc751a42e2abef030800a887190fb3/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -333,4 +333,9 @@ directive:
     where: $.definitions
     transform: >
       delete $.FactoryIdentity.properties.userAssignedIdentities;
+  # This change is used to prevent name conflicts within the model, where the previous `pwd` property has been renamed to `Password`.
+  - from: LinkedService.json
+    where: $.definitions
+    transform: >
+      $.GreenplumLinkedServiceTypeProperties.properties.password['x-ms-client-name'] = 'PasswordV2';
 ```
