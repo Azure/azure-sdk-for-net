@@ -29,8 +29,56 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
       - [EvaluateAutoScale](#evaluateautoscalepool)
       - [ListPoolNodeCounts](#listpoolnodecounts)
       - [ListPoolUsageMetrics](#listpoolusagemetrics)
-  - [Create Jobs](#create-jobs)
-  - [Submit Tasks](#submit-tasks)
+      - [Get Supported Images](#get-supported-images)
+  - [Job Operations](#job-operations)
+      - [CreateJob](#createjob)
+      - [GetJob](#getjob)
+      - [ListJobs](#listjobs)
+      - [DeleteJob](#deletejob)
+      - [Replace](#replace-job)
+      - [Update](#update-job)
+      - [Disable](#disable-job)
+      - [Enable](#enable-job)
+      - [ListJobPreparationAndReleaseTaskStatus](#listjobpreparationandreleasetaskstatus)
+      - [GetJobTaskCounts](#getjobtaskcounts)
+      - [Terminate](#terminate-job)
+  - [Job Schedule Operations](#job-schedule-operations)
+      - [CreateJobSchedule](#createjobschedule)
+      - [GetJobSchedule](#getjobschedule)
+      - [ListJobSchedules](#listjobschedules)
+      - [DeleteJobSchedule](#deletejobschedule)
+      - [Replace](#replace-job-schedule)
+      - [Update](#update-job-schedule)
+      - [Disable](#disable-job-schedule)
+      - [Enable](#enable-job-schedule)
+      - [Terminate](#terminate-job-schedule)
+  - [Task Operations](#task-operations)
+      - [AddTask](#addtask)
+      - [GetTask](#gettask)
+      - [ListTasks](#listtasks)
+      - [Delete](#delete-task)
+      - [Replace](#replace-task)
+      - [Reactivate](#reactivate-task)
+      - [Terminate](#terminate-task)
+  - [Node Operations](#node-operations)
+      - [GetComputeNode](#getcomputenode)
+      - [ListComputeNodes](#listcomputenodes)
+      - [Reboot](#reboot-node)
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+
+  - [Application Operations](#application-operations)
+      - [GetApplicationSummary](#getapplicationsummary)
+      - [ListApplicationSummaries](#listapplicationsummaries)
 
 ## Overview
 
@@ -388,7 +436,7 @@ batchClient.DeletePool(poolID);
 
 Previously in `Microsoft.Azure.Batch` to patch a pool would first have to have a bound pool, i.e. a pool that exists, then update its properties then call  `Commit`
 ``` C#
-CloudJob refreshableJob = batchClient.JobOperations.GetJob(jobId);
+CloudJob refreshableJob = batchClient.JobOperations.GetJob("jobID");
 refreshableJob.NetworkConfiguration = new JobNetworkConfiguration("0.0.0.0", false);
 refreshableJob.CommitChanges();
 ```
@@ -508,7 +556,7 @@ AutoScaleRun eval = batchClient.EvaluatePoolAutoScale(poolId, batchPoolEvaluateA
 #### ListPoolNodeCounts
 
 Previously in `Microsoft.Azure.Batch` to list pool node counts you could call the `ListPoolNodeCounts` method from the PoolOperations object
-``` C#             
+``` C#
 foreach (var poolNodeCount in batchClient.PoolOperations.ListPoolNodeCounts())
 {
     // do something
@@ -526,7 +574,7 @@ foreach (BatchPoolNodeCounts item in batchClient.GetPoolNodeCounts())
 #### ListPoolUsageMetrics
 
 Previously in `Microsoft.Azure.Batch` to list pool usage metrics you could call the `ListPoolUsageMetrics` method from the PoolOperations object
-``` C#             
+``` C#
 foreach (PoolUsageMetrics int in batchClient.PoolOperations.ListPoolUsageMetrics(DateTime.Now - TimeSpan.FromDays(1)))
 {
     // do something
@@ -541,76 +589,638 @@ foreach (BatchPoolUsageMetrics item in batchClient.GetPoolUsageMetrics())
 }
 ```
 
+#### Get Supported Images
 
+Previously in `Microsoft.Azure.Batch` to get a list of supported imagesy ou could call the `ListSupportedImages` method from the PoolOperations object
+``` C#
+var supportedImages = batchCli.PoolOperations.ListSupportedImages().ToList();
+
+foreach (ImageInformation imageInfo in supportedImages)
+{
+    // do something
+}
+```
+
+With `Azure.Compute.Batch` call `GetSupportedImagesAsync`
+``` C#
+foreach (BatchSupportedImage item in client.GetSupportedImages())
+{
+    // do something
+}
+```
 
 ### Job Operations
-#### Create Job
-#### Delete Job
-#### Disable Job
-#### Enable Job
-#### Get Job
-#### Get Jobs
-#### Get Job Preparation and Release Task Statuse
-#### Get Job Task counts
+
+#### CreateJob
+
+Previously in `Microsoft.Azure.Batch` to create a job you could call the `CreateJob` method from the JobOperations object followed by a Commit to create a job
+``` C#
+CloudJob unboundJob = batchClient.JobOperations.CreateJob();
+unboundJob.Id = "JobID";
+unboundJob.PoolInformation = new PoolInformation() { PoolId = "poolID" };
+
+// Commit Job to create it in the service
+unboundJob.Commit();
+```
+
+With `Azure.Compute.Batch` call `CreateJob` with a parameter of type `BatchJobCreateContent`
+``` C#
+BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent("jobID", "poolID")
+{
+    JobPreparationTask = new BatchJobPreparationTask(commandLine)
+};
+
+batchClient.CreateJob(batchJobCreateContent);
+```
+
+#### GetJob
+
+Previously in `Microsoft.Azure.Batch` to get a job you could call the `GetJob` method from the JobOperations object
+``` C#
+CloudJob updatedJob = batchClient.JobOperations.GetJob("jobID");
+```
+
+With `Azure.Compute.Batch` call `GetJob`
+``` C#
+batchClient.GetJob("jobID");
+```
+
+#### ListJobs
+
+Previously in `Microsoft.Azure.Batch` to get a list of jobs you could call the `ListJobs` method from the JobOperations object
+``` C#
+List<CloudJob> jobs = new List<CloudJob>(batchClient.JobOperations.ListJobs());
+ 
+foreach (CloudJob curJob in jobs)
+{
+    // do something
+}
+```
+
+With `Azure.Compute.Batch` call `GetJobs`
+``` C#
+foreach (BatchJob item in batchClient.GetJobs())
+{
+    // do something
+}
+```
+
+#### DeleteJob
+
+Previously in `Microsoft.Azure.Batch` to delete a job you could call the `DeleteJob` method from the JobOperations object
+``` C#
+batchClient.JobOperations.DeleteJob("jobID");
+```
+
+With `Azure.Compute.Batch` call `DeleteJob`
+``` C#
+batchClient.DeleteJob("jobID");
+```
+
 #### Replace Job
-#### Terminate Job
+
+Previously in `Microsoft.Azure.Batch` to replace a job you could call the `Commit` method from the JobOperations object on a modified `CloudJob`
+``` C#
+CloudJob refreshableJob = batchClient.JobOperations.GetJob("jobID");
+JobConstraints newJobConstraints = new JobConstraints(TimeSpan.FromSeconds(200), 19);
+refreshableJob.Constraints = newJobConstraints;
+refreshableJob.Commit();
+```
+
+With `Azure.Compute.Batch` call `ReplaceJob`
+``` C#
+job = await batchClient.GetJobAsync("jobID");
+job.OnAllTasksComplete = OnAllBatchTasksComplete.TerminateJob;
+batchClient.ReplaceJob("jobID", job);
+```
+
 #### Update Job
 
+Previously in `Microsoft.Azure.Batch` to update a job you could call the `CommitChanges` method directly from a modified CloudJob object
+``` C#
+CloudJob refreshableJob = batchClient.JobOperations.GetJob("jobID");
+refreshableJob.NetworkConfiguration = new JobNetworkConfiguration("0.0.0.0", false);
+refreshableJob.CommitChanges();
+```
+
+With `Azure.Compute.Batch` call `UpdateJob` with a parameter of type `BatchJobUpdateContent`
+``` C#
+BatchJobUpdateContent batchUpdateContent = new BatchJobUpdateContent();
+batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+
+batchClient.UpdateJob("jobID", batchUpdateContent);
+```
+
+#### Disable Job
+
+Previously in `Microsoft.Azure.Batch` to disable a job you could call the `Disable` method directly from the CloudJob object
+``` C#
+CloudJob updatedJob = batchClient.JobOperations.GetJob("jobID");
+updatedJob.Disable(DisableJobOption.Terminate);
+```
+
+With `Azure.Compute.Batch` call `DisableJob` with a parameter of type `BatchJobDisableContent`
+``` C#
+BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Requeue);
+batchClient.DisableJob("jobID", content);
+```
+
+#### Enable Job
+
+Previously in `Microsoft.Azure.Batch` to enable a job you could call the `Enable` method directly from the CloudJob object
+``` C#
+CloudJob updatedJob = batchClient.JobOperations.GetJob("jobID");
+updatedJob.Enable();
+```
+
+With `Azure.Compute.Batch` call `EnableJob`
+``` C#
+batchClient.EnableJob("jobID");
+```
+
+#### ListJobPreparationAndReleaseTaskStatus
+
+Previously in `Microsoft.Azure.Batch` to get a list of job preparation and release task status you could call the `ListJobPreparationAndReleaseTaskStatus` method from the JobOperations object
+``` C#
+List<JobPreparationAndReleaseTaskExecutionInformation> jobPrepStatus = new List<JobPreparationAndReleaseTaskExecutionInformation>(batchClient.JobOperations.ListJobPreparationAndReleaseTaskStatus("jobID"));
+ 
+foreach (JobPreparationAndReleaseTaskExecutionInformation item in jobPrepStatus)
+{
+    // do something
+}        
+```
+
+With `Azure.Compute.Batch` call `GetJobPreparationAndReleaseTaskStatuses`
+``` C#
+ foreach (BatchJobPreparationAndReleaseTaskStatus item in batchClient.GetJobPreparationAndReleaseTaskStatuses("jobID"))
+ {
+     // do something
+ }
+```
+
+#### GetJobTaskCounts
+
+Previously in `Microsoft.Azure.Batch` to get a job task count you could call the `GetJobTaskCounts` method from the JobOperations object
+``` C#
+TaskCountsResult taskCount = batchClient.JobOperations.GetJobTaskCounts("jobID");
+```
+
+With `Azure.Compute.Batch` call `GetJobTaskCounts`
+``` C#
+BatchTaskCountsResult batchTaskCountsResult = batchClient.GetJobTaskCounts("jobID");
+```
+
+#### Terminate Job
+
+Previously in `Microsoft.Azure.Batch` to terminate a job you could call the `Terminate` method from the JobOperations object
+``` C#
+CloudJob job = batchClient.JobOperations.GetJob("jobID");       
+job.Terminate("need some reason");
+```
+
+With `Azure.Compute.Batch` call `TerminateJob`
+``` C#
+batchClient.TerminateJob("jobID");
+```
+
 ### Job Schedule Operations
-#### Create Job Schedule
-#### Delete Job Schedule
-#### Disable Job Schedule
-#### Enable Job Schedule
-#### Get Job Schedule
-#### Get Job Schedules
-#### Job Schedule Exists
+
+#### CreateJobSchedule
+
+Previously in `Microsoft.Azure.Batch` to create a job schedule you could call the `CreateJobSchedule` method from the JobScheduleOperations object followed by a Commit to create a job
+``` C#
+CloudJobSchedule jobSchedule = batchClient.JobScheduleOperations.CreateJobSchedule(jobScheduleId, null, null);
+TimeSpan firstRecurrenceInterval = TimeSpan.FromMinutes(2);
+jobSchedule.Schedule = new Schedule() { RecurrenceInterval = firstRecurrenceInterval };
+PoolInformation poolInfo = new PoolInformation()
+{
+    PoolId = poolFixture.PoolId
+};
+
+jobSchedule.JobSpecification = new JobSpecification(poolInfo)
+{
+    Priority = jobSchedulePriority,
+    JobManagerTask = new JobManagerTask(jobManagerId, jobManagerCommandLine)
+};
+
+jobSchedule.Metadata = metadata;
+jobSchedule.Commit();
+```
+
+With `Azure.Compute.Batch` call `CreateJobSchedule` with a parameter of type `BatchJobScheduleCreateContent`
+``` C#
+ BatchJobScheduleConfiguration schedule = new BatchJobScheduleConfiguration();
+ 
+ BatchPoolInfo poolInfo = new BatchPoolInfo()
+ {
+     PoolId = "poolID",
+ };
+ BatchJobManagerTask batchJobManagerTask = new BatchJobManagerTask("task1", "cmd / c echo Hello World");
+
+ BatchJobSpecification jobSpecification = new BatchJobSpecification(poolInfo)
+ {
+     JobManagerTask = batchJobManagerTask,
+ };
+
+ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent(jobScheduleId, schedule, jobSpecification);
+
+ batchClient.CreateJobSchedule(jobSchedule);
+```
+
+#### GetJobSchedule
+
+Previously in `Microsoft.Azure.Batch` to get a job schedule you could call the `GetJobSchedule` method from JobScheduleOperations which returns a `CloudJobSchedule` object
+``` C#
+CloudJobSchedule jobSchedule = batchClient.JobScheduleOperations.GetJobSchedule("jobScheduleId");
+```
+
+With `Azure.Compute.Batch` call `GetJobSchedule` which returns a `BatchJobSchedule` object
+``` C#
+ BatchJobSchedule batchJobSchedule = batchClient.GetJobSchedule("jobScheduleId");
+```
+
+#### ListJobSchedules
+
+Previously in `Microsoft.Azure.Batch` to get a list of job schedule you could call the `ListJobSchedules` method from the JobScheduleOperations object
+``` C#
+List<CloudJobSchedule> jobSchedules = new List<CloudJobSchedule>(batchClient.JobScheduleOperations.ListJobSchedules());
+ 
+foreach (CloudJobSchedule item in jobSchedules)
+{
+    // do something
+}     
+
+```
+
+With `Azure.Compute.Batch` call `GetJobSchedules` with a parameter of type `BatchJobScheduleCreateContent`
+``` C#
+ foreach (BatchJobSchedule item in client.GetJobSchedules())
+ {
+     // do something
+ }
+```
+
+#### DeleteJobSchedule
+
+Previously in `Microsoft.Azure.Batch` to delete a job schedule you could call the `DeleteJobSchedule` method from JobScheduleOperations
+``` C#
+batchClient.JobScheduleOperations.DeleteJobSchedule("jobScheduleId");
+```
+
+With `Azure.Compute.Batch` call `DeleteJobSchedule`
+``` C#
+batchClient.DeleteJobSchedule("jobScheduleId");
+```
+
 #### Replace Job Schedule
-#### Terminate Job Schedule
+
+Previously in `Microsoft.Azure.Batch` to replace a job schedule you could call the `Commit` method from the JobScheduleOperations object on a modified `CloudJobSchedule`
+``` C#
+CloudJobSchedule refreshableJobSchedule = batchClient.JobScheduleOperations.GetJobSchedule("jobScheduleId");
+TimeSpan recurrenceInterval = TimeSpan.FromMinutes(5);
+refreshableJobSchedule.Schedule = new Schedule()
+{
+    RecurrenceInterval = recurrenceInterval
+};
+boundJobSchrefreshableJobScheduleedule.Commit();
+```
+
+With `Azure.Compute.Batch` call `ReplaceJobSchedule`
+``` C#
+BatchJobSchedule batchJobSchedule = await client.GetJobScheduleAsync(jobScheduleId);
+
+DateTime unboundDNRU = DateTime.Parse("2026-08-18T00:00:00.0000000Z");
+batchJobSchedule.Schedule =  new BatchJobScheduleConfiguration()
+{
+    DoNotRunUntil = unboundDNRU,
+};
+batchClient.ReplaceJobSchedule(jobScheduleId, batchJobSchedule);
+```
+
 #### Update Job Schedule
 
+Previously in `Microsoft.Azure.Batch` to update a job schedule you could call the `CommitChanges` method from the JobScheduleOperations object on a modified `CloudJobSchedule`
+``` C#
+CloudJobSchedule jobSchedule = batchClient.JobScheduleOperations.GetJobSchedule("jobScheduleId");
+jobSchedule.JobSpecification.JobManagerTask.CommandLine = newJobManagerCommandLine;
+jobSchedule.Metadata = new List<MetadataItem>()
+    {
+        new MetadataItem(metadataKey, metadataValue)
+    };
+
+jobSchedule.CommitChanges();
+```
+
+With `Azure.Compute.Batch` call `UpdateJobSchedule` with a parameter of type `BatchJobScheduleUpdateContent`
+``` C#
+BatchJobScheduleUpdateContent batchUpdateContent = new BatchJobScheduleUpdateContent();
+batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
+
+batchClient.UpdateJobSchedule("jobID", batchUpdateContent);
+```
+
+#### Disable Job Schedule
+
+Previously in `Microsoft.Azure.Batch` to disable a job you could call the `Disable` method directly from the CloudJobSchedule object
+``` C#
+CloudJobSchedule jobSchedule = batchClient.JobScheduleOperations.GetJobSchedule("jobScheduleId");
+jobSchedule.Disable();
+```
+
+With `Azure.Compute.Batch` call `DisableJobSchedule` 
+``` C#
+batchClient.DisableJobSchedule("jobScheduleId");
+```
+
+#### Enable Job Schedule
+
+Previously in `Microsoft.Azure.Batch` to enable a job you could call the `Enable` method directly from the CloudJobSchedule object
+``` C#
+CloudJobSchedule jobSchedule = batchClient.JobScheduleOperations.GetJobSchedule("jobScheduleId");
+jobSchedule.Enable();
+```
+
+With `Azure.Compute.Batch` call `EnableJobSchedule` 
+``` C#
+batchClient.EnableJobSchedule("jobScheduleId");
+```
+
+#### Terminate Job Schedule
+
+Previously in `Microsoft.Azure.Batch` to termainate a job you could call the `TerminateJobSchedule` method directly from JobScheduleOperations
+``` C#
+batchClient.JobScheduleOperations.TerminateJobSchedule("jobScheduleId");
+```
+
+With `Azure.Compute.Batch` call `TerminateJobSchedule` 
+``` C#
+batchClient.TerminateJobSchedule("jobScheduleId");
+```
+
+### Task Operations
+
+#### AddTask
+
+Previously in `Microsoft.Azure.Batch` to there were two ways to add a task to a job
+
+You could call the `AddTask` method from JobOperations with a parameter of type `CloudTask` to add a single task
+``` C#
+
+CloudTask unboundTask = new CloudTask("taskId", "echo test")
+    {
+        OutputFiles = new List<OutputFile>
+            {
+                new OutputFile(@"../*.txt", destination, uploadOptions)
+            }
+    };
+
+batchClient.JobOperations.AddTask("jobId", unboundTask);
+```
+
+or you could call the `AddTask` method with a collection of `CloudTask`.  Note this method is a utility method that would break up the list 
+of tasks passed in and repeatly call the /jobs/{jobId}/addtaskcollection api with 100 tasks at a time.  This utility method allowed the user
+to select the number of parallel calls to /addtaskcollection.
+
+``` C#
+ var tasksToAdd = new List<CloudTask>
+    {
+        new CloudTask("foo", "bar"),
+        new CloudTask(failingTaskId, "qux")
+    };
+
+batchClient.JobOperations.AddTask("jobId", tasksToAdd);
+```
+
+With `Azure.Compute.Batch` there are three ways to add a task to a job
+
+You can call `CreateTask` with a parameter of type `BatchTaskCreateContent` to create a single task
+``` C#
+ BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent("taskID", commandLine);
+ batchClient.CreateTask("jobID", taskCreateContent);
+```
+
+You can call `CreateTaskCollection` with a `BatchTaskGroup` param to create up to 100 tasks.  This method represents the /jobs/{jobId}/addtaskcollection api
+``` C#
+BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
+{
+    new BatchTaskCreateContent("task1", commandLine),
+    new BatchTaskCreateContent("task2", commandLine)
+});
+
+BatchTaskAddCollectionResult batchTaskAddCollectionResult = batchClient.CreateTaskCollection("jobID", taskCollection);
+```
+Lastly you can call `CreateTasks` which is the replacement for the utility method found in `Microsoft.Azure.Batch`.  This method will package up the list of `BatchTaskCreateContent` tasks passed in and repeatly call the `batchClient.CreateTaskCollection()` with groups of tasks bundled into `BatchTaskGroup` objects.  This utility method allowed the user
+to select the number of parallel calls to `batchClient.CreateTaskCollection()`.
+
+``` C#
+List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+for (int i=0; i < taskCount; i++)
+{
+    tasks.Add(new BatchTaskCreateContent($"{taskID}_{i}", commandLine));
+}
+
+CreateTasksResult taskResult = batchClient.CreateTasks(jobID, tasks);
+```
+
+#### GetTask
+
+Previously in `Microsoft.Azure.Batch` to get a task you could call the `GetTask` method from JobOperations which would retun a`CloudTask`
+``` C#
+
+CloudTask boundTask = batchClient.JobOperations.GetTask("jobId", "taskId");
+```
+
+With `Azure.Compute.Batch` call `GetTask` which would retun a`BatchTask`
+``` C#
+BatchTask task = batchClient.GetTask("jobId", "taskId");
+```
+
+#### ListTasks
+
+Previously in `Microsoft.Azure.Batch` to get a list of tasks in a job you could call the `ListTasks` method directly from the `CloudJob` object
+``` C#
+CloudJob boundJob = batchCli.JobOperations.GetJob("jobId");
+foreach (CloudTask curTask in boundJob.ListTasks())
+{
+    // do something
+}    
+```
+
+With `Azure.Compute.Batch` call `GetTasks` 
+``` C#
+foreach (BatchTask item in client.GetTasks("jobID"))
+{
+    task = item;
+}
+```
+
+#### Delete Task
+
+Previously in `Microsoft.Azure.Batch` to get a delete a tasks in a job you could call the `Delete` method directly from the `CloudTask` object
+``` C#
+CloudTask boundTask = batchClient.JobOperations.GetTask("jobId", "taskId");
+boundTask.Delete();
+```
+
+With `Azure.Compute.Batch` call `DeleteTask` 
+``` C#
+batchClient.DeleteTask("jobId", "taskId");
+
+```
+
+#### Replace Task
+
+Previously in `Microsoft.Azure.Batch` to replace a tasks in a job you could call the `Commit` method directly from a modified `CloudTask` object
+``` C#
+CloudTask boundTask = batchClient.JobOperations.GetTask("jobId", "taskId");
+
+TimeSpan maxWallClockTime = TimeSpan.FromHours(1);
+TimeSpan dataRetentionTime = TimeSpan.FromHours(2);
+const int maxRetryCount = 1;
+boundTask.Constraints = new TaskConstraints(maxWallClockTime, dataRetentionTime, maxRetryCount);
+
+boundTask.Commit();
+```
+
+With `Azure.Compute.Batch` call `ReplaceTask` with a `BatchTaskConstraints` parameter
+``` C#
+BatchTask task = batchClient.GetTask("jobId", "taskId");
+BatchTaskConstraints batchTaskConstraints = new BatchTaskConstraints()
+{
+    MaxTaskRetryCount = 3,
+};
+
+task.Constraints = batchTaskConstraints;
+batchClient.ReplaceTask("jobID", "taskID", task);
+
+```
+
+#### Reactivate Task
+
+Previously in `Microsoft.Azure.Batch` to reactive a tasks you could call the `Reactivate` method directly from a modified `CloudTask` object
+``` C#
+CloudTask boundTask = batchClient.JobOperations.GetTask("jobId", "taskId");
+boundTask.Reactivate()
+```
+
+With `Azure.Compute.Batch` call `ReactivateTask`
+``` C#
+batchClient.ReactivateTask("jobID", "taskID");
+
+```
+
+#### Terminate Task
+
+Previously in `Microsoft.Azure.Batch` to terminate a tasks you could call the `Terminate` method directly from a modified `CloudTask` object
+``` C#
+CloudTask boundTask = batchClient.JobOperations.GetTask("jobId", "taskId");
+boundTask.Terminate()
+```
+
+With `Azure.Compute.Batch` call `TerminateTask`
+``` C#
+batchClient.TerminateTask("jobID", "taskID");
+
+```
+
 ### Node Operations
+
+#### GetComputeNode 
+
+Previously in `Microsoft.Azure.Batch` to get a node you could call the `GetComputeNode` method from PoolOperations which would retun a`ComputeNode`
+``` C#
+
+ComputeNode computeNodeFromManager = batchClient.PoolOperations.GetComputeNode("poolId", "computeNodeId");
+```
+
+With `Azure.Compute.Batch` call `GetTask` which would retun a`BatchNode`
+``` C#
+BatchNode node = batchClient.GetNode("poolId", "computeNodeId");
+```
+
+#### ListComputeNodes 
+
+Previously in `Microsoft.Azure.Batch` to get a list of nodes you could call the `ListComputeNodes` method directly from a `CloudPool` object
+``` C#
+
+CloudPool pool = batchClient.PoolOperations.GetPool(poolFixture.PoolId);
+
+foreach (ComputeNode curComputeNode in pool.ListComputeNodes())
+{
+    // do something
+}
+```
+
+With `Azure.Compute.Batch` call `GetNodes`
+``` C#
+ foreach (BatchNode item in batchClient.GetNodes("poolID"))
+ {
+     // do something
+ }
+```
+
+#### Reboot Node
+
+Previously in `Microsoft.Azure.Batch` to get a list of nodes you could call the `Reboot` method directly from a `ComputeNode` object
+``` C#
+
+ComputeNode computeNode = batchClient.PoolOperations.GetComputeNode("poolId", "computeNodeId");
+computeNode.Reboot();
+```
+
+With `Azure.Compute.Batch` call `RebootNode`
+``` C#
+batchClient.RebootNode("poolId", "computeNodeId");
+```
+
+
+
 #### Create Node User
 #### Delete Node User
 #### Delete Node File
-#### Get Node 
-#### Get Nodes 
 #### Get Node Extension
 #### Get Node Extensions
 #### Get Node File
+NodeFile sharedTextFile = await node.GetNodeFileAsync("shared\\job_prep_and_release.txt");
 #### Get Node Files
 #### Get Node File Properties
 #### Get Node Remote Login Settings
-#### Reboot Node 
-#### Remove Nodes 
 #### Remove Node User
 #### Update Node Logs
-
-
 #### Enable Node Schedululing
 #### Disable Node Schedululing
 
-### Task Operations
-#### Create Task
-#### Get Task
-#### Get Tasks
-#### Delete Task
-#### Create Task Collection
-#### Delete Task File
-#### Get Task File
-#### Get Task Files
-#### Get Task File Properties
-#### Get Sub Tasks
-#### Reactivate Task
-#### Replace Task
-#### Terminate Task
-
 
 ### Application Operations
-#### Get Application
-#### Get Applications
 
-#### Get Supported Images
+#### GetApplicationSummary
 
+Previously in `Microsoft.Azure.Batch` to get an application you could call the `GetApplicationSummary` method from the ApplicationOperations object
+``` C#
+ApplicationSummary applicationSummary = client.ApplicationOperations.GetApplicationSummary("appID");
+```
 
+With `Azure.Compute.Batch` call `GetApplication`
+``` C#
+BatchApplication application = batchClient.GetApplication("appID");
+```
 
+#### ListApplicationSummaries
 
+Previously in `Microsoft.Azure.Batch` to get a list of applications you could call the `ListApplicationSummaries` method from the ApplicationOperations object
+``` C#
+List<ApplicationSummary> jobPrepStatus = new List<ApplicationSummary>(batchClient.ApplicationOperations.ListApplicationSummaries());
+ 
+foreach (ApplicationSummary item in jobPrepStatus)
+{
+    // do something
+} 
+```
+
+With `Azure.Compute.Batch` call `GetApplications`
+``` C#
+foreach (BatchApplication item in batchClient.GetApplications())
+{
+    // do something
+}
+```

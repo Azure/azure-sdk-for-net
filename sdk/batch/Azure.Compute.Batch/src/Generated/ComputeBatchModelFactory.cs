@@ -1145,7 +1145,7 @@ namespace Azure.Compute.Batch
         /// <param name="contentType"> The content type of the file. </param>
         /// <param name="fileMode"> The file mode attribute in octal format. The file mode is returned only for files on Linux Compute Nodes. </param>
         /// <returns> A new <see cref="Batch.FileProperties"/> instance for mocking. </returns>
-        public static FileProperties FileProperties(DateTimeOffset? creationTime = null, DateTimeOffset lastModified = default, string contentLength = null, string contentType = null, string fileMode = null)
+        public static FileProperties FileProperties(DateTimeOffset? creationTime = null, DateTimeOffset lastModified = default, long contentLength = default, string contentType = null, string fileMode = null)
         {
             return new FileProperties(
                 creationTime,
