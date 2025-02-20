@@ -51,6 +51,8 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary>
         /// Tags.
+        ///
+        /// Note: this will return null if there are no tags associated with the blob.
         /// </summary>
         public IDictionary<string, string> Tags { get; internal set; }
 

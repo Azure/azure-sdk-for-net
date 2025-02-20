@@ -22,7 +22,6 @@ namespace Azure.AI.Projects
             Argument.AssertNotNull(id, nameof(id));
 
             Type = "file_search";
-            FileSearch = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaFileSearchToolCall"/>. </summary>
@@ -31,7 +30,7 @@ namespace Azure.AI.Projects
         /// <param name="type"> The type of the tool call detail item in a streaming run step's details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileSearch"> Reserved for future use. </param>
-        internal RunStepDeltaFileSearchToolCall(int index, string id, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> fileSearch) : base(index, id, type, serializedAdditionalRawData)
+        internal RunStepDeltaFileSearchToolCall(int index, string id, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, RunStepFileSearchToolCallResults fileSearch) : base(index, id, type, serializedAdditionalRawData)
         {
             FileSearch = fileSearch;
         }
@@ -42,6 +41,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Reserved for future use. </summary>
-        public IReadOnlyDictionary<string, string> FileSearch { get; }
+        public RunStepFileSearchToolCallResults FileSearch { get; }
     }
 }
