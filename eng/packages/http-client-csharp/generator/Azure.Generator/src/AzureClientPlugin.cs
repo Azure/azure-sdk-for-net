@@ -56,6 +56,7 @@ public class AzureClientPlugin : ClientModelPlugin
         if (IsAzureArm.Value)
         {
             AddVisitor(new RestClientVisitor());
+            AddVisitor(new ResourceVisitor());
         }
     }
 
