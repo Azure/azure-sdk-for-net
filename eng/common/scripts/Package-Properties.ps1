@@ -126,14 +126,7 @@ class PackageProps {
 
             if ($ciArtifactResult) {
                 $this.ArtifactDetails = [Hashtable]$ciArtifactResult.ArtifactConfig
-                $this.CIParameters["CITriggerPaths"] = @()
                 $this.CIParameters["CIMatrixConfigs"] = @()
-
-                $triggers = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("trigger", "paths", "include")
-
-                if ($triggers) {
-                    $this.CIParameters["CITriggerPaths"] += $triggers
-                }
 
                 # if we know this is the matrix for our file, we should now see if there is a custom matrix config for the package
                 $matrixConfigList = GetValueSafelyFrom-Yaml $ciArtifactResult.ParsedYml @("extends", "parameters", "MatrixConfigs")
