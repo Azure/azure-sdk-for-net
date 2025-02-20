@@ -147,7 +147,7 @@ function DeployStressTests(
         }
         RunOrExitOnFailure helm repo add --force-update $chartRepoName file://$absAddonsPath
     } else {
-        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://stresstestcharts.blob.core.windows.net/helm/
+        RunOrExitOnFailure helm repo add --force-update $chartRepoName https://azuresdkartifacts.z5.web.core.windows.net/stress/
     }
 
     Run helm repo update
