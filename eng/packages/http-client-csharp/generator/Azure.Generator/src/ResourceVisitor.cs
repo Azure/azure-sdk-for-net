@@ -12,7 +12,6 @@ namespace Azure.Generator
     {
         protected override ModelProvider? Visit(InputModelType model, ModelProvider? type)
         {
-            base.Visit(model, type);
             if (type is not null)
             {
                 TransformResource(type);
@@ -22,7 +21,6 @@ namespace Azure.Generator
 
         protected override TypeProvider? Visit(TypeProvider type)
         {
-            base.Visit(type);
             TransformResource(type);
             return type;
         }
