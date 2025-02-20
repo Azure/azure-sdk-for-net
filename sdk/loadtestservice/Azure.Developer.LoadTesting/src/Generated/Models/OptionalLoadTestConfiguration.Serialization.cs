@@ -62,7 +62,7 @@ namespace Azure.Developer.LoadTesting.Models
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteNumberValue(Duration.Value);
+                writer.WriteNumberValue(Convert.ToInt32(Duration.Value.ToString("%s")));
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +106,7 @@ namespace Azure.Developer.LoadTesting.Models
             int? maxResponseTimeInMs = default;
             int? virtualUsers = default;
             int? rampUpTime = default;
-            int? duration = default;
+            TimeSpan? duration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    duration = property.Value.GetInt32();
+                    duration = TimeSpan.FromSeconds(property.Value.GetInt32());
                     continue;
                 }
                 if (options.Format != "W")

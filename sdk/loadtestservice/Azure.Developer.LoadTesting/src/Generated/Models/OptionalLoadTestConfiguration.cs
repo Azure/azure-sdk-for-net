@@ -58,7 +58,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="rampUpTime"> Ramp up time in seconds. </param>
         /// <param name="duration"> Test run duration in seconds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OptionalLoadTestConfiguration(string endpointUrl, int? requestsPerSecond, int? maxResponseTimeInMs, int? virtualUsers, int? rampUpTime, int? duration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OptionalLoadTestConfiguration(string endpointUrl, int? requestsPerSecond, int? maxResponseTimeInMs, int? virtualUsers, int? rampUpTime, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointUrl = endpointUrl;
             RequestsPerSecond = requestsPerSecond;
@@ -80,6 +80,6 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Ramp up time in seconds. </summary>
         public int? RampUpTime { get; set; }
         /// <summary> Test run duration in seconds. </summary>
-        public int? Duration { get; set; }
+        public TimeSpan? Duration { get; set; }
     }
 }
