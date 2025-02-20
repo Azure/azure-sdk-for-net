@@ -15,19 +15,19 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override TypeProvider? Visit(TypeProvider type)
         {
-            base.Visit(type);
+            var result = base.Visit(type);
 
-            if (type is ClientProvider)
+            if (result is ClientProvider)
             {
-                type.DeclarationModifiers = TransfromPublicModifiersToInternal(type);
-                type.RelativeFilePath = TransformRelativeFilePathForClient(type);
+                result.DeclarationModifiers = TransfromPublicModifiersToInternal(result);
+                result.RelativeFilePath = TransformRelativeFilePathForClient(result);
             }
             // TODO: uncomment this once resources are generated
             //if (type is RestClientProvider)
             //{
             //    type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForRestClient(type));
             //}
-            return type;
+            return result;
         }
 
         private static string TransformRelativeFilePathForClient(TypeProvider type)

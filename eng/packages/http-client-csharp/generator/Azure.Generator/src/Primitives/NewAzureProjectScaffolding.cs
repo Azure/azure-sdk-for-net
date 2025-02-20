@@ -23,10 +23,10 @@ namespace Azure.Generator.Primitives
         {
             var builder = new CSharpProjectWriter()
             {
-                Description = $"This is the {AzureClientPlugin.Instance.InputLibrary.InputNamespace.Name} client library for developing .NET applications with rich experience.",
-                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.InputLibrary.InputNamespace.Name}",
+                Description = $"This is the {AzureClientPlugin.Instance.TypeFactory.PackageName} client library for developing .NET applications with rich experience.",
+                AssemblyTitle = $"SDK Code Generation {AzureClientPlugin.Instance.TypeFactory.PackageName}",
                 Version = "1.0.0-beta.1",
-                PackageTags = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Name,
+                PackageTags = AzureClientPlugin.Instance.TypeFactory.PackageName,
                 GenerateDocumentationFile = true,
             };
 
@@ -162,7 +162,7 @@ Global
     EndGlobalSection
 EndGlobal
 ";
-            return string.Format(slnContent, AzureClientPlugin.Instance.InputLibrary.InputNamespace.Name);
+            return string.Format(slnContent, AzureClientPlugin.Instance.TypeFactory.PackageName);
         }
     }
 }
