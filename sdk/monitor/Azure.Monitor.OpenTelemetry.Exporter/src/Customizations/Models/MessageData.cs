@@ -12,11 +12,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class MessageData
     {
-        public MessageData(int version, LogRecord logRecord, string message, ChangeTrackingDictionary<string, string> properties) : base(version)
+        public MessageData(int version, LogRecord logRecord, string? message, ChangeTrackingDictionary<string, string> properties) : base(version)
         {
             Properties = properties;
             Measurements = new ChangeTrackingDictionary<string, double>();
-            Message = message.Truncate(SchemaConstants.MessageData_Message_MaxLength);
+            Message = message?.Truncate(SchemaConstants.MessageData_Message_MaxLength);
 
 #pragma warning disable CS0618 // Type or member is obsolete
             // TODO: Remove warning disable with next Stable release.

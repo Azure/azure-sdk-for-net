@@ -82,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             }
                         };
                     }
-                    else if (message is not null)
+                    else
                     {
                         telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey)
                         {
@@ -92,11 +92,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseData = new MessageData(Version, logRecord, message, properties),
                             }
                         };
-                    }
-                    else
-                    {
-                        Debug.Fail("Failed to map a LogRecord to a TelemetryItem");
-                        continue;
                     }
 
                     telemetryItems.Add(telemetryItem);
