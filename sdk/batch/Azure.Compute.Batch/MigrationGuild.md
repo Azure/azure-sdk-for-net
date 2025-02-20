@@ -64,18 +64,16 @@ Familiarity with the legacy client library is assumed. For those new to the Azur
       - [GetComputeNode](#getcomputenode)
       - [ListComputeNodes](#listcomputenodes)
       - [Reboot](#reboot-node)
+      - [CreateComputeNodeUser](#createcomputenodeuser)
+      - [DeleteComputeNodeUser](#deletecomputenodeuser)
+      - [GetNodeFile](#getnodefile)
+      - [ListNodeFiles](#listnodefiles)
+      - [DeleteNodeFile](#deletenodefile)
+      - [File Properties](#get-node-file-properties)
+      - [GetRemoteLoginSettings](#getremoteloginsettings)
+      - [UploadComputeNodeBatchServiceLogs](#uploadcomputenodebatchservicelogs)
       - []()
       - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-
   - [Application Operations](#application-operations)
       - [GetApplicationSummary](#getapplicationsummary)
       - [ListApplicationSummaries](#listapplicationsummaries)
@@ -1173,23 +1171,117 @@ With `Azure.Compute.Batch` call `RebootNode`
 batchClient.RebootNode("poolId", "computeNodeId");
 ```
 
+#### CreateComputeNodeUser
 
+Previously in `Microsoft.Azure.Batch` to create a node user you could call the `CreateComputeNodeUser` method from `PoolOperations` 
+``` C#
+ComputeNodeUser bob = batchClient.PoolOperations.CreateComputeNodeUser("poolID", "batchNodeID");
+```
 
-#### Create Node User
-#### Delete Node User
-#### Delete Node File
-#### Get Node Extension
-#### Get Node Extensions
-#### Get Node File
-NodeFile sharedTextFile = await node.GetNodeFileAsync("shared\\job_prep_and_release.txt");
-#### Get Node Files
+With `Azure.Compute.Batch` call `CreateNodeUserAsync` with a `BatchNodeUserCreateContent` param
+``` C#
+BatchNodeUserCreateContent user = new BatchNodeUserCreateContent(userName)
+{
+    Password = userPassWord
+};
+batchClient.CreateNodeUser("poolID", "batchNodeID", user);
+```
+
+#### DeleteComputeNodeUser
+
+Previously in `Microsoft.Azure.Batch` to delete a node user you could call the `DeleteComputeNodeUser` method directly from a `ComputeNode` object 
+``` C#
+ComputeNode computeNode = batchClient.PoolOperations.GetComputeNode("poolId", "computeNodeId");
+computeNode.DeleteComputeNodeUser("curCNUName");
+```
+
+With `Azure.Compute.Batch` call `DeleteNodeUserAsync` 
+``` C#
+batchClient.DeleteNodeUserAsync("poolID", "batchNodeID", "userName");
+```
+
+#### GetNodeFile
+
+Previously in `Microsoft.Azure.Batch` to get a file from a node you could call the `GetNodeFile` method directly from a `ComputeNode` object 
+``` C#
+ComputeNode computeNode = batchClient.PoolOperations.GetComputeNode("poolId", "computeNodeId");
+NodeFile sharedTextFile = computeNode.GetNodeFile("filePath");
+```
+
+With `Azure.Compute.Batch` call `DeleteNodeUserAsync` 
+``` C#
+BinaryData fileContents = batchClient.GetNodeFileAsync("poolId", "computeNodeId", "filePath");
+```
+
+#### ListNodeFiles
+
+Previously in `Microsoft.Azure.Batch` to get a list of file from a node you could call the `ListNodeFiles` method from `JobOperations` 
+``` C#
+List<NodeFile> nodeFiles = new List<NodeFile>(batchClient.JobOperations.ListNodeFiles("jobId", "taskId"));
+
+foreach (NodeFile nodeFile in nodeFiles)
+{
+    // do something
+}
+```
+
+With `Azure.Compute.Batch` call `GetNodeFiles` 
+``` C#
+await foreach (BatchNodeFile item in batchClient.GetNodeFiles("jobId", "nodeId"))
+{
+    // do something
+}
+```
+
+#### DeleteNodeFile
+
+Previously in `Microsoft.Azure.Batch` to delete a file from a node you could call the `DeleteNodeFile` method from `JobOperations` 
+``` C#
+batchClient.JobOperations.DeleteNodeFile("jobId", "taskId", "filePath");
+```
+
+With `Azure.Compute.Batch` call `DeleteNodeUserAsync` 
+``` C#
+batchClient.DeleteNodeFile("jobId", "taskId", "filePath");
+```
+
 #### Get Node File Properties
-#### Get Node Remote Login Settings
-#### Remove Node User
-#### Update Node Logs
-#### Enable Node Schedululing
-#### Disable Node Schedululing
 
+Previously in `Microsoft.Azure.Batch` to get the properties of a file from a node you could call the `GetNodeFile` method from `JobOperations` then look at the Properties field. 
+``` C#
+NodeFile file = batchClient.JobOperations.GetNodeFile("jobID", "taskId", "filePath");
+file.Properties;
+```
+
+With `Azure.Compute.Batch` call `GetNodeFileProperties` 
+``` C#
+BatchFileProperties batchFileProperties = batchClient.GetNodeFileProperties("poolId", "nodeId", "filePath");
+```
+#### GetRemoteLoginSettings
+
+Previously in `Microsoft.Azure.Batch` to get the remote loging settings of a node you could call the `GetRemoteLoginSettings` method from `PoolOperations` 
+``` C#
+RemoteLoginSettings rlsViaPoolOps = batchClient.PoolOperations.GetRemoteLoginSettings("poolId", "computeNodeId");
+```
+
+With `Azure.Compute.Batch` call `GetNodeRemoteLoginSettings` 
+``` C#
+BatchNodeRemoteLoginSettings batchNodeRemoteLoginSettings = batchClient.GetNodeRemoteLoginSettings("poolId", "computeNodeId");
+```
+
+#### UploadComputeNodeBatchServiceLogs
+
+Previously in `Microsoft.Azure.Batch` to upload logs to a node you could call the `UploadComputeNodeBatchServiceLogs` method from `PoolOperations` 
+``` C#
+UploadBatchServiceLogsResult results = batchClient.PoolOperations.UploadComputeNodeBatchServiceLogs("poolId", "computeNodeId","containerUrl");
+```
+
+With `Azure.Compute.Batch` call `GetNodeRemoteLoginSettings` with a param of type `UploadBatchServiceLogsContent`
+``` C#
+UploadBatchServiceLogsContent uploadBatchServiceLogsContent = new UploadBatchServiceLogsContent("containerUrl", DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
+
+UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  batchClient.UploadNodeLogsAsync("poolId", "computeNodeId", uploadBatchServiceLogsContent);
+```
 
 ### Application Operations
 
