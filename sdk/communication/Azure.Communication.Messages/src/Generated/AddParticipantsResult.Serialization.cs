@@ -78,17 +78,17 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            IReadOnlyList<ParticipantsResult> invalidParticipants = default;
+            IReadOnlyList<UpdateParticipantsResult> invalidParticipants = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("invalidParticipants"u8))
                 {
-                    List<ParticipantsResult> array = new List<ParticipantsResult>();
+                    List<UpdateParticipantsResult> array = new List<UpdateParticipantsResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantsResult.DeserializeParticipantsResult(item, options));
+                        array.Add(UpdateParticipantsResult.DeserializeUpdateParticipantsResult(item, options));
                     }
                     invalidParticipants = array;
                     continue;

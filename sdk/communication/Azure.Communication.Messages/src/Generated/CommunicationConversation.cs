@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> A conversation. </summary>
-    public partial class Conversation
+    public partial class CommunicationConversation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.Communication.Messages
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Conversation"/>. </summary>
-        public Conversation()
+        /// <summary> Initializes a new instance of <see cref="CommunicationConversation"/>. </summary>
+        public CommunicationConversation()
         {
             DeliveryChannelIds = new ChangeTrackingList<string>();
-            Participants = new ChangeTrackingList<Participant>();
+            Participants = new ChangeTrackingList<ConversationParticipant>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Conversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationConversation"/>. </summary>
         /// <param name="id"> The conversation ID. </param>
         /// <param name="topic"> The conversation topic. </param>
         /// <param name="deliveryChannelIds"> List of delivery channel IDs. </param>
         /// <param name="outboundDeliveryStrategy"> Outbound delivery strategy for the conversation. </param>
         /// <param name="participants">
         /// List of participants involved in the conversation.
-        /// Please note <see cref="Participant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalParticipant"/> and <see cref="InternalParticipant"/>.
+        /// Please note <see cref="ConversationParticipant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExternalConversationParticipant"/> and <see cref="InternalConversationParticipant"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Conversation(string id, string topic, IList<string> deliveryChannelIds, OutboundDeliveryStrategyKind? outboundDeliveryStrategy, IList<Participant> participants, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommunicationConversation(string id, string topic, IList<string> deliveryChannelIds, OutboundDeliveryStrategyKind? outboundDeliveryStrategy, IList<ConversationParticipant> participants, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Topic = topic;
@@ -83,9 +83,9 @@ namespace Azure.Communication.Messages
         public OutboundDeliveryStrategyKind? OutboundDeliveryStrategy { get; set; }
         /// <summary>
         /// List of participants involved in the conversation.
-        /// Please note <see cref="Participant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalParticipant"/> and <see cref="InternalParticipant"/>.
+        /// Please note <see cref="ConversationParticipant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExternalConversationParticipant"/> and <see cref="InternalConversationParticipant"/>.
         /// </summary>
-        public IList<Participant> Participants { get; }
+        public IList<ConversationParticipant> Participants { get; }
     }
 }

@@ -8,20 +8,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
     /// <summary> External conversation participant. </summary>
-    public partial class ExternalParticipant : Participant
+    public partial class ExternalConversationParticipant : ConversationParticipant
     {
-        /// <summary> Initializes a new instance of <see cref="ExternalParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalConversationParticipant"/>. </summary>
         /// <param name="contacts">
         /// List of external platform identifiers for the participant.
         /// Please note <see cref="ConversationContact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BotContact"/>, <see cref="CommunicationContact"/> and <see cref="WhatsAppContact"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contacts"/> is null. </exception>
-        public ExternalParticipant(IEnumerable<ConversationContact> contacts)
+        public ExternalConversationParticipant(IEnumerable<ConversationContact> contacts)
         {
             Argument.AssertNotNull(contacts, nameof(contacts));
 
@@ -29,7 +30,7 @@ namespace Azure.Communication.Messages
             Contacts = contacts.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExternalConversationParticipant"/>. </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
         /// <param name="kind"> The type discriminator describing a participant type. </param>
@@ -39,13 +40,13 @@ namespace Azure.Communication.Messages
         /// Please note <see cref="ConversationContact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BotContact"/>, <see cref="CommunicationContact"/> and <see cref="WhatsAppContact"/>.
         /// </param>
-        internal ExternalParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ConversationContact> contacts) : base(id, displayName, kind, serializedAdditionalRawData)
+        internal ExternalConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ConversationContact> contacts) : base(id, displayName, kind, serializedAdditionalRawData)
         {
             Contacts = contacts;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExternalParticipant"/> for deserialization. </summary>
-        internal ExternalParticipant()
+        /// <summary> Initializes a new instance of <see cref="ExternalConversationParticipant"/> for deserialization. </summary>
+        internal ExternalConversationParticipant()
         {
         }
 

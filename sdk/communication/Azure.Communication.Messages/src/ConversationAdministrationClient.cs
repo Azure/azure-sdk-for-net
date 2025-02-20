@@ -11,39 +11,39 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Messages
 {
     /// <summary>
-    /// The Azure Communication Services Conversation Management client.
+    /// The Azure Communication Services Conversation Adminstration client.
     /// </summary>
 
-    public partial class ConversationManagementClient
+    public partial class ConversationAdministrationClient
     {
         #region public constructors
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ConversationManagementClient"/>.
+        /// Initializes a new instance of <see cref="ConversationAdministrationClient"/>.
         /// </summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        public ConversationManagementClient(string connectionString)
+        public ConversationAdministrationClient(string connectionString)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 new CommunicationMessagesClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationManagementClient"/>.</summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationAdministrationClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationManagementClient(string connectionString, CommunicationMessagesClientOptions options)
+        public ConversationAdministrationClient(string connectionString, CommunicationMessagesClientOptions options)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new CommunicationMessagesClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationManagementClient"/>.</summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationAdministrationClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationManagementClient(Uri endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options = default)
+        public ConversationAdministrationClient(Uri endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options = default)
              : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
@@ -55,15 +55,15 @@ namespace Azure.Communication.Messages
         #endregion
 
         #region private constructors
-        private ConversationManagementClient(ConnectionString connectionString, CommunicationMessagesClientOptions options)
+        private ConversationAdministrationClient(ConnectionString connectionString, CommunicationMessagesClientOptions options)
            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
         { }
 
-        private ConversationManagementClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
+        private ConversationAdministrationClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
         { }
 
-        private ConversationManagementClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
+        private ConversationAdministrationClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
             ClientDiagnostics = new ClientDiagnostics(options);
             _pipeline = httpPipeline;
@@ -76,7 +76,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of ConversationManagementClient. </summary>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        internal ConversationManagementClient(Uri endpoint) : this(endpoint, new CommunicationMessagesClientOptions())
+        internal ConversationAdministrationClient(Uri endpoint) : this(endpoint, new CommunicationMessagesClientOptions())
         {
         }
 
@@ -84,7 +84,7 @@ namespace Azure.Communication.Messages
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        internal ConversationManagementClient(Uri endpoint, CommunicationMessagesClientOptions options)
+        internal ConversationAdministrationClient(Uri endpoint, CommunicationMessagesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new CommunicationMessagesClientOptions();
@@ -95,8 +95,34 @@ namespace Azure.Communication.Messages
             _apiVersion = options.Version;
         }
 
-        /// <summary>Initializes a new instance of <see cref="ConversationManagementClient"/> for mocking.</summary>
-        protected ConversationManagementClient()
+        /// <summary> Initializes a new instance of ConversationManagementClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        internal ConversationAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of ConversationManagementClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        internal ConversationAdministrationClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new CommunicationMessagesClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary>Initializes a new instance of <see cref="ConversationAdministrationClient"/> for mocking.</summary>
+        protected ConversationAdministrationClient()
         {
             ClientDiagnostics = null!;
         }

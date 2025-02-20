@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> Result of the get conversation messages AI Analysis operation. </summary>
-    public partial class GetConversationMessagesAnalysisResult
+    /// <summary> Request payload for removing participants from a conversation. </summary>
+    public partial class RemoveParticipantsOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,31 +46,31 @@ namespace Azure.Communication.Messages
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GetConversationMessagesAnalysisResult"/>. </summary>
-        /// <param name="summary"> The AI summary of the conversation messages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="summary"/> is null. </exception>
-        internal GetConversationMessagesAnalysisResult(string summary)
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsOptions"/>. </summary>
+        /// <param name="participantIds"> The participant IDs to remove. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantIds"/> is null. </exception>
+        public RemoveParticipantsOptions(IEnumerable<string> participantIds)
         {
-            Argument.AssertNotNull(summary, nameof(summary));
+            Argument.AssertNotNull(participantIds, nameof(participantIds));
 
-            Summary = summary;
+            ParticipantIds = participantIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetConversationMessagesAnalysisResult"/>. </summary>
-        /// <param name="summary"> The AI summary of the conversation messages. </param>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsOptions"/>. </summary>
+        /// <param name="participantIds"> The participant IDs to remove. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetConversationMessagesAnalysisResult(string summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemoveParticipantsOptions(IList<string> participantIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Summary = summary;
+            ParticipantIds = participantIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GetConversationMessagesAnalysisResult"/> for deserialization. </summary>
-        internal GetConversationMessagesAnalysisResult()
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsOptions"/> for deserialization. </summary>
+        internal RemoveParticipantsOptions()
         {
         }
 
-        /// <summary> The AI summary of the conversation messages. </summary>
-        public string Summary { get; }
+        /// <summary> The participant IDs to remove. </summary>
+        public IList<string> ParticipantIds { get; }
     }
 }

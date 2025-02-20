@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     /// <summary> WhatsApp Contact. </summary>
     public partial class WhatsAppContact : ConversationContact

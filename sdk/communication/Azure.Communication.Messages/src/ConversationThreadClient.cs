@@ -10,39 +10,39 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Messages
 {
     /// <summary>
-    /// The Azure Communication Services Conversation Messages client.
+    /// The Azure Communication Services Conversation Thread client.
     /// </summary>
 
-    public partial class ConversationMessagesClient
+    public partial class ConversationThreadClient
     {
         #region public constructors
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ConversationMessagesClient"/>.
+        /// Initializes a new instance of <see cref="ConversationThreadClient"/>.
         /// </summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
-        public ConversationMessagesClient(string connectionString)
+        internal ConversationThreadClient(string connectionString)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 new CommunicationMessagesClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationMessagesClient"/>.</summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationThreadClient"/>.</summary>
         /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
         /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationMessagesClient(string connectionString, CommunicationMessagesClientOptions options)
+        internal ConversationThreadClient(string connectionString, CommunicationMessagesClientOptions options)
             : this(
                 ConnectionString.Parse(Argument.CheckNotNullOrEmpty(connectionString, nameof(connectionString))),
                 options ?? new CommunicationMessagesClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationMessagesClient"/>.</summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationThreadClient"/>.</summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationMessagesClient(Uri endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options = default)
+        internal ConversationThreadClient(Uri endpoint, AzureKeyCredential credential, CommunicationMessagesClientOptions options = default)
              : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(credential, nameof(credential)),
@@ -52,12 +52,12 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConversationMessagesClient"/> class.
+        /// Initializes a new instance of the <see cref="ConversationThreadClient"/> class.
         /// </summary>
         /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
         /// <param name="communicationTokenCredential">The <see cref="CommunicationTokenCredential"/> used to authenticate requests.</param>
         /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
-        public ConversationMessagesClient(Uri endpoint, CommunicationTokenCredential communicationTokenCredential, CommunicationMessagesClientOptions options = default)
+        public ConversationThreadClient(Uri endpoint, CommunicationTokenCredential communicationTokenCredential, CommunicationMessagesClientOptions options = default)
         : this(
                 Argument.CheckNotNull(endpoint, nameof(endpoint)).AbsoluteUri,
                 Argument.CheckNotNull(communicationTokenCredential, nameof(communicationTokenCredential)),
@@ -69,20 +69,20 @@ namespace Azure.Communication.Messages
         #endregion
 
         #region private constructors
-        private ConversationMessagesClient(ConnectionString connectionString, CommunicationMessagesClientOptions options)
+        private ConversationThreadClient(ConnectionString connectionString, CommunicationMessagesClientOptions options)
            : this(new Uri(connectionString.GetRequired("endpoint")), options.BuildHttpPipeline(connectionString), options)
         { }
 
-        private ConversationMessagesClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
+        private ConversationThreadClient(string endpoint, AzureKeyCredential keyCredential, CommunicationMessagesClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(keyCredential), options)
         { }
 
-        private ConversationMessagesClient(string endpoint, CommunicationTokenCredential communicationTokenCredential, CommunicationMessagesClientOptions options)
+        private ConversationThreadClient(string endpoint, CommunicationTokenCredential communicationTokenCredential, CommunicationMessagesClientOptions options)
             : this(new Uri(endpoint), options.BuildHttpPipeline(new CommunicationBearerTokenCredential(communicationTokenCredential)), options)
         {
         }
 
-        private ConversationMessagesClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
+        private ConversationThreadClient(Uri endpoint, HttpPipeline httpPipeline, CommunicationMessagesClientOptions options)
         {
             ClientDiagnostics = new ClientDiagnostics(options);
             _pipeline = httpPipeline;
@@ -95,7 +95,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of ConversationMessagesClient. </summary>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        internal ConversationMessagesClient(Uri endpoint) : this(endpoint, new CommunicationMessagesClientOptions())
+        internal ConversationThreadClient(Uri endpoint) : this(endpoint, new CommunicationMessagesClientOptions())
         {
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Communication.Messages
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        internal ConversationMessagesClient(Uri endpoint, CommunicationMessagesClientOptions options)
+        internal ConversationThreadClient(Uri endpoint, CommunicationMessagesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new CommunicationMessagesClientOptions();
@@ -114,8 +114,16 @@ namespace Azure.Communication.Messages
             _apiVersion = options.Version;
         }
 
-        /// <summary>Initializes a new instance of <see cref="ConversationMessagesClient"/> for mocking.</summary>
-        protected ConversationMessagesClient()
+        /// <summary> Initializes a new instance of ConversationMessagesClient. </summary>
+        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        internal ConversationThreadClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        {
+        }
+
+        /// <summary>Initializes a new instance of <see cref="ConversationThreadClient"/> for mocking.</summary>
+        protected ConversationThreadClient()
         {
            ClientDiagnostics = null!;
         }

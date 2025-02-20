@@ -78,7 +78,7 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            Conversation conversation = default;
+            CommunicationConversation conversation = default;
             ConversationMessage initialMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.Communication.Messages
             {
                 if (property.NameEquals("conversation"u8))
                 {
-                    conversation = Conversation.DeserializeConversation(property.Value, options);
+                    conversation = CommunicationConversation.DeserializeCommunicationConversation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialMessage"u8))

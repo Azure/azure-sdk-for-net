@@ -23,7 +23,7 @@ namespace Azure.Communication.Messages
         }
 
         private const string InternalValue = "internal";
-        private const string ExternalValue = "External";
+        private const string ExternalValue = "external";
 
         /// <summary> A participant internal to Azure Communication Services. </summary>
         public static ParticipantKind Internal { get; } = new ParticipantKind(InternalValue);

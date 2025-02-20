@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Messages
+namespace Azure.Communication.Messages.Models.Channels
 {
     public partial class WhatsAppContact : IUtf8JsonSerializable, IJsonModel<WhatsAppContact>
     {

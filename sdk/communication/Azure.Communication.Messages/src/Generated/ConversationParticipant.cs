@@ -7,12 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> Request payload for removing participants from a conversation. </summary>
-    public partial class RemoveParticipantsRequest
+    /// <summary>
+    /// Advanced Messaging conversation participant.
+    /// Please note <see cref="ConversationParticipant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ExternalConversationParticipant"/> and <see cref="InternalConversationParticipant"/>.
+    /// </summary>
+    public abstract partial class ConversationParticipant
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,33 +47,31 @@ namespace Azure.Communication.Messages
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsRequest"/>. </summary>
-        /// <param name="participantIds"> The participant IDs to remove. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantIds"/> is null. </exception>
-        public RemoveParticipantsRequest(IEnumerable<string> participantIds)
+        /// <summary> Initializes a new instance of <see cref="ConversationParticipant"/>. </summary>
+        protected ConversationParticipant()
         {
-            Argument.AssertNotNull(participantIds, nameof(participantIds));
-
-            ParticipantIds = participantIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsRequest"/>. </summary>
-        /// <param name="participantIds"> The participant IDs to remove. </param>
+        /// <summary> Initializes a new instance of <see cref="ConversationParticipant"/>. </summary>
+        /// <param name="id"> Participant Identifier. </param>
+        /// <param name="displayName"> Participant display name. </param>
+        /// <param name="kind"> The type discriminator describing a participant type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemoveParticipantsRequest(IList<string> participantIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ParticipantIds = participantIds;
+            Id = id;
+            DisplayName = displayName;
+            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsRequest"/> for deserialization. </summary>
-        internal RemoveParticipantsRequest()
-        {
-        }
-
-        /// <summary> The participant IDs to remove. </summary>
-        public IList<string> ParticipantIds { get; }
+        /// <summary> Participant Identifier. </summary>
+        public string Id { get; }
+        /// <summary> Participant display name. </summary>
+        public string DisplayName { get; set; }
+        /// <summary> The type discriminator describing a participant type. </summary>
+        internal ParticipantKind Kind { get; set; }
     }
 }

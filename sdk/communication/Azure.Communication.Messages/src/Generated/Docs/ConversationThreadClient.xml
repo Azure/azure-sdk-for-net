@@ -1,63 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="AddParticipantsAsync(string,AddParticipantsRequest,CancellationToken)">
+    <member name="AddParticipantsAsync(string,AddParticipantsOptions,CancellationToken)">
       <example>
 This sample shows how to call AddParticipantsAsync.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
 {
-    new InternalParticipant(new CommunicationContact("<id>"))
+    new InternalConversationParticipant(new CommunicationContact("<id>"))
 });
-Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", body);
+Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
 ]]></code>
 This sample shows how to call AddParticipantsAsync with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
 {
-    new InternalParticipant(new CommunicationContact("<id>"))
+    new InternalConversationParticipant(new CommunicationContact("<id>"))
     {
         DisplayName = "<displayName>",
     }
 });
-Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", body);
+Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
 ]]></code></example>
     </member>
-    <member name="AddParticipants(string,AddParticipantsRequest,CancellationToken)">
+    <member name="AddParticipants(string,AddParticipantsOptions,CancellationToken)">
       <example>
 This sample shows how to call AddParticipants.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
 {
-    new InternalParticipant(new CommunicationContact("<id>"))
+    new InternalConversationParticipant(new CommunicationContact("<id>"))
 });
-Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", body);
+Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
 ]]></code>
 This sample shows how to call AddParticipants with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
 {
-    new InternalParticipant(new CommunicationContact("<id>"))
+    new InternalConversationParticipant(new CommunicationContact("<id>"))
     {
         DisplayName = "<displayName>",
     }
 });
-Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", body);
+Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
 ]]></code></example>
     </member>
     <member name="AddParticipantsAsync(string,RequestContent,RequestContext)">
       <example>
 This sample shows how to call AddParticipantsAsync and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -81,7 +91,9 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id")
 ]]></code>
 This sample shows how to call AddParticipantsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -113,7 +125,9 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("erro
       <example>
 This sample shows how to call AddParticipants and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -137,7 +151,9 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id")
 ]]></code>
 This sample shows how to call AddParticipants with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -165,45 +181,55 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("erro
 Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
-    <member name="RemoveParticipantsAsync(string,RemoveParticipantsRequest,CancellationToken)">
+    <member name="RemoveParticipantsAsync(string,RemoveParticipantsOptions,CancellationToken)">
       <example>
 This sample shows how to call RemoveParticipantsAsync.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", body);
+RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
 ]]></code>
 This sample shows how to call RemoveParticipantsAsync with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", body);
+RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
 ]]></code></example>
     </member>
-    <member name="RemoveParticipants(string,RemoveParticipantsRequest,CancellationToken)">
+    <member name="RemoveParticipants(string,RemoveParticipantsOptions,CancellationToken)">
       <example>
 This sample shows how to call RemoveParticipants.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", body);
+RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
 ]]></code>
 This sample shows how to call RemoveParticipants with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", body);
+RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
 ]]></code></example>
     </member>
     <member name="RemoveParticipantsAsync(string,RequestContent,RequestContext)">
       <example>
 This sample shows how to call RemoveParticipantsAsync and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -219,7 +245,9 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id")
 ]]></code>
 This sample shows how to call RemoveParticipantsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -242,7 +270,9 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("erro
       <example>
 This sample shows how to call RemoveParticipants and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -258,7 +288,9 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id")
 ]]></code>
 This sample shows how to call RemoveParticipants with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -277,51 +309,61 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("erro
 Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
-    <member name="SendMessageAsync(string,SendConversationMessageRequest,CancellationToken)">
+    <member name="SendMessageAsync(string,SendConversationMessageOptions,CancellationToken)">
       <example>
 This sample shows how to call SendMessageAsync.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-SendConversationMessageRequest body = new SendConversationMessageRequest(new TextConversationMessageContent("<content>"));
-Response<SendConversationMessageResult> response = await client.SendMessageAsync("<conversationId>", body);
+SendConversationMessageOptions options = new SendConversationMessageOptions(new TextConversationMessageContent("<content>"));
+Response<SendConversationMessageResult> response = await client.SendMessageAsync("<conversationId>", options);
 ]]></code>
 This sample shows how to call SendMessageAsync with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-SendConversationMessageRequest body = new SendConversationMessageRequest(new TextConversationMessageContent("<content>"))
+SendConversationMessageOptions options = new SendConversationMessageOptions(new TextConversationMessageContent("<content>"))
 {
     OutboundDeliveryStrategy = OutboundDeliveryStrategyKind.InternalOnly,
 };
-Response<SendConversationMessageResult> response = await client.SendMessageAsync("<conversationId>", body);
+Response<SendConversationMessageResult> response = await client.SendMessageAsync("<conversationId>", options);
 ]]></code></example>
     </member>
-    <member name="SendMessage(string,SendConversationMessageRequest,CancellationToken)">
+    <member name="SendMessage(string,SendConversationMessageOptions,CancellationToken)">
       <example>
 This sample shows how to call SendMessage.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-SendConversationMessageRequest body = new SendConversationMessageRequest(new TextConversationMessageContent("<content>"));
-Response<SendConversationMessageResult> response = client.SendMessage("<conversationId>", body);
+SendConversationMessageOptions options = new SendConversationMessageOptions(new TextConversationMessageContent("<content>"));
+Response<SendConversationMessageResult> response = client.SendMessage("<conversationId>", options);
 ]]></code>
 This sample shows how to call SendMessage with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-SendConversationMessageRequest body = new SendConversationMessageRequest(new TextConversationMessageContent("<content>"))
+SendConversationMessageOptions options = new SendConversationMessageOptions(new TextConversationMessageContent("<content>"))
 {
     OutboundDeliveryStrategy = OutboundDeliveryStrategyKind.InternalOnly,
 };
-Response<SendConversationMessageResult> response = client.SendMessage("<conversationId>", body);
+Response<SendConversationMessageResult> response = client.SendMessage("<conversationId>", options);
 ]]></code></example>
     </member>
     <member name="SendMessageAsync(string,RequestContent,RequestContext)">
       <example>
 This sample shows how to call SendMessageAsync and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -338,7 +380,9 @@ Console.WriteLine(result.GetProperty("messageId").ToString());
 ]]></code>
 This sample shows how to call SendMessageAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -359,7 +403,9 @@ Console.WriteLine(result.GetProperty("messageId").ToString());
       <example>
 This sample shows how to call SendMessage and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -376,7 +422,9 @@ Console.WriteLine(result.GetProperty("messageId").ToString());
 ]]></code>
 This sample shows how to call SendMessage with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -397,37 +445,47 @@ Console.WriteLine(result.GetProperty("messageId").ToString());
       <example>
 This sample shows how to call AnalyzeConversationAsync.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-Response<GetConversationMessagesAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-Response<GetConversationMessagesAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
 ]]></code></example>
     </member>
     <member name="AnalyzeConversation(string,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeConversation.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-Response<GetConversationMessagesAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
 ]]></code>
 This sample shows how to call AnalyzeConversation with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-Response<GetConversationMessagesAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
 ]]></code></example>
     </member>
     <member name="AnalyzeConversationAsync(string,RequestContext)">
       <example>
 This sample shows how to call AnalyzeConversationAsync and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
 
@@ -436,7 +494,9 @@ Console.WriteLine(result.GetProperty("summary").ToString());
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync with all parameters and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
 
@@ -448,7 +508,9 @@ Console.WriteLine(result.GetProperty("summary").ToString());
       <example>
 This sample shows how to call AnalyzeConversation and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 Response response = client.AnalyzeConversation("<conversationId>", null);
 
@@ -457,7 +519,9 @@ Console.WriteLine(result.GetProperty("summary").ToString());
 ]]></code>
 This sample shows how to call AnalyzeConversation with all parameters and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 Response response = client.AnalyzeConversation("<conversationId>", null);
 
@@ -469,17 +533,21 @@ Console.WriteLine(result.GetProperty("summary").ToString());
       <example>
 This sample shows how to call GetConversationsAsync.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-await foreach (Conversation item in client.GetConversationsAsync())
+await foreach (CommunicationConversation item in client.GetConversationsAsync())
 {
 }
 ]]></code>
 This sample shows how to call GetConversationsAsync with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-await foreach (Conversation item in client.GetConversationsAsync(maxpagesize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
+await foreach (CommunicationConversation item in client.GetConversationsAsync(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
 {
 }
 ]]></code></example>
@@ -488,17 +556,21 @@ await foreach (Conversation item in client.GetConversationsAsync(maxpagesize: 12
       <example>
 This sample shows how to call GetConversations.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-foreach (Conversation item in client.GetConversations())
+foreach (CommunicationConversation item in client.GetConversations())
 {
 }
 ]]></code>
 This sample shows how to call GetConversations with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-foreach (Conversation item in client.GetConversations(maxpagesize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
+foreach (CommunicationConversation item in client.GetConversations(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
 {
 }
 ]]></code></example>
@@ -507,7 +579,9 @@ foreach (Conversation item in client.GetConversations(maxpagesize: 1234, partici
       <example>
 This sample shows how to call GetConversationsAsync and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetConversationsAsync(null, null, null, null))
 {
@@ -517,7 +591,9 @@ await foreach (BinaryData item in client.GetConversationsAsync(null, null, null,
 ]]></code>
 This sample shows how to call GetConversationsAsync with all parameters and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetConversationsAsync(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
 {
@@ -536,7 +612,9 @@ await foreach (BinaryData item in client.GetConversationsAsync(1234, "<participa
       <example>
 This sample shows how to call GetConversations and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetConversations(null, null, null, null))
 {
@@ -546,7 +624,9 @@ foreach (BinaryData item in client.GetConversations(null, null, null, null))
 ]]></code>
 This sample shows how to call GetConversations with all parameters and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetConversations(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
 {
@@ -565,7 +645,9 @@ foreach (BinaryData item in client.GetConversations(1234, "<participantId>", Gui
       <example>
 This sample shows how to call GetMessagesAsync.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>"))
 {
@@ -573,9 +655,11 @@ await foreach (ConversationMessageItem item in client.GetMessagesAsync("<convers
 ]]></code>
 This sample shows how to call GetMessagesAsync with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxpagesize: 1234, participantId: "<participantId>"))
+await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
 {
 }
 ]]></code></example>
@@ -584,7 +668,9 @@ await foreach (ConversationMessageItem item in client.GetMessagesAsync("<convers
       <example>
 This sample shows how to call GetMessages.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 foreach (ConversationMessageItem item in client.GetMessages("<conversationId>"))
 {
@@ -592,9 +678,11 @@ foreach (ConversationMessageItem item in client.GetMessages("<conversationId>"))
 ]]></code>
 This sample shows how to call GetMessages with all parameters.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxpagesize: 1234, participantId: "<participantId>"))
+foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
 {
 }
 ]]></code></example>
@@ -603,7 +691,9 @@ foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", 
       <example>
 This sample shows how to call GetMessagesAsync and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", null, null, null))
 {
@@ -616,7 +706,9 @@ await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", nu
 ]]></code>
 This sample shows how to call GetMessagesAsync with all parameters and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", 1234, "<participantId>", null))
 {
@@ -634,7 +726,9 @@ await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", 12
       <example>
 This sample shows how to call GetMessages and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetMessages("<conversationId>", null, null, null))
 {
@@ -647,7 +741,9 @@ foreach (BinaryData item in client.GetMessages("<conversationId>", null, null, n
 ]]></code>
 This sample shows how to call GetMessages with all parameters and parse the result.
 <code><![CDATA[
-ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetMessages("<conversationId>", 1234, "<participantId>", null))
 {

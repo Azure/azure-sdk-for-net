@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> Response for the remove participants operation. </summary>
-    public partial class ParticipantsResult
+    /// <summary> Result of the get conversation messages AI Analysis operation. </summary>
+    public partial class GetConversationThreadAnalysisResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,31 @@ namespace Azure.Communication.Messages
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ParticipantsResult"/>. </summary>
-        /// <param name="id"> Participant User Id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal ParticipantsResult(string id)
+        /// <summary> Initializes a new instance of <see cref="GetConversationThreadAnalysisResult"/>. </summary>
+        /// <param name="summary"> The AI summary of the conversation messages. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="summary"/> is null. </exception>
+        internal GetConversationThreadAnalysisResult(string summary)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(summary, nameof(summary));
 
-            Id = id;
+            Summary = summary;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ParticipantsResult"/>. </summary>
-        /// <param name="id"> Participant User Id. </param>
-        /// <param name="error"> Error of the participant operation. </param>
+        /// <summary> Initializes a new instance of <see cref="GetConversationThreadAnalysisResult"/>. </summary>
+        /// <param name="summary"> The AI summary of the conversation messages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ParticipantsResult(string id, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetConversationThreadAnalysisResult(string summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            Error = error;
+            Summary = summary;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ParticipantsResult"/> for deserialization. </summary>
-        internal ParticipantsResult()
+        /// <summary> Initializes a new instance of <see cref="GetConversationThreadAnalysisResult"/> for deserialization. </summary>
+        internal GetConversationThreadAnalysisResult()
         {
         }
 
-        /// <summary> Participant User Id. </summary>
-        public string Id { get; }
-        /// <summary> Error of the participant operation. </summary>
-        public ResponseError Error { get; }
+        /// <summary> The AI summary of the conversation messages. </summary>
+        public string Summary { get; }
     }
 }

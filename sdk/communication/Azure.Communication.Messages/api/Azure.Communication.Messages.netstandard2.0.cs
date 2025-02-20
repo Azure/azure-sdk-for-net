@@ -1,20 +1,20 @@
 namespace Azure.Communication.Messages
 {
-    public partial class AddParticipantsRequest : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsRequest>
+    public partial class AddParticipantsOptions : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsOptions>
     {
-        public AddParticipantsRequest(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.Participant> participants) { }
-        public System.Collections.Generic.IList<Azure.Communication.Messages.Participant> Participants { get { throw null; } }
+        public AddParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationParticipant> participants) { }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.ConversationParticipant> Participants { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.AddParticipantsRequest System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.AddParticipantsRequest System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Communication.Messages.AddParticipantsOptions System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.AddParticipantsOptions System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AddParticipantsResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.AddParticipantsResult>
     {
         internal AddParticipantsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Messages.ParticipantsResult> InvalidParticipants { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Messages.UpdateParticipantsResult> InvalidParticipants { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.Messages.AddParticipantsResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.AddParticipantsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -65,6 +65,21 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.CommunicationContact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.CommunicationContact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CommunicationConversation : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.CommunicationConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.CommunicationConversation>
+    {
+        public CommunicationConversation() { }
+        public System.Collections.Generic.IList<string> DeliveryChannelIds { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.Communication.Messages.OutboundDeliveryStrategyKind? OutboundDeliveryStrategy { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Communication.Messages.ConversationParticipant> Participants { get { throw null; } }
+        public string Topic { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.CommunicationConversation System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.CommunicationConversation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.CommunicationConversation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.CommunicationConversation System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.CommunicationConversation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.CommunicationConversation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.CommunicationConversation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CommunicationMessagesClientOptions : Azure.Core.ClientOptions
     {
         public CommunicationMessagesClientOptions(Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion version = Azure.Communication.Messages.CommunicationMessagesClientOptions.ServiceVersion.V2025_03_01_Preview) { }
@@ -77,15 +92,16 @@ namespace Azure.Communication.Messages
     }
     public static partial class CommunicationMessagesModelFactory
     {
-        public static Azure.Communication.Messages.AddParticipantsResult AddParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ParticipantsResult> invalidParticipants = null) { throw null; }
+        public static Azure.Communication.Messages.AddParticipantsResult AddParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.UpdateParticipantsResult> invalidParticipants = null) { throw null; }
         public static Azure.Communication.Messages.AudioNotificationContent AudioNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, System.Uri mediaUri = null) { throw null; }
-        public static Azure.Communication.Messages.Conversation Conversation(string id = null, string topic = null, System.Collections.Generic.IEnumerable<string> deliveryChannelIds = null, Azure.Communication.Messages.OutboundDeliveryStrategyKind? outboundDeliveryStrategy = default(Azure.Communication.Messages.OutboundDeliveryStrategyKind?), System.Collections.Generic.IEnumerable<Azure.Communication.Messages.Participant> participants = null) { throw null; }
+        public static Azure.Communication.Messages.CommunicationConversation CommunicationConversation(string id = null, string topic = null, System.Collections.Generic.IEnumerable<string> deliveryChannelIds = null, Azure.Communication.Messages.OutboundDeliveryStrategyKind? outboundDeliveryStrategy = default(Azure.Communication.Messages.OutboundDeliveryStrategyKind?), System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationParticipant> participants = null) { throw null; }
         public static Azure.Communication.Messages.ConversationMessageItem ConversationMessageItem(string id = null, long? sequenceId = default(long?), Azure.Communication.Messages.ConversationMessageContent message = null, string senderDisplayName = null, string senderCommunicationIdentifier = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.Communication.Messages.ConversationParticipant ConversationParticipant(string id = null, string displayName = null, string kind = null) { throw null; }
         public static Azure.Communication.Messages.DocumentNotificationContent DocumentNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, string fileName = null, System.Uri mediaUri = null) { throw null; }
-        public static Azure.Communication.Messages.ExternalParticipant ExternalParticipant(string id = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationContact> contacts = null) { throw null; }
-        public static Azure.Communication.Messages.GetConversationMessagesAnalysisResult GetConversationMessagesAnalysisResult(string summary = null) { throw null; }
+        public static Azure.Communication.Messages.ExternalConversationParticipant ExternalConversationParticipant(string id = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationContact> contacts = null) { throw null; }
+        public static Azure.Communication.Messages.GetConversationThreadAnalysisResult GetConversationThreadAnalysisResult(string summary = null) { throw null; }
         public static Azure.Communication.Messages.ImageNotificationContent ImageNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, System.Uri mediaUri = null) { throw null; }
-        public static Azure.Communication.Messages.InternalParticipant InternalParticipant(string id = null, string displayName = null, Azure.Communication.Messages.ConversationContact contact = null) { throw null; }
+        public static Azure.Communication.Messages.InternalConversationParticipant InternalConversationParticipant(string id = null, string displayName = null, Azure.Communication.Messages.ConversationContact contact = null) { throw null; }
         public static Azure.Communication.Messages.MediaNotificationContent MediaNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string content = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.MessageReceipt MessageReceipt(string messageId = null, string to = null) { throw null; }
         public static Azure.Communication.Messages.MessageTemplate MessageTemplate(string name = null, string language = null, System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageTemplateValue> values = null, Azure.Communication.Messages.MessageTemplateBindings bindings = null) { throw null; }
@@ -97,31 +113,56 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.MessageTemplateValue MessageTemplateValue(string name = null, string kind = null) { throw null; }
         public static Azure.Communication.Messages.MessageTemplateVideo MessageTemplateVideo(string name = null, System.Uri uri = null, string caption = null, string fileName = null) { throw null; }
         public static Azure.Communication.Messages.NotificationContent NotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string kind = null) { throw null; }
-        public static Azure.Communication.Messages.Participant Participant(string id = null, string displayName = null, string kind = null) { throw null; }
-        public static Azure.Communication.Messages.ParticipantsResult ParticipantsResult(string id = null, Azure.ResponseError error = null) { throw null; }
-        public static Azure.Communication.Messages.RemoveParticipantsResult RemoveParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ParticipantsResult> invalidParticipants = null) { throw null; }
-        public static Azure.Communication.Messages.SendConversationMessageRequest SendConversationMessageRequest(Azure.Communication.Messages.ConversationMessageContent request = null, Azure.Communication.Messages.OutboundDeliveryStrategyKind? outboundDeliveryStrategy = default(Azure.Communication.Messages.OutboundDeliveryStrategyKind?)) { throw null; }
+        public static Azure.Communication.Messages.RemoveParticipantsResult RemoveParticipantsResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.UpdateParticipantsResult> invalidParticipants = null) { throw null; }
+        public static Azure.Communication.Messages.SendConversationMessageOptions SendConversationMessageOptions(Azure.Communication.Messages.ConversationMessageContent request = null, Azure.Communication.Messages.OutboundDeliveryStrategyKind? outboundDeliveryStrategy = default(Azure.Communication.Messages.OutboundDeliveryStrategyKind?)) { throw null; }
         public static Azure.Communication.Messages.SendConversationMessageResult SendConversationMessageResult(string messageId = null) { throw null; }
         public static Azure.Communication.Messages.SendMessageResult SendMessageResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageReceipt> receipts = null) { throw null; }
         public static Azure.Communication.Messages.TemplateNotificationContent TemplateNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, Azure.Communication.Messages.MessageTemplate template = null) { throw null; }
         public static Azure.Communication.Messages.TextNotificationContent TextNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string content = null) { throw null; }
+        public static Azure.Communication.Messages.UpdateParticipantsResult UpdateParticipantsResult(string id = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.Communication.Messages.VideoNotificationContent VideoNotificationContent(System.Guid channelRegistrationId = default(System.Guid), System.Collections.Generic.IEnumerable<string> to = null, string caption = null, System.Uri mediaUri = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus), System.BinaryData content = null) { throw null; }
     }
-    public partial class Conversation : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Conversation>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Conversation>
+    public partial class ConversationAdministrationClient
     {
-        public Conversation() { }
-        public System.Collections.Generic.IList<string> DeliveryChannelIds { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.Communication.Messages.OutboundDeliveryStrategyKind? OutboundDeliveryStrategy { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Communication.Messages.Participant> Participants { get { throw null; } }
-        public string Topic { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.Conversation System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Conversation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Conversation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.Conversation System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Conversation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Conversation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Conversation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected ConversationAdministrationClient() { }
+        public ConversationAdministrationClient(string connectionString) { }
+        public ConversationAdministrationClient(string connectionString, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
+        public ConversationAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public ConversationAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response<Azure.Communication.Messages.AddParticipantsResult> AddParticipants(string conversationId, Azure.Communication.Messages.AddParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response AddParticipants(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.AddParticipantsResult>> AddParticipantsAsync(string conversationId, Azure.Communication.Messages.AddParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddParticipantsAsync(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response AnalyzeConversation(string conversationId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.GetConversationThreadAnalysisResult> AnalyzeConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeConversationAsync(string conversationId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.GetConversationThreadAnalysisResult>> AnalyzeConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.CommunicationConversation> CreateConversation(Azure.Communication.Messages.CommunicationConversation conversation, Azure.Communication.Messages.ConversationMessage initialMessage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateConversation(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.CommunicationConversation>> CreateConversationAsync(Azure.Communication.Messages.CommunicationConversation conversation, Azure.Communication.Messages.ConversationMessage initialMessage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateConversationAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response DeleteConversation(string conversationId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteConversationAsync(string conversationId, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response GetConversation(string conversationId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.CommunicationConversation> GetConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetConversationAsync(string conversationId, Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.CommunicationConversation>> GetConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetConversations(int? maxPageSize, string participantId, System.Guid? channelId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.Messages.CommunicationConversation> GetConversations(int? maxPageSize = default(int?), string participantId = null, System.Guid? channelId = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetConversationsAsync(int? maxPageSize, string participantId, System.Guid? channelId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.Messages.CommunicationConversation> GetConversationsAsync(int? maxPageSize = default(int?), string participantId = null, System.Guid? channelId = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMessages(string conversationId, int? maxPageSize, string participantId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.Messages.ConversationMessageItem> GetMessages(string conversationId, int? maxPageSize = default(int?), string participantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMessagesAsync(string conversationId, int? maxPageSize, string participantId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.Messages.ConversationMessageItem> GetMessagesAsync(string conversationId, int? maxPageSize = default(int?), string participantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.RemoveParticipantsResult> RemoveParticipants(string conversationId, Azure.Communication.Messages.RemoveParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response RemoveParticipants(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.RemoveParticipantsResult>> RemoveParticipantsAsync(string conversationId, Azure.Communication.Messages.RemoveParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveParticipantsAsync(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response TerminateConversation(string conversationId, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateConversationAsync(string conversationId, Azure.RequestContext context = null) { throw null; }
     }
     public abstract partial class ConversationContact : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ConversationContact>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationContact>
     {
@@ -133,49 +174,6 @@ namespace Azure.Communication.Messages
         Azure.Communication.Messages.ConversationContact System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationContact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationContact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationContact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ConversationManagementClient
-    {
-        protected ConversationManagementClient() { }
-        public ConversationManagementClient(string connectionString) { }
-        public ConversationManagementClient(string connectionString, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
-        public ConversationManagementClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public ConversationManagementClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
-        public ConversationManagementClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public ConversationManagementClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Communication.Messages.AddParticipantsResult> AddParticipants(string conversationId, Azure.Communication.Messages.AddParticipantsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response AddParticipants(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.AddParticipantsResult>> AddParticipantsAsync(string conversationId, Azure.Communication.Messages.AddParticipantsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AddParticipantsAsync(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response AnalyzeConversation(string conversationId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Messages.GetConversationMessagesAnalysisResult> AnalyzeConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeConversationAsync(string conversationId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>> AnalyzeConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Messages.Conversation> CreateConversation(Azure.Communication.Messages.Conversation conversation, Azure.Communication.Messages.ConversationMessage initialMessage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response CreateConversation(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.Conversation>> CreateConversationAsync(Azure.Communication.Messages.Conversation conversation, Azure.Communication.Messages.ConversationMessage initialMessage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> CreateConversationAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response DeleteConversation(string conversationId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteConversationAsync(string conversationId, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response GetConversation(string conversationId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Messages.Conversation> GetConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetConversationAsync(string conversationId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.Conversation>> GetConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetConversations(int? maxpagesize, string participantId, System.Guid? channelId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.Messages.Conversation> GetConversations(int? maxpagesize = default(int?), string participantId = null, System.Guid? channelId = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetConversationsAsync(int? maxpagesize, string participantId, System.Guid? channelId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.Messages.Conversation> GetConversationsAsync(int? maxpagesize = default(int?), string participantId = null, System.Guid? channelId = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMessages(string conversationId, int? maxpagesize, string participantId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.Messages.ConversationMessageItem> GetMessages(string conversationId, int? maxpagesize = default(int?), string participantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMessagesAsync(string conversationId, int? maxpagesize, string participantId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.Messages.ConversationMessageItem> GetMessagesAsync(string conversationId, int? maxpagesize = default(int?), string participantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Messages.RemoveParticipantsResult> RemoveParticipants(string conversationId, Azure.Communication.Messages.RemoveParticipantsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response RemoveParticipants(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.RemoveParticipantsResult>> RemoveParticipantsAsync(string conversationId, Azure.Communication.Messages.RemoveParticipantsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> RemoveParticipantsAsync(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response TerminateConversation(string conversationId, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> TerminateConversationAsync(string conversationId, Azure.RequestContext context = null) { throw null; }
     }
     public partial class ConversationMessage : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ConversationMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationMessage>
     {
@@ -214,40 +212,48 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationMessageItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationMessageItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConversationMessagesClient
+    public abstract partial class ConversationParticipant : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ConversationParticipant>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationParticipant>
     {
-        protected ConversationMessagesClient() { }
-        public ConversationMessagesClient(string connectionString) { }
-        public ConversationMessagesClient(string connectionString, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
-        public ConversationMessagesClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public ConversationMessagesClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
-        public ConversationMessagesClient(System.Uri endpoint, Azure.Communication.CommunicationTokenCredential communicationTokenCredential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
-        public ConversationMessagesClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public ConversationMessagesClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
+        protected ConversationParticipant() { }
+        public string DisplayName { get { throw null; } set { } }
+        public string Id { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ConversationParticipant System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ConversationParticipant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ConversationParticipant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ConversationParticipant System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationParticipant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationParticipant>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ConversationParticipant>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ConversationThreadClient
+    {
+        protected ConversationThreadClient() { }
+        public ConversationThreadClient(System.Uri endpoint, Azure.Communication.CommunicationTokenCredential communicationTokenCredential, Azure.Communication.Messages.CommunicationMessagesClientOptions options = null) { }
+        public ConversationThreadClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ConversationThreadClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Communication.Messages.AddParticipantsResult> AddParticipants(string conversationId, Azure.Communication.Messages.AddParticipantsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.AddParticipantsResult> AddParticipants(string conversationId, Azure.Communication.Messages.AddParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response AddParticipants(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.AddParticipantsResult>> AddParticipantsAsync(string conversationId, Azure.Communication.Messages.AddParticipantsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.AddParticipantsResult>> AddParticipantsAsync(string conversationId, Azure.Communication.Messages.AddParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddParticipantsAsync(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AnalyzeConversation(string conversationId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Messages.GetConversationMessagesAnalysisResult> AnalyzeConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.GetConversationThreadAnalysisResult> AnalyzeConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AnalyzeConversationAsync(string conversationId, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>> AnalyzeConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetConversations(int? maxpagesize, string participantId, System.Guid? channelId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.Messages.Conversation> GetConversations(int? maxpagesize = default(int?), string participantId = null, System.Guid? channelId = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetConversationsAsync(int? maxpagesize, string participantId, System.Guid? channelId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.Messages.Conversation> GetConversationsAsync(int? maxpagesize = default(int?), string participantId = null, System.Guid? channelId = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetMessages(string conversationId, int? maxpagesize, string participantId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.Messages.ConversationMessageItem> GetMessages(string conversationId, int? maxpagesize = default(int?), string participantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetMessagesAsync(string conversationId, int? maxpagesize, string participantId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.Messages.ConversationMessageItem> GetMessagesAsync(string conversationId, int? maxpagesize = default(int?), string participantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Messages.RemoveParticipantsResult> RemoveParticipants(string conversationId, Azure.Communication.Messages.RemoveParticipantsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.GetConversationThreadAnalysisResult>> AnalyzeConversationAsync(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetConversations(int? maxPageSize, string participantId, System.Guid? channelId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.Messages.CommunicationConversation> GetConversations(int? maxPageSize = default(int?), string participantId = null, System.Guid? channelId = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetConversationsAsync(int? maxPageSize, string participantId, System.Guid? channelId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.Messages.CommunicationConversation> GetConversationsAsync(int? maxPageSize = default(int?), string participantId = null, System.Guid? channelId = default(System.Guid?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetMessages(string conversationId, int? maxPageSize, string participantId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.Messages.ConversationMessageItem> GetMessages(string conversationId, int? maxPageSize = default(int?), string participantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetMessagesAsync(string conversationId, int? maxPageSize, string participantId, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.Messages.ConversationMessageItem> GetMessagesAsync(string conversationId, int? maxPageSize = default(int?), string participantId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.RemoveParticipantsResult> RemoveParticipants(string conversationId, Azure.Communication.Messages.RemoveParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response RemoveParticipants(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.RemoveParticipantsResult>> RemoveParticipantsAsync(string conversationId, Azure.Communication.Messages.RemoveParticipantsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.RemoveParticipantsResult>> RemoveParticipantsAsync(string conversationId, Azure.Communication.Messages.RemoveParticipantsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RemoveParticipantsAsync(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Communication.Messages.SendConversationMessageResult> SendMessage(string conversationId, Azure.Communication.Messages.SendConversationMessageRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Communication.Messages.SendConversationMessageResult> SendMessage(string conversationId, Azure.Communication.Messages.SendConversationMessageOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SendMessage(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.SendConversationMessageResult>> SendMessageAsync(string conversationId, Azure.Communication.Messages.SendConversationMessageRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.Messages.SendConversationMessageResult>> SendMessageAsync(string conversationId, Azure.Communication.Messages.SendConversationMessageOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SendMessageAsync(string conversationId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class DocumentConversationMessageContent : Azure.Communication.Messages.ConversationMessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.DocumentConversationMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentConversationMessageContent>
@@ -276,27 +282,27 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.DocumentNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExternalParticipant : Azure.Communication.Messages.Participant, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ExternalParticipant>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ExternalParticipant>
+    public partial class ExternalConversationParticipant : Azure.Communication.Messages.ConversationParticipant, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ExternalConversationParticipant>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ExternalConversationParticipant>
     {
-        public ExternalParticipant(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationContact> contacts) { }
+        public ExternalConversationParticipant(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.ConversationContact> contacts) { }
         public System.Collections.Generic.IList<Azure.Communication.Messages.ConversationContact> Contacts { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.ExternalParticipant System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ExternalParticipant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ExternalParticipant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.ExternalParticipant System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ExternalParticipant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ExternalParticipant>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ExternalParticipant>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Communication.Messages.ExternalConversationParticipant System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ExternalConversationParticipant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ExternalConversationParticipant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.ExternalConversationParticipant System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ExternalConversationParticipant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ExternalConversationParticipant>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ExternalConversationParticipant>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GetConversationMessagesAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>
+    public partial class GetConversationThreadAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.GetConversationThreadAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.GetConversationThreadAnalysisResult>
     {
-        internal GetConversationMessagesAnalysisResult() { }
+        internal GetConversationThreadAnalysisResult() { }
         public string Summary { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.GetConversationMessagesAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.GetConversationMessagesAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.GetConversationMessagesAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Communication.Messages.GetConversationThreadAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.GetConversationThreadAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.GetConversationThreadAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.GetConversationThreadAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.GetConversationThreadAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.GetConversationThreadAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.GetConversationThreadAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ImageConversationMessageContent : Azure.Communication.Messages.ConversationMessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ImageConversationMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageConversationMessageContent>
     {
@@ -322,16 +328,16 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ImageNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class InternalParticipant : Azure.Communication.Messages.Participant, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InternalParticipant>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalParticipant>
+    public partial class InternalConversationParticipant : Azure.Communication.Messages.ConversationParticipant, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InternalConversationParticipant>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalConversationParticipant>
     {
-        public InternalParticipant(Azure.Communication.Messages.ConversationContact contact) { }
+        public InternalConversationParticipant(Azure.Communication.Messages.ConversationContact contact) { }
         public Azure.Communication.Messages.ConversationContact Contact { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.InternalParticipant System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InternalParticipant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InternalParticipant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.InternalParticipant System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalParticipant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalParticipant>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalParticipant>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Communication.Messages.InternalConversationParticipant System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InternalConversationParticipant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.InternalConversationParticipant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.InternalConversationParticipant System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalConversationParticipant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalConversationParticipant>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.InternalConversationParticipant>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("`MediaNotificationContent` is being deprecated, we encourage you to use the new `ImageNotificationContent` for sending images instead.")]
     public partial class MediaNotificationContent : Azure.Communication.Messages.NotificationContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MediaNotificationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MediaNotificationContent>
@@ -392,10 +398,10 @@ namespace Azure.Communication.Messages
         public MessageTemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MessageTemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Pageable<System.BinaryData> GetTemplates(System.Guid channelId, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplates(System.Guid channelId, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetTemplatesAsync(System.Guid channelId, int? maxpagesize, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplatesAsync(System.Guid channelId, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTemplates(System.Guid channelId, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplates(System.Guid channelId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTemplatesAsync(System.Guid channelId, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplatesAsync(System.Guid channelId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MessageTemplateDocument : Azure.Communication.Messages.MessageTemplateValue, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.MessageTemplateDocument>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.MessageTemplateDocument>
     {
@@ -567,45 +573,21 @@ namespace Azure.Communication.Messages
         public static bool operator !=(Azure.Communication.Messages.OutboundDeliveryStrategyKind left, Azure.Communication.Messages.OutboundDeliveryStrategyKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class Participant : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Participant>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Participant>
+    public partial class RemoveParticipantsOptions : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsOptions>
     {
-        protected Participant() { }
-        public string DisplayName { get { throw null; } set { } }
-        public string Id { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.Participant System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Participant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Participant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.Participant System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Participant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Participant>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Participant>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ParticipantsResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ParticipantsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ParticipantsResult>
-    {
-        internal ParticipantsResult() { }
-        public Azure.ResponseError Error { get { throw null; } }
-        public string Id { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.ParticipantsResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ParticipantsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.ParticipantsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.ParticipantsResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ParticipantsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ParticipantsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.ParticipantsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class RemoveParticipantsRequest : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsRequest>
-    {
-        public RemoveParticipantsRequest(System.Collections.Generic.IEnumerable<string> participantIds) { }
+        public RemoveParticipantsOptions(System.Collections.Generic.IEnumerable<string> participantIds) { }
         public System.Collections.Generic.IList<string> ParticipantIds { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.RemoveParticipantsRequest System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.RemoveParticipantsRequest System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Communication.Messages.RemoveParticipantsOptions System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.RemoveParticipantsOptions System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RemoveParticipantsResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsResult>
     {
         internal RemoveParticipantsResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Messages.ParticipantsResult> InvalidParticipants { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Communication.Messages.UpdateParticipantsResult> InvalidParticipants { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Communication.Messages.RemoveParticipantsResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.RemoveParticipantsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -613,17 +595,17 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.RemoveParticipantsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SendConversationMessageRequest : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendConversationMessageRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageRequest>
+    public partial class SendConversationMessageOptions : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendConversationMessageOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageOptions>
     {
-        public SendConversationMessageRequest(Azure.Communication.Messages.ConversationMessageContent request) { }
+        public SendConversationMessageOptions(Azure.Communication.Messages.ConversationMessageContent request) { }
         public Azure.Communication.Messages.OutboundDeliveryStrategyKind? OutboundDeliveryStrategy { get { throw null; } set { } }
         public Azure.Communication.Messages.ConversationMessageContent Request { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.SendConversationMessageRequest System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendConversationMessageRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendConversationMessageRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.SendConversationMessageRequest System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Communication.Messages.SendConversationMessageOptions System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendConversationMessageOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendConversationMessageOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.SendConversationMessageOptions System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SendConversationMessageResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.SendConversationMessageResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.SendConversationMessageResult>
     {
@@ -691,6 +673,18 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.TextNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class UpdateParticipantsResult : System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.UpdateParticipantsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.UpdateParticipantsResult>
+    {
+        internal UpdateParticipantsResult() { }
+        public Azure.ResponseError Error { get { throw null; } }
+        public string Id { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.UpdateParticipantsResult System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.UpdateParticipantsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.UpdateParticipantsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.UpdateParticipantsResult System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.UpdateParticipantsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.UpdateParticipantsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.UpdateParticipantsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class VideoConversationMessageContent : Azure.Communication.Messages.ConversationMessageContent, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.VideoConversationMessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoConversationMessageContent>
     {
         public VideoConversationMessageContent(System.Uri mediaUri) { }
@@ -715,19 +709,19 @@ namespace Azure.Communication.Messages
         string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoNotificationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.VideoNotificationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WhatsAppContact : Azure.Communication.Messages.ConversationContact, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.WhatsAppContact>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.WhatsAppContact>
-    {
-        public WhatsAppContact(string id) : base (default(string)) { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.WhatsAppContact System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.WhatsAppContact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.WhatsAppContact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Communication.Messages.WhatsAppContact System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.WhatsAppContact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.WhatsAppContact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.WhatsAppContact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
 }
 namespace Azure.Communication.Messages.Models.Channels
 {
+    public partial class WhatsAppContact : Azure.Communication.Messages.ConversationContact, System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>, System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>
+    {
+        public WhatsAppContact(string id) : base (default(string)) { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.Models.Channels.WhatsAppContact System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Communication.Messages.Models.Channels.WhatsAppContact System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Communication.Messages.Models.Channels.WhatsAppContact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WhatsAppMessageButtonSubType : System.IEquatable<Azure.Communication.Messages.Models.Channels.WhatsAppMessageButtonSubType>
     {
@@ -799,12 +793,12 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class CommunicationMessagesClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationManagementClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationManagementClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationManagementClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationManagementClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationManagementClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationManagementClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationMessagesClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationMessagesClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationMessagesClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationMessagesClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationMessagesClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationMessagesClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationAdministrationClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationAdministrationClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationAdministrationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationAdministrationClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationThreadClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationThreadClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationThreadClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationThreadClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.ConversationThreadClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddConversationThreadClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.MessageTemplateClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.MessageTemplateClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Communication.Messages.MessageTemplateClient, Azure.Communication.Messages.CommunicationMessagesClientOptions> AddMessageTemplateClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

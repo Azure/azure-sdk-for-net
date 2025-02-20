@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary>
-    /// Advanced Messaging conversation participant.
-    /// Please note <see cref="Participant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ExternalParticipant"/> and <see cref="InternalParticipant"/>.
-    /// </summary>
-    public abstract partial class Participant
+    /// <summary> Response for the remove participants operation. </summary>
+    public partial class UpdateParticipantsResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +43,37 @@ namespace Azure.Communication.Messages
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Participant"/>. </summary>
-        protected Participant()
+        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsResult"/>. </summary>
+        /// <param name="id"> Participant User Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal UpdateParticipantsResult(string id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
+            Id = id;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Participant"/>. </summary>
-        /// <param name="id"> Participant Identifier. </param>
-        /// <param name="displayName"> Participant display name. </param>
-        /// <param name="kind"> The type discriminator describing a participant type. </param>
+        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsResult"/>. </summary>
+        /// <param name="id"> Participant User Id. </param>
+        /// <param name="error"> Error of the participant operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Participant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateParticipantsResult(string id, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            DisplayName = displayName;
-            Kind = kind;
+            Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Participant Identifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateParticipantsResult"/> for deserialization. </summary>
+        internal UpdateParticipantsResult()
+        {
+        }
+
+        /// <summary> Participant User Id. </summary>
         public string Id { get; }
-        /// <summary> Participant display name. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> The type discriminator describing a participant type. </summary>
-        internal ParticipantKind Kind { get; set; }
+        /// <summary> Error of the participant operation. </summary>
+        public ResponseError Error { get; }
     }
 }

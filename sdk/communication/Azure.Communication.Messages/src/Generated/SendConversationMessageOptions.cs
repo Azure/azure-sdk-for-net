@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> Request payload for sending a conversation message. </summary>
-    public partial class SendConversationMessageRequest
+    public partial class SendConversationMessageOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,21 @@ namespace Azure.Communication.Messages
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SendConversationMessageRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendConversationMessageOptions"/>. </summary>
         /// <param name="request">
         /// Details of a send conversation message request.
         /// Please note <see cref="ConversationMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AudioConversationMessageContent"/>, <see cref="DocumentConversationMessageContent"/>, <see cref="ImageConversationMessageContent"/>, <see cref="TemplateConversationMessageContent"/>, <see cref="TextConversationMessageContent"/> and <see cref="VideoConversationMessageContent"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public SendConversationMessageRequest(ConversationMessageContent request)
+        public SendConversationMessageOptions(ConversationMessageContent request)
         {
             Argument.AssertNotNull(request, nameof(request));
 
             Request = request;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendConversationMessageRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendConversationMessageOptions"/>. </summary>
         /// <param name="request">
         /// Details of a send conversation message request.
         /// Please note <see cref="ConversationMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,15 +70,15 @@ namespace Azure.Communication.Messages
         /// Supports internalOnly, allChannels.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SendConversationMessageRequest(ConversationMessageContent request, OutboundDeliveryStrategyKind? outboundDeliveryStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SendConversationMessageOptions(ConversationMessageContent request, OutboundDeliveryStrategyKind? outboundDeliveryStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Request = request;
             OutboundDeliveryStrategy = outboundDeliveryStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendConversationMessageRequest"/> for deserialization. </summary>
-        internal SendConversationMessageRequest()
+        /// <summary> Initializes a new instance of <see cref="SendConversationMessageOptions"/> for deserialization. </summary>
+        internal SendConversationMessageOptions()
         {
         }
 

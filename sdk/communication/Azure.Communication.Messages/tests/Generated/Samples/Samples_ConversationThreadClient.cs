@@ -14,13 +14,15 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Messages.Samples
 {
-    public partial class Samples_ConversationMessagesClient
+    public partial class Samples_ConversationThreadClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_AddParticipants_ShortVersion()
+        public void Example_ConversationThreadClient_AddParticipants_ShortVersion()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -45,9 +47,11 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_AddParticipants_ShortVersion_Async()
+        public async Task Example_ConversationThreadClient_AddParticipants_ShortVersion_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -72,35 +76,41 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_AddParticipants_ShortVersion_Convenience()
+        public void Example_ConversationThreadClient_AddParticipants_ShortVersion_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalParticipant(new CommunicationContact("<id>"))
+new InternalConversationParticipant(new CommunicationContact("<id>"))
             });
-            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", body);
+            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_AddParticipants_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationThreadClient_AddParticipants_ShortVersion_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalParticipant(new CommunicationContact("<id>"))
+new InternalConversationParticipant(new CommunicationContact("<id>"))
             });
-            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", body);
+            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_AddParticipants_AllParameters()
+        public void Example_ConversationThreadClient_AddParticipants_AllParameters()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -130,9 +140,11 @@ displayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_AddParticipants_AllParameters_Async()
+        public async Task Example_ConversationThreadClient_AddParticipants_AllParameters_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -162,41 +174,47 @@ displayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_AddParticipants_AllParameters_Convenience()
+        public void Example_ConversationThreadClient_AddParticipants_AllParameters_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalParticipant(new CommunicationContact("<id>"))
+new InternalConversationParticipant(new CommunicationContact("<id>"))
 {
 DisplayName = "<displayName>",
 }
             });
-            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", body);
+            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_AddParticipants_AllParameters_Convenience_Async()
+        public async Task Example_ConversationThreadClient_AddParticipants_AllParameters_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalParticipant(new CommunicationContact("<id>"))
+new InternalConversationParticipant(new CommunicationContact("<id>"))
 {
 DisplayName = "<displayName>",
 }
             });
-            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", body);
+            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_RemoveParticipants_ShortVersion()
+        public void Example_ConversationThreadClient_RemoveParticipants_ShortVersion()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -213,9 +231,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_RemoveParticipants_ShortVersion_Async()
+        public async Task Example_ConversationThreadClient_RemoveParticipants_ShortVersion_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -232,29 +252,35 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_RemoveParticipants_ShortVersion_Convenience()
+        public void Example_ConversationThreadClient_RemoveParticipants_ShortVersion_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", body);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_RemoveParticipants_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationThreadClient_RemoveParticipants_ShortVersion_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", body);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_RemoveParticipants_AllParameters()
+        public void Example_ConversationThreadClient_RemoveParticipants_AllParameters()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -275,9 +301,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_RemoveParticipants_AllParameters_Async()
+        public async Task Example_ConversationThreadClient_RemoveParticipants_AllParameters_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -298,29 +326,35 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_RemoveParticipants_AllParameters_Convenience()
+        public void Example_ConversationThreadClient_RemoveParticipants_AllParameters_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", body);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_RemoveParticipants_AllParameters_Convenience_Async()
+        public async Task Example_ConversationThreadClient_RemoveParticipants_AllParameters_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", body);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_SendMessage_ShortVersion()
+        public void Example_ConversationThreadClient_SendMessage_ShortVersion()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -338,9 +372,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_SendMessage_ShortVersion_Async()
+        public async Task Example_ConversationThreadClient_SendMessage_ShortVersion_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -358,29 +394,35 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_SendMessage_ShortVersion_Convenience()
+        public void Example_ConversationThreadClient_SendMessage_ShortVersion_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            SendConversationMessageRequest body = new SendConversationMessageRequest(new TextConversationMessageContent("<content>"));
-            Response<SendConversationMessageResult> response = client.SendMessage("<conversationId>", body);
+            SendConversationMessageOptions options = new SendConversationMessageOptions(new TextConversationMessageContent("<content>"));
+            Response<SendConversationMessageResult> response = client.SendMessage("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_SendMessage_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationThreadClient_SendMessage_ShortVersion_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            SendConversationMessageRequest body = new SendConversationMessageRequest(new TextConversationMessageContent("<content>"));
-            Response<SendConversationMessageResult> response = await client.SendMessageAsync("<conversationId>", body);
+            SendConversationMessageOptions options = new SendConversationMessageOptions(new TextConversationMessageContent("<content>"));
+            Response<SendConversationMessageResult> response = await client.SendMessageAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_SendMessage_AllParameters()
+        public void Example_ConversationThreadClient_SendMessage_AllParameters()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -399,9 +441,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_SendMessage_AllParameters_Async()
+        public async Task Example_ConversationThreadClient_SendMessage_AllParameters_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -420,35 +464,41 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_SendMessage_AllParameters_Convenience()
+        public void Example_ConversationThreadClient_SendMessage_AllParameters_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            SendConversationMessageRequest body = new SendConversationMessageRequest(new TextConversationMessageContent("<content>"))
+            SendConversationMessageOptions options = new SendConversationMessageOptions(new TextConversationMessageContent("<content>"))
             {
                 OutboundDeliveryStrategy = OutboundDeliveryStrategyKind.InternalOnly,
             };
-            Response<SendConversationMessageResult> response = client.SendMessage("<conversationId>", body);
+            Response<SendConversationMessageResult> response = client.SendMessage("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_SendMessage_AllParameters_Convenience_Async()
+        public async Task Example_ConversationThreadClient_SendMessage_AllParameters_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            SendConversationMessageRequest body = new SendConversationMessageRequest(new TextConversationMessageContent("<content>"))
+            SendConversationMessageOptions options = new SendConversationMessageOptions(new TextConversationMessageContent("<content>"))
             {
                 OutboundDeliveryStrategy = OutboundDeliveryStrategyKind.InternalOnly,
             };
-            Response<SendConversationMessageResult> response = await client.SendMessageAsync("<conversationId>", body);
+            Response<SendConversationMessageResult> response = await client.SendMessageAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_AnalyzeConversation_ShortVersion()
+        public void Example_ConversationThreadClient_AnalyzeConversation_ShortVersion()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             Response response = client.AnalyzeConversation("<conversationId>", null);
 
@@ -458,9 +508,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_AnalyzeConversation_ShortVersion_Async()
+        public async Task Example_ConversationThreadClient_AnalyzeConversation_ShortVersion_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
 
@@ -470,27 +522,33 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_AnalyzeConversation_ShortVersion_Convenience()
+        public void Example_ConversationThreadClient_AnalyzeConversation_ShortVersion_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            Response<GetConversationMessagesAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_AnalyzeConversation_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationThreadClient_AnalyzeConversation_ShortVersion_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            Response<GetConversationMessagesAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_AnalyzeConversation_AllParameters()
+        public void Example_ConversationThreadClient_AnalyzeConversation_AllParameters()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             Response response = client.AnalyzeConversation("<conversationId>", null);
 
@@ -500,9 +558,11 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_AnalyzeConversation_AllParameters_Async()
+        public async Task Example_ConversationThreadClient_AnalyzeConversation_AllParameters_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
 
@@ -512,27 +572,33 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationMessagesClient_AnalyzeConversation_AllParameters_Convenience()
+        public void Example_ConversationThreadClient_AnalyzeConversation_AllParameters_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            Response<GetConversationMessagesAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationMessagesClient_AnalyzeConversation_AllParameters_Convenience_Async()
+        public async Task Example_ConversationThreadClient_AnalyzeConversation_AllParameters_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            Response<GetConversationMessagesAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversations_ShortVersion()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetConversations(null, null, null, null))
             {
@@ -545,7 +611,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversations_ShortVersion_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetConversationsAsync(null, null, null, null))
             {
@@ -558,9 +626,11 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversations_ShortVersion_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            foreach (Conversation item in client.GetConversations())
+            foreach (CommunicationConversation item in client.GetConversations())
             {
             }
         }
@@ -569,9 +639,11 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversations_ShortVersion_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            await foreach (Conversation item in client.GetConversationsAsync())
+            await foreach (CommunicationConversation item in client.GetConversationsAsync())
             {
             }
         }
@@ -580,7 +652,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversations_AllParameters()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetConversations(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
             {
@@ -599,7 +673,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversations_AllParameters_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetConversationsAsync(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
             {
@@ -618,9 +694,11 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversations_AllParameters_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            foreach (Conversation item in client.GetConversations(maxpagesize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
+            foreach (CommunicationConversation item in client.GetConversations(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
             {
             }
         }
@@ -629,9 +707,11 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversations_AllParameters_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            await foreach (Conversation item in client.GetConversationsAsync(maxpagesize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
+            await foreach (CommunicationConversation item in client.GetConversationsAsync(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
             {
             }
         }
@@ -640,7 +720,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConversationMessageItem_GetMessages_ShortVersion()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetMessages("<conversationId>", null, null, null))
             {
@@ -656,7 +738,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConversationMessageItem_GetMessages_ShortVersion_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", null, null, null))
             {
@@ -672,7 +756,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConversationMessageItem_GetMessages_ShortVersion_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             foreach (ConversationMessageItem item in client.GetMessages("<conversationId>"))
             {
@@ -683,7 +769,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConversationMessageItem_GetMessages_ShortVersion_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>"))
             {
@@ -694,7 +782,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConversationMessageItem_GetMessages_AllParameters()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetMessages("<conversationId>", 1234, "<participantId>", null))
             {
@@ -712,7 +802,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConversationMessageItem_GetMessages_AllParameters_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", 1234, "<participantId>", null))
             {
@@ -730,9 +822,11 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConversationMessageItem_GetMessages_AllParameters_Convenience()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxpagesize: 1234, participantId: "<participantId>"))
+            foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
             {
             }
         }
@@ -741,9 +835,11 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConversationMessageItem_GetMessages_AllParameters_Convenience_Async()
         {
-            ConversationMessagesClient client = new ConversationMessagesClient((string)null);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ConversationThreadClient client = new ConversationThreadClient(endpoint, credential);
 
-            await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxpagesize: 1234, participantId: "<participantId>"))
+            await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
             {
             }
         }

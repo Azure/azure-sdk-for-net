@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class AddParticipantsRequest : IUtf8JsonSerializable, IJsonModel<AddParticipantsRequest>
+    public partial class RemoveParticipantsOptions : IUtf8JsonSerializable, IJsonModel<RemoveParticipantsOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AddParticipantsRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemoveParticipantsOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AddParticipantsRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RemoveParticipantsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,17 +28,17 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RemoveParticipantsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddParticipantsRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RemoveParticipantsOptions)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("participants"u8);
+            writer.WritePropertyName("participantIds"u8);
             writer.WriteStartArray();
-            foreach (var item in Participants)
+            foreach (var item in ParticipantIds)
             {
-                writer.WriteObjectValue(item, options);
+                writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -58,19 +58,19 @@ namespace Azure.Communication.Messages
             }
         }
 
-        AddParticipantsRequest IJsonModel<AddParticipantsRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RemoveParticipantsOptions IJsonModel<RemoveParticipantsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RemoveParticipantsOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddParticipantsRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RemoveParticipantsOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAddParticipantsRequest(document.RootElement, options);
+            return DeserializeRemoveParticipantsOptions(document.RootElement, options);
         }
 
-        internal static AddParticipantsRequest DeserializeAddParticipantsRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RemoveParticipantsOptions DeserializeRemoveParticipantsOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -78,19 +78,19 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            IList<Participant> participants = default;
+            IList<string> participantIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("participants"u8))
+                if (property.NameEquals("participantIds"u8))
                 {
-                    List<Participant> array = new List<Participant>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Participant.DeserializeParticipant(item, options));
+                        array.Add(item.GetString());
                     }
-                    participants = array;
+                    participantIds = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,46 +99,46 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AddParticipantsRequest(participants, serializedAdditionalRawData);
+            return new RemoveParticipantsOptions(participantIds, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AddParticipantsRequest>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RemoveParticipantsOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RemoveParticipantsOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AddParticipantsRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemoveParticipantsOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AddParticipantsRequest IPersistableModel<AddParticipantsRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RemoveParticipantsOptions IPersistableModel<RemoveParticipantsOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AddParticipantsRequest>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RemoveParticipantsOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAddParticipantsRequest(document.RootElement, options);
+                        return DeserializeRemoveParticipantsOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddParticipantsRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemoveParticipantsOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AddParticipantsRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RemoveParticipantsOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AddParticipantsRequest FromResponse(Response response)
+        internal static RemoveParticipantsOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAddParticipantsRequest(document.RootElement);
+            return DeserializeRemoveParticipantsOptions(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

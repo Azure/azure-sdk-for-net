@@ -48,7 +48,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="CreateConversationRequest"/>. </summary>
         /// <param name="conversation"> The conversation details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversation"/> is null. </exception>
-        internal CreateConversationRequest(Conversation conversation)
+        internal CreateConversationRequest(CommunicationConversation conversation)
         {
             Argument.AssertNotNull(conversation, nameof(conversation));
 
@@ -59,7 +59,7 @@ namespace Azure.Communication.Messages
         /// <param name="conversation"> The conversation details. </param>
         /// <param name="initialMessage"> An intial message within the conversation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateConversationRequest(Conversation conversation, ConversationMessage initialMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateConversationRequest(CommunicationConversation conversation, ConversationMessage initialMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Conversation = conversation;
             InitialMessage = initialMessage;
@@ -72,7 +72,7 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> The conversation details. </summary>
-        public Conversation Conversation { get; }
+        public CommunicationConversation Conversation { get; }
         /// <summary> An intial message within the conversation. </summary>
         public ConversationMessage InitialMessage { get; }
     }

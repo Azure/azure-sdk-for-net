@@ -49,7 +49,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="RemoveParticipantsResult"/>. </summary>
         /// <param name="invalidParticipants"> List of Ids with Errors if failed to be added. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="invalidParticipants"/> is null. </exception>
-        internal RemoveParticipantsResult(IEnumerable<ParticipantsResult> invalidParticipants)
+        internal RemoveParticipantsResult(IEnumerable<UpdateParticipantsResult> invalidParticipants)
         {
             Argument.AssertNotNull(invalidParticipants, nameof(invalidParticipants));
 
@@ -59,7 +59,7 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="RemoveParticipantsResult"/>. </summary>
         /// <param name="invalidParticipants"> List of Ids with Errors if failed to be added. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RemoveParticipantsResult(IReadOnlyList<ParticipantsResult> invalidParticipants, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RemoveParticipantsResult(IReadOnlyList<UpdateParticipantsResult> invalidParticipants, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InvalidParticipants = invalidParticipants;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> List of Ids with Errors if failed to be added. </summary>
-        public IReadOnlyList<ParticipantsResult> InvalidParticipants { get; }
+        public IReadOnlyList<UpdateParticipantsResult> InvalidParticipants { get; }
     }
 }

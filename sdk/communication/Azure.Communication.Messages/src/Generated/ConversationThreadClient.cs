@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.Messages
 {
     // Data plane generated client.
-    /// <summary> The ConversationMessages service client. </summary>
-    public partial class ConversationMessagesClient
+    /// <summary> The ConversationThread service client. </summary>
+    public partial class ConversationThreadClient
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
@@ -33,28 +33,20 @@ namespace Azure.Communication.Messages
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ConversationMessagesClient. </summary>
+        /// <summary> Initializes a new instance of ConversationThreadClient. </summary>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationMessagesClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
+        public ConversationThreadClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of ConversationMessagesClient. </summary>
-        /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationMessagesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new CommunicationMessagesClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of ConversationMessagesClient. </summary>
+        /// <summary> Initializes a new instance of ConversationThreadClient. </summary>
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ConversationMessagesClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
+        public ConversationThreadClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -69,17 +61,17 @@ namespace Azure.Communication.Messages
 
         /// <summary> Adds participants to a specific conversation. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="body"> Details of the payload for adding participants to a conversation. </param>
+        /// <param name="options"> Details of the payload for adding participants to a conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='AddParticipantsAsync(string,AddParticipantsRequest,CancellationToken)']/*" />
-        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(string conversationId, AddParticipantsRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='AddParticipantsAsync(string,AddParticipantsOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<AddParticipantsResult>> AddParticipantsAsync(string conversationId, AddParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AddParticipantsAsync(conversationId, content, context).ConfigureAwait(false);
             return Response.FromValue(AddParticipantsResult.FromResponse(response), response);
@@ -87,17 +79,17 @@ namespace Azure.Communication.Messages
 
         /// <summary> Adds participants to a specific conversation. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="body"> Details of the payload for adding participants to a conversation. </param>
+        /// <param name="options"> Details of the payload for adding participants to a conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='AddParticipants(string,AddParticipantsRequest,CancellationToken)']/*" />
-        public virtual Response<AddParticipantsResult> AddParticipants(string conversationId, AddParticipantsRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='AddParticipants(string,AddParticipantsOptions,CancellationToken)']/*" />
+        public virtual Response<AddParticipantsResult> AddParticipants(string conversationId, AddParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AddParticipants(conversationId, content, context);
             return Response.FromValue(AddParticipantsResult.FromResponse(response), response);
@@ -113,7 +105,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddParticipantsAsync(string,AddParticipantsRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddParticipantsAsync(string,AddParticipantsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -125,13 +117,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='AddParticipantsAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='AddParticipantsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AddParticipantsAsync(string conversationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationMessagesClient.AddParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ConversationThreadClient.AddParticipants");
             scope.Start();
             try
             {
@@ -155,7 +147,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddParticipants(string,AddParticipantsRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddParticipants(string,AddParticipantsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -167,13 +159,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='AddParticipants(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='AddParticipants(string,RequestContent,RequestContext)']/*" />
         public virtual Response AddParticipants(string conversationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationMessagesClient.AddParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ConversationThreadClient.AddParticipants");
             scope.Start();
             try
             {
@@ -189,17 +181,17 @@ namespace Azure.Communication.Messages
 
         /// <summary> remove a participant from a conversation. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="body"> Details of the request body for removing participants from a conversation. </param>
+        /// <param name="options"> Details of the request body for removing participants from a conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='RemoveParticipantsAsync(string,RemoveParticipantsRequest,CancellationToken)']/*" />
-        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string conversationId, RemoveParticipantsRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='RemoveParticipantsAsync(string,RemoveParticipantsOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string conversationId, RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RemoveParticipantsAsync(conversationId, content, context).ConfigureAwait(false);
             return Response.FromValue(RemoveParticipantsResult.FromResponse(response), response);
@@ -207,17 +199,17 @@ namespace Azure.Communication.Messages
 
         /// <summary> remove a participant from a conversation. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="body"> Details of the request body for removing participants from a conversation. </param>
+        /// <param name="options"> Details of the request body for removing participants from a conversation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='RemoveParticipants(string,RemoveParticipantsRequest,CancellationToken)']/*" />
-        public virtual Response<RemoveParticipantsResult> RemoveParticipants(string conversationId, RemoveParticipantsRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='RemoveParticipants(string,RemoveParticipantsOptions,CancellationToken)']/*" />
+        public virtual Response<RemoveParticipantsResult> RemoveParticipants(string conversationId, RemoveParticipantsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = RemoveParticipants(conversationId, content, context);
             return Response.FromValue(RemoveParticipantsResult.FromResponse(response), response);
@@ -233,7 +225,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RemoveParticipantsAsync(string,RemoveParticipantsRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RemoveParticipantsAsync(string,RemoveParticipantsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -245,13 +237,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='RemoveParticipantsAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='RemoveParticipantsAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> RemoveParticipantsAsync(string conversationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationMessagesClient.RemoveParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ConversationThreadClient.RemoveParticipants");
             scope.Start();
             try
             {
@@ -275,7 +267,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="RemoveParticipants(string,RemoveParticipantsRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="RemoveParticipants(string,RemoveParticipantsOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -287,13 +279,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='RemoveParticipants(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='RemoveParticipants(string,RequestContent,RequestContext)']/*" />
         public virtual Response RemoveParticipants(string conversationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationMessagesClient.RemoveParticipants");
+            using var scope = ClientDiagnostics.CreateScope("ConversationThreadClient.RemoveParticipants");
             scope.Start();
             try
             {
@@ -309,17 +301,17 @@ namespace Azure.Communication.Messages
 
         /// <summary> Sends a conversation message from Business to User. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="body"> Details of the conversation message to send. </param>
+        /// <param name="options"> Details of the conversation message to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='SendMessageAsync(string,SendConversationMessageRequest,CancellationToken)']/*" />
-        public virtual async Task<Response<SendConversationMessageResult>> SendMessageAsync(string conversationId, SendConversationMessageRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='SendMessageAsync(string,SendConversationMessageOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<SendConversationMessageResult>> SendMessageAsync(string conversationId, SendConversationMessageOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SendMessageAsync(conversationId, content, context).ConfigureAwait(false);
             return Response.FromValue(SendConversationMessageResult.FromResponse(response), response);
@@ -327,17 +319,17 @@ namespace Azure.Communication.Messages
 
         /// <summary> Sends a conversation message from Business to User. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="body"> Details of the conversation message to send. </param>
+        /// <param name="options"> Details of the conversation message to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> or <paramref name="options"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='SendMessage(string,SendConversationMessageRequest,CancellationToken)']/*" />
-        public virtual Response<SendConversationMessageResult> SendMessage(string conversationId, SendConversationMessageRequest body, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='SendMessage(string,SendConversationMessageOptions,CancellationToken)']/*" />
+        public virtual Response<SendConversationMessageResult> SendMessage(string conversationId, SendConversationMessageOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = options.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = SendMessage(conversationId, content, context);
             return Response.FromValue(SendConversationMessageResult.FromResponse(response), response);
@@ -353,7 +345,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SendMessageAsync(string,SendConversationMessageRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SendMessageAsync(string,SendConversationMessageOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -365,13 +357,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='SendMessageAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='SendMessageAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SendMessageAsync(string conversationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationMessagesClient.SendMessage");
+            using var scope = ClientDiagnostics.CreateScope("ConversationThreadClient.SendMessage");
             scope.Start();
             try
             {
@@ -395,7 +387,7 @@ namespace Azure.Communication.Messages
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="SendMessage(string,SendConversationMessageRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="SendMessage(string,SendConversationMessageOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -407,13 +399,13 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='SendMessage(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='SendMessage(string,RequestContent,RequestContext)']/*" />
         public virtual Response SendMessage(string conversationId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationMessagesClient.SendMessage");
+            using var scope = ClientDiagnostics.CreateScope("ConversationThreadClient.SendMessage");
             scope.Start();
             try
             {
@@ -432,14 +424,14 @@ namespace Azure.Communication.Messages
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<GetConversationMessagesAnalysisResult>> AnalyzeConversationAsync(string conversationId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<GetConversationThreadAnalysisResult>> AnalyzeConversationAsync(string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await AnalyzeConversationAsync(conversationId, context).ConfigureAwait(false);
-            return Response.FromValue(GetConversationMessagesAnalysisResult.FromResponse(response), response);
+            return Response.FromValue(GetConversationThreadAnalysisResult.FromResponse(response), response);
         }
 
         /// <summary> Get AI Analysis of a conversation. </summary>
@@ -447,14 +439,14 @@ namespace Azure.Communication.Messages
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='AnalyzeConversation(string,CancellationToken)']/*" />
-        public virtual Response<GetConversationMessagesAnalysisResult> AnalyzeConversation(string conversationId, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='AnalyzeConversation(string,CancellationToken)']/*" />
+        public virtual Response<GetConversationThreadAnalysisResult> AnalyzeConversation(string conversationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = AnalyzeConversation(conversationId, context);
-            return Response.FromValue(GetConversationMessagesAnalysisResult.FromResponse(response), response);
+            return Response.FromValue(GetConversationThreadAnalysisResult.FromResponse(response), response);
         }
 
         /// <summary>
@@ -478,12 +470,12 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> AnalyzeConversationAsync(string conversationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationMessagesClient.AnalyzeConversation");
+            using var scope = ClientDiagnostics.CreateScope("ConversationThreadClient.AnalyzeConversation");
             scope.Start();
             try
             {
@@ -518,12 +510,12 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='AnalyzeConversation(string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='AnalyzeConversation(string,RequestContext)']/*" />
         public virtual Response AnalyzeConversation(string conversationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationMessagesClient.AnalyzeConversation");
+            using var scope = ClientDiagnostics.CreateScope("ConversationThreadClient.AnalyzeConversation");
             scope.Start();
             try
             {
@@ -538,31 +530,31 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Retrieves list of conversations. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='GetConversationsAsync(int?,string,Guid?,CancellationToken)']/*" />
-        public virtual AsyncPageable<Conversation> GetConversationsAsync(int? maxpagesize = null, string participantId = null, Guid? channelId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='GetConversationsAsync(int?,string,Guid?,CancellationToken)']/*" />
+        public virtual AsyncPageable<CommunicationConversation> GetConversationsAsync(int? maxPageSize = null, string participantId = null, Guid? channelId = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConversationsRequest(pageSizeHint, participantId, channelId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConversationsNextPageRequest(nextLink, pageSizeHint, participantId, channelId, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Conversation.DeserializeConversation(e), ClientDiagnostics, _pipeline, "ConversationMessagesClient.GetConversations", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConversationsRequest(maxPageSize, participantId, channelId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConversationsNextPageRequest(nextLink, maxPageSize, participantId, channelId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CommunicationConversation.DeserializeCommunicationConversation(e), ClientDiagnostics, _pipeline, "ConversationThreadClient.GetConversations", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves list of conversations. </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='GetConversations(int?,string,Guid?,CancellationToken)']/*" />
-        public virtual Pageable<Conversation> GetConversations(int? maxpagesize = null, string participantId = null, Guid? channelId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='GetConversations(int?,string,Guid?,CancellationToken)']/*" />
+        public virtual Pageable<CommunicationConversation> GetConversations(int? maxPageSize = null, string participantId = null, Guid? channelId = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConversationsRequest(pageSizeHint, participantId, channelId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConversationsNextPageRequest(nextLink, pageSizeHint, participantId, channelId, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Conversation.DeserializeConversation(e), ClientDiagnostics, _pipeline, "ConversationMessagesClient.GetConversations", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConversationsRequest(maxPageSize, participantId, channelId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConversationsNextPageRequest(nextLink, maxPageSize, participantId, channelId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CommunicationConversation.DeserializeCommunicationConversation(e), ClientDiagnostics, _pipeline, "ConversationThreadClient.GetConversations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -580,18 +572,18 @@ namespace Azure.Communication.Messages
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='GetConversationsAsync(int?,string,Guid?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetConversationsAsync(int? maxpagesize, string participantId, Guid? channelId, RequestContext context)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='GetConversationsAsync(int?,string,Guid?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetConversationsAsync(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConversationsRequest(pageSizeHint, participantId, channelId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConversationsNextPageRequest(nextLink, pageSizeHint, participantId, channelId, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationMessagesClient.GetConversations", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConversationsRequest(maxPageSize, participantId, channelId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConversationsNextPageRequest(nextLink, maxPageSize, participantId, channelId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationThreadClient.GetConversations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -609,54 +601,54 @@ namespace Azure.Communication.Messages
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="channelId"> The id of channel. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='GetConversations(int?,string,Guid?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetConversations(int? maxpagesize, string participantId, Guid? channelId, RequestContext context)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='GetConversations(int?,string,Guid?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetConversations(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConversationsRequest(pageSizeHint, participantId, channelId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConversationsNextPageRequest(nextLink, pageSizeHint, participantId, channelId, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationMessagesClient.GetConversations", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConversationsRequest(maxPageSize, participantId, channelId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConversationsNextPageRequest(nextLink, maxPageSize, participantId, channelId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationThreadClient.GetConversations", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves list of conversation messages. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='GetMessagesAsync(string,int?,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<ConversationMessageItem> GetMessagesAsync(string conversationId, int? maxpagesize = null, string participantId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='GetMessagesAsync(string,int?,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<ConversationMessageItem> GetMessagesAsync(string conversationId, int? maxPageSize = null, string participantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, pageSizeHint, participantId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, pageSizeHint, participantId, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationMessageItem.DeserializeConversationMessageItem(e), ClientDiagnostics, _pipeline, "ConversationMessagesClient.GetMessages", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, maxPageSize, participantId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, maxPageSize, participantId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConversationMessageItem.DeserializeConversationMessageItem(e), ClientDiagnostics, _pipeline, "ConversationThreadClient.GetMessages", "value", "nextLink", context);
         }
 
         /// <summary> Retrieves list of conversation messages. </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='GetMessages(string,int?,string,CancellationToken)']/*" />
-        public virtual Pageable<ConversationMessageItem> GetMessages(string conversationId, int? maxpagesize = null, string participantId = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='GetMessages(string,int?,string,CancellationToken)']/*" />
+        public virtual Pageable<ConversationMessageItem> GetMessages(string conversationId, int? maxPageSize = null, string participantId = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, pageSizeHint, participantId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, pageSizeHint, participantId, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationMessageItem.DeserializeConversationMessageItem(e), ClientDiagnostics, _pipeline, "ConversationMessagesClient.GetMessages", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, maxPageSize, participantId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, maxPageSize, participantId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConversationMessageItem.DeserializeConversationMessageItem(e), ClientDiagnostics, _pipeline, "ConversationThreadClient.GetMessages", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -675,21 +667,21 @@ namespace Azure.Communication.Messages
         /// </list>
         /// </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='GetMessagesAsync(string,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetMessagesAsync(string conversationId, int? maxpagesize, string participantId, RequestContext context)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='GetMessagesAsync(string,int?,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetMessagesAsync(string conversationId, int? maxPageSize, string participantId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, pageSizeHint, participantId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, pageSizeHint, participantId, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationMessagesClient.GetMessages", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, maxPageSize, participantId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, maxPageSize, participantId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationThreadClient.GetMessages", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -708,21 +700,21 @@ namespace Azure.Communication.Messages
         /// </list>
         /// </summary>
         /// <param name="conversationId"> The conversation ID. </param>
-        /// <param name="maxpagesize"> Number of objects to return per page. </param>
+        /// <param name="maxPageSize"> Number of objects to return per page. </param>
         /// <param name="participantId"> The participant user ID. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="conversationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ConversationMessagesClient.xml" path="doc/members/member[@name='GetMessages(string,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetMessages(string conversationId, int? maxpagesize, string participantId, RequestContext context)
+        /// <include file="Docs/ConversationThreadClient.xml" path="doc/members/member[@name='GetMessages(string,int?,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetMessages(string conversationId, int? maxPageSize, string participantId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(conversationId, nameof(conversationId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, pageSizeHint, participantId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, pageSizeHint, participantId, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationMessagesClient.GetMessages", "value", "nextLink", maxpagesize, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(conversationId, maxPageSize, participantId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMessagesNextPageRequest(nextLink, conversationId, maxPageSize, participantId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationThreadClient.GetMessages", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateAddParticipantsRequest(string conversationId, RequestContent content, RequestContext context)
@@ -765,7 +757,7 @@ namespace Azure.Communication.Messages
             return message;
         }
 
-        internal HttpMessage CreateGetConversationsRequest(int? maxpagesize, string participantId, Guid? channelId, RequestContext context)
+        internal HttpMessage CreateGetConversationsRequest(int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -774,9 +766,9 @@ namespace Azure.Communication.Messages
             uri.Reset(_endpoint);
             uri.AppendPath("/messages/conversations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (participantId != null)
             {
@@ -791,7 +783,7 @@ namespace Azure.Communication.Messages
             return message;
         }
 
-        internal HttpMessage CreateGetMessagesRequest(string conversationId, int? maxpagesize, string participantId, RequestContext context)
+        internal HttpMessage CreateGetMessagesRequest(string conversationId, int? maxPageSize, string participantId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -802,9 +794,9 @@ namespace Azure.Communication.Messages
             uri.AppendPath(conversationId, true);
             uri.AppendPath("/messages", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxpagesize != null)
+            if (maxPageSize != null)
             {
-                uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
+                uri.AppendQuery("maxPageSize", maxPageSize.Value, true);
             }
             if (participantId != null)
             {
@@ -853,7 +845,7 @@ namespace Azure.Communication.Messages
             return message;
         }
 
-        internal HttpMessage CreateGetConversationsNextPageRequest(string nextLink, int? maxpagesize, string participantId, Guid? channelId, RequestContext context)
+        internal HttpMessage CreateGetConversationsNextPageRequest(string nextLink, int? maxPageSize, string participantId, Guid? channelId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -866,7 +858,7 @@ namespace Azure.Communication.Messages
             return message;
         }
 
-        internal HttpMessage CreateGetMessagesNextPageRequest(string nextLink, string conversationId, int? maxpagesize, string participantId, RequestContext context)
+        internal HttpMessage CreateGetMessagesNextPageRequest(string nextLink, string conversationId, int? maxPageSize, string participantId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

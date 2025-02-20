@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="CreateConversationAsync(Conversation,ConversationMessage,CancellationToken)">
+    <member name="CreateConversationAsync(CommunicationConversation,ConversationMessage,CancellationToken)">
       <example>
 This sample shows how to call CreateConversationAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Conversation conversation = new Conversation();
-Response<Conversation> response = await client.CreateConversationAsync(conversation);
+CommunicationConversation conversation = new CommunicationConversation();
+Response<CommunicationConversation> response = await client.CreateConversationAsync(conversation);
 ]]></code>
 This sample shows how to call CreateConversationAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Conversation conversation = new Conversation
+CommunicationConversation conversation = new CommunicationConversation
 {
     Topic = "<topic>",
     DeliveryChannelIds = { "<deliveryChannelIds>" },
     OutboundDeliveryStrategy = OutboundDeliveryStrategyKind.InternalOnly,
-    Participants = {new InternalParticipant(new CommunicationContact("<id>"))
+    Participants = {new InternalConversationParticipant(new CommunicationContact("<id>"))
     {
         DisplayName = "<displayName>",
     }},
 };
 ConversationMessage initialMessage = new ConversationMessage("<content>");
-Response<Conversation> response = await client.CreateConversationAsync(conversation, initialMessage: initialMessage);
+Response<CommunicationConversation> response = await client.CreateConversationAsync(conversation, initialMessage: initialMessage);
 ]]></code></example>
     </member>
-    <member name="CreateConversation(Conversation,ConversationMessage,CancellationToken)">
+    <member name="CreateConversation(CommunicationConversation,ConversationMessage,CancellationToken)">
       <example>
 This sample shows how to call CreateConversation.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Conversation conversation = new Conversation();
-Response<Conversation> response = client.CreateConversation(conversation);
+CommunicationConversation conversation = new CommunicationConversation();
+Response<CommunicationConversation> response = client.CreateConversation(conversation);
 ]]></code>
 This sample shows how to call CreateConversation with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Conversation conversation = new Conversation
+CommunicationConversation conversation = new CommunicationConversation
 {
     Topic = "<topic>",
     DeliveryChannelIds = { "<deliveryChannelIds>" },
     OutboundDeliveryStrategy = OutboundDeliveryStrategyKind.InternalOnly,
-    Participants = {new InternalParticipant(new CommunicationContact("<id>"))
+    Participants = {new InternalConversationParticipant(new CommunicationContact("<id>"))
     {
         DisplayName = "<displayName>",
     }},
 };
 ConversationMessage initialMessage = new ConversationMessage("<content>");
-Response<Conversation> response = client.CreateConversation(conversation, initialMessage: initialMessage);
+Response<CommunicationConversation> response = client.CreateConversation(conversation, initialMessage: initialMessage);
 ]]></code></example>
     </member>
     <member name="CreateConversationAsync(RequestContent,RequestContext)">
       <example>
 This sample shows how to call CreateConversationAsync and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -72,7 +72,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
 This sample shows how to call CreateConversationAsync with all request content and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -119,7 +119,7 @@ Console.WriteLine(result.GetProperty("participants")[0].GetProperty("kind").ToSt
       <example>
 This sample shows how to call CreateConversation and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -132,7 +132,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
 This sample shows how to call CreateConversation with all request content and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -179,37 +179,37 @@ Console.WriteLine(result.GetProperty("participants")[0].GetProperty("kind").ToSt
       <example>
 This sample shows how to call GetConversationAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Response<Conversation> response = await client.GetConversationAsync("<conversationId>");
+Response<CommunicationConversation> response = await client.GetConversationAsync("<conversationId>");
 ]]></code>
 This sample shows how to call GetConversationAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Response<Conversation> response = await client.GetConversationAsync("<conversationId>");
+Response<CommunicationConversation> response = await client.GetConversationAsync("<conversationId>");
 ]]></code></example>
     </member>
     <member name="GetConversation(string,CancellationToken)">
       <example>
 This sample shows how to call GetConversation.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Response<Conversation> response = client.GetConversation("<conversationId>");
+Response<CommunicationConversation> response = client.GetConversation("<conversationId>");
 ]]></code>
 This sample shows how to call GetConversation with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Response<Conversation> response = client.GetConversation("<conversationId>");
+Response<CommunicationConversation> response = client.GetConversation("<conversationId>");
 ]]></code></example>
     </member>
     <member name="GetConversationAsync(string,RequestContext)">
       <example>
 This sample shows how to call GetConversationAsync and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = await client.GetConversationAsync("<conversationId>", null);
 
@@ -218,7 +218,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
 This sample shows how to call GetConversationAsync with all parameters and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = await client.GetConversationAsync("<conversationId>", null);
 
@@ -236,7 +236,7 @@ Console.WriteLine(result.GetProperty("participants")[0].GetProperty("kind").ToSt
       <example>
 This sample shows how to call GetConversation and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = client.GetConversation("<conversationId>", null);
 
@@ -245,7 +245,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
 This sample shows how to call GetConversation with all parameters and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = client.GetConversation("<conversationId>", null);
 
@@ -263,7 +263,7 @@ Console.WriteLine(result.GetProperty("participants")[0].GetProperty("kind").ToSt
       <example>
 This sample shows how to call DeleteConversationAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = await client.DeleteConversationAsync("<conversationId>");
 
@@ -271,7 +271,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteConversationAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = await client.DeleteConversationAsync("<conversationId>");
 
@@ -282,7 +282,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteConversation.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = client.DeleteConversation("<conversationId>");
 
@@ -290,7 +290,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteConversation with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = client.DeleteConversation("<conversationId>");
 
@@ -301,7 +301,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call TerminateConversationAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = await client.TerminateConversationAsync("<conversationId>");
 
@@ -309,7 +309,7 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call TerminateConversationAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = await client.TerminateConversationAsync("<conversationId>");
 
@@ -320,7 +320,7 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call TerminateConversation.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = client.TerminateConversation("<conversationId>");
 
@@ -328,70 +328,70 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call TerminateConversation with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = client.TerminateConversation("<conversationId>");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="AddParticipantsAsync(string,AddParticipantsRequest,CancellationToken)">
+    <member name="AddParticipantsAsync(string,AddParticipantsOptions,CancellationToken)">
       <example>
 This sample shows how to call AddParticipantsAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
 {
-    new InternalParticipant(new CommunicationContact("<id>"))
+    new InternalConversationParticipant(new CommunicationContact("<id>"))
 });
-Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", body);
+Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
 ]]></code>
 This sample shows how to call AddParticipantsAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
 {
-    new InternalParticipant(new CommunicationContact("<id>"))
+    new InternalConversationParticipant(new CommunicationContact("<id>"))
     {
         DisplayName = "<displayName>",
     }
 });
-Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", body);
+Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
 ]]></code></example>
     </member>
-    <member name="AddParticipants(string,AddParticipantsRequest,CancellationToken)">
+    <member name="AddParticipants(string,AddParticipantsOptions,CancellationToken)">
       <example>
 This sample shows how to call AddParticipants.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
 {
-    new InternalParticipant(new CommunicationContact("<id>"))
+    new InternalConversationParticipant(new CommunicationContact("<id>"))
 });
-Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", body);
+Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
 ]]></code>
 This sample shows how to call AddParticipants with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
 {
-    new InternalParticipant(new CommunicationContact("<id>"))
+    new InternalConversationParticipant(new CommunicationContact("<id>"))
     {
         DisplayName = "<displayName>",
     }
 });
-Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", body);
+Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
 ]]></code></example>
     </member>
     <member name="AddParticipantsAsync(string,RequestContent,RequestContext)">
       <example>
 This sample shows how to call AddParticipantsAsync and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -415,7 +415,7 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id")
 ]]></code>
 This sample shows how to call AddParticipantsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -447,7 +447,7 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("erro
       <example>
 This sample shows how to call AddParticipants and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -471,7 +471,7 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id")
 ]]></code>
 This sample shows how to call AddParticipants with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -499,45 +499,45 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("erro
 Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
-    <member name="RemoveParticipantsAsync(string,RemoveParticipantsRequest,CancellationToken)">
+    <member name="RemoveParticipantsAsync(string,RemoveParticipantsOptions,CancellationToken)">
       <example>
 This sample shows how to call RemoveParticipantsAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", body);
+RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
 ]]></code>
 This sample shows how to call RemoveParticipantsAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", body);
+RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
 ]]></code></example>
     </member>
-    <member name="RemoveParticipants(string,RemoveParticipantsRequest,CancellationToken)">
+    <member name="RemoveParticipants(string,RemoveParticipantsOptions,CancellationToken)">
       <example>
 This sample shows how to call RemoveParticipants.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", body);
+RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
 ]]></code>
 This sample shows how to call RemoveParticipants with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", body);
+RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
 ]]></code></example>
     </member>
     <member name="RemoveParticipantsAsync(string,RequestContent,RequestContext)">
       <example>
 This sample shows how to call RemoveParticipantsAsync and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -553,7 +553,7 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id")
 ]]></code>
 This sample shows how to call RemoveParticipantsAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -576,7 +576,7 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("erro
       <example>
 This sample shows how to call RemoveParticipants and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -592,7 +592,7 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("id")
 ]]></code>
 This sample shows how to call RemoveParticipants with all parameters and request content and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -615,37 +615,37 @@ Console.WriteLine(result.GetProperty("invalidParticipants")[0].GetProperty("erro
       <example>
 This sample shows how to call AnalyzeConversationAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Response<GetConversationMessagesAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Response<GetConversationMessagesAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
 ]]></code></example>
     </member>
     <member name="AnalyzeConversation(string,CancellationToken)">
       <example>
 This sample shows how to call AnalyzeConversation.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Response<GetConversationMessagesAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
 ]]></code>
 This sample shows how to call AnalyzeConversation with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-Response<GetConversationMessagesAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
 ]]></code></example>
     </member>
     <member name="AnalyzeConversationAsync(string,RequestContext)">
       <example>
 This sample shows how to call AnalyzeConversationAsync and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
 
@@ -654,7 +654,7 @@ Console.WriteLine(result.GetProperty("summary").ToString());
 ]]></code>
 This sample shows how to call AnalyzeConversationAsync with all parameters and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
 
@@ -666,7 +666,7 @@ Console.WriteLine(result.GetProperty("summary").ToString());
       <example>
 This sample shows how to call AnalyzeConversation and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = client.AnalyzeConversation("<conversationId>", null);
 
@@ -675,7 +675,7 @@ Console.WriteLine(result.GetProperty("summary").ToString());
 ]]></code>
 This sample shows how to call AnalyzeConversation with all parameters and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 Response response = client.AnalyzeConversation("<conversationId>", null);
 
@@ -687,17 +687,17 @@ Console.WriteLine(result.GetProperty("summary").ToString());
       <example>
 This sample shows how to call GetConversationsAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-await foreach (Conversation item in client.GetConversationsAsync())
+await foreach (CommunicationConversation item in client.GetConversationsAsync())
 {
 }
 ]]></code>
 This sample shows how to call GetConversationsAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-await foreach (Conversation item in client.GetConversationsAsync(maxpagesize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
+await foreach (CommunicationConversation item in client.GetConversationsAsync(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
 {
 }
 ]]></code></example>
@@ -706,17 +706,17 @@ await foreach (Conversation item in client.GetConversationsAsync(maxpagesize: 12
       <example>
 This sample shows how to call GetConversations.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-foreach (Conversation item in client.GetConversations())
+foreach (CommunicationConversation item in client.GetConversations())
 {
 }
 ]]></code>
 This sample shows how to call GetConversations with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-foreach (Conversation item in client.GetConversations(maxpagesize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
+foreach (CommunicationConversation item in client.GetConversations(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
 {
 }
 ]]></code></example>
@@ -725,7 +725,7 @@ foreach (Conversation item in client.GetConversations(maxpagesize: 1234, partici
       <example>
 This sample shows how to call GetConversationsAsync and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 await foreach (BinaryData item in client.GetConversationsAsync(null, null, null, null))
 {
@@ -735,7 +735,7 @@ await foreach (BinaryData item in client.GetConversationsAsync(null, null, null,
 ]]></code>
 This sample shows how to call GetConversationsAsync with all parameters and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 await foreach (BinaryData item in client.GetConversationsAsync(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
 {
@@ -754,7 +754,7 @@ await foreach (BinaryData item in client.GetConversationsAsync(1234, "<participa
       <example>
 This sample shows how to call GetConversations and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 foreach (BinaryData item in client.GetConversations(null, null, null, null))
 {
@@ -764,7 +764,7 @@ foreach (BinaryData item in client.GetConversations(null, null, null, null))
 ]]></code>
 This sample shows how to call GetConversations with all parameters and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 foreach (BinaryData item in client.GetConversations(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
 {
@@ -783,7 +783,7 @@ foreach (BinaryData item in client.GetConversations(1234, "<participantId>", Gui
       <example>
 This sample shows how to call GetMessagesAsync.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>"))
 {
@@ -791,9 +791,9 @@ await foreach (ConversationMessageItem item in client.GetMessagesAsync("<convers
 ]]></code>
 This sample shows how to call GetMessagesAsync with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxpagesize: 1234, participantId: "<participantId>"))
+await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
 {
 }
 ]]></code></example>
@@ -802,7 +802,7 @@ await foreach (ConversationMessageItem item in client.GetMessagesAsync("<convers
       <example>
 This sample shows how to call GetMessages.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 foreach (ConversationMessageItem item in client.GetMessages("<conversationId>"))
 {
@@ -810,9 +810,9 @@ foreach (ConversationMessageItem item in client.GetMessages("<conversationId>"))
 ]]></code>
 This sample shows how to call GetMessages with all parameters.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxpagesize: 1234, participantId: "<participantId>"))
+foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
 {
 }
 ]]></code></example>
@@ -821,7 +821,7 @@ foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", 
       <example>
 This sample shows how to call GetMessagesAsync and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", null, null, null))
 {
@@ -834,7 +834,7 @@ await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", nu
 ]]></code>
 This sample shows how to call GetMessagesAsync with all parameters and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", 1234, "<participantId>", null))
 {
@@ -852,7 +852,7 @@ await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", 12
       <example>
 This sample shows how to call GetMessages and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 foreach (BinaryData item in client.GetMessages("<conversationId>", null, null, null))
 {
@@ -865,7 +865,7 @@ foreach (BinaryData item in client.GetMessages("<conversationId>", null, null, n
 ]]></code>
 This sample shows how to call GetMessages with all parameters and parse the result.
 <code><![CDATA[
-ConversationManagementClient client = new ConversationManagementClient((string)null);
+ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
 foreach (BinaryData item in client.GetMessages("<conversationId>", 1234, "<participantId>", null))
 {

@@ -169,23 +169,23 @@ namespace Azure.Communication.Messages
                 content);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.Conversation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.CommunicationConversation"/>. </summary>
         /// <param name="id"> The conversation ID. </param>
         /// <param name="topic"> The conversation topic. </param>
         /// <param name="deliveryChannelIds"> List of delivery channel IDs. </param>
         /// <param name="outboundDeliveryStrategy"> Outbound delivery strategy for the conversation. </param>
         /// <param name="participants">
         /// List of participants involved in the conversation.
-        /// Please note <see cref="Messages.Participant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Messages.ExternalParticipant"/> and <see cref="Messages.InternalParticipant"/>.
+        /// Please note <see cref="Messages.ConversationParticipant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Messages.ExternalConversationParticipant"/> and <see cref="Messages.InternalConversationParticipant"/>.
         /// </param>
-        /// <returns> A new <see cref="Messages.Conversation"/> instance for mocking. </returns>
-        public static Conversation Conversation(string id = null, string topic = null, IEnumerable<string> deliveryChannelIds = null, OutboundDeliveryStrategyKind? outboundDeliveryStrategy = null, IEnumerable<Participant> participants = null)
+        /// <returns> A new <see cref="Messages.CommunicationConversation"/> instance for mocking. </returns>
+        public static CommunicationConversation CommunicationConversation(string id = null, string topic = null, IEnumerable<string> deliveryChannelIds = null, OutboundDeliveryStrategyKind? outboundDeliveryStrategy = null, IEnumerable<ConversationParticipant> participants = null)
         {
             deliveryChannelIds ??= new List<string>();
-            participants ??= new List<Participant>();
+            participants ??= new List<ConversationParticipant>();
 
-            return new Conversation(
+            return new CommunicationConversation(
                 id,
                 topic,
                 deliveryChannelIds?.ToList(),
@@ -194,17 +194,17 @@ namespace Azure.Communication.Messages
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.Participant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.ConversationParticipant"/>. </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
         /// <param name="kind"> The type discriminator describing a participant type. </param>
-        /// <returns> A new <see cref="Messages.Participant"/> instance for mocking. </returns>
-        public static Participant Participant(string id = null, string displayName = null, string kind = null)
+        /// <returns> A new <see cref="Messages.ConversationParticipant"/> instance for mocking. </returns>
+        public static ConversationParticipant ConversationParticipant(string id = null, string displayName = null, string kind = null)
         {
-            return new UnknownParticipant(id, displayName, kind == null ? default : new ParticipantKind(kind), serializedAdditionalRawData: null);
+            return new UnknownConversationParticipant(id, displayName, kind == null ? default : new ParticipantKind(kind), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.InternalParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.InternalConversationParticipant"/>. </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
         /// <param name="contact">
@@ -212,13 +212,13 @@ namespace Azure.Communication.Messages
         /// Please note <see cref="ConversationContact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BotContact"/>, <see cref="CommunicationContact"/> and <see cref="WhatsAppContact"/>.
         /// </param>
-        /// <returns> A new <see cref="Messages.InternalParticipant"/> instance for mocking. </returns>
-        public static InternalParticipant InternalParticipant(string id = null, string displayName = null, ConversationContact contact = null)
+        /// <returns> A new <see cref="Messages.InternalConversationParticipant"/> instance for mocking. </returns>
+        public static InternalConversationParticipant InternalConversationParticipant(string id = null, string displayName = null, ConversationContact contact = null)
         {
-            return new InternalParticipant(id, displayName, ParticipantKind.Internal, serializedAdditionalRawData: null, contact);
+            return new InternalConversationParticipant(id, displayName, ParticipantKind.Internal, serializedAdditionalRawData: null, contact);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.ExternalParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.ExternalConversationParticipant"/>. </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
         /// <param name="contacts">
@@ -226,12 +226,12 @@ namespace Azure.Communication.Messages
         /// Please note <see cref="ConversationContact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BotContact"/>, <see cref="CommunicationContact"/> and <see cref="WhatsAppContact"/>.
         /// </param>
-        /// <returns> A new <see cref="Messages.ExternalParticipant"/> instance for mocking. </returns>
-        public static ExternalParticipant ExternalParticipant(string id = null, string displayName = null, IEnumerable<ConversationContact> contacts = null)
+        /// <returns> A new <see cref="Messages.ExternalConversationParticipant"/> instance for mocking. </returns>
+        public static ExternalConversationParticipant ExternalConversationParticipant(string id = null, string displayName = null, IEnumerable<ConversationContact> contacts = null)
         {
             contacts ??= new List<ConversationContact>();
 
-            return new ExternalParticipant(id, displayName, ParticipantKind.External, serializedAdditionalRawData: null, contacts?.ToList());
+            return new ExternalConversationParticipant(id, displayName, ParticipantKind.External, serializedAdditionalRawData: null, contacts?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.ConversationMessageItem"/>. </summary>
@@ -261,41 +261,41 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="Messages.AddParticipantsResult"/>. </summary>
         /// <param name="invalidParticipants"> List of Ids with Errors if failed to be added. </param>
         /// <returns> A new <see cref="Messages.AddParticipantsResult"/> instance for mocking. </returns>
-        public static AddParticipantsResult AddParticipantsResult(IEnumerable<ParticipantsResult> invalidParticipants = null)
+        public static AddParticipantsResult AddParticipantsResult(IEnumerable<UpdateParticipantsResult> invalidParticipants = null)
         {
-            invalidParticipants ??= new List<ParticipantsResult>();
+            invalidParticipants ??= new List<UpdateParticipantsResult>();
 
             return new AddParticipantsResult(invalidParticipants?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.ParticipantsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.UpdateParticipantsResult"/>. </summary>
         /// <param name="id"> Participant User Id. </param>
         /// <param name="error"> Error of the participant operation. </param>
-        /// <returns> A new <see cref="Messages.ParticipantsResult"/> instance for mocking. </returns>
-        public static ParticipantsResult ParticipantsResult(string id = null, ResponseError error = null)
+        /// <returns> A new <see cref="Messages.UpdateParticipantsResult"/> instance for mocking. </returns>
+        public static UpdateParticipantsResult UpdateParticipantsResult(string id = null, ResponseError error = null)
         {
-            return new ParticipantsResult(id, error, serializedAdditionalRawData: null);
+            return new UpdateParticipantsResult(id, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.RemoveParticipantsResult"/>. </summary>
         /// <param name="invalidParticipants"> List of Ids with Errors if failed to be added. </param>
         /// <returns> A new <see cref="Messages.RemoveParticipantsResult"/> instance for mocking. </returns>
-        public static RemoveParticipantsResult RemoveParticipantsResult(IEnumerable<ParticipantsResult> invalidParticipants = null)
+        public static RemoveParticipantsResult RemoveParticipantsResult(IEnumerable<UpdateParticipantsResult> invalidParticipants = null)
         {
-            invalidParticipants ??= new List<ParticipantsResult>();
+            invalidParticipants ??= new List<UpdateParticipantsResult>();
 
             return new RemoveParticipantsResult(invalidParticipants?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.GetConversationMessagesAnalysisResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.GetConversationThreadAnalysisResult"/>. </summary>
         /// <param name="summary"> The AI summary of the conversation messages. </param>
-        /// <returns> A new <see cref="Messages.GetConversationMessagesAnalysisResult"/> instance for mocking. </returns>
-        public static GetConversationMessagesAnalysisResult GetConversationMessagesAnalysisResult(string summary = null)
+        /// <returns> A new <see cref="Messages.GetConversationThreadAnalysisResult"/> instance for mocking. </returns>
+        public static GetConversationThreadAnalysisResult GetConversationThreadAnalysisResult(string summary = null)
         {
-            return new GetConversationMessagesAnalysisResult(summary, serializedAdditionalRawData: null);
+            return new GetConversationThreadAnalysisResult(summary, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.SendConversationMessageRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Messages.SendConversationMessageOptions"/>. </summary>
         /// <param name="request">
         /// Details of a send conversation message request.
         /// Please note <see cref="ConversationMessageContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -305,10 +305,10 @@ namespace Azure.Communication.Messages
         /// The options of the outbound delivery strategy for messages sent by emplyees in a conversation.
         /// Supports internalOnly, allChannels.
         /// </param>
-        /// <returns> A new <see cref="Messages.SendConversationMessageRequest"/> instance for mocking. </returns>
-        public static SendConversationMessageRequest SendConversationMessageRequest(ConversationMessageContent request = null, OutboundDeliveryStrategyKind? outboundDeliveryStrategy = null)
+        /// <returns> A new <see cref="Messages.SendConversationMessageOptions"/> instance for mocking. </returns>
+        public static SendConversationMessageOptions SendConversationMessageOptions(ConversationMessageContent request = null, OutboundDeliveryStrategyKind? outboundDeliveryStrategy = null)
         {
-            return new SendConversationMessageRequest(request, outboundDeliveryStrategy, serializedAdditionalRawData: null);
+            return new SendConversationMessageOptions(request, outboundDeliveryStrategy, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Messages.SendConversationMessageResult"/>. </summary>

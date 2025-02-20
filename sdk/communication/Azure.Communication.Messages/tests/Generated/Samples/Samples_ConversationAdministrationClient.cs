@@ -14,13 +14,13 @@ using NUnit.Framework;
 
 namespace Azure.Communication.Messages.Samples
 {
-    public partial class Samples_ConversationManagementClient
+    public partial class Samples_ConversationAdministrationClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_CreateConversation_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -36,7 +36,7 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_CreateConversation_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -52,27 +52,27 @@ namespace Azure.Communication.Messages.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_CreateConversation_ShortVersion_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Conversation conversation = new Conversation();
-            Response<Conversation> response = client.CreateConversation(conversation);
+            CommunicationConversation conversation = new CommunicationConversation();
+            Response<CommunicationConversation> response = client.CreateConversation(conversation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_CreateConversation_ShortVersion_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Conversation conversation = new Conversation();
-            Response<Conversation> response = await client.CreateConversationAsync(conversation);
+            CommunicationConversation conversation = new CommunicationConversation();
+            Response<CommunicationConversation> response = await client.CreateConversationAsync(conversation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_CreateConversation_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -119,7 +119,7 @@ displayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_CreateConversation_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -166,47 +166,47 @@ displayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_CreateConversation_AllParameters_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Conversation conversation = new Conversation
+            CommunicationConversation conversation = new CommunicationConversation
             {
                 Topic = "<topic>",
                 DeliveryChannelIds = { "<deliveryChannelIds>" },
                 OutboundDeliveryStrategy = OutboundDeliveryStrategyKind.InternalOnly,
-                Participants = {new InternalParticipant(new CommunicationContact("<id>"))
+                Participants = {new InternalConversationParticipant(new CommunicationContact("<id>"))
 {
 DisplayName = "<displayName>",
 }},
             };
             ConversationMessage initialMessage = new ConversationMessage("<content>");
-            Response<Conversation> response = client.CreateConversation(conversation, initialMessage: initialMessage);
+            Response<CommunicationConversation> response = client.CreateConversation(conversation, initialMessage: initialMessage);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_CreateConversation_AllParameters_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Conversation conversation = new Conversation
+            CommunicationConversation conversation = new CommunicationConversation
             {
                 Topic = "<topic>",
                 DeliveryChannelIds = { "<deliveryChannelIds>" },
                 OutboundDeliveryStrategy = OutboundDeliveryStrategyKind.InternalOnly,
-                Participants = {new InternalParticipant(new CommunicationContact("<id>"))
+                Participants = {new InternalConversationParticipant(new CommunicationContact("<id>"))
 {
 DisplayName = "<displayName>",
 }},
             };
             ConversationMessage initialMessage = new ConversationMessage("<content>");
-            Response<Conversation> response = await client.CreateConversationAsync(conversation, initialMessage: initialMessage);
+            Response<CommunicationConversation> response = await client.CreateConversationAsync(conversation, initialMessage: initialMessage);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversation_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = client.GetConversation("<conversationId>", null);
 
@@ -218,7 +218,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversation_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = await client.GetConversationAsync("<conversationId>", null);
 
@@ -230,25 +230,25 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversation_ShortVersion_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<Conversation> response = client.GetConversation("<conversationId>");
+            Response<CommunicationConversation> response = client.GetConversation("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversation_ShortVersion_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<Conversation> response = await client.GetConversationAsync("<conversationId>");
+            Response<CommunicationConversation> response = await client.GetConversationAsync("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversation_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = client.GetConversation("<conversationId>", null);
 
@@ -266,7 +266,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversation_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = await client.GetConversationAsync("<conversationId>", null);
 
@@ -284,25 +284,25 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversation_AllParameters_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<Conversation> response = client.GetConversation("<conversationId>");
+            Response<CommunicationConversation> response = client.GetConversation("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversation_AllParameters_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<Conversation> response = await client.GetConversationAsync("<conversationId>");
+            Response<CommunicationConversation> response = await client.GetConversationAsync("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_DeleteConversation_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = client.DeleteConversation("<conversationId>");
 
@@ -313,7 +313,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_DeleteConversation_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = await client.DeleteConversationAsync("<conversationId>");
 
@@ -324,7 +324,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_DeleteConversation_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = client.DeleteConversation("<conversationId>");
 
@@ -335,7 +335,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_DeleteConversation_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = await client.DeleteConversationAsync("<conversationId>");
 
@@ -344,9 +344,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_TerminateConversation_ShortVersion()
+        public void Example_ConversationAdministrationClient_TerminateConversation_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = client.TerminateConversation("<conversationId>");
 
@@ -355,9 +355,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_TerminateConversation_ShortVersion_Async()
+        public async Task Example_ConversationAdministrationClient_TerminateConversation_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = await client.TerminateConversationAsync("<conversationId>");
 
@@ -366,9 +366,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_TerminateConversation_AllParameters()
+        public void Example_ConversationAdministrationClient_TerminateConversation_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = client.TerminateConversation("<conversationId>");
 
@@ -377,9 +377,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_TerminateConversation_AllParameters_Async()
+        public async Task Example_ConversationAdministrationClient_TerminateConversation_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = await client.TerminateConversationAsync("<conversationId>");
 
@@ -388,9 +388,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_AddParticipants_ShortVersion()
+        public void Example_ConversationAdministrationClient_AddParticipants_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -415,9 +415,9 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_AddParticipants_ShortVersion_Async()
+        public async Task Example_ConversationAdministrationClient_AddParticipants_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -442,35 +442,35 @@ id = "<id>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_AddParticipants_ShortVersion_Convenience()
+        public void Example_ConversationAdministrationClient_AddParticipants_ShortVersion_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalParticipant(new CommunicationContact("<id>"))
+new InternalConversationParticipant(new CommunicationContact("<id>"))
             });
-            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", body);
+            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_AddParticipants_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_AddParticipants_ShortVersion_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalParticipant(new CommunicationContact("<id>"))
+new InternalConversationParticipant(new CommunicationContact("<id>"))
             });
-            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", body);
+            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_AddParticipants_AllParameters()
+        public void Example_ConversationAdministrationClient_AddParticipants_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -500,9 +500,9 @@ displayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_AddParticipants_AllParameters_Async()
+        public async Task Example_ConversationAdministrationClient_AddParticipants_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -532,41 +532,41 @@ displayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_AddParticipants_AllParameters_Convenience()
+        public void Example_ConversationAdministrationClient_AddParticipants_AllParameters_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalParticipant(new CommunicationContact("<id>"))
+new InternalConversationParticipant(new CommunicationContact("<id>"))
 {
 DisplayName = "<displayName>",
 }
             });
-            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", body);
+            Response<AddParticipantsResult> response = client.AddParticipants("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_AddParticipants_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_AddParticipants_AllParameters_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            AddParticipantsRequest body = new AddParticipantsRequest(new Participant[]
+            AddParticipantsOptions options = new AddParticipantsOptions(new ConversationParticipant[]
             {
-new InternalParticipant(new CommunicationContact("<id>"))
+new InternalConversationParticipant(new CommunicationContact("<id>"))
 {
 DisplayName = "<displayName>",
 }
             });
-            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", body);
+            Response<AddParticipantsResult> response = await client.AddParticipantsAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_RemoveParticipants_ShortVersion()
+        public void Example_ConversationAdministrationClient_RemoveParticipants_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -583,9 +583,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_RemoveParticipants_ShortVersion_Async()
+        public async Task Example_ConversationAdministrationClient_RemoveParticipants_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -602,29 +602,29 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_RemoveParticipants_ShortVersion_Convenience()
+        public void Example_ConversationAdministrationClient_RemoveParticipants_ShortVersion_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", body);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_RemoveParticipants_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_RemoveParticipants_ShortVersion_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", body);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_RemoveParticipants_AllParameters()
+        public void Example_ConversationAdministrationClient_RemoveParticipants_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -645,9 +645,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_RemoveParticipants_AllParameters_Async()
+        public async Task Example_ConversationAdministrationClient_RemoveParticipants_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -668,29 +668,29 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_RemoveParticipants_AllParameters_Convenience()
+        public void Example_ConversationAdministrationClient_RemoveParticipants_AllParameters_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", body);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+            Response<RemoveParticipantsResult> response = client.RemoveParticipants("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_RemoveParticipants_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_RemoveParticipants_AllParameters_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            RemoveParticipantsRequest body = new RemoveParticipantsRequest(new string[] { "<participantIds>" });
-            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", body);
+            RemoveParticipantsOptions options = new RemoveParticipantsOptions(new string[] { "<participantIds>" });
+            Response<RemoveParticipantsResult> response = await client.RemoveParticipantsAsync("<conversationId>", options);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_AnalyzeConversation_ShortVersion()
+        public void Example_ConversationAdministrationClient_AnalyzeConversation_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = client.AnalyzeConversation("<conversationId>", null);
 
@@ -700,9 +700,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_AnalyzeConversation_ShortVersion_Async()
+        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
 
@@ -712,27 +712,27 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_AnalyzeConversation_ShortVersion_Convenience()
+        public void Example_ConversationAdministrationClient_AnalyzeConversation_ShortVersion_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<GetConversationMessagesAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_AnalyzeConversation_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_ShortVersion_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<GetConversationMessagesAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_AnalyzeConversation_AllParameters()
+        public void Example_ConversationAdministrationClient_AnalyzeConversation_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = client.AnalyzeConversation("<conversationId>", null);
 
@@ -742,9 +742,9 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_AnalyzeConversation_AllParameters_Async()
+        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             Response response = await client.AnalyzeConversationAsync("<conversationId>", null);
 
@@ -754,27 +754,27 @@ DisplayName = "<displayName>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationManagementClient_AnalyzeConversation_AllParameters_Convenience()
+        public void Example_ConversationAdministrationClient_AnalyzeConversation_AllParameters_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<GetConversationMessagesAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = client.AnalyzeConversation("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationManagementClient_AnalyzeConversation_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAdministrationClient_AnalyzeConversation_AllParameters_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            Response<GetConversationMessagesAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
+            Response<GetConversationThreadAnalysisResult> response = await client.AnalyzeConversationAsync("<conversationId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversations_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             foreach (BinaryData item in client.GetConversations(null, null, null, null))
             {
@@ -787,7 +787,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversations_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             await foreach (BinaryData item in client.GetConversationsAsync(null, null, null, null))
             {
@@ -800,9 +800,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversations_ShortVersion_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            foreach (Conversation item in client.GetConversations())
+            foreach (CommunicationConversation item in client.GetConversations())
             {
             }
         }
@@ -811,9 +811,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversations_ShortVersion_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            await foreach (Conversation item in client.GetConversationsAsync())
+            await foreach (CommunicationConversation item in client.GetConversationsAsync())
             {
             }
         }
@@ -822,7 +822,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversations_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             foreach (BinaryData item in client.GetConversations(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
             {
@@ -841,7 +841,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversations_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             await foreach (BinaryData item in client.GetConversationsAsync(1234, "<participantId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null))
             {
@@ -860,9 +860,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_Conversation_GetConversations_AllParameters_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            foreach (Conversation item in client.GetConversations(maxpagesize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
+            foreach (CommunicationConversation item in client.GetConversations(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
             {
             }
         }
@@ -871,9 +871,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Conversation_GetConversations_AllParameters_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            await foreach (Conversation item in client.GetConversationsAsync(maxpagesize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
+            await foreach (CommunicationConversation item in client.GetConversationsAsync(maxPageSize: 1234, participantId: "<participantId>", channelId: Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
             {
             }
         }
@@ -882,7 +882,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConversationMessageItem_GetMessages_ShortVersion()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             foreach (BinaryData item in client.GetMessages("<conversationId>", null, null, null))
             {
@@ -898,7 +898,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConversationMessageItem_GetMessages_ShortVersion_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", null, null, null))
             {
@@ -914,7 +914,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConversationMessageItem_GetMessages_ShortVersion_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             foreach (ConversationMessageItem item in client.GetMessages("<conversationId>"))
             {
@@ -925,7 +925,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConversationMessageItem_GetMessages_ShortVersion_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>"))
             {
@@ -936,7 +936,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConversationMessageItem_GetMessages_AllParameters()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             foreach (BinaryData item in client.GetMessages("<conversationId>", 1234, "<participantId>", null))
             {
@@ -954,7 +954,7 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConversationMessageItem_GetMessages_AllParameters_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
             await foreach (BinaryData item in client.GetMessagesAsync("<conversationId>", 1234, "<participantId>", null))
             {
@@ -972,9 +972,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConversationMessageItem_GetMessages_AllParameters_Convenience()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxpagesize: 1234, participantId: "<participantId>"))
+            foreach (ConversationMessageItem item in client.GetMessages("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
             {
             }
         }
@@ -983,9 +983,9 @@ DisplayName = "<displayName>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConversationMessageItem_GetMessages_AllParameters_Convenience_Async()
         {
-            ConversationManagementClient client = new ConversationManagementClient((string)null);
+            ConversationAdministrationClient client = new ConversationAdministrationClient((string)null);
 
-            await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxpagesize: 1234, participantId: "<participantId>"))
+            await foreach (ConversationMessageItem item in client.GetMessagesAsync("<conversationId>", maxPageSize: 1234, participantId: "<participantId>"))
             {
             }
         }

@@ -12,7 +12,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>$(NoWarn);AZC0007</NoWarn>
-    <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <NoWarn>$(NoWarn);AZC0030</NoWarn>
   </PropertyGroup>
 

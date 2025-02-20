@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Communication.Messages
 {
     /// <summary> Request payload for adding participants to a conversation. </summary>
-    public partial class AddParticipantsRequest
+    public partial class AddParticipantsOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,43 +46,43 @@ namespace Azure.Communication.Messages
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AddParticipantsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsOptions"/>. </summary>
         /// <param name="participants">
         /// List of participants to add.
-        /// Please note <see cref="Participant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalParticipant"/> and <see cref="InternalParticipant"/>.
+        /// Please note <see cref="ConversationParticipant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExternalConversationParticipant"/> and <see cref="InternalConversationParticipant"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participants"/> is null. </exception>
-        public AddParticipantsRequest(IEnumerable<Participant> participants)
+        public AddParticipantsOptions(IEnumerable<ConversationParticipant> participants)
         {
             Argument.AssertNotNull(participants, nameof(participants));
 
             Participants = participants.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddParticipantsRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsOptions"/>. </summary>
         /// <param name="participants">
         /// List of participants to add.
-        /// Please note <see cref="Participant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalParticipant"/> and <see cref="InternalParticipant"/>.
+        /// Please note <see cref="ConversationParticipant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExternalConversationParticipant"/> and <see cref="InternalConversationParticipant"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AddParticipantsRequest(IList<Participant> participants, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AddParticipantsOptions(IList<ConversationParticipant> participants, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Participants = participants;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddParticipantsRequest"/> for deserialization. </summary>
-        internal AddParticipantsRequest()
+        /// <summary> Initializes a new instance of <see cref="AddParticipantsOptions"/> for deserialization. </summary>
+        internal AddParticipantsOptions()
         {
         }
 
         /// <summary>
         /// List of participants to add.
-        /// Please note <see cref="Participant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExternalParticipant"/> and <see cref="InternalParticipant"/>.
+        /// Please note <see cref="ConversationParticipant"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExternalConversationParticipant"/> and <see cref="InternalConversationParticipant"/>.
         /// </summary>
-        public IList<Participant> Participants { get; }
+        public IList<ConversationParticipant> Participants { get; }
     }
 }

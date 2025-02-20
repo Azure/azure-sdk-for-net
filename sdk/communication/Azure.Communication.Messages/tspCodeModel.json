@@ -670,7 +670,7 @@
      "$id": "74",
      "kind": "enumvalue",
      "name": "external",
-     "value": "External",
+     "value": "external",
      "valueType": {
       "$id": "75",
       "kind": "string",
@@ -2670,7 +2670,7 @@
   {
    "$id": "263",
    "kind": "model",
-   "name": "Conversation",
+   "name": "CommunicationConversation",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Conversation",
    "usage": "Input,Output,Json",
    "doc": "A conversation.",
@@ -2768,12 +2768,12 @@
      "type": {
       "$id": "273",
       "kind": "array",
-      "name": "ArrayParticipant",
+      "name": "ArrayConversationParticipant",
       "valueType": {
        "$id": "274",
        "kind": "model",
-       "name": "Participant",
-       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Participant",
+       "name": "ConversationParticipant",
+       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationParticipant",
        "usage": "Input,Output,Json",
        "doc": "Advanced Messaging conversation participant.",
        "decorators": [],
@@ -2791,7 +2791,7 @@
         "discriminator": true,
         "flatten": false,
         "decorators": [],
-        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Participant.kind"
+        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationParticipant.kind"
        },
        "properties": [
         {
@@ -2812,7 +2812,7 @@
          "discriminator": false,
          "flatten": false,
          "decorators": [],
-         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Participant.id"
+         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationParticipant.id"
         },
         {
          "$id": "278",
@@ -2832,7 +2832,7 @@
          "discriminator": false,
          "flatten": false,
          "decorators": [],
-         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.Participant.displayName"
+         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationParticipant.displayName"
         },
         {
          "$ref": "275"
@@ -2843,8 +2843,8 @@
         "internal": {
          "$id": "281",
          "kind": "model",
-         "name": "InternalParticipant",
-         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.InternalParticipant",
+         "name": "InternalConversationParticipant",
+         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.InternalConversationParticipant",
          "usage": "Input,Output,Json",
          "doc": "Internal conversation participant.",
          "discriminatorValue": "internal",
@@ -2877,7 +2877,7 @@
            "discriminator": true,
            "flatten": false,
            "decorators": [],
-           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.InternalParticipant.kind"
+           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.InternalConversationParticipant.kind"
           },
           {
            "$id": "285",
@@ -3086,18 +3086,18 @@
            "discriminator": false,
            "flatten": false,
            "decorators": [],
-           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.InternalParticipant.contact"
+           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.InternalConversationParticipant.contact"
           }
          ]
         },
-        "External": {
+        "external": {
          "$id": "305",
          "kind": "model",
-         "name": "ExternalParticipant",
-         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ExternalParticipant",
+         "name": "ExternalConversationParticipant",
+         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ExternalConversationParticipant",
          "usage": "Input,Output,Json",
          "doc": "External conversation participant.",
-         "discriminatorValue": "External",
+         "discriminatorValue": "external",
          "decorators": [],
          "baseModel": {
           "$ref": "274"
@@ -3119,7 +3119,7 @@
              "crossLanguageDefinitionId": "TypeSpec.string",
              "decorators": []
             },
-            "value": "External",
+            "value": "external",
             "decorators": []
            },
            "optional": false,
@@ -3127,7 +3127,7 @@
            "discriminator": true,
            "flatten": false,
            "decorators": [],
-           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ExternalParticipant.kind"
+           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ExternalConversationParticipant.kind"
           },
           {
            "$id": "309",
@@ -3150,7 +3150,7 @@
            "discriminator": false,
            "flatten": false,
            "decorators": [],
-           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ExternalParticipant.contacts"
+           "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ExternalConversationParticipant.contacts"
           }
          ]
         }
@@ -3833,8 +3833,8 @@
   {
    "$id": "364",
    "kind": "model",
-   "name": "AddParticipantsRequest",
-   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.AddParticipantsRequest",
+   "name": "AddParticipantsOptions",
+   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.AddParticipantsOptions",
    "usage": "Input,Json",
    "doc": "Request payload for adding participants to a conversation.",
    "decorators": [],
@@ -3848,7 +3848,7 @@
      "type": {
       "$id": "366",
       "kind": "array",
-      "name": "ArrayParticipant",
+      "name": "ArrayConversationParticipant",
       "valueType": {
        "$ref": "274"
       },
@@ -3860,7 +3860,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.AddParticipantsRequest.participants"
+     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.AddParticipantsOptions.participants"
     }
    ]
   },
@@ -3882,12 +3882,12 @@
      "type": {
       "$id": "369",
       "kind": "array",
-      "name": "ArrayParticipantsResult",
+      "name": "ArrayUpdateParticipantsResult",
       "valueType": {
        "$id": "370",
        "kind": "model",
-       "name": "ParticipantsResult",
-       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ParticipantsResult",
+       "name": "UpdateParticipantsResult",
+       "crossLanguageDefinitionId": "Azure.Communication.MessagesService.UpdateParticipantsResult",
        "usage": "Output,Json",
        "doc": "Response for the remove participants operation.",
        "decorators": [],
@@ -3910,7 +3910,7 @@
          "discriminator": false,
          "flatten": false,
          "decorators": [],
-         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ParticipantsResult.id"
+         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.UpdateParticipantsResult.id"
         },
         {
          "$id": "373",
@@ -4077,7 +4077,7 @@
          "discriminator": false,
          "flatten": false,
          "decorators": [],
-         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ParticipantsResult.error"
+         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.UpdateParticipantsResult.error"
         }
        ]
       },
@@ -4105,8 +4105,8 @@
   {
    "$id": "388",
    "kind": "model",
-   "name": "RemoveParticipantsRequest",
-   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.RemoveParticipantsRequest",
+   "name": "RemoveParticipantsOptions",
+   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.RemoveParticipantsOptions",
    "usage": "Input,Json",
    "doc": "Request payload for removing participants from a conversation.",
    "decorators": [],
@@ -4136,7 +4136,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.RemoveParticipantsRequest.participantIds"
+     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.RemoveParticipantsOptions.participantIds"
     }
    ]
   },
@@ -4158,7 +4158,7 @@
      "type": {
       "$id": "394",
       "kind": "array",
-      "name": "ArrayParticipantsResult",
+      "name": "ArrayUpdateParticipantsResult",
       "valueType": {
        "$ref": "370"
       },
@@ -4177,8 +4177,8 @@
   {
    "$id": "395",
    "kind": "model",
-   "name": "GetConversationMessagesAnalysisResult",
-   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.GetConversationMessagesAnalysisResult",
+   "name": "GetConversationThreadAnalysisResult",
+   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.GetConversationThreadAnalysisResult",
    "usage": "Output,Json",
    "doc": "Result of the get conversation messages AI Analysis operation.",
    "decorators": [],
@@ -4201,15 +4201,15 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.GetConversationMessagesAnalysisResult.summary"
+     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.GetConversationThreadAnalysisResult.summary"
     }
    ]
   },
   {
    "$id": "398",
    "kind": "model",
-   "name": "SendConversationMessageRequest",
-   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendConversationMessageRequest",
+   "name": "SendConversationMessageOptions",
+   "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendConversationMessageOptions",
    "usage": "Input,Json",
    "doc": "Request payload for sending a conversation message.",
    "decorators": [],
@@ -4228,7 +4228,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendConversationMessageRequest.request"
+     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendConversationMessageOptions.request"
     },
     {
      "$id": "400",
@@ -4244,7 +4244,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendConversationMessageRequest.outboundDeliveryStrategy"
+     "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendConversationMessageOptions.outboundDeliveryStrategy"
     }
    ]
   },
@@ -5014,8 +5014,8 @@
       },
       {
        "$id": "481",
-       "Name": "maxpagesize",
-       "NameInRequest": "maxpagesize",
+       "Name": "maxPageSize",
+       "NameInRequest": "maxPageSize",
        "Doc": "Number of objects to return per page.",
        "Type": {
         "$id": "482",
@@ -5175,7 +5175,7 @@
   },
   {
    "$id": "497",
-   "Name": "ConversationManagementClient",
+   "Name": "ConversationAdministrationClient",
    "Operations": [
     {
      "$id": "498",
@@ -5316,7 +5316,7 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationManagementClient.createConversation",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationAdministrationClient.createConversation",
      "Decorators": []
     },
     {
@@ -5482,7 +5482,7 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationManagementClient.getConversation",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationAdministrationClient.getConversation",
      "Decorators": []
     },
     {
@@ -5703,13 +5703,13 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationManagementClient.deleteConversation",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationAdministrationClient.deleteConversation",
      "Decorators": []
     },
     {
      "$id": "551",
      "Name": "terminateConversation",
-     "ResourceName": "ConversationManagementClient",
+     "ResourceName": "ConversationAdministrationClient",
      "Doc": "Terminates a specific conversation.",
      "Accessibility": "public",
      "Parameters": [
@@ -5924,7 +5924,7 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationManagementClient.terminateConversation",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationAdministrationClient.terminateConversation",
      "Decorators": []
     },
     {
@@ -5968,8 +5968,8 @@
       },
       {
        "$id": "579",
-       "Name": "maxpagesize",
-       "NameInRequest": "maxpagesize",
+       "Name": "maxPageSize",
+       "NameInRequest": "maxPageSize",
        "Doc": "Number of objects to return per page.",
        "Type": {
         "$id": "580",
@@ -6146,7 +6146,7 @@
      },
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationManagementClient.listConversations",
+     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listConversations",
      "Decorators": []
     },
     {
@@ -6212,8 +6212,8 @@
       },
       {
        "$id": "604",
-       "Name": "maxpagesize",
-       "NameInRequest": "maxpagesize",
+       "Name": "maxPageSize",
+       "NameInRequest": "maxPageSize",
        "Doc": "Number of objects to return per page.",
        "Type": {
         "$id": "605",
@@ -6361,13 +6361,13 @@
      },
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationManagementClient.listMessages",
+     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.listMessages",
      "Decorators": []
     },
     {
      "$id": "619",
      "Name": "addParticipants",
-     "ResourceName": "ConversationManagementClient",
+     "ResourceName": "ConversationAdministrationClient",
      "Doc": "Adds participants to a specific conversation.",
      "Accessibility": "public",
      "Parameters": [
@@ -6563,8 +6563,8 @@
       },
       {
        "$id": "640",
-       "Name": "body",
-       "NameInRequest": "body",
+       "Name": "options",
+       "NameInRequest": "options",
        "Doc": "Details of the payload for adding participants to a conversation.",
        "Type": {
         "$ref": "364"
@@ -6637,13 +6637,13 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationManagementClient.addParticipants",
+     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.addParticipants",
      "Decorators": []
     },
     {
      "$id": "646",
      "Name": "removeParticipants",
-     "ResourceName": "ConversationManagementClient",
+     "ResourceName": "ConversationAdministrationClient",
      "Doc": "remove a participant from a conversation",
      "Accessibility": "public",
      "Parameters": [
@@ -6839,8 +6839,8 @@
       },
       {
        "$id": "667",
-       "Name": "body",
-       "NameInRequest": "body",
+       "Name": "options",
+       "NameInRequest": "options",
        "Doc": "Details of the request body for removing participants from a conversation.",
        "Type": {
         "$ref": "388"
@@ -6913,13 +6913,13 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationManagementClient.removeParticipants",
+     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.removeParticipants",
      "Decorators": []
     },
     {
      "$id": "673",
      "Name": "analyzeConversation",
-     "ResourceName": "ConversationManagementClient",
+     "ResourceName": "ConversationAdministrationClient",
      "Doc": "Get AI Analysis of a conversation.",
      "Accessibility": "public",
      "Parameters": [
@@ -7140,7 +7140,7 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationManagementClient.analyzeConversation",
+     "CrossLanguageDefinitionId": "ClientForAcsMessages.ConversationAdministrationClient.analyzeConversation",
      "Decorators": []
     }
    ],
@@ -7174,12 +7174,12 @@
   },
   {
    "$id": "699",
-   "Name": "ConversationMessagesClient",
+   "Name": "ConversationThreadClient",
    "Operations": [
     {
      "$id": "700",
      "Name": "addParticipants",
-     "ResourceName": "ConversationMessagesClient",
+     "ResourceName": "ConversationThreadClient",
      "Doc": "Adds participants to a specific conversation.",
      "Accessibility": "public",
      "Parameters": [
@@ -7375,8 +7375,8 @@
       },
       {
        "$id": "721",
-       "Name": "body",
-       "NameInRequest": "body",
+       "Name": "options",
+       "NameInRequest": "options",
        "Doc": "Details of the payload for adding participants to a conversation.",
        "Type": {
         "$ref": "364"
@@ -7449,13 +7449,13 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationMessagesClient.addParticipants",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.addParticipants",
      "Decorators": []
     },
     {
      "$id": "727",
      "Name": "removeParticipants",
-     "ResourceName": "ConversationMessagesClient",
+     "ResourceName": "ConversationThreadClient",
      "Doc": "remove a participant from a conversation",
      "Accessibility": "public",
      "Parameters": [
@@ -7651,8 +7651,8 @@
       },
       {
        "$id": "748",
-       "Name": "body",
-       "NameInRequest": "body",
+       "Name": "options",
+       "NameInRequest": "options",
        "Doc": "Details of the request body for removing participants from a conversation.",
        "Type": {
         "$ref": "388"
@@ -7725,7 +7725,7 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationMessagesClient.removeParticipants",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.removeParticipants",
      "Decorators": []
     },
     {
@@ -7769,8 +7769,8 @@
       },
       {
        "$id": "759",
-       "Name": "maxpagesize",
-       "NameInRequest": "maxpagesize",
+       "Name": "maxPageSize",
+       "NameInRequest": "maxPageSize",
        "Doc": "Number of objects to return per page.",
        "Type": {
         "$id": "760",
@@ -7947,7 +7947,7 @@
      },
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationMessagesClient.listConversations",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.listConversations",
      "Decorators": []
     },
     {
@@ -8013,8 +8013,8 @@
       },
       {
        "$id": "784",
-       "Name": "maxpagesize",
-       "NameInRequest": "maxpagesize",
+       "Name": "maxPageSize",
+       "NameInRequest": "maxPageSize",
        "Doc": "Number of objects to return per page.",
        "Type": {
         "$id": "785",
@@ -8162,13 +8162,13 @@
      },
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationMessagesClient.listMessages",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.listMessages",
      "Decorators": []
     },
     {
      "$id": "799",
      "Name": "sendMessage",
-     "ResourceName": "ConversationMessagesClient",
+     "ResourceName": "ConversationThreadClient",
      "Doc": "Sends a conversation message from Business to User.",
      "Accessibility": "public",
      "Parameters": [
@@ -8364,8 +8364,8 @@
       },
       {
        "$id": "820",
-       "Name": "body",
-       "NameInRequest": "body",
+       "Name": "options",
+       "NameInRequest": "options",
        "Doc": "Details of the conversation message to send.",
        "Type": {
         "$ref": "398"
@@ -8438,13 +8438,13 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationMessagesClient.sendMessage",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.sendMessage",
      "Decorators": []
     },
     {
      "$id": "826",
      "Name": "analyzeConversation",
-     "ResourceName": "ConversationMessagesClient",
+     "ResourceName": "ConversationThreadClient",
      "Doc": "Get AI Analysis of a conversation.",
      "Accessibility": "public",
      "Parameters": [
@@ -8665,7 +8665,7 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationMessagesClient.analyzeConversation",
+     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.ConversationThreadClient.analyzeConversation",
      "Decorators": []
     }
    ],

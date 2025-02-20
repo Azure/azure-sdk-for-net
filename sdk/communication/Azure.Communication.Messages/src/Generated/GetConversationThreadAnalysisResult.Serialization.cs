@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
-    public partial class GetConversationMessagesAnalysisResult : IUtf8JsonSerializable, IJsonModel<GetConversationMessagesAnalysisResult>
+    public partial class GetConversationThreadAnalysisResult : IUtf8JsonSerializable, IJsonModel<GetConversationThreadAnalysisResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetConversationMessagesAnalysisResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetConversationThreadAnalysisResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GetConversationMessagesAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GetConversationThreadAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Communication.Messages
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetConversationMessagesAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetConversationThreadAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetConversationMessagesAnalysisResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GetConversationThreadAnalysisResult)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("summary"u8);
@@ -53,19 +53,19 @@ namespace Azure.Communication.Messages
             }
         }
 
-        GetConversationMessagesAnalysisResult IJsonModel<GetConversationMessagesAnalysisResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GetConversationThreadAnalysisResult IJsonModel<GetConversationThreadAnalysisResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetConversationMessagesAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetConversationThreadAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetConversationMessagesAnalysisResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GetConversationThreadAnalysisResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGetConversationMessagesAnalysisResult(document.RootElement, options);
+            return DeserializeGetConversationThreadAnalysisResult(document.RootElement, options);
         }
 
-        internal static GetConversationMessagesAnalysisResult DeserializeGetConversationMessagesAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GetConversationThreadAnalysisResult DeserializeGetConversationThreadAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,46 +89,46 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetConversationMessagesAnalysisResult(summary, serializedAdditionalRawData);
+            return new GetConversationThreadAnalysisResult(summary, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GetConversationMessagesAnalysisResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GetConversationThreadAnalysisResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetConversationMessagesAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetConversationThreadAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetConversationMessagesAnalysisResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetConversationThreadAnalysisResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GetConversationMessagesAnalysisResult IPersistableModel<GetConversationMessagesAnalysisResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GetConversationThreadAnalysisResult IPersistableModel<GetConversationThreadAnalysisResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetConversationMessagesAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GetConversationThreadAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGetConversationMessagesAnalysisResult(document.RootElement, options);
+                        return DeserializeGetConversationThreadAnalysisResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetConversationMessagesAnalysisResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetConversationThreadAnalysisResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GetConversationMessagesAnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GetConversationThreadAnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static GetConversationMessagesAnalysisResult FromResponse(Response response)
+        internal static GetConversationThreadAnalysisResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeGetConversationMessagesAnalysisResult(document.RootElement);
+            return DeserializeGetConversationThreadAnalysisResult(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

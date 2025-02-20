@@ -7,20 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Communication.Messages.Models.Channels;
 
 namespace Azure.Communication.Messages
 {
     /// <summary> Internal conversation participant. </summary>
-    public partial class InternalParticipant : Participant
+    public partial class InternalConversationParticipant : ConversationParticipant
     {
-        /// <summary> Initializes a new instance of <see cref="InternalParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalConversationParticipant"/>. </summary>
         /// <param name="contact">
         /// The internal platform identifiers for the participant.
         /// Please note <see cref="ConversationContact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BotContact"/>, <see cref="CommunicationContact"/> and <see cref="WhatsAppContact"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contact"/> is null. </exception>
-        public InternalParticipant(ConversationContact contact)
+        public InternalConversationParticipant(ConversationContact contact)
         {
             Argument.AssertNotNull(contact, nameof(contact));
 
@@ -28,7 +29,7 @@ namespace Azure.Communication.Messages
             Contact = contact;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalParticipant"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalConversationParticipant"/>. </summary>
         /// <param name="id"> Participant Identifier. </param>
         /// <param name="displayName"> Participant display name. </param>
         /// <param name="kind"> The type discriminator describing a participant type. </param>
@@ -38,13 +39,13 @@ namespace Azure.Communication.Messages
         /// Please note <see cref="ConversationContact"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BotContact"/>, <see cref="CommunicationContact"/> and <see cref="WhatsAppContact"/>.
         /// </param>
-        internal InternalParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ConversationContact contact) : base(id, displayName, kind, serializedAdditionalRawData)
+        internal InternalConversationParticipant(string id, string displayName, ParticipantKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ConversationContact contact) : base(id, displayName, kind, serializedAdditionalRawData)
         {
             Contact = contact;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalParticipant"/> for deserialization. </summary>
-        internal InternalParticipant()
+        /// <summary> Initializes a new instance of <see cref="InternalConversationParticipant"/> for deserialization. </summary>
+        internal InternalConversationParticipant()
         {
         }
 
