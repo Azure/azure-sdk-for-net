@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("messageServerService"u8);
                 JsonSerializer.Serialize(writer, MessageServerService);
             }
-            if (Optional.IsDefined(SncMode))
+            if (Optional.IsDefined(SncFlag))
             {
                 writer.WritePropertyName("sncMode"u8);
-                JsonSerializer.Serialize(writer, SncMode);
+                JsonSerializer.Serialize(writer, SncFlag);
             }
             if (Optional.IsDefined(SncMyName))
             {

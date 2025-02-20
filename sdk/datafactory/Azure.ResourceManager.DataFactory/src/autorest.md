@@ -253,6 +253,8 @@ rename-mapping:
   WebActivity.typeProperties.headers: RequestHeaders
   WebHookActivity.typeProperties.headers: RequestHeaders
   LinkedService.version: LinkedServiceVersion
+  SapOdpLinkedService.typeProperties.sncMode: SncFlag
+  SapTableLinkedService.typeProperties.sncMode: SncFlag
 
 prepend-rp-prefix:
   - BlobEventsTrigger
