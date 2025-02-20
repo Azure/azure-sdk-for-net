@@ -22,28 +22,28 @@ namespace Azure.Developer.LoadTesting.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ACCEPTEDValue = "ACCEPTED";
-        private const string NOTSTARTEDValue = "NOTSTARTED";
-        private const string EXECUTINGValue = "EXECUTING";
-        private const string DONEValue = "DONE";
-        private const string CANCELLINGValue = "CANCELLING";
-        private const string CANCELLEDValue = "CANCELLED";
-        private const string FAILEDValue = "FAILED";
+        private const string AcceptedValue = "ACCEPTED";
+        private const string NotStartedValue = "NOTSTARTED";
+        private const string ExecutingValue = "EXECUTING";
+        private const string DoneValue = "DONE";
+        private const string CancellingValue = "CANCELLING";
+        private const string CancelledValue = "CANCELLED";
+        private const string FailedValue = "FAILED";
 
         /// <summary> Test profile run request is accepted. </summary>
-        public static TestProfileRunStatus ACCEPTED { get; } = new TestProfileRunStatus(ACCEPTEDValue);
+        public static TestProfileRunStatus Accepted { get; } = new TestProfileRunStatus(AcceptedValue);
         /// <summary> Test profile run is not yet started. </summary>
-        public static TestProfileRunStatus NOTSTARTED { get; } = new TestProfileRunStatus(NOTSTARTEDValue);
+        public static TestProfileRunStatus NotStarted { get; } = new TestProfileRunStatus(NotStartedValue);
         /// <summary> Test profile run has started executing. </summary>
-        public static TestProfileRunStatus EXECUTING { get; } = new TestProfileRunStatus(EXECUTINGValue);
+        public static TestProfileRunStatus Executing { get; } = new TestProfileRunStatus(ExecutingValue);
         /// <summary> Test profile run has completed successfully. </summary>
-        public static TestProfileRunStatus DONE { get; } = new TestProfileRunStatus(DONEValue);
+        public static TestProfileRunStatus Done { get; } = new TestProfileRunStatus(DoneValue);
         /// <summary> Test profile run is being cancelled. </summary>
-        public static TestProfileRunStatus CANCELLING { get; } = new TestProfileRunStatus(CANCELLINGValue);
+        public static TestProfileRunStatus Cancelling { get; } = new TestProfileRunStatus(CancellingValue);
         /// <summary> Test profile run is cancelled. </summary>
-        public static TestProfileRunStatus CANCELLED { get; } = new TestProfileRunStatus(CANCELLEDValue);
+        public static TestProfileRunStatus Cancelled { get; } = new TestProfileRunStatus(CancelledValue);
         /// <summary> Test profile run has failed. </summary>
-        public static TestProfileRunStatus FAILED { get; } = new TestProfileRunStatus(FAILEDValue);
+        public static TestProfileRunStatus Failed { get; } = new TestProfileRunStatus(FailedValue);
         /// <summary> Determines if two <see cref="TestProfileRunStatus"/> values are the same. </summary>
         public static bool operator ==(TestProfileRunStatus left, TestProfileRunStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TestProfileRunStatus"/> values are not the same. </summary>

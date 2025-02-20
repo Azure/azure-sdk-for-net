@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Developer.LoadTesting.Models
 {
     /// <summary> Configuration for quick load test. </summary>
-    public partial class OptionalLoadTestConfig
+    public partial class OptionalLoadTestConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.Developer.LoadTesting.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OptionalLoadTestConfig"/>. </summary>
-        public OptionalLoadTestConfig()
+        /// <summary> Initializes a new instance of <see cref="OptionalLoadTestConfiguration"/>. </summary>
+        public OptionalLoadTestConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OptionalLoadTestConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptionalLoadTestConfiguration"/>. </summary>
         /// <param name="endpointUrl"> Test URL. Provide the complete HTTP URL. For example, https://contoso-app.azurewebsites.net/login. </param>
         /// <param name="requestsPerSecond"> Target throughput (requests per second). This may not be necessarily achieved. The actual throughput will be lower if the application is not capable of handling it. </param>
         /// <param name="maxResponseTimeInMs"> Maximum response time in milliseconds of the API/endpoint. </param>
@@ -58,7 +58,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="rampUpTime"> Ramp up time in seconds. </param>
         /// <param name="duration"> Test run duration in seconds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OptionalLoadTestConfig(string endpointUrl, int? requestsPerSecond, int? maxResponseTimeInMs, int? virtualUsers, int? rampUpTime, int? duration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OptionalLoadTestConfiguration(string endpointUrl, int? requestsPerSecond, int? maxResponseTimeInMs, int? virtualUsers, int? rampUpTime, int? duration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointUrl = endpointUrl;
             RequestsPerSecond = requestsPerSecond;

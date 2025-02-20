@@ -104,7 +104,7 @@ namespace Azure.Developer.LoadTesting.Models
             int? engineInstances = default;
             bool? splitAllCSVs = default;
             bool? quickStartTest = default;
-            OptionalLoadTestConfig optionalLoadTestConfig = default;
+            OptionalLoadTestConfiguration optionalLoadTestConfig = default;
             IList<RegionalConfiguration> regionalLoadTestConfig = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.Developer.LoadTesting.Models
                     {
                         continue;
                     }
-                    optionalLoadTestConfig = OptionalLoadTestConfig.DeserializeOptionalLoadTestConfig(property.Value, options);
+                    optionalLoadTestConfig = OptionalLoadTestConfiguration.DeserializeOptionalLoadTestConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("regionalLoadTestConfig"u8))

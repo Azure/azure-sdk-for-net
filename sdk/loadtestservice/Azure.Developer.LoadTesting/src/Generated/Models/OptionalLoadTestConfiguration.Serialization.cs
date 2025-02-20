@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
-    public partial class OptionalLoadTestConfig : IUtf8JsonSerializable, IJsonModel<OptionalLoadTestConfig>
+    public partial class OptionalLoadTestConfiguration : IUtf8JsonSerializable, IJsonModel<OptionalLoadTestConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OptionalLoadTestConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OptionalLoadTestConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OptionalLoadTestConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OptionalLoadTestConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OptionalLoadTestConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OptionalLoadTestConfiguration)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(EndpointUrl))
@@ -81,19 +81,19 @@ namespace Azure.Developer.LoadTesting.Models
             }
         }
 
-        OptionalLoadTestConfig IJsonModel<OptionalLoadTestConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OptionalLoadTestConfiguration IJsonModel<OptionalLoadTestConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OptionalLoadTestConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OptionalLoadTestConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOptionalLoadTestConfig(document.RootElement, options);
+            return DeserializeOptionalLoadTestConfiguration(document.RootElement, options);
         }
 
-        internal static OptionalLoadTestConfig DeserializeOptionalLoadTestConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static OptionalLoadTestConfiguration DeserializeOptionalLoadTestConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -167,7 +167,7 @@ namespace Azure.Developer.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OptionalLoadTestConfig(
+            return new OptionalLoadTestConfiguration(
                 endpointUrl,
                 requestsPerSecond,
                 maxResponseTimeInMs,
@@ -177,43 +177,43 @@ namespace Azure.Developer.LoadTesting.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OptionalLoadTestConfig>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<OptionalLoadTestConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OptionalLoadTestConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptionalLoadTestConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OptionalLoadTestConfig IPersistableModel<OptionalLoadTestConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        OptionalLoadTestConfiguration IPersistableModel<OptionalLoadTestConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfig>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OptionalLoadTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeOptionalLoadTestConfig(document.RootElement, options);
+                        return DeserializeOptionalLoadTestConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OptionalLoadTestConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptionalLoadTestConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OptionalLoadTestConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OptionalLoadTestConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OptionalLoadTestConfig FromResponse(Response response)
+        internal static OptionalLoadTestConfiguration FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeOptionalLoadTestConfig(document.RootElement);
+            return DeserializeOptionalLoadTestConfiguration(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
