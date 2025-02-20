@@ -30,7 +30,7 @@ namespace Azure.Generator
             if (type is ModelProvider && AzureClientPlugin.Instance.OutputLibrary.IsResource(type.Name))
             {
                 type.RelativeFilePath = TransformRelativeFilePath(type);
-                type.Type.Name = type.Name;
+                type.Type.Name = TransformName(type);
                 foreach (var serialization in type.SerializationProviders)
                 {
                     serialization.RelativeFilePath = TransformRelativeFilePathForSerialization(serialization);
